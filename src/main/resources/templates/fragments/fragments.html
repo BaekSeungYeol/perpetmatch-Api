@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <title>PerPetMatch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            background-color: #e7c060;
+        }
+        h3 {
+            color: #204030;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        h2 {
+            color: whitesmoke;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 100%);
+            overflow: hidden;
+            scroll-behavior: smooth;
+        }
+        .wrapper section {
+            width: 100%;
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(5, auto);
+            margin: 20px 0;
+        }
+        .wrapper section .item {
+            padding: 0 2px;
+            transition: 250ms all;
+        }
+        .wrapper section .item:hover {
+            margin: 0 40px;
+            transform: scale(1.2);
+        }
+        .wrapper section a {
+            position: absolute;
+            color: #fff;
+            text-decoration: none;
+            font-size: 6em;
+            background: #102010;
+            width: 80px;
+            padding: 20px;
+            text-align: center;
+            z-index: 1;
+        }
+        .wrapper section a:nth-of-type(1) {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+        }
+        .wrapper section a:nth-of-type(2) {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+        }
+        @media only screen and (max-width: 600px) {
+            a.arrow__btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<nav th:fragment="main-nav" class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="/" th:href="@{/}">
+        <img src="/images/logo_symbol.png" width="30" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <form th:action="@{/}" class="form-inline" method="get">
+                    <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="검색"
+                           aria-label="Search"/>
+                </form>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" th:href="@{/}">로그인</a>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" th:href="@{/}">가입</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link btn btn-outline-primary" th:href="@{/}">
+                    <i class="fa fa-plus" aria-hidden="true"></i> 게시글 올리기
+                </a>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
+                    <h6 class="dropdown-header">
+                        <span sec:authentication="name">Username</span>
+                    </h6>
+                    <a class="dropdown-item">게시글</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">설정</a>
+                    <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
+                        <button class="dropdown-item" type="submit">로그아웃</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

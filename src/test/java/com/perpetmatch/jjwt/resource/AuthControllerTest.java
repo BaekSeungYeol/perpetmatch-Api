@@ -1,5 +1,6 @@
 package com.perpetmatch.jjwt.resource;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Member;
 import com.perpetmatch.Member.MemberRepository;
@@ -48,8 +49,16 @@ class AuthControllerTest {
 
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() throws Exception {
+        SignUpRequest request = SignUpRequest.builder()
+                .nickname("백승열입니다")
+                .email("beck22222@naver.com")
+                .password("12345678").build();
 
+        mockMvc.perform(post("/api/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
     }
 
     @AfterEach
@@ -61,13 +70,6 @@ class AuthControllerTest {
     @Test
     @DisplayName("이메일로 로그인 하기")
     void login_with_email() throws Exception {
-
-        SignUpRequest request = SignUpRequest.builder()
-                .nickname("백승열입니다")
-                .email("beck22222@naver.com")
-                .password("12345678").build();
-
-        memberService.join(request);
 
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
@@ -83,4 +85,40 @@ class AuthControllerTest {
                 .andExpect(jsonPath("tokenType").value("Bearer"));
     }
 
+
+    @Test
+    @DisplayName("닉네임으로 로그인 하기")
+    void login_with_nickname() throws Exception {
+
+        LoginRequest loginRequest = LoginRequest.builder()
+                .usernameOrEmail("백승열입니다")
+                .password("12345678")
+                .build();
+
+        mockMvc.perform(post("/api/auth/signin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(loginRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("accessToken").exists())
+                .andExpect(jsonPath("tokenType").value("Bearer"));
+    }
+
+    @DisplayName("로그인 실패 - 가입되어 있지 않은 유저")
+    @Test
+    void login_fail() throws Exception {
+
+        LoginRequest loginRequest = LoginRequest.builder()
+                .usernameOrEmail("익명입니다")
+                .password("12345678")
+                .build();
+
+        mockMvc.perform(post("/signin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(loginRequest)))
+                .andExpect(status().isUnauthorized());
+    }
+//    @DisplayName("로그아웃")
+//    @Test
 }

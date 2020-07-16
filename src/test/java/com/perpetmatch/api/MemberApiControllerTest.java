@@ -34,9 +34,6 @@ class MemberApiControllerTest {
     @Autowired
     MemberRepository memberRepository;
 
-
-    String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbjI4bWludXRlcyIsImV4cCI6MTU5NTM1Nzc1NiwiaWF0IjoxNTk0NzUyOTU2fQ.SoesHhT_DCw6_q57OEsvKWXY1K-inEnUwj_46mmaU392o1X2IzZJaIBVjWCKvgJzgL5zudO68FEQ0YwvxMuFfg";
-
     @BeforeEach
     public void setUp() {
         memberRepository.deleteAll();
@@ -52,12 +49,12 @@ class MemberApiControllerTest {
                 .password("123456789")
                 .build();
 
-        mockMvc.perform(post("/signup")
+        mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(member)))
                 .andDo(print())
-                .andExpect(jsonPath("success").value("true"))
+                .andExpect(jsonPath("success").value(true))
                 .andExpect(jsonPath("message").value("User registered successfully"));
 
         Member savedMember = memberRepository.findByEmail("beck33333@naver.com");
@@ -77,8 +74,7 @@ class MemberApiControllerTest {
                 .email("beck33")
                 .build();
 
-        mockMvc.perform(post("/authenticate")
-                .header("Authorization", token)
+        mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(member)))
@@ -95,8 +91,7 @@ class MemberApiControllerTest {
                 .email("beck33333@naver.com")
                 .build();
 
-        mockMvc.perform(post("/authenticate")
-                .header("Authorization", token)
+        mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(member)));
@@ -107,12 +102,13 @@ class MemberApiControllerTest {
                 .email("beck33333@naver.com")
                 .build();
 
-        mockMvc.perform(post("/authenticate")
-                .header("Authorization", token)
+        mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(member)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("success").value(false))
+                .andExpect(jsonPath("message").value("Username is already taken!"));;
 
     }
     @Test
@@ -124,8 +120,7 @@ class MemberApiControllerTest {
                 .email("")
                 .build();
 
-        mockMvc.perform(post("/authenticate")
-                .header("Authorization", token)
+        mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(member)))
@@ -133,33 +128,31 @@ class MemberApiControllerTest {
 
     }
 
-    @DisplayName("인증 메일 확인 - 입력값 오류")
-    @Test
-    void checkEmailToken_with_wrong_input() throws Exception {
-        mockMvc.perform(get("/check-email-token")
-                .header("Authorization", token)
-                .param("token", "sdfkldsfklds")
-                .param("email", "email@email.com"))
-                .andExpect(status().isBadRequest());
-    }
-
-    @DisplayName("인증 메일 확인 - 입력값 정상")
-    @Test
-    void checkEmailToken_with_right_input() throws Exception {
-        Member member = Member.builder()
-                .email("test@email.com")
-                .password("12345678")
-                .nickname("seungyeol")
-                .build();
-
-        Member newMember = memberRepository.save(member);
-        newMember.generateEmailCheckToken();
-
-        mockMvc.perform(get("/check-email-token")
-                .header("Authorization", token)
-                .param("token", newMember.getEmailCheckToken())
-                .param("email", newMember.getEmail()))
-                .andExpect(status().isOk());
-    }
+//    @DisplayName("인증 메일 확인 - 입력값 오류")
+//    @Test
+//    void checkEmailToken_with_wrong_input() throws Exception {
+//        mockMvc.perform(get("/check-email-token")
+//                .param("token", "sdfkldsfklds")
+//                .param("email", "email@email.com"))
+//                .andExpect(status().isBadRequest());
+//    }
+//
+//    @DisplayName("인증 메일 확인 - 입력값 정상")
+//    @Test
+//    void checkEmailToken_with_right_input() throws Exception {
+//        Member member = Member.builder()
+//                .email("test@email.com")
+//                .password("12345678")
+//                .nickname("seungyeol")
+//                .build();
+//
+//        Member newMember = memberRepository.save(member);
+//        newMember.generateEmailCheckToken();
+//
+//        mockMvc.perform(get("/check-email-token")
+//                .param("token", newMember.getEmailCheckToken())
+//                .param("email", newMember.getEmail()))
+//                .andExpect(status().isOk());
+//    }
 
 }

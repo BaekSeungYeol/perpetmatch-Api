@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Member;
 import com.perpetmatch.Member.MemberRepository;
 import com.perpetmatch.Member.MemberService;
+import com.perpetmatch.jjwt.JwtTokenProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +41,11 @@ class AuthControllerTest {
 
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    JwtTokenProvider tokenProvider;
+    @Autowired
+    AuthenticationManager authenticationManager;
+
 
     @BeforeEach
     void beforeEach() {
@@ -51,20 +61,20 @@ class AuthControllerTest {
     @Test
     @DisplayName("이메일로 로그인 하기")
     void login_with_email() throws Exception {
-        SignUpRequest member = SignUpRequest.builder()
+
+        SignUpRequest request = SignUpRequest.builder()
                 .nickname("백승열입니다")
                 .email("beck22222@naver.com")
                 .password("12345678").build();
 
-        memberService.join(member);
-
+        memberService.join(request);
 
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
                 .password("12345678")
                 .build();
 
-        mockMvc.perform(post("/signin")
+        mockMvc.perform(post("/api/auth/signin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest)))

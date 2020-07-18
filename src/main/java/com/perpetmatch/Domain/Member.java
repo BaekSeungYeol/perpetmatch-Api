@@ -3,6 +3,7 @@ package com.perpetmatch.Domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -30,7 +31,7 @@ public class Member extends DateAudit {
 
     private boolean emailVerified = false;
 
-    private LocalDateTime joinedAt;
+    private Instant joinedAt;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Pet> pet = new HashSet<>();
@@ -39,7 +40,7 @@ public class Member extends DateAudit {
 
     private int credit;
 
-    private int houseType;
+    private String houseType;
 
     private String occupation;
 
@@ -50,6 +51,8 @@ public class Member extends DateAudit {
     private int howManyPets;
 
     private int expectedFeeForMonth;
+
+    private String phoneNumber;
 
     private String location;
 
@@ -65,6 +68,6 @@ public class Member extends DateAudit {
 
     public void completeSignup(String token) {
         this.setEmailVerified(true);
-        this.setJoinedAt(LocalDateTime.now());
+        this.setJoinedAt(Instant.now());
     }
 }

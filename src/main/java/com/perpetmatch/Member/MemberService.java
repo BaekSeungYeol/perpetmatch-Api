@@ -1,31 +1,23 @@
 package com.perpetmatch.Member;
 
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.Member;
-import com.perpetmatch.Domain.Role;
-import com.perpetmatch.Domain.RoleName;
+import com.perpetmatch.Domain.*;
 import com.perpetmatch.Role.RoleRepository;
-import com.perpetmatch.apiDto.JoinMemberRequest;
+import com.perpetmatch.apiDto.ProfileRequest;
 import com.perpetmatch.apiDto.UpdateMemberRequest;
 import com.perpetmatch.exception.AppException;
+import com.perpetmatch.exception.ResourceNotFoundException;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -99,7 +91,7 @@ public class MemberService {
 
 
     public void addPet(String managerName, Pet pet) {
-        Member Member = memberRepository.findByNickname(managerName);
+        Member Member = memberRepository.findByNickname(managerName).get();
         Member.getPet().add(pet);
     }
 
@@ -115,21 +107,25 @@ public class MemberService {
             return false;
         }
         member.completeSignup(token);
-        login(member);
         return true;
     }
 
-    public void login(Member member) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                new UserMember(member),
-                member.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
-        SecurityContext context = SecurityContextHolder.getContext();
-        context.setAuthentication(token);
+    public Member findByNickname(String nickname) {
+        Member byNickname = memberRepository.findByNickname(nickname).
+                orElseThrow(() -> new ResourceNotFoundException("Member", "nickname", nickname));
 
-//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-//                username,password);
-//        Authentication authentication = authenticationManager.authenticate(token);
-//        context.setAuthentication(authentication);
+        return byNickname;
+    }
+
+    public void updateProfile(Long id, ProfileRequest profileRequest) {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
+        member.setHouseType(profileRequest.getHouseType());
+        member.setOccupation(profileRequest.getOccupation());
+        member.setExperience(profileRequest.isExperience());
+        member.setLiveAlone(profileRequest.isLiveAlone());
+        member.setHowManyPets(profileRequest.getHowManyPets());
+        member.setExpectedFeeForMonth(profileRequest.getExpectedFeeForMonth());
+        member.setLocation(profileRequest.getLocation());
+        member.setProfileImage(profileRequest.getProfileImage());
     }
 }

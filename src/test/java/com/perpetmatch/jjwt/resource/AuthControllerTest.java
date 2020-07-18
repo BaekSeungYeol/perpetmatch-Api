@@ -113,7 +113,7 @@ class AuthControllerTest {
                 .password("12345678")
                 .build();
 
-        mockMvc.perform(post("/signin")
+        mockMvc.perform(post("/api/auth/signin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest)))

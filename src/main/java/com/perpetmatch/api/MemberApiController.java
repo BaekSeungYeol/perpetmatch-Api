@@ -1,18 +1,24 @@
 package com.perpetmatch.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Member;
 import com.perpetmatch.Member.MemberRepository;
 import com.perpetmatch.Member.MemberService;
 import com.perpetmatch.apiDto.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
+import com.perpetmatch.jjwt.resource.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,7 +27,8 @@ public class MemberApiController {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
-
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
     //수정
     @PutMapping("/api/members/{id}")
     @PreAuthorize("hasRole('USER')")
@@ -34,7 +41,7 @@ public class MemberApiController {
 
     //조회
     @GetMapping("/api/members")
-    public AllMembersResponse getAllmembers(@CurrentMember UserPrincipal currentMember) {
+    public AllMembersResponse getAllmembers(@CurrentMember UserPrincipal currentMember) throws JsonProcessingException {
 
         Long id = currentMember.getId();
         List<Member> members = memberService.findMembers();

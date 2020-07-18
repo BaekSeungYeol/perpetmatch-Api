@@ -41,11 +41,14 @@ public class ProfileApiController {
     // 이름으로 유저 한명의 프로필 조회
 
     @GetMapping("/api/profiles/{nickname}")
-    public ProfileResponse profileAll(@PathVariable String nickname) {
+    public ResponseEntity<ProfileResponse> profileAll(@PathVariable String nickname) {
 
+        if(!memberRepository.existsByNickname(nickname)) {
+            return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
+                    HttpStatus.BAD_REQUEST);
+        }
         Member byNickname = memberService.findByNickname(nickname);
-        return new ProfileResponse(byNickname);
-
+        return ResponseEntity.ok().body(new ProfileResponse(byNickname));
     }
 
     // 해당 유저의 프로필 수정
@@ -60,9 +63,7 @@ public class ProfileApiController {
         }
         memberService.updateProfile(currentMember.getId(), profileRequest);
 
-        URI uri = linkTo(methodOn(ProfileApiController.class).profileUpdate(null,null,null)).slash(currentMember.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new ApiResponse(true, "Profile updated successfully"));
+        return ResponseEntity.ok().body(new ApiResponse(true, "Profile updated successfully"));
     }
 
     // 유저 한명의

@@ -3,6 +3,7 @@ package com.perpetmatch.apiDto;
 import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Domain.Zone;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileRequest {
@@ -35,8 +37,8 @@ public class ProfileRequest {
     @NotBlank
     private String location;
     @NotBlank
-    private String profileImage;
-    @NotBlank
     private String phoneNumber;
+
+    private String profileImage;
 
 }

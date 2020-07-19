@@ -2,6 +2,7 @@ package com.perpetmatch.Member;
 
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Role.RoleRepository;
+import com.perpetmatch.apiDto.PasswordRequest;
 import com.perpetmatch.apiDto.ProfileRequest;
 import com.perpetmatch.apiDto.UpdateMemberRequest;
 import com.perpetmatch.exception.AppException;
@@ -127,5 +128,11 @@ public class MemberService {
         member.setExpectedFeeForMonth(profileRequest.getExpectedFeeForMonth());
         member.setLocation(profileRequest.getLocation());
         member.setProfileImage(profileRequest.getProfileImage());
+    }
+
+    public void updatePassword(Long id, PasswordRequest passwordRequest) {
+
+        Member member = memberRepository.findById(id).get();
+        member.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
     }
 }

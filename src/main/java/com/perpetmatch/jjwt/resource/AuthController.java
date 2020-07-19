@@ -58,12 +58,12 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerMember(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(memberRepository.existsByNickname(signUpRequest.getNickname())) {
-            return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
+            return new ResponseEntity(new ApiResponse(false, "해당 이름이 이미 존재합니다."),
                     HttpStatus.BAD_REQUEST);
         }
 
         if(memberRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
+            return new ResponseEntity(new ApiResponse(false, "이메일이 이미 존재합니다."),
                     HttpStatus.BAD_REQUEST);
         }
 

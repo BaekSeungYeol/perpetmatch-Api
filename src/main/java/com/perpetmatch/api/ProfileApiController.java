@@ -62,7 +62,7 @@ public class ProfileApiController {
         }
 
         if(errors.hasErrors()) {
-            return new ResponseEntity(new ApiResponse(false, "입력방식이 잘못되었습니다."),
+            return new ResponseEntity(new ApiResponse(false, "입력값을 다 채우지 않았습니다."),
                     HttpStatus.BAD_REQUEST);
         }
 

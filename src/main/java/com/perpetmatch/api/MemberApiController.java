@@ -43,6 +43,7 @@ public class MemberApiController {
     @GetMapping("/api/members")
     public AllMembersResponse getAllmembers(@CurrentMember UserPrincipal currentMember) throws JsonProcessingException {
 
+
         Long id = currentMember.getId();
         List<Member> members = memberService.findMembers();
 

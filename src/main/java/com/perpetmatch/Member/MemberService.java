@@ -128,11 +128,28 @@ public class MemberService {
         member.setExpectedFeeForMonth(profileRequest.getExpectedFeeForMonth());
         member.setLocation(profileRequest.getLocation());
         member.setProfileImage(profileRequest.getProfileImage());
+        member.setWantCheckUp(profileRequest.isWantCheckUp());
+        member.setWantLineAgeImage(profileRequest.isWantLineAgeImage());
+        member.setWantNeutered(profileRequest.isWantNeutered());
     }
 
     public void updatePassword(Long id, PasswordRequest passwordRequest) {
 
         Member member = memberRepository.findById(id).get();
         member.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
+    }
+
+    public void sendLoginLink(Member member) {
+        member.generateEmailCheckToken();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(member.getEmail());
+        mailMessage.setSubject("퍼펫매치, 로그인 링크");
+        mailMessage.setText("/login-by-email?token=" + member.getEmailCheckToken() + "&email=" + member.getEmail());
+        javaMailSender.send(mailMessage);
+    }
+
+    public void addTag(Long id, Pet pet) {
+        Optional<Member> byId = memberRepository.findById(id);
+        byId.ifPresent(m -> m.getPet().add(pet));
     }
 }

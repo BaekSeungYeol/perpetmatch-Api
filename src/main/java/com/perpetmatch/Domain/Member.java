@@ -56,6 +56,11 @@ public class Member extends DateAudit {
 
     private String location;
 
+    private boolean wantCheckUp;
+    private boolean wantLineAgeImage;
+    private boolean wantNeutered;
+
+
     @Lob @Basic(fetch = FetchType.EAGER)
     private String profileImage;
 

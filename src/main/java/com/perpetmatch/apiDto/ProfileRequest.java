@@ -41,4 +41,11 @@ public class ProfileRequest {
 
     private String profileImage;
 
+    private boolean wantCheckUp;
+
+    private boolean wantLineAgeImage;
+
+    private boolean wantNeutered;
+
+
 }

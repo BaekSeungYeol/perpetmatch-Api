@@ -1,18 +1,16 @@
 package com.perpetmatch.Domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 
 @Entity
+@Getter @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of="id")
 public class Pet {
 
@@ -20,9 +18,7 @@ public class Pet {
     @GeneratedValue
     private Long id;
 
-    private String kind;
+    @Column(unique = true, nullable = false)
+    private String title; // 품종
 
-    public Pet(String kind) {
-        this.kind = kind;
-    }
 }

@@ -33,6 +33,22 @@ public class Board {
 
     private int credit;
 
+    private String gender;
+
+    private int age;
+
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String checkUp;
+
+    private boolean hasCheckUp;
+
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String lineAgeImage;
+
+    private boolean hasLineAgeImage;
+
     @Lob
     @Basic(fetch = FetchType.EAGER)
     private String image;

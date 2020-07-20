@@ -1,31 +1,38 @@
 package com.perpetmatch.api;
 
 import com.perpetmatch.Domain.Member;
+import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Member.MemberRepository;
 import com.perpetmatch.Member.MemberService;
 import com.perpetmatch.apiDto.PasswordRequest;
 import com.perpetmatch.apiDto.ProfileRequest;
 import com.perpetmatch.apiDto.ProfileResponse;
+import com.perpetmatch.apiDto.TagForm;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
+import com.perpetmatch.pet.PetRepository;
 import com.perpetmatch.pet.PetService;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.descriptor.tld.TagFileXml;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 /**
- * 마이 페이지 눌렀을때
+ * 마이 페이지에 프로필 수정 눌렀을때
  *  프로필
  *  패스워드
  *  관심 펫
  *  지역
+ *  계정 탈퇴
  */
 @RestController
 @RequestMapping("/api/settings")
@@ -36,6 +43,8 @@ public class ProfileApiController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
+    private final PetRepository petRepository;
+
 
 
     // 이름으로 유저 한명의 프로필 조회
@@ -96,6 +105,31 @@ public class ProfileApiController {
 
         return ResponseEntity.ok().body(new ApiResponse(true, "패스워드 수정이 완료 되었습니다."));
     }
+
+    @PostMapping("/settings/tag/add")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity addTag(@CurrentMember UserPrincipal currentMember, @RequestBody TagForm tagForm) {
+        if(currentMember == null) {
+            return new ResponseEntity(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        String title = tagForm.getTagTitle();
+
+        Pet pet = petRepository.findByTitle(title);
+        if(pet == null) {
+            petRepository.save(Pet.builder().title(title).build());
+        }
+
+        memberService.addTag(currentMember.getId(),pet);
+
+        return ResponseEntity.ok().body(new ApiResponse(true,"성공적으로 태그를 추가했습니다."));
+
+    }
+
+
+
+
 
 
 

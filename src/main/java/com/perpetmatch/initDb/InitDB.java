@@ -14,25 +14,25 @@ import java.util.Date;
 @RequiredArgsConstructor
 
 public class InitDB {
-//    private final InitService initService;
-//
-//    @PostConstruct
-//    public void init() {
-//        initService.dbInit1();
-//    }
-//
-//    @Component
-//    @Transactional
-//    @RequiredArgsConstructor
-//    static class InitService {
-//
-//        private final RoleRepository roleRepository;
-//
-//        public void dbInit1() {
-//            Role role = new Role(RoleName.ROLE_USER);
-//            roleRepository.save(role);
-//            Role role2 = new Role(RoleName.ROLE_ADMIN);
-//            roleRepository.save(role2);
-//        }
-//    }
+    private final InitService initService;
+
+    @PostConstruct
+    public void init() {
+        initService.dbInit1();
+    }
+
+    @Component
+    @Transactional
+    @RequiredArgsConstructor
+    static class InitService {
+
+        private final RoleRepository roleRepository;
+
+        public void dbInit1() {
+            Role role = new Role(RoleName.ROLE_USER);
+            roleRepository.save(role);
+            Role role2 = new Role(RoleName.ROLE_ADMIN);
+            roleRepository.save(role2);
+        }
+    }
 }

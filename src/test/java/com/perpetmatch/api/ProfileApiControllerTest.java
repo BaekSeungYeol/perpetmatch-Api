@@ -1,40 +1,30 @@
 package com.perpetmatch.api;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Member;
 import com.perpetmatch.Member.MemberRepository;
-import com.perpetmatch.apiDto.PasswordRequest;
-import com.perpetmatch.apiDto.ProfileRequest;
+import com.perpetmatch.apiDto.Profile.PasswordRequest;
+import com.perpetmatch.apiDto.Profile.ProfileRequest;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.Length;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.DataInput;
-import java.util.Map;
 
 import static com.sun.activation.registries.LogSupport.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

@@ -1,4 +1,4 @@
-package com.perpetmatch.apiDto;
+package com.perpetmatch.apiDto.Profile;
 
 import com.perpetmatch.Domain.Member;
 import com.perpetmatch.Domain.Pet;

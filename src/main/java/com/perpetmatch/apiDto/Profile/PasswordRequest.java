@@ -1,4 +1,4 @@
-package com.perpetmatch.apiDto;
+package com.perpetmatch.apiDto.Profile;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

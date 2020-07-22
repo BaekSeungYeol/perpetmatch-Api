@@ -2,8 +2,8 @@ package com.perpetmatch.Member;
 
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Role.RoleRepository;
-import com.perpetmatch.apiDto.PasswordRequest;
-import com.perpetmatch.apiDto.ProfileRequest;
+import com.perpetmatch.apiDto.Profile.PasswordRequest;
+import com.perpetmatch.apiDto.Profile.ProfileRequest;
 import com.perpetmatch.apiDto.UpdateMemberRequest;
 import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.ResourceNotFoundException;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -91,10 +90,6 @@ public class MemberService {
     }
 
 
-    public void addPet(String managerName, Pet pet) {
-        Member Member = memberRepository.findByNickname(managerName).get();
-        Member.getPet().add(pet);
-    }
 
 
     public boolean verifyingEmail(String token, String email) {
@@ -148,8 +143,13 @@ public class MemberService {
         javaMailSender.send(mailMessage);
     }
 
-    public void addTag(Long id, Pet pet) {
+    public void addPet(Long id, Pet pet) {
         Optional<Member> byId = memberRepository.findById(id);
         byId.ifPresent(m -> m.getPet().add(pet));
+    }
+
+    public void removePet(Long id, Pet pet) {
+        Optional<Member> byId = memberRepository.findById(id);
+        byId.ifPresent(m -> m.getPet().remove(pet));
     }
 }

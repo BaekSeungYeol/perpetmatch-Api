@@ -2,11 +2,15 @@ package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Member;
+import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Member.MemberRepository;
+import com.perpetmatch.Member.MemberService;
 import com.perpetmatch.apiDto.Profile.PasswordRequest;
+import com.perpetmatch.apiDto.Profile.PetForm;
 import com.perpetmatch.apiDto.Profile.ProfileRequest;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
+import com.perpetmatch.pet.PetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +25,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Optional;
 
 import static com.sun.activation.registries.LogSupport.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,6 +56,10 @@ class ProfileApiControllerTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    PetRepository petRepository;
+    @Autowired
+    MemberService memberService;
 
     String token = null;
 
@@ -174,5 +184,60 @@ class ProfileApiControllerTest {
                 .content(objectMapper.writeValueAsString(passwordRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("message").value("입력한 새 패스워드가 일치하지 않습니다."));
+    }
+
+    @Test
+    @DisplayName(" 로그인 한 유저의 관심 품종 조회 " )
+    void showPetTag_success() throws Exception {
+
+        mockMvc.perform(get("/api/settings/pet")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("pets").exists())
+                .andExpect(jsonPath("allPets").exists());
+    }
+
+    @Test
+    @DisplayName("관심 품종 추가 성공 " )
+    void addPetTag_success() throws Exception {
+        PetForm petForm = new PetForm();
+        petForm.setPetTitle("푸들");
+
+        mockMvc.perform(post("/api/settings/pet/add")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(petForm)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("성공적으로 품종을 추가했습니다."));
+
+        Pet newPet = petRepository.findByTitle("푸들");
+        assertTrue(newPet != null);
+        assertTrue(memberRepository.findByNickname("백승열입니다").get().getPet().contains(newPet));
+
+
+    }
+
+    @Test
+    @DisplayName("관심 품종 추가 실패 " )
+    void removePetTag_failed() throws Exception {
+        Member member = memberRepository.findByNickname("백승열입니다").get();
+        PetForm petForm = new PetForm();
+        petForm.setPetTitle("newPet");
+        Pet pet = petRepository.save(Pet.builder().title(petForm.getPetTitle()).build());
+        memberService.addPet(member.getId(),pet.getTitle());
+
+        assertTrue(member.getPet().contains(pet));
+
+        mockMvc.perform(post("/api/settings/pet/remove")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(petForm)))
+                .andExpect(status().isOk());
+
+        assertTrue(!member.getPet().contains(pet));
     }
 }

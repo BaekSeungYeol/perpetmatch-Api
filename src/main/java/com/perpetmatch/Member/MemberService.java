@@ -8,7 +8,9 @@ import com.perpetmatch.apiDto.UpdateMemberRequest;
 import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.ResourceNotFoundException;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
+import com.perpetmatch.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,8 @@ public class MemberService {
     private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final PetRepository petRepository;
+    private final ModelMapper modelMapper;
 
     public void sendJoinMemberConfirmEmail(Member savedMember) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -42,11 +46,10 @@ public class MemberService {
 
     public Member join(SignUpRequest request) {
 
-        Member member = Member.builder().nickname(request.getNickname())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .email(request.getEmail())
-                .build();
-
+        Member member = new Member();
+        member.setNickname(request.getNickname());
+        member.setPassword(passwordEncoder.encode(request.getPassword()));
+        member.setEmail(request.getEmail());
 
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new AppException("User Role not set."));
@@ -61,15 +64,6 @@ public class MemberService {
         return savedMember;
     }
 
-    public void update(Long id, UpdateMemberRequest request) {
-
-        Optional<Member> byId = memberRepository.findById(id);
-        Member Member = byId.get();
-
-        Member = Member.builder()
-                .nickname(request.getName())
-                .password(request.getPassword()).build();
-    }
 
 
     private boolean validateDuplicateMember(Member member) {
@@ -143,9 +137,20 @@ public class MemberService {
         javaMailSender.send(mailMessage);
     }
 
-    public void addPet(Long id, Pet pet) {
+    public void addPet(Long id, String title) {
+
+        Pet pet = petRepository.findByTitle(title);
+
+        if(pet == null) {
+            Pet newPet = new Pet();
+            newPet.setTitle(title);
+            petRepository.save(newPet);
+        }
+
+        Pet savedPet = petRepository.findByTitle(title);
+
         Optional<Member> byId = memberRepository.findById(id);
-        byId.ifPresent(m -> m.getPet().add(pet));
+        byId.ifPresent(m -> m.getPet().add(savedPet));
     }
 
     public void removePet(Long id, Pet pet) {

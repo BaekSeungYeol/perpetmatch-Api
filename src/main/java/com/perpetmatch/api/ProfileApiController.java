@@ -12,7 +12,6 @@ import com.perpetmatch.pet.PetRepository;
 import com.perpetmatch.pet.PetService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -115,13 +113,7 @@ public class ProfileApiController {
 
         String title = petForm.getPetTitle();
 
-        Pet pet = petRepository.findByTitle(title);
-        if(pet == null) {
-            pet = petRepository.save(Pet.builder().title(title).build());
-        }
-
-
-        memberService.addPet(currentMember.getId(),pet);
+        memberService.addPet(currentMember.getId(),title);
 
         return ResponseEntity.ok().body(new ApiResponse(true,"성공적으로 품종을 추가했습니다."));
 
@@ -151,7 +143,7 @@ public class ProfileApiController {
     }
 
 
-    // 해당 유저의 품종을 모두 조회
+    // 해당 유저의 선호 품종을 모두 조회
     @GetMapping("/pet")
     public ResponseEntity getPets(@CurrentMember UserPrincipal currentMember) {
 
@@ -160,10 +152,14 @@ public class ProfileApiController {
                     HttpStatus.BAD_REQUEST);
         }
 
+        // 현재 유저의 선호 품종
         Member member = memberRepository.findById(currentMember.getId()).get();
 
-        Set<Pet> pet = member.getPet();
-        PetResponseOne collect = new PetResponseOne(pet);
+        // 모든 유저의 선호 품종 리스트로 반환
+        List<String> allPets = petRepository.findAll().stream().map(Pet::getTitle).collect(Collectors.toList());
+
+        Set<PetDto> pet = member.getPet().stream().map(m -> new PetDto(m.getTitle())).collect(Collectors.toSet());
+        PetResponseOne collect = new PetResponseOne(pet,allPets);
 
         return ResponseEntity.ok().body(collect);
 

@@ -108,7 +108,7 @@ class MemberApiControllerTest {
                 .content(objectMapper.writeValueAsString(member)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("success").value(false))
-                .andExpect(jsonPath("message").value("Username is already taken!"));;
+                .andExpect(jsonPath("message").value("해당 이름이 이미 존재합니다."));;
 
     }
     @Test

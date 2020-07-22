@@ -40,30 +40,6 @@ public class MemberApiController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
 
-    //수정
-    @PutMapping("/api/members/{id}")
-    @PreAuthorize("hasRole('USER')")
-    public UpdateMemberResponse updatemember(@PathVariable Long id, @RequestBody @Valid UpdateMemberRequest request) {
-
-        memberService.update(id, request);
-        Member findmember = memberService.findOne(id);
-        return new UpdateMemberResponse(findmember.getId());
-    }
-
-    //조회
-    @GetMapping("/api/members")
-    public AllMembersResponse getAllmembers(@CurrentMember UserPrincipal currentMember) throws JsonProcessingException {
-
-
-        Long id = currentMember.getId();
-        List<Member> members = memberService.findMembers();
-
-        List<MemberDto> collect = members.stream().map(m -> new MemberDto(m.getNickname())).collect(Collectors.toList());
-        return new AllMembersResponse(collect);
-    }
-
-    //삭제
-
 
     // 이메일 확인 localhost:3000/check-email-token 페이지-> then -> localhost:8080/check-success -> 밑에 logic
     @GetMapping("/check-email-token")

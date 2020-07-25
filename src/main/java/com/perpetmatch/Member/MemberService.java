@@ -1,10 +1,10 @@
 package com.perpetmatch.Member;
 
 import com.perpetmatch.Domain.*;
+import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
 import com.perpetmatch.apiDto.Profile.PasswordRequest;
 import com.perpetmatch.apiDto.Profile.ProfileRequest;
-import com.perpetmatch.apiDto.UpdateMemberRequest;
 import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.ResourceNotFoundException;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
@@ -32,6 +32,7 @@ public class MemberService {
     private final RoleRepository roleRepository;
     private final PetRepository petRepository;
     private final ModelMapper modelMapper;
+    private final PetAgeRepository petAgeRepository;
 
     public void sendJoinMemberConfirmEmail(Member savedMember) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -118,7 +119,7 @@ public class MemberService {
         member.setLocation(profileRequest.getLocation());
         member.setProfileImage(profileRequest.getProfileImage());
         member.setWantCheckUp(profileRequest.isWantCheckUp());
-        member.setWantLineAgeImage(profileRequest.isWantLineAgeImage());
+        member.setWantLineAge(profileRequest.isWantLineAge());
         member.setWantNeutered(profileRequest.isWantNeutered());
     }
 
@@ -156,5 +157,18 @@ public class MemberService {
     public void removePet(Long id, Pet pet) {
         Optional<Member> byId = memberRepository.findById(id);
         byId.ifPresent(m -> m.getPet().remove(pet));
+    }
+
+    public void addPetAge(Long id, String range) {
+
+        PetAge petRange = petAgeRepository.findPetRange(range);
+        Optional<Member> byId = memberRepository.findById(id);
+        byId.ifPresent(m -> m.getPetAge().add(petRange));
+    }
+
+    public void removePetAge(Long id, String range) {
+        Optional<Member> byId = memberRepository.findById(id);
+        PetAge petRange = petAgeRepository.findPetRange(range);
+        byId.ifPresent(m -> m.getPetAge().remove(petRange));
     }
 }

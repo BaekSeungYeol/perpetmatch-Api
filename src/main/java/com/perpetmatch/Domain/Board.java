@@ -59,16 +59,12 @@ public class Board {
     private LocalDateTime publishedDateTime;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Pet pet;
-    @OneToOne(fetch = FetchType.LAZY)
-    private Zone zone;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Pet> pet = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Zone> zone = new HashSet<>();
 
-    public void createPet(Pet pet) {
-        this.pet = pet;
-    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<PetAge> petAge = new HashSet<>();
 
-    public void createZone(Zone zone) {
-        this.zone = zone;
-    }
 }

@@ -1,38 +1,80 @@
 package com.perpetmatch.initDb;
 
-import com.perpetmatch.Domain.Role;
-import com.perpetmatch.Domain.RoleName;
+
+import com.perpetmatch.Domain.*;
+import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
+import com.perpetmatch.Zone.ZoneRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.util.Date;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 
 public class InitDB {
-//    private final InitService initService;
-//
-//    @PostConstruct
-//    public void init() {
-//        initService.dbInit1();
-//    }
-//
-//    @Component
-//    @Transactional
-//    @RequiredArgsConstructor
-//    static class InitService {
-//
-//        private final RoleRepository roleRepository;
-//
-//        public void dbInit1() {
-//            Role role = new Role(RoleName.ROLE_USER);
-//            roleRepository.save(role);
-//            Role role2 = new Role(RoleName.ROLE_ADMIN);
-//            roleRepository.save(role2);
-//        }
-//    }
+    private final InitService initService;
+
+    @PostConstruct
+    public void init() throws IOException {
+        initService.initRoleData();
+        initService.initZoneData();
+        initService.initageRangeData();
+    }
+
+    @Component
+    @Transactional
+    @RequiredArgsConstructor
+    static class InitService {
+
+        private final RoleRepository roleRepository;
+        private final ZoneRepository zoneRepository;
+        private final PetAgeRepository petAgeRepository;
+
+        public void initRoleData() {
+            if (roleRepository.count() == 0) {
+                Role role = new Role(RoleName.ROLE_USER);
+                roleRepository.save(role);
+                Role role2 = new Role(RoleName.ROLE_ADMIN);
+                roleRepository.save(role2);
+            }
+        }
+
+        public void initageRangeData() {
+            if(petAgeRepository.count() == 0) {
+                PetAge petAge = PetAge.builder().petRange("1년이하")
+                        .build();
+                petAgeRepository.save(petAge);
+                PetAge petAge2 = PetAge.builder().petRange("1년~7년")
+                        .build();
+                petAgeRepository.save(petAge2);
+                PetAge petAge3 = PetAge.builder().petRange("7년이상")
+                        .build();
+                petAgeRepository.save(petAge3);
+
+            }
+        }
+
+        public void initZoneData() throws IOException {
+            if(zoneRepository.count() == 0) {
+                Resource resource = new ClassPathResource("zones_kr.csv");
+                List<Zone> collect = Files.readAllLines(resource.getFile().toPath(), StandardCharsets.UTF_8).stream()
+                        .map(line -> {
+                            String[] lines = line.split(",");
+                            return Zone.builder().city(lines[0]).province(lines[1]).build();
+                        }).collect(Collectors.toList());
+
+                zoneRepository.saveAll(collect);
+            }
+        }
+    }
 }

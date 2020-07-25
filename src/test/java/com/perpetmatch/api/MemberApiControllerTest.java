@@ -55,7 +55,7 @@ class MemberApiControllerTest {
                 .content(objectMapper.writeValueAsString(member)))
                 .andDo(print())
                 .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("User registered successfully"));
+                .andExpect(jsonPath("message").value("회원가입이 성공적으로 완료되었습니다."));
 
         Member savedMember = memberRepository.findByEmail("beck33333@naver.com");
         assertNotNull(savedMember);

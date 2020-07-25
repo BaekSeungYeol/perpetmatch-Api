@@ -74,6 +74,6 @@ public class AuthController {
                 .fromCurrentContextPath().path("/api/members/{username}")
                 .buildAndExpand(result.getNickname()).toUri();
 
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+        return ResponseEntity.created(location).body(new ApiResponse(true, "회원가입이 성공적으로 완료되었습니다."));
     }
 }

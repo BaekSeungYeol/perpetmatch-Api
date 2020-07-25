@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class PetResponseOne {
+@NoArgsConstructor
+public class PetAgeResponseOne {
 
-    List<String> petTitles;
-    List<String> allPetTitles;
-
+    List<String> ages;
+    List<String> allAges;
 }

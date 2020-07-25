@@ -1,5 +1,7 @@
 package com.perpetmatch.Domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of="id")
 public class Zone {
 
@@ -19,7 +23,7 @@ public class Zone {
     @Column(nullable = false)
     private String city;
 
-    public Zone(String city) {
-        this.city = city;
-    }
+    @Column(nullable = true)
+    private String province;
+
 }

@@ -3,9 +3,12 @@ package com.perpetmatch.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Member;
 import com.perpetmatch.Domain.Pet;
+import com.perpetmatch.Domain.PetAge;
 import com.perpetmatch.Member.MemberRepository;
 import com.perpetmatch.Member.MemberService;
+import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.apiDto.Profile.PasswordRequest;
+import com.perpetmatch.apiDto.Profile.PetAgeRequest;
 import com.perpetmatch.apiDto.Profile.PetForm;
 import com.perpetmatch.apiDto.Profile.ProfileRequest;
 import com.perpetmatch.jjwt.resource.LoginRequest;
@@ -25,8 +28,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Optional;
 
 import static com.sun.activation.registries.LogSupport.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -60,6 +61,8 @@ class ProfileApiControllerTest {
     PetRepository petRepository;
     @Autowired
     MemberService memberService;
+    @Autowired
+    PetAgeRepository petAgeRepository;
 
     String token = null;
 
@@ -114,7 +117,7 @@ class ProfileApiControllerTest {
                 .phoneNumber("010-3926-6280")
                 .build();
 
-        mockMvc.perform(post("/api/settings/profile")
+        mockMvc.perform(post("/api/settings/profile/one")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -138,7 +141,7 @@ class ProfileApiControllerTest {
                 .phoneNumber("010-3926-6280")
                 .build();
 
-        mockMvc.perform(post("/api/settings/profile")
+        mockMvc.perform(post("/api/settings/profile/one")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -190,13 +193,13 @@ class ProfileApiControllerTest {
     @DisplayName(" 로그인 한 유저의 관심 품종 조회 " )
     void showPetTag_success() throws Exception {
 
-        mockMvc.perform(get("/api/settings/pet")
+        mockMvc.perform(get("/api/settings/pet/title")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("pets").exists())
-                .andExpect(jsonPath("allPets").exists());
+                .andExpect(jsonPath("petTitles").exists())
+                .andExpect(jsonPath("allPetTitles").exists());
     }
 
     @Test
@@ -205,7 +208,7 @@ class ProfileApiControllerTest {
         PetForm petForm = new PetForm();
         petForm.setPetTitle("푸들");
 
-        mockMvc.perform(post("/api/settings/pet/add")
+        mockMvc.perform(post("/api/settings/pet/title/add")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -231,7 +234,7 @@ class ProfileApiControllerTest {
 
         assertTrue(member.getPet().contains(pet));
 
-        mockMvc.perform(post("/api/settings/pet/remove")
+        mockMvc.perform(post("/api/settings/pet/title/remove")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -239,5 +242,54 @@ class ProfileApiControllerTest {
                 .andExpect(status().isOk());
 
         assertTrue(!member.getPet().contains(pet));
+    }
+
+    @Test
+    @DisplayName(" 로그인 한 유저의 관심 펫 나이 조회 " )
+    void showPetAges_success() throws Exception {
+
+        mockMvc.perform(get("/api/settings/pet/age")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("ages").exists())
+                .andExpect(jsonPath("allAges").exists());
+    }
+    @Test
+    @DisplayName("관심 나이 추가 성공 " )
+    void addPetAge_success() throws Exception {
+        PetAgeRequest petAge = new PetAgeRequest();
+        petAge.setPetRange("1년이하");
+
+        mockMvc.perform(post("/api/settings/pet/age/add")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(petAge)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("성공적으로 나이를 추가했습니다."));
+
+        PetAge petRange = petAgeRepository.findPetRange("1년이하");
+        assertTrue(memberRepository.findByNickname("백승열입니다").get().getPetAge().contains(petRange));
+
+    }
+    @Test
+    @DisplayName("관심 나이 제거 성공 " )
+    void addPetAge_failed() throws Exception {
+        PetAgeRequest petAge = new PetAgeRequest();
+        petAge.setPetRange("1년이하");
+
+        mockMvc.perform(post("/api/settings/pet/age/remove")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(petAge)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("성공적으로 나이를 제거했습니다."));
+
+        PetAge petRange = petAgeRepository.findPetRange("1년이하");
+        assertTrue(!memberRepository.findByNickname("백승열입니다").get().getPetAge().contains(petRange));
+
     }
 }

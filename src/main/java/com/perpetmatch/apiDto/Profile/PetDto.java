@@ -15,4 +15,8 @@ public class PetDto {
 
     private String title; // 품종
 
+    @Override
+    public String toString() {
+        return title;
+    }
 }

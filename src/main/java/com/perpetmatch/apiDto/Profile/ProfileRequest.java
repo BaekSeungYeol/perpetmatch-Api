@@ -19,15 +19,16 @@ import java.util.Set;
 @AllArgsConstructor
 public class ProfileRequest {
 
-    // TODO password,email,nickname 바꾸기
 
-    @NotBlank
-    private String houseType;
+    private int age;
     @NotBlank
     private String occupation;
+    @NotBlank
+    private String location;
+    @NotBlank
+    private String houseType;
     @NotNull
     private boolean experience;
-
     @NotNull
     private boolean liveAlone;
     @NotNull
@@ -35,15 +36,13 @@ public class ProfileRequest {
     @NotNull
     private int expectedFeeForMonth;
     @NotBlank
-    private String location;
-    @NotBlank
     private String phoneNumber;
 
     private String profileImage;
 
     private boolean wantCheckUp;
 
-    private boolean wantLineAgeImage;
+    private boolean wantLineAge;
 
     private boolean wantNeutered;
 

@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @NoArgsConstructor
@@ -38,6 +37,9 @@ public class Member extends DateAudit {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Zone> zone = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<PetAge> petAge = new HashSet<>();
+
     private int credit;
 
     private String houseType;
@@ -57,7 +59,7 @@ public class Member extends DateAudit {
     private String location;
 
     private boolean wantCheckUp;
-    private boolean wantLineAgeImage;
+    private boolean wantLineAge;
     private boolean wantNeutered;
 
 

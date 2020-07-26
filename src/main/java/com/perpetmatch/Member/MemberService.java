@@ -7,42 +7,65 @@ import com.perpetmatch.apiDto.Profile.PasswordRequest;
 import com.perpetmatch.apiDto.Profile.ProfileRequest;
 import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.ResourceNotFoundException;
+import com.perpetmatch.infra.config.AppProperties;
+import com.perpetmatch.infra.mail.EmailMessage;
+import com.perpetmatch.infra.mail.EmailService;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
 import com.perpetmatch.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final JavaMailSender javaMailSender;
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final PetRepository petRepository;
     private final ModelMapper modelMapper;
     private final PetAgeRepository petAgeRepository;
+    private final TemplateEngine templateEngine;
+    private final AppProperties appProperties;
 
     public void sendJoinMemberConfirmEmail(Member savedMember) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(savedMember.getEmail());
-        mailMessage.setSubject("퍼펫매치, 회원 가입 인증");
-        mailMessage.setText("/check-email-token?token=" + savedMember.getEmailCheckToken() +
-                "&email=" + savedMember.getEmail());
-        //인터페이스만 관리
-        // TODO SMTP 서버 연결해서 GMAIL로 보내보기
-        javaMailSender.send(mailMessage);
+        Context context = new Context();
+        context.setVariable("link", "/check-email-token?token=" + savedMember.getEmailCheckToken() + "&email="
+                + savedMember.getEmail());
+        context.setVariable("nickname", savedMember.getNickname());
+        context.setVariable("linkName", "이메일 인증하기");
+        context.setVariable("message", "퍼펫매치 서비스를 사용하려면 링크를 클릭하세요.");
+        context.setVariable("host", appProperties.getHost());
+
+        String message = templateEngine.process("mail/link", context);
+
+
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(savedMember.getEmail())
+                .subject("퍼펫매치, 회원 가입 인증")
+                .message(message)
+                .build();
+
+        emailService.sendEmail(emailMessage);
+
     }
 
     public Member join(SignUpRequest request) {
@@ -130,12 +153,23 @@ public class MemberService {
     }
 
     public void sendLoginLink(Member member) {
-        member.generateEmailCheckToken();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(member.getEmail());
-        mailMessage.setSubject("퍼펫매치, 로그인 링크");
-        mailMessage.setText("/login-by-email?token=" + member.getEmailCheckToken() + "&email=" + member.getEmail());
-        javaMailSender.send(mailMessage);
+
+        Context context = new Context();
+        context.setVariable("link","/login-by-email?token=" + member.getEmailCheckToken() + "&email=" + member.getEmail());
+        context.setVariable("nickname", member.getNickname());
+        context.setVariable("linkName", "이메일로 로그인하기");
+        context.setVariable("message", "로그인 하려면 아래 링크를 클릭하세요.");
+        context.setVariable("host", appProperties.getHost());
+
+        String message = templateEngine.process("mail/link", context);
+
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(member.getEmail())
+                .subject("퍼펫매치, 로그인 링크")
+                .message(message)
+                .build();
+        emailService.sendEmail(emailMessage);
+
     }
 
     public void addPet(Long id, String title) {

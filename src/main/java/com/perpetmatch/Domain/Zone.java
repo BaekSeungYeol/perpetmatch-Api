@@ -1,9 +1,6 @@
 package com.perpetmatch.Domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Getter @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,4 +24,8 @@ public class Zone {
     @Column(nullable = true)
     private String province;
 
+    @Override
+    public String toString() {
+        return province;
+    }
 }

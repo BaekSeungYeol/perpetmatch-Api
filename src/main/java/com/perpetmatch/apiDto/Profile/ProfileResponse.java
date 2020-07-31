@@ -1,10 +1,9 @@
 package com.perpetmatch.apiDto.Profile;
 
-import com.perpetmatch.Domain.Member;
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.Role;
-import com.perpetmatch.Domain.Zone;
+import com.perpetmatch.Domain.*;
 import lombok.*;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -17,31 +16,26 @@ import java.util.Set;
 @AllArgsConstructor
 public class ProfileResponse {
 
+    private int age;
     private String nickname;
     private String email;
-    private Instant joinedAt;
+    private Instant createdAt;
+    private Set<Pet> petTitles;
+    private Set<Zone> zones;
+    private Set<PetAge> petAges;
     private int credit;
     private String houseType;
     private String occupation;
     private boolean experience;
     private boolean liveAlone;
+    private String phoneNumber;
     private int howManyPets;
     private int expectedFeeForMonth;
     private String location;
     private String profileImage;
+    private String description;
+    private boolean wantCheckUp;
+    private boolean wantLineAge;
+    private boolean wantNeutered;
 
-    public ProfileResponse(Member member) {
-        this.nickname = member.getNickname();
-        this.email = member.getEmail();
-        this.joinedAt = member.getJoinedAt();
-        this.credit = member.getCredit();
-        this.houseType = member.getHouseType();
-        this.occupation = member.getOccupation();
-        this.experience = member.isExperience();
-        this.liveAlone = member.isLiveAlone();
-        this.howManyPets = member.getHowManyPets();
-        this.expectedFeeForMonth = member.getExpectedFeeForMonth();
-        this.location = member.getLocation();
-        this.profileImage = member.getProfileImage();
-    }
 }

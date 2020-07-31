@@ -21,4 +21,9 @@ public class Pet {
     @Column(unique = true, nullable = false)
     private String title; // 품종
 
+    @Override
+    public String toString() {
+        return title;
+    }
+
 }

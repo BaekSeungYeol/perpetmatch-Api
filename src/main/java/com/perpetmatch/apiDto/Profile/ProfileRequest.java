@@ -20,6 +20,7 @@ import java.util.Set;
 public class ProfileRequest {
 
 
+    @NotNull
     private int age;
     @NotBlank
     private String occupation;
@@ -37,6 +38,8 @@ public class ProfileRequest {
     private int expectedFeeForMonth;
     @NotBlank
     private String phoneNumber;
+    @NotBlank
+    private String description;
 
     private String profileImage;
 

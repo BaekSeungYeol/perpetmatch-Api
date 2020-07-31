@@ -54,15 +54,18 @@
             <version>1.5.7</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.hateoas</groupId>
-            <artifactId>spring-hateoas</artifactId>
-            <version>1.1.0.RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.restdocs/spring-restdocs-mockmvc -->
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <version>2.0.4.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -87,6 +90,7 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -112,79 +116,62 @@
     </dependencies>
 
     <build>
+
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.8.0</version>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>1.5.3</version>
                 <executions>
                     <execution>
-                        <id>Install Node and npm ...</id>
+                        <id>generate-docs</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>install-node-and-npm</goal>
+                            <goal>process-asciidoc</goal>
                         </goals>
-                        <phase>generate-resources</phase>
                         <configuration>
-                            <nodeVersion>v12.18.1</nodeVersion>
-                            <npmVersion>6.14.5</npmVersion>
+                            <backend>html</backend>
+                            <doctype>book</doctype>
                         </configuration>
                     </execution>
-
-                    <execution>
-                        <id>npm install all of our dependencies</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>npm build our react application</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>run build</arguments>
-                        </configuration>
-                    </execution>
-
                 </executions>
-                <configuration>
-                    <workingDirectory>src/main/myfrontend</workingDirectory>
-                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework.restdocs</groupId>
+                        <artifactId>spring-restdocs-asciidoctor</artifactId>
+                        <version>2.0.2.RELEASE</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
                 <executions>
                     <execution>
-                        <id>Copy my react frontend to the static folder of my spring applications target folder</id>
-                        <phase>process-resources</phase>
+                        <id>copy-resources</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>target/classes/static</outputDirectory>
+                            <outputDirectory>
+                                ${project.build.outputDirectory}/static/docs
+                            </outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/myfrontend/build</directory>
-                                    <filtering>true</filtering>
+                                    <directory>
+                                        ${project.build.directory}/generated-docs
+                                    </directory>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
-
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

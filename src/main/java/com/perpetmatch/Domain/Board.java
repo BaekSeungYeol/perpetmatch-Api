@@ -4,12 +4,13 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,22 +21,32 @@ public class Board {
     @GeneratedValue
     private Long id;
 
-    String manager;
+    // 관리자
+    @OneToOne(fetch = FetchType.LAZY)
+    private Member manager;
 
+    // 신청자들
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Member> members = new HashSet<>();
 
     private String title;
 
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
-    private String description;
-
     private int credit;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Zone zone;
 
     private String gender;
 
-    private int age;
+    private int year;
+    private int month;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private PetAge petAge;
+
+    // 품종
+    @OneToOne(fetch = FetchType.LAZY)
+    private Pet pet;
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
@@ -51,20 +62,31 @@ public class Board {
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
-    private String image;
+    private String neuteredImage;
 
     private boolean neutered;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime publishedDateTime;
+    private Instant publishedDateTime;
 
+    private boolean closed;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Pet> pet = new HashSet<>();
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Zone> zone = new HashSet<>();
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<PetAge> petAge = new HashSet<>();
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String boardImage1;
 
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String boardImage2;
+
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String boardImage3;
+
+    public void addManager(Member member) {
+        this.manager = member;
+    }
 }

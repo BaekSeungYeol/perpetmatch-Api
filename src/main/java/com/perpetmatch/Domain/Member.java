@@ -33,12 +33,12 @@ public class Member extends DateAudit {
     private Instant joinedAt;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Pet> pet = new HashSet<>();
+    private Set<Pet> petTitles = new HashSet<>();
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Zone> zone = new HashSet<>();
+    private Set<Zone> zones = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<PetAge> petAge = new HashSet<>();
+    private Set<PetAge> petAges = new HashSet<>();
 
     private int credit;
 
@@ -57,6 +57,9 @@ public class Member extends DateAudit {
     private String phoneNumber;
 
     private String location;
+
+    @Lob @Basic(fetch = FetchType.LAZY)
+    private String description;
 
     private boolean wantCheckUp;
     private boolean wantLineAge;

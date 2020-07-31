@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -57,23 +56,20 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerMember(@Valid @RequestBody SignUpRequest signUpRequest) {
+
         if(memberRepository.existsByNickname(signUpRequest.getNickname())) {
-            return new ResponseEntity(new ApiResponse(false, "해당 이름이 이미 존재합니다."),
+            return new ResponseEntity<>(new ApiResponse(false, "해당 이름이 이미 존재합니다."),
                     HttpStatus.BAD_REQUEST);
         }
 
         if(memberRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "이메일이 이미 존재합니다."),
+            return new ResponseEntity<>(new ApiResponse(false, "이메일이 이미 존재합니다."),
                     HttpStatus.BAD_REQUEST);
         }
 
         Member result = memberService.join(signUpRequest);
 
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/api/members/{username}")
-                .buildAndExpand(result.getNickname()).toUri();
-
-        return ResponseEntity.created(location).body(new ApiResponse(true, "회원가입이 성공적으로 완료되었습니다."));
+        return ResponseEntity.ok().body(new ApiResponse(true, "회원가입이 성공적으로 완료되었습니다."));
     }
 }

@@ -1,0 +1,154 @@
+= PERPET MATCH REST API Guide
+백승열;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:operation-curl-request-title: Example request
+:operation-http-response-title: Example response
+
+[[overview]]
+= 개요
+
+[[overview-http-verbs]]
+== HTTP 동사
+
+본 REST API에서 사용하는 HTTP 동사(verbs)는 가능한한 표준 HTTP와 REST 규약을 따릅니다.
+
+|===
+| 동사 | 용례
+
+| `GET`
+| 리소스를 가져올 때 사용
+
+| `POST`
+| 새 리소스를 만들 때 사용
+
+| `PUT`
+| 기존 리소스를 수정할 때 사용
+
+| `PATCH`
+| 기존 리소스의 일부를 수정할 때 사용
+
+| `DELETE`
+| 기존 리소스를 삭제할 떄 사용
+|===
+
+[[overview-http-status-codes]]
+== HTTP 상태 코드
+
+본 REST API에서 사용하는 HTTP 상태 코드는 가능한 표준 HTTP와 REST 규약을 따릅니다.
+
+|===
+| 상태 코드 | 용례
+
+| `200 OK`
+| 요청을 성공적으로 처리함
+
+| `401 unAuthorized`
+| 토큰을 가지지 않고 API를 요청하는 경우.
+
+| `400 Bad Request`
+| 잘못된 요청을 보낸 경우.
+
+| `404 Not Found`
+| 요청한 리소스가 없음.
+|===
+
+[[overview-errors]]
+== 오류
+
+//에러 응답이 발생했을 때 (상태 코드 >= 400), 본문에 해당 문제를 기술한 JSON 객체가 담겨있다. 에러 객체는 다음의 구조를 따른다.
+//
+//include::{snippets}/errors/response-fields.adoc[]
+//
+//예를 들어, 잘못된 요청으로 이벤트를 만들려고 했을 때 다음과 같은 `400 Bad Request` 응답을 받는다.
+//
+//include::{snippets}/errors/http-response.adoc[]
+
+//[[overview-hypermedia]]
+//== 하이퍼미디어
+//
+//
+//[[resources-index-access]]
+//=== 인덱스 조회
+
+//`GET` 요청을 사용하여 인덱스에 접근할 수 있다.
+//
+//operation::sign-up[snippets='response-body,http-response'
+== 공통 응답
+|===
+|코드|코드명|필수값
+
+|success|성공 유무|true
+|message|결과 메세지|true
+|data|데이터|false
+|===
+
+== 공통 헤더
+|===
+|헤더|토큰|필수값
+|Authorization|Bearer 토큰| true ( 회원가입 제외 )
+|===
+
+
+[[members]]
+== 회원
+
+회원 가입을 해야 토큰을 발급받을 수 있다. 토큰이 없는 경우 API를 사용할 수 없다.
+
+[[members-signup]]
+=== 회원가입
+
+`POST` 요청을 사용하여 퍼펫 매치 서비스에 회원가입 할 수 있다.
+
+operation::sign-up[snippets='request-fields,response-fields,http-request,http-response']
+
+[[members-signin]]
+=== 로그인
+
+`POST` 요청을 사용하여 퍼펫 매치 서비스에 로그인 할 수 있다.
+
+operation::sign-in[snippets='request-fields,response-fields,http-request,http-response']
+
+[[profile]]
+== 프로필
+
+프로필 관련
+
+
+[[profile-password]]
+=== 패스워드 변경
+
+`PUT` 요청을 사용하여 해당 유저의 비밀번호를 변경할 수 있다.
+
+operation::update-password[snippets='request-fields,response-fields,http-request,http-response']
+
+[[profile-create]]
+=== 기본 프로필 등록
+
+'POST' 요청을 사용하여 해당 유저의 기본 프로필을 등록할 수 있다.
+
+operation::create-profile[snippets='request-fields,response-fields,http-request,http-response']
+
+[[profile-show]]
+=== 프로필 조회
+
+'GET' 요청을 사용하여 해당 유저의 프로필을 조회할 수 있다.
+
+operation::show-profile[snippets='response-fields,http-request,http-response']
+//[[resources-events-get]]
+//=== 이벤트 조회
+//
+//`Get` 요청을 사용해서 기존 이벤트 하나를 조회할 수 있다.
+//
+//operation::sign-up[snippets='request-fields,curl-request,http-response']
+//
+//[[resources-events-update]]
+//=== 이벤트 수정
+//
+//`PUT` 요청을 사용해서 기존 이벤트를 수정할 수 있다.
+//
+//operation::sign-up[snippets='request-fields,curl-request,http-response']

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Member;
 import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Domain.PetAge;
+import com.perpetmatch.Domain.Zone;
 import com.perpetmatch.Member.MemberRepository;
 import com.perpetmatch.Member.MemberService;
 import com.perpetmatch.PetAge.PetAgeRepository;
@@ -11,6 +12,7 @@ import com.perpetmatch.apiDto.Profile.PasswordRequest;
 import com.perpetmatch.apiDto.Profile.PetAgeRequest;
 import com.perpetmatch.apiDto.Profile.PetForm;
 import com.perpetmatch.apiDto.Profile.ProfileRequest;
+import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
 import com.perpetmatch.pet.PetRepository;
@@ -20,18 +22,33 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import java.time.Instant;
+import java.util.Set;
+
 import static com.sun.activation.registries.LogSupport.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +57,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @Slf4j
+@AutoConfigureRestDocs
+@Import(RestDocsConfiguration.class)
 class ProfileApiControllerTest {
 
 
@@ -50,9 +69,6 @@ class ProfileApiControllerTest {
 
     @Autowired
     MemberRepository memberRepository;
-
-    @Autowired
-    RestTemplate restTemplate;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -99,23 +115,118 @@ class ProfileApiControllerTest {
         memberRepository.deleteAll();
     }
 
-
-    @DisplayName("프로필 수정 성공 - 입력값 정상")
+    @DisplayName("프로필 조회 성공 - 입력값 정상")
     @Test
-    void updateProfile_success() throws Exception {
-
+    void getOneUserProfile_success() throws Exception {
 
         ProfileRequest profileRequest = ProfileRequest.builder()
+                .age(19)
+                .occupation("학생")
+                .location("서울")
                 .houseType("아파트")
-                .occupation("약사")
                 .experience(false)
                 .liveAlone(false)
                 .howManyPets(2)
-                .expectedFeeForMonth(100000)
-                .location("서울")
                 .profileImage("fdklfkdslfksdflks")
                 .phoneNumber("010-3926-6280")
+                .description("안녕하세요 누구누구입니다.")
+                .wantCheckUp(true)
+                .wantLineAge(true)
+                .wantNeutered(true)
+                .expectedFeeForMonth(100000)
                 .build();
+
+
+        mockMvc.perform(post("/api/settings/profile/one")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(profileRequest)));
+
+        mockMvc.perform(get("/api/settings/profile/one")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("data.nickname").exists())
+                .andExpect(jsonPath("data.email").exists())
+                .andExpect(jsonPath("data.createdAt").exists())
+                .andExpect(jsonPath("data.petTitles").exists())
+                .andExpect(jsonPath("data.zones").exists())
+                .andExpect(jsonPath("data.petAges").exists())
+                .andExpect(jsonPath("data.credit").exists())
+                .andExpect(jsonPath("data.age").exists())
+                .andExpect(jsonPath("data.occupation").exists())
+                .andExpect(jsonPath("data.location").exists())
+                .andExpect(jsonPath("data.houseType").exists())
+                .andExpect(jsonPath("data.experience").exists())
+                .andExpect(jsonPath("data.liveAlone").exists())
+                .andExpect(jsonPath("data.howManyPets").exists())
+                .andExpect(jsonPath("data.profileImage").exists())
+                .andExpect(jsonPath("data.phoneNumber").exists())
+                .andExpect(jsonPath("data.description").exists())
+                .andExpect(jsonPath("data.wantCheckUp").exists())
+                .andExpect(jsonPath("data.wantLineAge").exists())
+                .andExpect(jsonPath("data.wantNeutered").exists())
+                .andExpect(jsonPath("data.expectedFeeForMonth").exists())
+                .andDo(document("show-profile",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 프로필 조회입니다."),
+                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
+                                fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
+                                fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("가입일"),
+                                fieldWithPath("data.petTitles").type(JsonFieldType.ARRAY).description("원하는 품종"),
+                                fieldWithPath("data.zones").type(JsonFieldType.ARRAY).description("원하는 지역"),
+                                fieldWithPath("data.petAges").type(JsonFieldType.ARRAY).description("원하는 나이"),
+                                fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
+                                fieldWithPath("data.age").type(JsonFieldType.NUMBER).description("나이"),
+                                fieldWithPath("data.occupation").type(JsonFieldType.STRING).description("직업"),
+                                fieldWithPath("data.location").type(JsonFieldType.STRING).description("지역"),
+                                fieldWithPath("data.houseType").type(JsonFieldType.STRING).description("주택"),
+                                fieldWithPath("data.experience").type(JsonFieldType.BOOLEAN).description("반려동물 키워본 경험 유무"),
+                                fieldWithPath("data.liveAlone").type(JsonFieldType.BOOLEAN).description("혼자 사는지 아닌지 여부"),
+                                fieldWithPath("data.howManyPets").type(JsonFieldType.NUMBER).description("현재 키우는 반려동물의 수"),
+                                fieldWithPath("data.profileImage").type(JsonFieldType.STRING).description("프로필 이미지"),
+                                fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING).description("전화번호"),
+                                fieldWithPath("data.description").type(JsonFieldType.STRING).description("간단한 자기소개"),
+                                fieldWithPath("data.wantCheckUp").type(JsonFieldType.BOOLEAN).description("건강검진을 원하는지 여부"),
+                                fieldWithPath("data.wantLineAge").type(JsonFieldType.BOOLEAN).description("혈통서를 원하는지 여부"),
+                                fieldWithPath("data.wantNeutered").type(JsonFieldType.BOOLEAN).description("중성화가 필요한지 여부"),
+                                fieldWithPath("data.expectedFeeForMonth").type(JsonFieldType.NUMBER).description("한달 지출"))
+                    ));
+
+    }
+
+    @DisplayName("프로필 등록 성공 - 입력값 정상")
+    @Test
+    void updateProfile_success() throws Exception {
+
+        ProfileRequest profileRequest = ProfileRequest.builder()
+                .age(19)
+                .occupation("학생")
+                .location("서울")
+                .houseType("아파트")
+                .experience(false)
+                .liveAlone(false)
+                .howManyPets(2)
+                .profileImage("fdklfkdslfksdflks")
+                .phoneNumber("010-3926-6280")
+                .description("안녕하세요 누구누구입니다.")
+                .wantCheckUp(true)
+                .wantLineAge(true)
+                .wantNeutered(true)
+                .expectedFeeForMonth(100000)
+                .build();
+
 
         mockMvc.perform(post("/api/settings/profile/one")
                 .header("Authorization", token)
@@ -124,7 +235,39 @@ class ProfileApiControllerTest {
                 .content(objectMapper.writeValueAsString(profileRequest)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("프로필이 수정 완료 되었습니다."));
+                .andExpect(jsonPath("message").value("프로필이 등록 완료 되었습니다."))
+                .andDo(document("create-profile",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        requestFields(
+                                fieldWithPath("age").type(JsonFieldType.NUMBER).description("나이 (필수)"),
+                                fieldWithPath("occupation").type(JsonFieldType.STRING).description("직업 (필수)"),
+                                fieldWithPath("location").type(JsonFieldType.STRING).description("지역 (필수)"),
+                                fieldWithPath("houseType").type(JsonFieldType.STRING).description("주택 (필수)"),
+                                fieldWithPath("experience").type(JsonFieldType.BOOLEAN).description("반려동물 키워본 경험 유무 (필수)"),
+                                fieldWithPath("liveAlone").type(JsonFieldType.BOOLEAN).description("혼자 사는지 아닌지 여부 (필수)"),
+                                fieldWithPath("howManyPets").type(JsonFieldType.NUMBER).description("현재 키우는 반려동물의 수 (필수)"),
+                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("전화번호 (필수)"),
+                                fieldWithPath("description").type(JsonFieldType.STRING).description("간단한 자기소개 (필수)"),
+                                fieldWithPath("profileImage").type(JsonFieldType.STRING).description("프로필 이미지"),
+                                fieldWithPath("wantCheckUp").type(JsonFieldType.BOOLEAN).description("건강검진을 원하는지 여부"),
+                                fieldWithPath("wantLineAge").type(JsonFieldType.BOOLEAN).description("혈통서를 원하는지 여부"),
+                                fieldWithPath("wantNeutered").type(JsonFieldType.BOOLEAN).description("중성화가 필요한지 여부"),
+                                fieldWithPath("expectedFeeForMonth").type(JsonFieldType.NUMBER).description("한달 지출")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("프로필이 등록 완료 되었습니다.")
+                        )
+                        ));
+
+
 
         Member member = memberRepository.findByNickname("백승열입니다").get();
         assertEquals(member.getHouseType(), "아파트");
@@ -159,16 +302,35 @@ class ProfileApiControllerTest {
        passwordRequest.setNewPassword("123456789");
        passwordRequest.setNewPasswordConfirm("123456789");
 
-        mockMvc.perform(post("/api/settings/password")
-                .header("Authorization", token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(passwordRequest)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("패스워드 수정이 완료 되었습니다."));
 
-        Member member = memberRepository.findByNickname("백승열입니다").get();
+       mockMvc.perform(put("/api/settings/password")
+               .header("Authorization", token)
+               .contentType(MediaType.APPLICATION_JSON)
+               .accept(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString(passwordRequest)))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("success").value(true))
+               .andExpect(jsonPath("message").value("패스워드 수정이 완료 되었습니다."))
+               .andDo(document("update-password",
+                       requestHeaders(
+                               headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                               headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                               headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                       ),
+                       requestFields(
+                               fieldWithPath("newPassword").type(JsonFieldType.STRING).description("새로운 패스워드"),
+                               fieldWithPath("newPasswordConfirm").type(JsonFieldType.STRING).description("새로운 패스워드 확인")
+                       ),
+                       responseHeaders(
+                               headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                       ),
+                       responseFields(
+                               fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                               fieldWithPath("message").type(JsonFieldType.STRING).description("패스워드 수정이 완료 되었습니다.")
+                       )
+               ));
+       Member member = memberRepository.findByNickname("백승열입니다").get();
         assertTrue(passwordEncoder.matches("123456789", member.getPassword()));
    }
 
@@ -180,7 +342,7 @@ class ProfileApiControllerTest {
         passwordRequest.setNewPassword("123456789");
         passwordRequest.setNewPasswordConfirm("12345678");
 
-        mockMvc.perform(post("/api/settings/password")
+        mockMvc.perform(put("/api/settings/password")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -198,8 +360,8 @@ class ProfileApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("petTitles").exists())
-                .andExpect(jsonPath("allPetTitles").exists());
+                .andExpect(jsonPath("data.petTitles").exists())
+                .andExpect(jsonPath("data.allPetTitles").exists());
     }
 
     @Test
@@ -218,7 +380,7 @@ class ProfileApiControllerTest {
 
         Pet newPet = petRepository.findByTitle("푸들");
         assertTrue(newPet != null);
-        assertTrue(memberRepository.findByNickname("백승열입니다").get().getPet().contains(newPet));
+        assertTrue(memberRepository.findByNickname("백승열입니다").get().getPetTitles().contains(newPet));
 
 
     }
@@ -232,16 +394,16 @@ class ProfileApiControllerTest {
         Pet pet = petRepository.save(Pet.builder().title(petForm.getPetTitle()).build());
         memberService.addPet(member.getId(),pet.getTitle());
 
-        assertTrue(member.getPet().contains(pet));
+        assertTrue(member.getPetTitles().contains(pet));
 
-        mockMvc.perform(post("/api/settings/pet/title/remove")
+        mockMvc.perform(delete("/api/settings/pet/title/remove")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(petForm)))
                 .andExpect(status().isOk());
 
-        assertTrue(!member.getPet().contains(pet));
+        assertTrue(!member.getPetTitles().contains(pet));
     }
 
     @Test
@@ -253,8 +415,8 @@ class ProfileApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("ages").exists())
-                .andExpect(jsonPath("allAges").exists());
+                .andExpect(jsonPath("data.ages").exists())
+                .andExpect(jsonPath("data.allAges").exists());
     }
     @Test
     @DisplayName("관심 나이 추가 성공 " )
@@ -271,7 +433,7 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("message").value("성공적으로 나이를 추가했습니다."));
 
         PetAge petRange = petAgeRepository.findPetRange("1년이하");
-        assertTrue(memberRepository.findByNickname("백승열입니다").get().getPetAge().contains(petRange));
+        assertTrue(memberRepository.findByNickname("백승열입니다").get().getPetAges().contains(petRange));
 
     }
     @Test
@@ -280,7 +442,7 @@ class ProfileApiControllerTest {
         PetAgeRequest petAge = new PetAgeRequest();
         petAge.setPetRange("1년이하");
 
-        mockMvc.perform(post("/api/settings/pet/age/remove")
+        mockMvc.perform(delete("/api/settings/pet/age/remove")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -289,7 +451,7 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("message").value("성공적으로 나이를 제거했습니다."));
 
         PetAge petRange = petAgeRepository.findPetRange("1년이하");
-        assertTrue(!memberRepository.findByNickname("백승열입니다").get().getPetAge().contains(petRange));
+        assertTrue(!memberRepository.findByNickname("백승열입니다").get().getPetAges().contains(petRange));
 
     }
 }

@@ -5,6 +5,7 @@ import com.perpetmatch.Domain.*;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
 import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -29,6 +30,7 @@ public class InitDB {
         initService.initRoleData();
         initService.initZoneData();
         initService.initageRangeData();
+        initService.petTitleData();
     }
 
     @Component
@@ -39,6 +41,7 @@ public class InitDB {
         private final RoleRepository roleRepository;
         private final ZoneRepository zoneRepository;
         private final PetAgeRepository petAgeRepository;
+        private final PetRepository petRepository;
 
         public void initRoleData() {
             if (roleRepository.count() == 0) {
@@ -63,6 +66,19 @@ public class InitDB {
 
             }
         }
+        public void petTitleData() throws IOException {
+            if(petRepository.count() == 0) {
+                Resource resource = new ClassPathResource("petTitle.csv");
+                List<Pet> collect = Files.readAllLines(resource.getFile().toPath(),StandardCharsets.UTF_8).stream()
+                        .map(line -> {
+                            String[] lines = line.split(",");
+                            return Pet.builder().title(lines[0]).build();
+                        }).collect(Collectors.toList());
+
+                petRepository.saveAll(collect);
+            }
+        }
+
 
         public void initZoneData() throws IOException {
             if(zoneRepository.count() == 0) {

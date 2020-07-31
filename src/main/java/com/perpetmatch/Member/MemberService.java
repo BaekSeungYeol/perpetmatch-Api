@@ -141,6 +141,8 @@ public class MemberService {
         member.setExpectedFeeForMonth(profileRequest.getExpectedFeeForMonth());
         member.setLocation(profileRequest.getLocation());
         member.setProfileImage(profileRequest.getProfileImage());
+        member.setPhoneNumber(profileRequest.getPhoneNumber());
+        member.setDescription(profileRequest.getDescription());
         member.setWantCheckUp(profileRequest.isWantCheckUp());
         member.setWantLineAge(profileRequest.isWantLineAge());
         member.setWantNeutered(profileRequest.isWantNeutered());
@@ -185,24 +187,24 @@ public class MemberService {
         Pet savedPet = petRepository.findByTitle(title);
 
         Optional<Member> byId = memberRepository.findById(id);
-        byId.ifPresent(m -> m.getPet().add(savedPet));
+        byId.ifPresent(m -> m.getPetTitles().add(savedPet));
     }
 
     public void removePet(Long id, Pet pet) {
         Optional<Member> byId = memberRepository.findById(id);
-        byId.ifPresent(m -> m.getPet().remove(pet));
+        byId.ifPresent(m -> m.getPetTitles().remove(pet));
     }
 
     public void addPetAge(Long id, String range) {
 
         PetAge petRange = petAgeRepository.findPetRange(range);
         Optional<Member> byId = memberRepository.findById(id);
-        byId.ifPresent(m -> m.getPetAge().add(petRange));
+        byId.ifPresent(m -> m.getPetAges().add(petRange));
     }
 
     public void removePetAge(Long id, String range) {
         Optional<Member> byId = memberRepository.findById(id);
         PetAge petRange = petAgeRepository.findPetRange(range);
-        byId.ifPresent(m -> m.getPetAge().remove(petRange));
+        byId.ifPresent(m -> m.getPetAges().remove(petRange));
     }
 }

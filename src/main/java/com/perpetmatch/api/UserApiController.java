@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequiredArgsConstructor
-public class MemberApiController {
+public class UserApiController {
 
     private final UserService userService;
     private final UserRepository userRepository;

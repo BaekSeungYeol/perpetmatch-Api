@@ -1,4 +1,4 @@
-package com.perpetmatch.apiDto.Member;
+package com.perpetmatch.apiDto.User;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberDto {
+public class UserDto {
 
     private Long id;
 

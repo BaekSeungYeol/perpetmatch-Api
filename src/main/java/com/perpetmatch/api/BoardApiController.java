@@ -48,4 +48,6 @@ public class BoardApiController {
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글이 등록 되었습니다.",boardResponse));
     }
 
+
+
 }

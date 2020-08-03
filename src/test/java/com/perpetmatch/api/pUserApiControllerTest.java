@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
-class pMemberApiControllerTest {
+class pUserApiControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;

@@ -1,22 +1,15 @@
 package com.perpetmatch.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.Member;
-import com.perpetmatch.Member.MemberRepository;
-import com.perpetmatch.Member.MemberService;
-import com.perpetmatch.apiDto.*;
-import com.perpetmatch.jjwt.CurrentMember;
+import com.perpetmatch.Domain.User;
+import com.perpetmatch.Member.UserRepository;
+import com.perpetmatch.Member.UserService;
 import com.perpetmatch.jjwt.JwtTokenProvider;
-import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.JwtAuthenticationResponse;
-import com.perpetmatch.jjwt.resource.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,17 +17,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @RestController
 @RequiredArgsConstructor
 public class MemberApiController {
 
-    private final MemberService memberService;
-    private final MemberRepository memberRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final AuthenticationManager authenticationManager;
@@ -45,7 +33,7 @@ public class MemberApiController {
     @GetMapping("/check-email-token")
     public ResponseEntity checkEmailToken(String token, String email) {
 
-        boolean checkEmail = memberService.verifyingEmail(token, email);
+        boolean checkEmail = userService.verifyingEmail(token, email);
 
         if(!checkEmail){
             return ResponseEntity.badRequest().build();
@@ -62,20 +50,20 @@ public class MemberApiController {
     //이메일로 로그인 localhost:3000/email-login -> 클릭 누르면 서버로 옴
     @PostMapping("/email-login")
     public ResponseEntity sendEmailLoginLink(String email) {
-        Member member = memberRepository.findByEmail(email);
+        User member = userRepository.findByEmail(email);
         if(member == null) {
             return new ResponseEntity(new ApiResponse(false, "유효한 이메일 주소가 아닙니다."),
                     HttpStatus.BAD_REQUEST);
         }
 
-        memberService.sendLoginLink(member);
+        userService.sendLoginLink(member);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "이메일 로그인이 완료 되었습니다."));
     }
 
     @GetMapping("/login-by-email")
     public ResponseEntity loginByEmail(String token, String email) {
-        Member member = memberRepository.findByEmail(email);
+        User member = userRepository.findByEmail(email);
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

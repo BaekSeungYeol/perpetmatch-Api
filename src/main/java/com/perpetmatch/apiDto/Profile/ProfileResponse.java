@@ -1,5 +1,6 @@
 package com.perpetmatch.apiDto.Profile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perpetmatch.Domain.*;
 import lombok.*;
 import org.modelmapper.ModelMapper;
@@ -19,7 +20,8 @@ public class ProfileResponse {
     private int age;
     private String nickname;
     private String email;
-    private Instant createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDateTime joinedAt;
     private Set<Pet> petTitles;
     private Set<Zone> zones;
     private Set<PetAge> petAges;

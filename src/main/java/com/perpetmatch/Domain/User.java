@@ -1,20 +1,22 @@
 package com.perpetmatch.Domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@Entity @Builder
-@EqualsAndHashCode(of="id")
-public class Member extends DateAudit {
+@EqualsAndHashCode(of = "id")
+public class User {
 
     @Id @GeneratedValue
-    @Column(name = "member_id")
     private Long id;
 
     @Column(unique = true)
@@ -30,7 +32,8 @@ public class Member extends DateAudit {
 
     private boolean emailVerified = false;
 
-    private Instant joinedAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDateTime joinedAt;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Pet> petTitles = new HashSet<>();
@@ -78,6 +81,6 @@ public class Member extends DateAudit {
 
     public void completeSignup(String token) {
         this.setEmailVerified(true);
-        this.setJoinedAt(Instant.now());
+        this.setJoinedAt(LocalDateTime.now());
     }
 }

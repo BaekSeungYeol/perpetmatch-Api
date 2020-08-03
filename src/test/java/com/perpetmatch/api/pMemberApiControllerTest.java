@@ -1,15 +1,14 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.Member;
-import com.perpetmatch.Member.MemberRepository;
+import com.perpetmatch.Domain.User;
+import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,15 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.filter.CharacterEncodingFilter;
-
-import javax.validation.constraints.NotBlank;
-import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -45,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
-class MemberApiControllerTest {
+class pMemberApiControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -53,11 +44,11 @@ class MemberApiControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    MemberRepository memberRepository;
+    UserRepository userRepository;
 
     @BeforeEach
     public void setUp() {
-        memberRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -141,10 +132,10 @@ class MemberApiControllerTest {
 
                 ));
 
-        Member savedMember = memberRepository.findByEmail("beck33333@naver.com");
+        User savedMember = userRepository.findByEmail("beck33333@naver.com");
         assertNotNull(savedMember);
 
-        assertTrue(memberRepository.existsByEmail("beck33333@naver.com"));
+        assertTrue(userRepository.existsByEmail("beck33333@naver.com"));
         assertNotNull(savedMember.getEmailCheckToken());
     }
 
@@ -152,11 +143,10 @@ class MemberApiControllerTest {
     @Test
     @DisplayName("회원가입 - 입력값 오류")
     public void createmember_bad_request_Test() throws Exception {
-        Member member = Member.builder()
-                .nickname("백승")
-                .password("125")
-                .email("beck33")
-                .build();
+        User member = new User();
+        member.setNickname("백승");
+        member.setPassword("125");
+        member.setEmail("beck33");
 
         mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -198,11 +188,10 @@ class MemberApiControllerTest {
     @Test
     @DisplayName("회원 가입 - 빈 입력값")
     public void createmember_bad_request_Test_Empty() throws Exception {
-        Member member = Member.builder()
-                .nickname("")
-                .password("")
-                .email("")
-                .build();
+        User member = new User();
+        member.setNickname("");
+        member.setPassword("");
+        member.setEmail("");
 
         mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

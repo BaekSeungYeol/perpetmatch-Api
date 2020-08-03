@@ -1,10 +1,10 @@
 package com.perpetmatch.Domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.perpetmatch.Board.Gender;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,8 +13,7 @@ import java.util.Set;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 public class Board {
 
     @Id
@@ -23,11 +22,11 @@ public class Board {
 
     // 관리자
     @OneToOne(fetch = FetchType.LAZY)
-    private Member manager;
+    private User manager;
 
     // 신청자들
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Member> members = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     private String title;
 
@@ -36,7 +35,7 @@ public class Board {
     @OneToOne(fetch = FetchType.LAZY)
     private Zone zone;
 
-    private String gender;
+    private Gender gender;
 
     private int year;
     private int month;
@@ -66,7 +65,8 @@ public class Board {
 
     private boolean neutered;
 
-    private Instant publishedDateTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDateTime publishedDateTime;
 
     private boolean closed;
 
@@ -86,7 +86,7 @@ public class Board {
     @Basic(fetch = FetchType.EAGER)
     private String boardImage3;
 
-    public void addManager(Member member) {
+    public void addManager(User member) {
         this.manager = member;
     }
 }

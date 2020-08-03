@@ -1,18 +1,17 @@
 package com.perpetmatch.Member;
 
-import com.perpetmatch.Domain.Member;
+import com.perpetmatch.Domain.User;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 
 @Getter
-public class UserMember extends User {
+public class UserMember extends org.springframework.security.core.userdetails.User {
 
-    private Member member;
+    private User member;
 
-    public UserMember(Member member) {
+    public UserMember(User member) {
         super(member.getNickname(), member.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_USER")));
         this.member = member;
     }

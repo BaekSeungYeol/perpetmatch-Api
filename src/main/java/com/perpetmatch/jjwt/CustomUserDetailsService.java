@@ -1,7 +1,7 @@
 package com.perpetmatch.jjwt;
 
-import com.perpetmatch.Domain.Member;
-import com.perpetmatch.Member.MemberRepository;
+import com.perpetmatch.Domain.User;
+import com.perpetmatch.Member.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,14 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String usernameOrEmail)
             throws UsernameNotFoundException {
         // Let people login with either username or email
-        Member user = memberRepository.findByNicknameOrEmail(usernameOrEmail, usernameOrEmail)
+        User user = userRepository.findByNicknameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail)
                 );
@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     // This method is used by JWTAuthenticationFilter
     @Transactional
     public UserDetails loadUserById(Long id) {
-        Member user = memberRepository.findById(id).orElseThrow(
+        User user = userRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("User not found with id : " + id)
         );
 

@@ -1,10 +1,10 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.Domain.Member;
+import com.perpetmatch.Domain.User;
 import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Domain.PetAge;
-import com.perpetmatch.Member.MemberRepository;
-import com.perpetmatch.Member.MemberService;
+import com.perpetmatch.Member.UserRepository;
+import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.apiDto.Profile.*;
 import com.perpetmatch.jjwt.CurrentMember;
@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,30 +38,30 @@ import java.util.stream.Collectors;
 public class ProfileApiController {
 
     private final PetService petService;
-    private final MemberService memberService;
-    private final MemberRepository memberRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PetRepository petRepository;
     private final PetAgeRepository petAgeRepository;
 
 
     // 이름으로 유저 한명의 프로필 조회
-    @GetMapping("/profile/one")
-    public ResponseEntity profileAll(@CurrentMember UserPrincipal currentMember) {
+    @GetMapping("/profile/{id}")
+    public ResponseEntity profileAll(@PathVariable Long id) {
 
-        if (!memberRepository.existsByNickname(currentMember.getUsername())) {
+        if (!userRepository.existsById(id)) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
                     HttpStatus.BAD_REQUEST);
         }
 
-        Member byNickname = memberService.findByNickname(currentMember.getUsername());
+        User byNickname = userService.findByParamId(id);
 
         ProfileResponse profileResponse = modelMapper.map(byNickname, ProfileResponse.class);
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "해당 유저의 프로필 조회입니다.", profileResponse));
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "요청 유저의 프로필 조회입니다.", profileResponse));
     }
 
     // 해당 유저의 프로필 수정
-    @PostMapping("/profile/one")
+    @PostMapping("/profile")
     public ResponseEntity profileUpdate(@CurrentMember UserPrincipal currentMember,
                                         @Valid @RequestBody ProfileRequest profileRequest, Errors errors) {
 
@@ -76,9 +75,10 @@ public class ProfileApiController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        memberService.updateProfile(currentMember.getId(), profileRequest);
+        User member = userService.updateProfile(currentMember.getId(), profileRequest);
+        ProfileDto profileDto = ProfileDto.builder().id(member.getId()).nickname(member.getNickname()).email(member.getEmail()).build();
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "프로필이 등록 완료 되었습니다."));
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "프로필이 등록 완료 되었습니다.",profileDto));
     }
 
     // 패스워드 변경
@@ -101,12 +101,12 @@ public class ProfileApiController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        memberService.updatePassword(currentMember.getId(), passwordRequest);
+        userService.updatePassword(currentMember.getId(), passwordRequest);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "패스워드 수정이 완료 되었습니다."));
     }
 
-    @PostMapping("/pet/title/add")
+    @PostMapping("/pet/title")
     public ResponseEntity addPet(@CurrentMember UserPrincipal currentMember, @RequestBody PetForm petForm) {
         if (currentMember == null) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
@@ -115,13 +115,13 @@ public class ProfileApiController {
 
         String title = petForm.getPetTitle();
 
-        memberService.addPet(currentMember.getId(), title);
+        userService.addPet(currentMember.getId(), title);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 품종을 추가했습니다."));
 
     }
 
-    @DeleteMapping("/pet/title/remove")
+    @DeleteMapping("/pet/title")
     public ResponseEntity removePet(@CurrentMember UserPrincipal currentMember, @RequestBody PetForm petForm) {
 
         if (currentMember == null) {
@@ -137,7 +137,7 @@ public class ProfileApiController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        memberService.removePet(currentMember.getId(), pet);
+        userService.removePet(currentMember.getId(), pet);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 품종을 제거했습니다."));
 
@@ -148,13 +148,13 @@ public class ProfileApiController {
     @GetMapping("/pet/title")
     public ResponseEntity getPets(@CurrentMember UserPrincipal currentMember) {
 
-        if (!memberRepository.existsByNickname(currentMember.getUsername())) {
+        if (!userRepository.existsByNickname(currentMember.getUsername())) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
                     HttpStatus.BAD_REQUEST);
         }
 
 
-        Member member = memberRepository.findById(currentMember.getId()).get();
+        User member = userRepository.findById(currentMember.getId()).get();
 
         // 모든 유저의 선호 품종 리스트로 반환
         List<String> allPets = petRepository.findAll().stream().map(Pet::toString).collect(Collectors.toList());
@@ -172,11 +172,11 @@ public class ProfileApiController {
     @GetMapping("pet/age")
     public ResponseEntity getPetAge(@CurrentMember UserPrincipal currentMember) {
 
-        if (!memberRepository.existsByNickname(currentMember.getUsername())) {
+        if (!userRepository.existsByNickname(currentMember.getUsername())) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
                     HttpStatus.BAD_REQUEST);
         }
-        Member member = memberRepository.findById(currentMember.getId()).get();
+        User member = userRepository.findById(currentMember.getId()).get();
         // 현재 유저의 선호 나이
         Set<PetDto> age = member.getPetAges().stream().map(m -> new PetDto(m.getPetRange())).collect(Collectors.toSet());
         List<String> ages = age.stream().map(PetDto::toString).collect(Collectors.toList());
@@ -189,7 +189,7 @@ public class ProfileApiController {
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true,"해당 유저의 선호 나이입니다.", collect));
     }
 
-    @PostMapping("/pet/age/add")
+    @PostMapping("/pet/age")
     public ResponseEntity addPetAge(@CurrentMember UserPrincipal currentMember, @RequestBody PetAgeRequest petAgeRequest) {
 
         if (currentMember == null) {
@@ -199,20 +199,20 @@ public class ProfileApiController {
 
         String range = petAgeRequest.getPetRange();
 
-        memberService.addPetAge(currentMember.getId(), range);
+        userService.addPetAge(currentMember.getId(), range);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 나이를 추가했습니다."));
 
     }
 
-    @DeleteMapping("/pet/age/remove")
+    @DeleteMapping("/pet/age")
     public ResponseEntity removePetAge(@CurrentMember UserPrincipal currentMember, @RequestBody PetAgeRequest petAgeRequest) {
 
         if (currentMember == null) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
                     HttpStatus.BAD_REQUEST);
         }
-        memberService.removePetAge(currentMember.getId(), petAgeRequest.getPetRange());
+        userService.removePetAge(currentMember.getId(), petAgeRequest.getPetRange());
 
         return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 나이를 제거했습니다."));
 

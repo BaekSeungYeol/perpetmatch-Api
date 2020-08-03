@@ -93,7 +93,6 @@
 |Authorization|Bearer 토큰| true ( 회원가입 제외 )
 |===
 
-
 [[members]]
 == 회원
 
@@ -126,6 +125,13 @@ operation::sign-in[snippets='request-fields,response-fields,http-request,http-re
 
 operation::update-password[snippets='request-fields,response-fields,http-request,http-response']
 
+[[profile-show]]
+=== 프로필 조회
+
+'GET/{id}' 요청을 사용하여 해당 유저의 프로필을 조회할 수 있다.
+
+operation::show-profile[snippets='path-parameters,response-fields,http-request,http-response']
+
 [[profile-create]]
 === 기본 프로필 등록
 
@@ -133,12 +139,66 @@ operation::update-password[snippets='request-fields,response-fields,http-request
 
 operation::create-profile[snippets='request-fields,response-fields,http-request,http-response']
 
-[[profile-show]]
-=== 프로필 조회
+[[petTitle]]
+=== 관심 품종
 
-'GET' 요청을 사용하여 해당 유저의 프로필을 조회할 수 있다.
+[[petTitle-get]]
+==== 관심 품종 조회
 
-operation::show-profile[snippets='response-fields,http-request,http-response']
+'GET' 요청을 사용하여 해당 유저의 관심 품종을 조회할 수 있다.
+
+operation::show-petTitle[snippets='response-fields,http-request,http-response']
+
+[[petTitle-create]]
+==== 관심 품종 등록
+
+'POST' 요청을 사용하여 해당 유저의 관심 품종을 등록할 수 있다.
+
+operation::update-petTitle[snippets='request-fields,response-fields,http-request,http-response']
+
+[[petTitle-remove]]
+==== 관심 품종 제거
+
+'DELETE' 요청을 사용하여 해당 유저의 관심 품종을 제거할 수 있다.
+
+operation::remove-petTitle[snippets='request-fields,response-fields,http-request,http-response']
+
+[[petAge]]
+=== 관심 나이
+
+[[petAge-get]]
+==== 관심 나이 조회
+
+'GET' 요청을 사용하여 해당 유저의 관심 나이를 조회할 수 있다.
+
+operation::show-petAge[snippets='response-fields,http-request,http-response']
+
+[[petAge-create]]
+==== 관심 나이 등록
+
+'POST' 요청을 사용하여 해당 유저의 관심 나이를 등록할 수 있다.
+
+operation::update-petAge[snippets='request-fields,response-fields,http-request,http-response']
+
+[[petAge-remove]]
+==== 관심 나이 제거
+
+'DELETE' 요청을 사용하여 해당 유저의 관심 나이를 제거할 수 있다.
+
+operation::remove-petAge[snippets='request-fields,response-fields,http-request,http-response']
+
+[[board]]
+== 파양하기 게시판
+
+파양하기 관련
+
+[[board-create]]
+=== 파양하기 게시글 등록
+
+'POST' 요청을 사용하여 파양하기 게시글을 만들 수 있다.
+
+operation::create-board[snippets='request-fields,response-fields,http-request,http-response']
+
 //[[resources-events-get]]
 //=== 이벤트 조회
 //

@@ -1,7 +1,7 @@
 package com.perpetmatch.jjwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.perpetmatch.Domain.Member;
+import com.perpetmatch.Domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +33,7 @@ public class UserPrincipal implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserPrincipal create(Member user) {
+    public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())
         ).collect(Collectors.toList());

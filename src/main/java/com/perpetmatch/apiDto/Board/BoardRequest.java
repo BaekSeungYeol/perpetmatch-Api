@@ -1,25 +1,18 @@
 package com.perpetmatch.apiDto.Board;
 
-import com.perpetmatch.Domain.Member;
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.PetAge;
-import com.perpetmatch.Domain.Zone;
+import com.perpetmatch.Board.Gender;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(of = "id")
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BoardRequest {
 
     @NotBlank
@@ -31,8 +24,11 @@ public class BoardRequest {
     private int credit;
 
     private String zone;
-    private String gender;
+    private Gender gender;
     private int year;
+
+    @Min(value = 1)
+    @Max(value = 12)
     private int month;
     private String petTitle;
     private String checkUp;

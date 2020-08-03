@@ -1,23 +1,14 @@
 package com.perpetmatch.Board;
 
 import com.perpetmatch.Domain.*;
+import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Zone.ZoneRepository;
 import com.perpetmatch.apiDto.Board.BoardRequest;
 import com.perpetmatch.pet.PetRepository;
-import com.perpetmatch.Member.MemberRepository;
+import com.perpetmatch.Member.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -25,11 +16,13 @@ import java.util.Set;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
     private final PetRepository petRepository;
+    private final ZoneRepository zoneRepository;
+    private final PetAgeRepository petAgeRepository;
 
     public Board createNewBoard(Long id, BoardRequest boardRequest) {
-        Member member = memberRepository.findById(id).get();
+        User member = userRepository.findById(id).get();
 
         Board board = new Board();
         board.addManager(member);
@@ -37,11 +30,28 @@ public class BoardService {
         board.setCredit(boardRequest.getCredit());
 
         String[] city = boardRequest.getZone().split(",");
-        Zone zone = Zone.builder().city(city[0]).province(city[1]).build();
+        Zone zone  = zoneRepository.findByProvince(city[1]);
         board.setZone(zone);
         board.setGender(boardRequest.getGender());
         board.setYear(boardRequest.getYear());
         board.setMonth(boardRequest.getMonth());
+
+
+        PetAge petAge;
+
+        int month = boardRequest.getMonth();
+        for(int i=0; i< boardRequest.getYear(); ++i)
+            month += 12;
+
+        if(month <= 12)
+            petAge = petAgeRepository.findPetRange("1년이하");
+        else if(month > 12 && month < 84)
+            petAge = petAgeRepository.findPetRange("1년~7년");
+        else
+            petAge = petAgeRepository.findPetRange("7년이상");
+
+
+        board.setPetAge(petAge);
 
         Pet byTitle = petRepository.findByTitle(boardRequest.getTitle());
         board.setPet(byTitle);

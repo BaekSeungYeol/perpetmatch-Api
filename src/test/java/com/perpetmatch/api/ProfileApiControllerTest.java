@@ -1,12 +1,11 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.Member;
+import com.perpetmatch.Domain.User;
 import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Domain.PetAge;
-import com.perpetmatch.Domain.Zone;
-import com.perpetmatch.Member.MemberRepository;
-import com.perpetmatch.Member.MemberService;
+import com.perpetmatch.Member.UserRepository;
+import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.apiDto.Profile.PasswordRequest;
 import com.perpetmatch.apiDto.Profile.PetAgeRequest;
@@ -28,18 +27,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import java.time.Instant;
-import java.util.Set;
 
 import static com.sun.activation.registries.LogSupport.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,6 +43,8 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -68,7 +64,7 @@ class ProfileApiControllerTest {
     ObjectMapper objectMapper;
 
     @Autowired
-    MemberRepository memberRepository;
+    UserRepository userRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -76,11 +72,12 @@ class ProfileApiControllerTest {
     @Autowired
     PetRepository petRepository;
     @Autowired
-    MemberService memberService;
+    UserService userService;
     @Autowired
     PetAgeRepository petAgeRepository;
 
-    String token = null;
+    private String token = null;
+    private Long id;
 
     @BeforeEach
     void beforeEach() throws Exception {
@@ -105,14 +102,14 @@ class ProfileApiControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk()).andReturn();
 
-
+        id = userRepository.findByNickname("백승열입니다").get().getId();
         TokenTest findToken = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TokenTest.class);
         token = findToken.getTokenType() + " " + findToken.getAccessToken();
     }
 
     @AfterEach
     void afterEach() {
-        memberRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @DisplayName("프로필 조회 성공 - 입력값 정상")
@@ -136,23 +133,23 @@ class ProfileApiControllerTest {
                 .expectedFeeForMonth(100000)
                 .build();
 
-
-        mockMvc.perform(post("/api/settings/profile/one")
+        mockMvc.perform(post("/api/settings/profile")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(profileRequest)));
 
-        mockMvc.perform(get("/api/settings/profile/one")
+
+        ResultActions results = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/settings/profile/{id}", id)
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("data.nickname").exists())
                 .andExpect(jsonPath("data.email").exists())
-                .andExpect(jsonPath("data.createdAt").exists())
                 .andExpect(jsonPath("data.petTitles").exists())
                 .andExpect(jsonPath("data.zones").exists())
+                .andExpect(jsonPath("data.joinedAt").exists())
                 .andExpect(jsonPath("data.petAges").exists())
                 .andExpect(jsonPath("data.credit").exists())
                 .andExpect(jsonPath("data.age").exists())
@@ -168,8 +165,12 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.wantCheckUp").exists())
                 .andExpect(jsonPath("data.wantLineAge").exists())
                 .andExpect(jsonPath("data.wantNeutered").exists())
-                .andExpect(jsonPath("data.expectedFeeForMonth").exists())
-                .andDo(document("show-profile",
+                .andExpect(jsonPath("data.expectedFeeForMonth").exists());
+
+                results.andDo(document("show-profile",
+                        pathParameters(
+                                parameterWithName("id").description("아이디")
+                        ),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -180,10 +181,10 @@ class ProfileApiControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 프로필 조회입니다."),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청 유저의 프로필 조회입니다."),
                                 fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
                                 fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
-                                fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("가입일"),
+                                fieldWithPath("data.joinedAt").type(JsonFieldType.STRING).description("가입일"),
                                 fieldWithPath("data.petTitles").type(JsonFieldType.ARRAY).description("원하는 품종"),
                                 fieldWithPath("data.zones").type(JsonFieldType.ARRAY).description("원하는 지역"),
                                 fieldWithPath("data.petAges").type(JsonFieldType.ARRAY).description("원하는 나이"),
@@ -228,7 +229,7 @@ class ProfileApiControllerTest {
                 .build();
 
 
-        mockMvc.perform(post("/api/settings/profile/one")
+        mockMvc.perform(post("/api/settings/profile")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -263,13 +264,16 @@ class ProfileApiControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("프로필이 등록 완료 되었습니다.")
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("프로필이 등록 완료 되었습니다."),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("아이디"),
+                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일")
                         )
                         ));
 
 
 
-        Member member = memberRepository.findByNickname("백승열입니다").get();
+        User member = userRepository.findByNickname("백승열입니다").get();
         assertEquals(member.getHouseType(), "아파트");
     }
     @DisplayName("프로필 수정 실패 - 입력값 빈 값")
@@ -284,7 +288,7 @@ class ProfileApiControllerTest {
                 .phoneNumber("010-3926-6280")
                 .build();
 
-        mockMvc.perform(post("/api/settings/profile/one")
+        mockMvc.perform(post("/api/settings/profile")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -330,7 +334,7 @@ class ProfileApiControllerTest {
                                fieldWithPath("message").type(JsonFieldType.STRING).description("패스워드 수정이 완료 되었습니다.")
                        )
                ));
-       Member member = memberRepository.findByNickname("백승열입니다").get();
+       User member = userRepository.findByNickname("백승열입니다").get();
         assertTrue(passwordEncoder.matches("123456789", member.getPassword()));
    }
 
@@ -361,7 +365,24 @@ class ProfileApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("data.petTitles").exists())
-                .andExpect(jsonPath("data.allPetTitles").exists());
+                .andExpect(jsonPath("data.allPetTitles").exists())
+                .andDo(document("show-petTitle",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 선호 품종입니다."),
+                                fieldWithPath("data.petTitles").type(JsonFieldType.ARRAY).description("유저의 선호 품종"),
+                                fieldWithPath("data.allPetTitles").type(JsonFieldType.ARRAY).description("품종 리스트")
+                        )
+                ));
     }
 
     @Test
@@ -370,17 +391,34 @@ class ProfileApiControllerTest {
         PetForm petForm = new PetForm();
         petForm.setPetTitle("푸들");
 
-        mockMvc.perform(post("/api/settings/pet/title/add")
+        mockMvc.perform(post("/api/settings/pet/title")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(petForm)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("message").value("성공적으로 품종을 추가했습니다."));
+                .andExpect(jsonPath("message").value("성공적으로 품종을 추가했습니다."))
+                .andDo(document("update-petTitle",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        requestFields(
+                                fieldWithPath("petTitle").type(JsonFieldType.STRING).description("품종")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 품종을 추가했습니다.")
+                        )));
 
         Pet newPet = petRepository.findByTitle("푸들");
         assertTrue(newPet != null);
-        assertTrue(memberRepository.findByNickname("백승열입니다").get().getPetTitles().contains(newPet));
+        assertTrue(userRepository.findByNickname("백승열입니다").get().getPetTitles().contains(newPet));
 
 
     }
@@ -388,20 +426,37 @@ class ProfileApiControllerTest {
     @Test
     @DisplayName("관심 품종 추가 실패 " )
     void removePetTag_failed() throws Exception {
-        Member member = memberRepository.findByNickname("백승열입니다").get();
+        User member = userRepository.findByNickname("백승열입니다").get();
         PetForm petForm = new PetForm();
-        petForm.setPetTitle("newPet");
+        petForm.setPetTitle("말티즈");
         Pet pet = petRepository.save(Pet.builder().title(petForm.getPetTitle()).build());
-        memberService.addPet(member.getId(),pet.getTitle());
+        userService.addPet(member.getId(),pet.getTitle());
 
         assertTrue(member.getPetTitles().contains(pet));
 
-        mockMvc.perform(delete("/api/settings/pet/title/remove")
+        mockMvc.perform(delete("/api/settings/pet/title")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(petForm)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(document("remove-petTitle",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        requestFields(
+                                fieldWithPath("petTitle").type(JsonFieldType.STRING).description("품종")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 품종을 제거했습니다.")
+                        )));
 
         assertTrue(!member.getPetTitles().contains(pet));
     }
@@ -416,7 +471,23 @@ class ProfileApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("data.ages").exists())
-                .andExpect(jsonPath("data.allAges").exists());
+                .andExpect(jsonPath("data.allAges").exists())
+                .andDo(document("show-petAge",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 선호 나이입니다."),
+                                fieldWithPath("data.ages").type(JsonFieldType.ARRAY).description("선호 나이 ( 리스트 중 택 1 )"),
+                                fieldWithPath("data.allAges").type(JsonFieldType.ARRAY).description("선호 나이 리스트")
+                        )));
     }
     @Test
     @DisplayName("관심 나이 추가 성공 " )
@@ -424,16 +495,33 @@ class ProfileApiControllerTest {
         PetAgeRequest petAge = new PetAgeRequest();
         petAge.setPetRange("1년이하");
 
-        mockMvc.perform(post("/api/settings/pet/age/add")
+        mockMvc.perform(post("/api/settings/pet/age")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(petAge)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("message").value("성공적으로 나이를 추가했습니다."));
+                .andExpect(jsonPath("message").value("성공적으로 나이를 추가했습니다."))
+                .andDo(document("update-petAge",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        requestFields(
+                                fieldWithPath("petRange").type(JsonFieldType.STRING).description("추가할 선호 나이 ( 리스트 중 택 1 )")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 나이를 추가했습니다.")
+                        )));
 
         PetAge petRange = petAgeRepository.findPetRange("1년이하");
-        assertTrue(memberRepository.findByNickname("백승열입니다").get().getPetAges().contains(petRange));
+        assertTrue(userRepository.findByNickname("백승열입니다").get().getPetAges().contains(petRange));
 
     }
     @Test
@@ -442,16 +530,33 @@ class ProfileApiControllerTest {
         PetAgeRequest petAge = new PetAgeRequest();
         petAge.setPetRange("1년이하");
 
-        mockMvc.perform(delete("/api/settings/pet/age/remove")
+        mockMvc.perform(delete("/api/settings/pet/age")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(petAge)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("message").value("성공적으로 나이를 제거했습니다."));
+                .andExpect(jsonPath("message").value("성공적으로 나이를 제거했습니다."))
+                .andDo(document("remove-petAge",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        requestFields(
+                                fieldWithPath("petRange").type(JsonFieldType.STRING).description("제거할 선호 나이 ( 리스트 중 택 1 )")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 나이를 제거했습니다.")
+                        )));
 
         PetAge petRange = petAgeRepository.findPetRange("1년이하");
-        assertTrue(!memberRepository.findByNickname("백승열입니다").get().getPetAges().contains(petRange));
+        assertTrue(!userRepository.findByNickname("백승열입니다").get().getPetAges().contains(petRange));
 
     }
 }

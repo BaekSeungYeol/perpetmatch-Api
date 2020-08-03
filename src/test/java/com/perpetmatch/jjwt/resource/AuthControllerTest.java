@@ -1,10 +1,8 @@
 package com.perpetmatch.jjwt.resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.Member;
-import com.perpetmatch.Member.MemberRepository;
-import com.perpetmatch.Member.MemberService;
+import com.perpetmatch.Member.UserRepository;
+import com.perpetmatch.Member.UserService;
 import com.perpetmatch.jjwt.JwtTokenProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,15 +13,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,12 +28,12 @@ class AuthControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    MemberService memberService;
+    UserService userService;
     @Autowired
     ObjectMapper objectMapper;
 
     @Autowired
-    MemberRepository memberRepository;
+    UserRepository userRepository;
     @Autowired
     JwtTokenProvider tokenProvider;
     @Autowired
@@ -63,7 +55,7 @@ class AuthControllerTest {
 
     @AfterEach
     void afterEach() {
-        memberRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
 

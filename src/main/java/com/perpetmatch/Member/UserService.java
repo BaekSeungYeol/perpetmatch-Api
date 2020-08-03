@@ -15,17 +15,13 @@ import com.perpetmatch.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +30,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MemberService {
+public class UserService {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
@@ -46,7 +42,7 @@ public class MemberService {
     private final TemplateEngine templateEngine;
     private final AppProperties appProperties;
 
-    public void sendJoinMemberConfirmEmail(Member savedMember) {
+    public void sendJoinMemberConfirmEmail(User savedMember) {
         Context context = new Context();
         context.setVariable("link", "/check-email-token?token=" + savedMember.getEmailCheckToken() + "&email="
                 + savedMember.getEmail());
@@ -68,19 +64,20 @@ public class MemberService {
 
     }
 
-    public Member join(SignUpRequest request) {
+    public User join(SignUpRequest request) {
 
-        Member member = new Member();
+        User member = new User();
         member.setNickname(request.getNickname());
         member.setPassword(passwordEncoder.encode(request.getPassword()));
         member.setEmail(request.getEmail());
+        member.setJoinedAt(LocalDateTime.now());
 
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new AppException("User Role not set."));
 
         member.setRoles(Collections.singleton(userRole));
 
-        Member savedMember = memberRepository.save(member);
+        User savedMember = userRepository.save(member);
 
         savedMember.generateEmailCheckToken();
         sendJoinMemberConfirmEmail(savedMember);
@@ -90,21 +87,21 @@ public class MemberService {
 
 
 
-    private boolean validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findAllByNickname(member.getNickname());
+    private boolean validateDuplicateMember(User member) {
+        List<User> findMembers = userRepository.findAllByNickname(member.getNickname());
         if(!findMembers.isEmpty()) {
             return true;
         }
         return false;
     }
 
-    public Member findOne(Long id) {
-        Optional<Member> byId = memberRepository.findById(id);
+    public User findOne(Long id) {
+        Optional<User> byId = userRepository.findById(id);
         return byId.get();
     }
 
-    public List<Member> findMembers() {
-        return memberRepository.findAll();
+    public List<User> findMembers() {
+        return userRepository.findAll();
     }
 
 
@@ -112,7 +109,7 @@ public class MemberService {
 
     public boolean verifyingEmail(String token, String email) {
 
-        Member member = memberRepository.findByEmail(email);
+        User member = userRepository.findByEmail(email);
         if (member == null) {
             return false;
         }
@@ -124,15 +121,15 @@ public class MemberService {
         return true;
     }
 
-    public Member findByNickname(String nickname) {
-        Member byNickname = memberRepository.findByNickname(nickname).
-                orElseThrow(() -> new ResourceNotFoundException("Member", "nickname", nickname));
+    public User findByParamId(Long id) {
+        User member = userRepository.findById(id).
+                orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
 
-        return byNickname;
+        return member;
     }
 
-    public void updateProfile(Long id, ProfileRequest profileRequest) {
-        Member member = memberRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
+    public User updateProfile(Long id, ProfileRequest profileRequest) {
+        User member = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
         member.setHouseType(profileRequest.getHouseType());
         member.setOccupation(profileRequest.getOccupation());
         member.setExperience(profileRequest.isExperience());
@@ -146,15 +143,16 @@ public class MemberService {
         member.setWantCheckUp(profileRequest.isWantCheckUp());
         member.setWantLineAge(profileRequest.isWantLineAge());
         member.setWantNeutered(profileRequest.isWantNeutered());
+        return member;
     }
 
     public void updatePassword(Long id, PasswordRequest passwordRequest) {
 
-        Member member = memberRepository.findById(id).get();
+        User member = userRepository.findById(id).get();
         member.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
     }
 
-    public void sendLoginLink(Member member) {
+    public void sendLoginLink(User member) {
 
         Context context = new Context();
         context.setVariable("link","/login-by-email?token=" + member.getEmailCheckToken() + "&email=" + member.getEmail());
@@ -186,25 +184,29 @@ public class MemberService {
 
         Pet savedPet = petRepository.findByTitle(title);
 
-        Optional<Member> byId = memberRepository.findById(id);
+        Optional<User> byId = userRepository.findById(id);
         byId.ifPresent(m -> m.getPetTitles().add(savedPet));
     }
 
     public void removePet(Long id, Pet pet) {
-        Optional<Member> byId = memberRepository.findById(id);
+        Optional<User> byId = userRepository.findById(id);
         byId.ifPresent(m -> m.getPetTitles().remove(pet));
     }
 
     public void addPetAge(Long id, String range) {
 
         PetAge petRange = petAgeRepository.findPetRange(range);
-        Optional<Member> byId = memberRepository.findById(id);
+        Optional<User> byId = userRepository.findById(id);
         byId.ifPresent(m -> m.getPetAges().add(petRange));
     }
 
     public void removePetAge(Long id, String range) {
-        Optional<Member> byId = memberRepository.findById(id);
+        Optional<User> byId = userRepository.findById(id);
         PetAge petRange = petAgeRepository.findPetRange(range);
         byId.ifPresent(m -> m.getPetAges().remove(petRange));
+    }
+
+    public User findById(Long id) {
+        return null;
     }
 }

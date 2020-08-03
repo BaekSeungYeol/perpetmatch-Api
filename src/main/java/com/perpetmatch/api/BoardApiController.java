@@ -2,10 +2,13 @@ package com.perpetmatch.api;
 
 import com.perpetmatch.Board.BoardService;
 import com.perpetmatch.Domain.Board;
+import com.perpetmatch.apiDto.Board.BoardData;
 import com.perpetmatch.apiDto.Board.BoardRequest;
+import com.perpetmatch.apiDto.Board.BoardResponse;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
+import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -40,8 +43,9 @@ public class BoardApiController {
         }
 
         Board newBoard = boardService.createNewBoard(currentMember.getId(), boardRequest);
+        BoardResponse boardResponse = BoardResponse.builder().id(newBoard.getId()).title(newBoard.getTitle()).build();
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "게시글이 등록 되었습니다."));
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글이 등록 되었습니다.",boardResponse));
     }
 
 }

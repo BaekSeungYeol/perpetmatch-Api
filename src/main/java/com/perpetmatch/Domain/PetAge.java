@@ -11,6 +11,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter @Setter
 @Builder
+@EqualsAndHashCode(of = "id")
 public class PetAge {
 
     @Id @GeneratedValue

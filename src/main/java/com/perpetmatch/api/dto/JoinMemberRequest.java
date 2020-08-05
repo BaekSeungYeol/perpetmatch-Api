@@ -1,9 +1,8 @@
-package com.perpetmatch.apiDto;
+package com.perpetmatch.api.dto;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
 
 @EqualsAndHashCode(of = "id")

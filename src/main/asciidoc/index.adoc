@@ -79,6 +79,18 @@
 //
 //operation::sign-up[snippets='response-body,http-response'
 == 공통 응답
+
+|===
+| 환경 | Domain
+
+| 개발서버
+| `http://docs.api.com:8080`
+
+| 운영서버
+|
+|===
+
+
 |===
 |코드|코드명|필수값
 

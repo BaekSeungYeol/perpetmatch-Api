@@ -1,4 +1,4 @@
-package com.perpetmatch.apiDto;
+package com.perpetmatch.api.dto;
 
 import lombok.*;
 

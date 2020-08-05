@@ -3,8 +3,9 @@ package com.perpetmatch.Member;
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
-import com.perpetmatch.apiDto.Profile.PasswordRequest;
-import com.perpetmatch.apiDto.Profile.ProfileRequest;
+import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.api.dto.Profile.PasswordRequest;
+import com.perpetmatch.api.dto.Profile.ProfileRequest;
 import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.ResourceNotFoundException;
 import com.perpetmatch.infra.config.AppProperties;
@@ -33,6 +34,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ZoneRepository zoneRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
@@ -86,10 +88,9 @@ public class UserService {
     }
 
 
-
     private boolean validateDuplicateMember(User member) {
         List<User> findMembers = userRepository.findAllByNickname(member.getNickname());
-        if(!findMembers.isEmpty()) {
+        if (!findMembers.isEmpty()) {
             return true;
         }
         return false;
@@ -103,8 +104,6 @@ public class UserService {
     public List<User> findMembers() {
         return userRepository.findAll();
     }
-
-
 
 
     public boolean verifyingEmail(String token, String email) {
@@ -155,7 +154,7 @@ public class UserService {
     public void sendLoginLink(User member) {
 
         Context context = new Context();
-        context.setVariable("link","/login-by-email?token=" + member.getEmailCheckToken() + "&email=" + member.getEmail());
+        context.setVariable("link", "/login-by-email?token=" + member.getEmailCheckToken() + "&email=" + member.getEmail());
         context.setVariable("nickname", member.getNickname());
         context.setVariable("linkName", "이메일로 로그인하기");
         context.setVariable("message", "로그인 하려면 아래 링크를 클릭하세요.");
@@ -176,7 +175,7 @@ public class UserService {
 
         Pet pet = petRepository.findByTitle(title);
 
-        if(pet == null) {
+        if (pet == null) {
             Pet newPet = new Pet();
             newPet.setTitle(title);
             petRepository.save(newPet);
@@ -208,5 +207,17 @@ public class UserService {
 
     public User findById(Long id) {
         return null;
+    }
+
+    public void addZone(Long id, String province) {
+        Zone zone = zoneRepository.findByProvince(province);
+        Optional<User> byId = userRepository.findById(id);
+        byId.ifPresent(m -> m.getZones().add(zone));
+    }
+
+    public void removeZone(Long id, String province) {
+        Zone zone = zoneRepository.findByProvince(province);
+        Optional<User> byId = userRepository.findById(id);
+        byId.ifPresent(m -> m.getZones().remove(zone));
     }
 }

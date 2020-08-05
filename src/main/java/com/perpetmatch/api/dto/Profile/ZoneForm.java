@@ -1,4 +1,4 @@
-package com.perpetmatch.apiDto.Profile;
+package com.perpetmatch.api.dto.Profile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,14 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class PetDto {
+@NoArgsConstructor
+public class ZoneForm {
 
-    private String title; // 품종
-
-    @Override
-    public String toString() {
-        return title;
-    }
+    private String province;
 }

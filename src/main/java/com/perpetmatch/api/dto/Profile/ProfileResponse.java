@@ -1,15 +1,10 @@
-package com.perpetmatch.apiDto.Profile;
+package com.perpetmatch.api.dto.Profile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perpetmatch.Domain.*;
 import lombok.*;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -17,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class ProfileResponse {
 
+    private Long id;
     private int age;
     private String nickname;
     private String email;

@@ -7,10 +7,10 @@ import com.perpetmatch.Domain.PetAge;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
-import com.perpetmatch.apiDto.Profile.PasswordRequest;
-import com.perpetmatch.apiDto.Profile.PetAgeRequest;
-import com.perpetmatch.apiDto.Profile.PetForm;
-import com.perpetmatch.apiDto.Profile.ProfileRequest;
+import com.perpetmatch.api.dto.Profile.PasswordRequest;
+import com.perpetmatch.api.dto.Profile.PetAgeRequest;
+import com.perpetmatch.api.dto.Profile.PetForm;
+import com.perpetmatch.api.dto.Profile.ProfileRequest;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
@@ -133,18 +133,19 @@ class ProfileApiControllerTest {
                 .expectedFeeForMonth(100000)
                 .build();
 
-        mockMvc.perform(post("/api/settings/profile")
+        mockMvc.perform(post("/api/profiles")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(profileRequest)));
 
 
-        ResultActions results = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/settings/profile/{id}", id)
+        ResultActions results = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/profiles/{id}", id)
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("data.id").exists())
                 .andExpect(jsonPath("data.nickname").exists())
                 .andExpect(jsonPath("data.email").exists())
                 .andExpect(jsonPath("data.petTitles").exists())
@@ -182,6 +183,7 @@ class ProfileApiControllerTest {
                         responseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("요청 유저의 프로필 조회입니다."),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("ID"),
                                 fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
                                 fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
                                 fieldWithPath("data.joinedAt").type(JsonFieldType.STRING).description("가입일"),
@@ -229,7 +231,7 @@ class ProfileApiControllerTest {
                 .build();
 
 
-        mockMvc.perform(post("/api/settings/profile")
+        mockMvc.perform(post("/api/profiles")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -288,7 +290,7 @@ class ProfileApiControllerTest {
                 .phoneNumber("010-3926-6280")
                 .build();
 
-        mockMvc.perform(post("/api/settings/profile")
+        mockMvc.perform(post("/api/profiles")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -307,7 +309,7 @@ class ProfileApiControllerTest {
        passwordRequest.setNewPasswordConfirm("123456789");
 
 
-       mockMvc.perform(put("/api/settings/password")
+       mockMvc.perform(put("/api/profiles/password")
                .header("Authorization", token)
                .contentType(MediaType.APPLICATION_JSON)
                .accept(MediaType.APPLICATION_JSON)
@@ -346,7 +348,7 @@ class ProfileApiControllerTest {
         passwordRequest.setNewPassword("123456789");
         passwordRequest.setNewPasswordConfirm("12345678");
 
-        mockMvc.perform(put("/api/settings/password")
+        mockMvc.perform(put("/api/profiles/password")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -359,7 +361,7 @@ class ProfileApiControllerTest {
     @DisplayName(" 로그인 한 유저의 관심 품종 조회 " )
     void showPetTag_success() throws Exception {
 
-        mockMvc.perform(get("/api/settings/pet/title")
+        mockMvc.perform(get("/api/profiles/pet/title")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -391,7 +393,7 @@ class ProfileApiControllerTest {
         PetForm petForm = new PetForm();
         petForm.setPetTitle("푸들");
 
-        mockMvc.perform(post("/api/settings/pet/title")
+        mockMvc.perform(post("/api/profiles/pet/title")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -434,7 +436,7 @@ class ProfileApiControllerTest {
 
         assertTrue(member.getPetTitles().contains(pet));
 
-        mockMvc.perform(delete("/api/settings/pet/title")
+        mockMvc.perform(delete("/api/profiles/pet/title")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -465,7 +467,7 @@ class ProfileApiControllerTest {
     @DisplayName(" 로그인 한 유저의 관심 펫 나이 조회 " )
     void showPetAges_success() throws Exception {
 
-        mockMvc.perform(get("/api/settings/pet/age")
+        mockMvc.perform(get("/api/profiles/pet/age")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -495,7 +497,7 @@ class ProfileApiControllerTest {
         PetAgeRequest petAge = new PetAgeRequest();
         petAge.setPetRange("1년이하");
 
-        mockMvc.perform(post("/api/settings/pet/age")
+        mockMvc.perform(post("/api/profiles/pet/age")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -530,7 +532,7 @@ class ProfileApiControllerTest {
         PetAgeRequest petAge = new PetAgeRequest();
         petAge.setPetRange("1년이하");
 
-        mockMvc.perform(delete("/api/settings/pet/age")
+        mockMvc.perform(delete("/api/profiles/pet/age")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)

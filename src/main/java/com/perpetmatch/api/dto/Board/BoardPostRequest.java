@@ -1,4 +1,4 @@
-package com.perpetmatch.apiDto.Board;
+package com.perpetmatch.api.dto.Board;
 
 import com.perpetmatch.Board.Gender;
 import lombok.*;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BoardRequest {
+public class BoardPostRequest {
 
     @NotBlank
     @Length(max = 50)

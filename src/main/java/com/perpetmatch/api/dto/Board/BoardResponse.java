@@ -1,4 +1,4 @@
-package com.perpetmatch.apiDto.Board;
+package com.perpetmatch.api.dto.Board;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

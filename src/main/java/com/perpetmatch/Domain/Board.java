@@ -35,6 +35,7 @@ public class Board {
     @OneToOne(fetch = FetchType.LAZY)
     private Zone zone;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private int year;
@@ -45,7 +46,7 @@ public class Board {
 
     // 품종
     @OneToOne(fetch = FetchType.LAZY)
-    private Pet pet;
+    private Pet petTitle;
 
     @Lob
     @Basic(fetch = FetchType.EAGER)

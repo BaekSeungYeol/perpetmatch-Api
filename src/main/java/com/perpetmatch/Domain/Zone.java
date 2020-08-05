@@ -18,10 +18,6 @@ public class Zone {
     @Id @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private String city;
-
-    @Column(nullable = true)
     private String province;
 
     @Override

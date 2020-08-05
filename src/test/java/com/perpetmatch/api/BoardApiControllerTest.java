@@ -1,11 +1,13 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.Board.Gender;
+import com.perpetmatch.Domain.Board;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
-import com.perpetmatch.apiDto.Board.BoardRequest;
+import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
@@ -32,7 +34,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,6 +55,8 @@ class BoardApiControllerTest {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    BoardRepository boardRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -64,7 +68,8 @@ class BoardApiControllerTest {
     @Autowired
     PetAgeRepository petAgeRepository;
 
-    String token = null;
+    private Long id;
+    private String token = null;
 
     @BeforeEach
     void beforeEach() throws Exception {
@@ -89,7 +94,6 @@ class BoardApiControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk()).andReturn();
 
-
         TokenTest findToken = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TokenTest.class);
         token = findToken.getTokenType() + " " + findToken.getAccessToken();
     }
@@ -99,14 +103,13 @@ class BoardApiControllerTest {
         userRepository.deleteAll();
     }
 
-
     @Test
-    @DisplayName("게시글 등록 테스트 - 성공 ")
-    public void createBoard() throws Exception {
-        BoardRequest boardRequest = BoardRequest.builder()
+    @DisplayName("게시글 단일 조회 테스트 - 성공")
+    public void getBoard() throws Exception {
+        BoardPostRequest boardRequest = BoardPostRequest.builder()
                 .title("버려진 포메 보호하고 있습니다")
                 .credit(100000)
-                .zone("Seoul,서울특별시")
+                .zone("서울특별시")
                 .gender(Gender.MALE)
                 .year(1)
                 .month(11)
@@ -120,7 +123,62 @@ class BoardApiControllerTest {
                 .boardImage3("DataURL")
                 .build();
 
-        mockMvc.perform(post("/api/board/one")
+        mockMvc.perform(post("/api/boards")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(boardRequest)))
+                .andExpect(status().isOk());
+
+        id = boardRepository.findByTitle("버려진 포메 보호하고 있습니다").getId();
+
+        mockMvc.perform(get("/api/boards/{id}", id)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("message").value("해당 유저의 게시글입니다."))
+                .andExpect(jsonPath("data.id").exists())
+                .andExpect(jsonPath("data.title").exists())
+                .andExpect(jsonPath("data.credit").exists())
+                .andExpect(jsonPath("data.zone").exists())
+                .andExpect(jsonPath("data.gender").exists())
+                .andExpect(jsonPath("data.year").exists())
+                .andExpect(jsonPath("data.month").exists())
+                .andExpect(jsonPath("data.petTitle").exists())
+                .andExpect(jsonPath("data.petAge").exists())
+                .andExpect(jsonPath("data.checkUp").exists())
+                .andExpect(jsonPath("data.lineAgeImage").exists())
+                .andExpect(jsonPath("data.neuteredImage").exists())
+                .andExpect(jsonPath("data.description").exists())
+                .andExpect(jsonPath("data.boardImage1").exists())
+                .andExpect(jsonPath("data.boardImage2").exists())
+                .andExpect(jsonPath("data.boardImage3").exists());
+
+    }
+
+    @Test
+    @DisplayName("게시글 등록 테스트 - 성공 ")
+    public void createBoard() throws Exception {
+        BoardPostRequest boardRequest = BoardPostRequest.builder()
+                .title("버려진 포메 보호하고 있습니다")
+                .credit(100000)
+                .zone("서울특별시")
+                .gender(Gender.MALE)
+                .year(1)
+                .month(11)
+                .petTitle("치와와")
+                .checkUp("DataURL")
+                .lineAgeImage("DataURL")
+                .neuteredImage("DataURL")
+                .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
+                .boardImage1("DataURL")
+                .boardImage2("DataURL")
+                .boardImage3("DataURL")
+                .build();
+
+        mockMvc.perform(post("/api/boards")
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)

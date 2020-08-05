@@ -1,16 +1,11 @@
-package com.perpetmatch.apiDto.Profile;
+package com.perpetmatch.api.dto.Profile;
 
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.Zone;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
-import java.time.Instant;
-import java.util.Set;
 
 
 @Data

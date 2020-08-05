@@ -86,7 +86,7 @@ public class InitDB {
                 List<Zone> collect = Files.readAllLines(resource.getFile().toPath(), StandardCharsets.UTF_8).stream()
                         .map(line -> {
                             String[] lines = line.split(",");
-                            return Zone.builder().city(lines[0]).province(lines[1]).build();
+                            return Zone.builder().province(lines[0]).build();
                         }).collect(Collectors.toList());
 
                 zoneRepository.saveAll(collect);

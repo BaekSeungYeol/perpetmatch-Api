@@ -3,10 +3,12 @@ package com.perpetmatch.api;
 import com.perpetmatch.Domain.User;
 import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Domain.PetAge;
+import com.perpetmatch.Domain.Zone;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
-import com.perpetmatch.apiDto.Profile.*;
+import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.api.dto.Profile.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
@@ -33,10 +35,11 @@ import java.util.stream.Collectors;
  *  선호 나이
  */
 @RestController
-@RequestMapping("/api/settings")
+@RequestMapping("/api/profiles")
 @RequiredArgsConstructor
 public class ProfileApiController {
 
+    private final ZoneRepository zoneRepository;
     private final PetService petService;
     private final UserService userService;
     private final UserRepository userRepository;
@@ -46,7 +49,7 @@ public class ProfileApiController {
 
 
     // 이름으로 유저 한명의 프로필 조회
-    @GetMapping("/profile/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity profileAll(@PathVariable Long id) {
 
         if (!userRepository.existsById(id)) {
@@ -61,7 +64,7 @@ public class ProfileApiController {
     }
 
     // 해당 유저의 프로필 수정
-    @PostMapping("/profile")
+    @PostMapping("")
     public ResponseEntity profileUpdate(@CurrentMember UserPrincipal currentMember,
                                         @Valid @RequestBody ProfileRequest profileRequest, Errors errors) {
 
@@ -104,6 +107,59 @@ public class ProfileApiController {
         userService.updatePassword(currentMember.getId(), passwordRequest);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "패스워드 수정이 완료 되었습니다."));
+    }
+
+    @GetMapping("/zone")
+    public ResponseEntity getZones(@CurrentMember UserPrincipal currentMember) {
+
+        if (!userRepository.existsByNickname(currentMember.getUsername())) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        User member = userRepository.findById(currentMember.getId()).get();
+
+        // 지역 리스트로 반환
+        List<String> allZones = zoneRepository.findAll().stream().map(Zone::toString).collect(Collectors.toList());
+
+        // 현재 유저의 선호 지역
+
+        List<ZoneForm> zone = member.getZones().stream().map(z -> new ZoneForm(z.getProvince())).collect(Collectors.toList());
+        List<String> zones = zone.stream().map(ZoneForm::toString).collect(Collectors.toList());
+        ZoneResponseOne collect = new ZoneResponseOne(zones,allZones);
+
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true,"해당 유저의 지역입니다.", collect));
+    }
+
+    @PostMapping("/zone")
+    public ResponseEntity addZone(@CurrentMember UserPrincipal currentMember, @RequestBody ZoneForm zoneForm) {
+        if (currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        String province = zoneForm.getProvince();
+
+        userService.addZone(currentMember.getId(), province);
+
+        return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 지역을 추가했습니다."));
+
+    }
+
+    @DeleteMapping("/zone")
+    public ResponseEntity removeZone(@CurrentMember UserPrincipal currentMember, @RequestBody ZoneForm zoneForm) {
+
+        if (currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        String province = zoneForm.getProvince();
+
+        userService.removeZone(currentMember.getId(), province);
+
+        return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 지역을 제거했습니다."));
+
     }
 
     @PostMapping("/pet/title")

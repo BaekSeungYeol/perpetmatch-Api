@@ -83,7 +83,7 @@ public class InitDB {
 
         public void initZoneData() throws IOException {
             if (zoneRepository.count() == 0) {
-                Resource resource = new ClassPathResource("zones.csv");
+                Resource resource = new ClassPathResource("zonesList.csv");
                 List<Zone> collect = Files.readAllLines(resource.getFile().toPath(), StandardCharsets.UTF_8).stream()
                         .map(line -> {
                             String[] lines = line.split(",");

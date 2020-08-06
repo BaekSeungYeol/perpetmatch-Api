@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BoardGetResponseV1 {
     private Long id;
+    private String manager;
     private String title;
     private int credit;
     private Zone zone;
@@ -35,6 +36,7 @@ public class BoardGetResponseV1 {
 
     public BoardGetResponseV1(Board board) {
         id = board.getId();
+        manager = board.getManager().getNickname();
         title = board.getTitle();
         credit = board.getCredit();
         zone = board.getZone();

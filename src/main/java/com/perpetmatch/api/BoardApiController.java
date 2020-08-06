@@ -6,6 +6,7 @@ import com.perpetmatch.Domain.Board;
 import com.perpetmatch.api.dto.Board.BoardGetResponseV1;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.api.dto.Board.BoardResponse;
+import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
@@ -25,6 +26,11 @@ public class BoardApiController {
 
     private final BoardService boardService;
     private final BoardRepository boardRepository;
+
+    // 다건 조회
+
+
+    // 단건 조회
     @GetMapping("/boards/{id}")
     public ResponseEntity getOneBoard(@PathVariable Long id) {
 
@@ -43,10 +49,10 @@ public class BoardApiController {
     public ResponseEntity createBoard(@CurrentMember UserPrincipal currentMember, @RequestBody @Valid BoardPostRequest boardRequest
     , Errors errors) {
         if(errors.hasErrors()) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 입력입니다."),
                     HttpStatus.BAD_REQUEST);
         }
-        if (currentMember == null) {
+        if(currentMember == null) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
                     HttpStatus.BAD_REQUEST);
         }
@@ -56,6 +62,25 @@ public class BoardApiController {
 
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글이 등록 되었습니다.",boardResponse));
     }
+
+    @PutMapping("/boards/{id}")
+    public ResponseEntity updateBoard(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
+                                      @RequestBody @Valid BoardUpdateRequest boardRequest, Errors errors) {
+        if(errors.hasErrors()) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 입력입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        boardService.updateBoard(currentMember.getId(), id, boardRequest);
+        Board board = boardService.findByBoardId(id);
+        BoardGetResponseV1 boardResponse = new BoardGetResponseV1(board);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 수정이 완료되었습니다.", boardResponse));
+
+    }
+
+
+
+
 
 
 

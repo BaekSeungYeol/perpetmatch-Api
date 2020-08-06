@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Board {
+public class Board extends DateAudit{
 
     @Id
     @GeneratedValue

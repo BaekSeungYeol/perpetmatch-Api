@@ -4,10 +4,15 @@
 :icons: font
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 4
+:toclevels: 3
 :sectlinks:
-:operation-curl-request-title: Example request
-:operation-http-response-title: Example response
+:docinfo: shared-head
+
+[[introduction]]
+== 소개
+
+퍼펫 매치(Perpet Match) API 서버입니다.
+
 
 [[overview-http-verbs]]
 == HTTP 동사
@@ -82,6 +87,7 @@
 |Authorization|Bearer 토큰| true ( 회원가입 제외 )
 |===
 
+
 [[members]]
 == 회원
 
@@ -115,7 +121,7 @@ operation::sign-in[snippets='request-fields,response-fields,http-request,http-re
 operation::update-password[snippets='request-fields,response-fields,http-request,http-response']
 
 [[profile-show]]
-=== 프로필 조회
+=== 프로필 단일 조회
 
 'GET/{id}' 요청을 사용하여 해당 유저의 프로필을 조회할 수 있다.
 
@@ -188,6 +194,12 @@ operation::remove-petAge[snippets='request-fields,response-fields,http-request,h
 
 operation::create-board[snippets='request-fields,response-fields,http-request,http-response']
 
+[[show-board]]
+=== 파양하기 게시글 단일 조회
+
+'GET/{id}' 요청을 사용하여 게시글을 조회할 수 있다.
+
+operation::show-board[snippets='path-parameters,response-fields,http-request,http-response']
 //[[resources-events-get]]
 //=== 이벤트 조회
 //

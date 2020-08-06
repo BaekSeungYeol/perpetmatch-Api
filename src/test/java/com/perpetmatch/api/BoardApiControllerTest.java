@@ -24,6 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,6 +35,8 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -132,7 +135,7 @@ class BoardApiControllerTest {
 
         id = boardRepository.findByTitle("버려진 포메 보호하고 있습니다").getId();
 
-        mockMvc.perform(get("/api/boards/{id}", id)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/{id}", id)
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -141,6 +144,7 @@ class BoardApiControllerTest {
                 .andExpect(jsonPath("message").value("해당 유저의 게시글입니다."))
                 .andExpect(jsonPath("data.id").exists())
                 .andExpect(jsonPath("data.title").exists())
+                .andExpect(jsonPath("data.manager").exists())
                 .andExpect(jsonPath("data.credit").exists())
                 .andExpect(jsonPath("data.zone").exists())
                 .andExpect(jsonPath("data.gender").exists())
@@ -154,7 +158,43 @@ class BoardApiControllerTest {
                 .andExpect(jsonPath("data.description").exists())
                 .andExpect(jsonPath("data.boardImage1").exists())
                 .andExpect(jsonPath("data.boardImage2").exists())
-                .andExpect(jsonPath("data.boardImage3").exists());
+                .andExpect(jsonPath("data.boardImage3").exists())
+                .andDo(document("show-board",
+                        pathParameters(
+                                parameterWithName("id").description("아이디")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 게시글입니다."),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("ID"),
+                                fieldWithPath("data.manager").type(JsonFieldType.STRING).description("작성자(관리자)"),
+                                fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
+                                fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
+                                fieldWithPath("data.zone.province").type(JsonFieldType.STRING).description("지역"),
+                                fieldWithPath("data.gender").type(JsonFieldType.STRING).description("성별"),
+                                fieldWithPath("data.year").type(JsonFieldType.NUMBER).description("나이(년)"),
+                                fieldWithPath("data.month").type(JsonFieldType.NUMBER).description("나이(개월)"),
+                                fieldWithPath("data.petTitle.title").type(JsonFieldType.STRING).description("품종"),
+                                fieldWithPath("data.petAge.petRange").type(JsonFieldType.STRING).description("나이 범위"),
+                                fieldWithPath("data.checkUp").type(JsonFieldType.STRING).description("건강검진 이미지"),
+                                fieldWithPath("data.lineAgeImage").type(JsonFieldType.STRING).description("혈통서 이미지"),
+                                fieldWithPath("data.neuteredImage").type(JsonFieldType.STRING).description("중성화 이미지"),
+                                fieldWithPath("data.description").type(JsonFieldType.STRING).description("소개"),
+                                fieldWithPath("data.boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
+                                fieldWithPath("data.boardImage2").type(JsonFieldType.STRING).description("강아지 이미지2"),
+                                fieldWithPath("data.boardImage3").type(JsonFieldType.STRING).description("강아지 이미지3"),
+                                fieldWithPath("data.zone.id").type(JsonFieldType.NUMBER).description("zoneID"),
+                                fieldWithPath("data.petTitle.id").type(JsonFieldType.NUMBER).description("petTItleID"),
+                                fieldWithPath("data.petAge.id").type(JsonFieldType.NUMBER).description("petAgeID")
+                        )));
 
     }
 

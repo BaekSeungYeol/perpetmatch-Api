@@ -427,12 +427,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
-<li><a href="#overview">개요</a>
 <ul class="sectlevel1">
+<li><a href="#introduction">소개</a></li>
 <li><a href="#overview-http-verbs">HTTP 동사</a></li>
 <li><a href="#overview-http-status-codes">HTTP 상태 코드</a></li>
-<li><a href="#overview-errors">오류</a></li>
 <li><a href="#_공통_응답">공통 응답</a></li>
 <li><a href="#_공통_헤더">공통 헤더</a></li>
 <li><a href="#members">회원</a>
@@ -442,7 +440,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#members-signup_request_fields">Request fields</a></li>
 <li><a href="#members-signup_response_fields">Response fields</a></li>
 <li><a href="#members-signup_http_request">HTTP request</a></li>
-<li><a href="#members-signup_http_response">Example response</a></li>
+<li><a href="#members-signup_http_response">HTTP response</a></li>
 </ul>
 </li>
 <li><a href="#members-signin">로그인</a>
@@ -450,7 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#members-signin_request_fields">Request fields</a></li>
 <li><a href="#members-signin_response_fields">Response fields</a></li>
 <li><a href="#members-signin_http_request">HTTP request</a></li>
-<li><a href="#members-signin_http_response">Example response</a></li>
+<li><a href="#members-signin_http_response">HTTP response</a></li>
 </ul>
 </li>
 </ul>
@@ -462,15 +460,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#profile-password_request_fields">Request fields</a></li>
 <li><a href="#profile-password_response_fields">Response fields</a></li>
 <li><a href="#profile-password_http_request">HTTP request</a></li>
-<li><a href="#profile-password_http_response">Example response</a></li>
+<li><a href="#profile-password_http_response">HTTP response</a></li>
 </ul>
 </li>
-<li><a href="#profile-show">프로필 조회</a>
+<li><a href="#profile-show">프로필 단일 조회</a>
 <ul class="sectlevel3">
 <li><a href="#profile-show_path_parameters">Path parameters</a></li>
 <li><a href="#profile-show_response_fields">Response fields</a></li>
 <li><a href="#profile-show_http_request">HTTP request</a></li>
-<li><a href="#profile-show_http_response">Example response</a></li>
+<li><a href="#profile-show_http_response">HTTP response</a></li>
 </ul>
 </li>
 <li><a href="#profile-create">기본 프로필 등록</a>
@@ -478,61 +476,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#profile-create_request_fields">Request fields</a></li>
 <li><a href="#profile-create_response_fields">Response fields</a></li>
 <li><a href="#profile-create_http_request">HTTP request</a></li>
-<li><a href="#profile-create_http_response">Example response</a></li>
+<li><a href="#profile-create_http_response">HTTP response</a></li>
 </ul>
 </li>
 <li><a href="#petTitle">관심 품종</a>
 <ul class="sectlevel3">
-<li><a href="#petTitle-get">관심 품종 조회</a>
-<ul class="sectlevel4">
-<li><a href="#petTitle-get_response_fields">Response fields</a></li>
-<li><a href="#petTitle-get_http_request">HTTP request</a></li>
-<li><a href="#petTitle-get_http_response">Example response</a></li>
-</ul>
-</li>
-<li><a href="#petTitle-create">관심 품종 등록</a>
-<ul class="sectlevel4">
-<li><a href="#petTitle-create_request_fields">Request fields</a></li>
-<li><a href="#petTitle-create_response_fields">Response fields</a></li>
-<li><a href="#petTitle-create_http_request">HTTP request</a></li>
-<li><a href="#petTitle-create_http_response">Example response</a></li>
-</ul>
-</li>
-<li><a href="#petTitle-remove">관심 품종 제거</a>
-<ul class="sectlevel4">
-<li><a href="#petTitle-remove_request_fields">Request fields</a></li>
-<li><a href="#petTitle-remove_response_fields">Response fields</a></li>
-<li><a href="#petTitle-remove_http_request">HTTP request</a></li>
-<li><a href="#petTitle-remove_http_response">Example response</a></li>
-</ul>
-</li>
+<li><a href="#petTitle-get">관심 품종 조회</a></li>
+<li><a href="#petTitle-create">관심 품종 등록</a></li>
+<li><a href="#petTitle-remove">관심 품종 제거</a></li>
 </ul>
 </li>
 <li><a href="#petAge">관심 나이</a>
 <ul class="sectlevel3">
-<li><a href="#petAge-get">관심 나이 조회</a>
-<ul class="sectlevel4">
-<li><a href="#petAge-get_response_fields">Response fields</a></li>
-<li><a href="#petAge-get_http_request">HTTP request</a></li>
-<li><a href="#petAge-get_http_response">Example response</a></li>
-</ul>
-</li>
-<li><a href="#petAge-create">관심 나이 등록</a>
-<ul class="sectlevel4">
-<li><a href="#petAge-create_request_fields">Request fields</a></li>
-<li><a href="#petAge-create_response_fields">Response fields</a></li>
-<li><a href="#petAge-create_http_request">HTTP request</a></li>
-<li><a href="#petAge-create_http_response">Example response</a></li>
-</ul>
-</li>
-<li><a href="#petAge-remove">관심 나이 제거</a>
-<ul class="sectlevel4">
-<li><a href="#petAge-remove_request_fields">Request fields</a></li>
-<li><a href="#petAge-remove_response_fields">Response fields</a></li>
-<li><a href="#petAge-remove_http_request">HTTP request</a></li>
-<li><a href="#petAge-remove_http_response">Example response</a></li>
-</ul>
-</li>
+<li><a href="#petAge-get">관심 나이 조회</a></li>
+<li><a href="#petAge-create">관심 나이 등록</a></li>
+<li><a href="#petAge-remove">관심 나이 제거</a></li>
 </ul>
 </li>
 </ul>
@@ -544,9 +502,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#board-create_request_fields">Request fields</a></li>
 <li><a href="#board-create_response_fields">Response fields</a></li>
 <li><a href="#board-create_http_request">HTTP request</a></li>
-<li><a href="#board-create_http_response">Example response</a></li>
+<li><a href="#board-create_http_response">HTTP response</a></li>
 </ul>
 </li>
+<li><a href="#show-board">파양하기 게시글 단일 조회</a>
+<ul class="sectlevel3">
+<li><a href="#show-board_path_parameters">Path parameters</a></li>
+<li><a href="#show-board_response_fields">Response fields</a></li>
+<li><a href="#show-board_http_request">HTTP request</a></li>
+<li><a href="#show-board_http_response">HTTP response</a></li>
 </ul>
 </li>
 </ul>
@@ -555,7 +519,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div id="content">
-<h1 id="overview" class="sect0"><a class="link" href="#overview">개요</a></h1>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">소개</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>퍼펫 매치(Perpet Match) API 서버입니다.</p>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="overview-http-verbs"><a class="link" href="#overview-http-verbs">HTTP 동사</a></h2>
 <div class="sectionbody">
@@ -637,12 +608,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="overview-errors"><a class="link" href="#overview-errors">오류</a></h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
 <h2 id="_공통_응답"><a class="link" href="#_공통_응답">공통 응답</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all spread">
@@ -659,7 +624,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">개발서버</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="http://3.34.246.39:8080/" class="bare">http://3.34.246.39:8080</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="http://3.34.246.39:8080/" class="bare">http://3.34.246.39:8080/</a></code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">운영서버</p></td>
@@ -817,7 +782,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="members-signup_http_response"><a class="link" href="#members-signup_http_response">Example response</a></h4>
+<h4 id="members-signup_http_response"><a class="link" href="#members-signup_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -922,7 +887,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="members-signin_http_response"><a class="link" href="#members-signin_http_response">Example response</a></h4>
+<h4 id="members-signin_http_response"><a class="link" href="#members-signin_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -939,7 +904,7 @@ X-Frame-Options: DENY
 Content-Length: 224
 
 {
-  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDAiLCJpYXQiOjE1OTY2Mjg5NjgsImV4cCI6MTU5NzIzMzc2OH0.0SCOsBVlGTg8NrXp--quWt9bnHCGfWG01Hr-VUtmZEJGnDbQjz-Gdx_RRnO-VI8-mdPz_GxaBwoZEbwDfdFt7w",
+  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDAiLCJpYXQiOjE1OTY3MjkyMzEsImV4cCI6MTU5NzMzNDAzMX0.71pE-BbqO2lydKWhcPclqEwBWeQTAarKAWcVKMdoVQQ6fOek7vMbh8S-JxITEHVK8ECBCtMAKxTCAe-4eD98NQ",
   "tokenType" : "Bearer"
 }</code></pre>
 </div>
@@ -1023,7 +988,7 @@ Content-Length: 224
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/profiles/password HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTgiLCJpYXQiOjE1OTY2Mjg5NjgsImV4cCI6MTU5NzIzMzc2OH0.P0UEwGZrCnQTE6ig-lJPs5XUzIRd5XxujowI-T27VCjR4gyAmKPEc-L3GakeSUL9ScPVS4lwMS4_C5WYjGgzvg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTgiLCJpYXQiOjE1OTY3MjkyMzAsImV4cCI6MTU5NzMzNDAzMH0.UBaaT5gytEGjVA0Vq_OmtMKQgPyxCi4DCU6idkCEc9hMFa20h-IzI0NAGLJEukjBr0C4N8KFpy5rbJkNmCAUEQ
 Accept: application/json
 Content-Length: 74
 Host: localhost:8080
@@ -1036,7 +1001,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="profile-password_http_response"><a class="link" href="#profile-password_http_response">Example response</a></h4>
+<h4 id="profile-password_http_response"><a class="link" href="#profile-password_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1061,7 +1026,7 @@ Content-Length: 89
 </div>
 </div>
 <div class="sect2">
-<h3 id="profile-show"><a class="link" href="#profile-show">프로필 조회</a></h3>
+<h3 id="profile-show"><a class="link" href="#profile-show">프로필 단일 조회</a></h3>
 <div class="paragraph">
 <p>'GET/{id}' 요청을 사용하여 해당 유저의 프로필을 조회할 수 있다.</p>
 </div>
@@ -1232,14 +1197,14 @@ Content-Length: 89
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/292 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE1OTY2Mjg5NjUsImV4cCI6MTU5NzIzMzc2NX0.PwGNOXJKRYmMlUDfrnKk5o3aux3a3dH8nakXg8wAag4BSuiuFRV62TWzKaJrOb93hDV_TGc7DWG-0qajfTxHOg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE1OTY3MjkyMjksImV4cCI6MTU5NzMzNDAyOX0.UkGoDgLCwOdQDlOaQJbF20Kt8uwVwODaRSE33cqLBqn16FojZzGL8XPnn1bzL1RlcqhvJE2xavFc5sxCfadmzQ
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="profile-show_http_response"><a class="link" href="#profile-show_http_response">Example response</a></h4>
+<h4 id="profile-show_http_response"><a class="link" href="#profile-show_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1263,7 +1228,7 @@ Content-Length: 763
     "age" : 1,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com",
-    "joinedAt" : "2020-08-05",
+    "joinedAt" : "2020-08-06",
     "petTitles" : [ ],
     "zones" : [ ],
     "petAges" : [ ],
@@ -1431,7 +1396,7 @@ Content-Length: 763
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTYiLCJpYXQiOjE1OTY2Mjg5NjcsImV4cCI6MTU5NzIzMzc2N30.ipvE-dswnw7GYb3r0wALqLS8dS7PJcIfNsLVUHvriW2zG2I4bc2KGomsSJ8DSGDh0vFfZVdK4LEXCnX6LqjZuA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTYiLCJpYXQiOjE1OTY3MjkyMzAsImV4cCI6MTU5NzMzNDAzMH0.pwE9rCFehJHtdR-b_f9bUGg8IIPVgPGnTMuXwNMY35w4_tDyCEkSW-17yjYtjVg1iBZmQb0YErL7Eq3rieGAdw
 Accept: application/json
 Content-Length: 422
 Host: localhost:8080
@@ -1456,7 +1421,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="profile-create_http_response"><a class="link" href="#profile-create_http_response">Example response</a></h4>
+<h4 id="profile-create_http_response"><a class="link" href="#profile-create_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1537,14 +1502,14 @@ Content-Length: 200
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTAiLCJpYXQiOjE1OTY2Mjg5NjUsImV4cCI6MTU5NzIzMzc2NX0.U93KqQTwc4j6cCBl3O5dT_FCQpH2I6KuDCHZpBXhKA_B5M0v7pLumD_1pmU_4JpjFdfc62cGGfkylcjYWKDcnA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTAiLCJpYXQiOjE1OTY3MjkyMjksImV4cCI6MTU5NzMzNDAyOX0.liWrY1ERLltE3k1eK8elhM67-if6vzTPxe8YXS6K9LCUrzmpnwm1xRJePFqKIIp9g173bYSIyaN16rEMrIap-g
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="petTitle-get_http_response"><a class="link" href="#petTitle-get_http_response">Example response</a></h5>
+<h5 id="petTitle-get_http_response"><a class="link" href="#petTitle-get_http_response">HTTP response</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1565,7 +1530,7 @@ Content-Length: 4860
   "message" : "해당 유저의 선호 품종입니다.",
   "data" : {
     "petTitles" : [ ],
-    "allPetTitles" : [ "고든 세터", "골든 리트리버", "그레이트 데인", "그레이트 스위스 마운틴 도그", "그레이트 피레네", "그레이하운드", "글렌 오브 이말 테리어", "기슈견", "네오폴리탄 마스티프", "노르웨이안 부훈트", "노르웨이 엘크 하운드", "노리치 테리어", "노바 스코셔 덕 톨링 레트리버", "노퍽 테리어", "뉴펀들랜드", "닥스훈트", "달마시안", "댄디 딘몬트 테리어", "도고 까나리오", "도그 드 보르도", "도베르만 핀셔", "도사견", "동경이", "라사압소", "라포니안 허더", "래브라도 레트리버", "레이크랜드 테리어", "로디지아 리지백", "로첸", "로트와일러", "마스티프", "맨체스터 테리어", "몰티즈", "미니어처 불 테리어", "미니어처 슈나우저", "미니어처 핀셔", "바센지", "바셋 하운드", "버니즈 마운틴 도그", "베들링턴 테리어", "벨기에 말리노이즈", "벨기에 시프도그", "벨기에 테뷰런", "벨지안 그리펀", "벨지안 셰퍼드 독", "보더콜리", "보더 테리어", "보르조이", "보스롱", "보스턴 테리어", "복서", "볼로네즈", "부비에 데 플랑드르", "불도그", "불 마스티프", "불 테리어", "브뤼셀 그리펀", "브리아드", "브리타니", "블랙 러시안 테리어", "블랙 앤드 탄 쿤하운드", "블러드 하운드", "비글", "비숑 프리제", "비어디드 콜리", "비즐라", "사모예드", "살루키", "삽살개", "서식스 스패니얼", "세인트 버나드", "셔틀랜드 시프도그", "소프트 코티드 휘튼 테리어", "스무드 폭스 테리어", "스위디쉬 발훈트", "스카이 테리어", "스코티시 디어하운드", "스코티시 테리어", "스키퍼키", "스태퍼드셔 불 테리어", "스탠더드 슈나우저", "스패니쉬 그레이 하운드", "스페니쉬 마스티프", "스피노네 이탈리아노", "스피츠", "시바 이누", "시베리언 허스키", "시추", "시코쿠견", "실리엄 테리어", "실키 테리어", "아나톨리아 셰퍼드", "아메리칸 불도그", "아메리칸 스태퍼드셔 테리어", "아메리칸 아키다", "아메리칸 에스키모 도그", "아메리칸 워터 스패니얼", "아메리칸 코커 스패니얼", "아메리칸 폭스하운드", "아이리쉬 소프트코티드 휘튼 테리어", "아이리시 레드 앤드 화이트 세터", "아이리시 세터", "아이리시 울프 하운드", "아이리시 워터 스패니얼", "아이리시 테리어", "아키타", "아펜핀셔", "아프간 하운드", "알래스칸 맬러뮤트", "에스트렐라 마운틴 독", "에어데일 테리어", "오스트레일리안 실키 테리어", "오스트레일리안 켈피", "오스트레일리언 셰퍼드", "오스트레일리언 캐틀 도그", "오스트레일리언 테리어", "오터 하운드", "올드 잉글리시 시프도그", "와이머라너", "와이어 폭스 테리어", "와이어헤어드 포인팅 그리펀", "요크셔 테리어", "웨스트 하이랜드 화이트 테리어", "웰시 스프링어 스패니얼", "웰시 코기", "웰시 테리어", "이비전 하운드", "이탤리언 그레이하운드", "잉글리시 세터", "잉글리시 스프링어 스패니얼", "잉글리시 코커 스패니얼", "잉글리시 토이 스패니얼", "잉글리시 폭스하운드", "자이언트 슈나우저", "재퍼니스 친", "재퍼니스 스피츠", "잭 러셀 테리어", "저먼 셰퍼드", "저먼 쇼트헤어드 포인터", "저먼 와이어헤어드 포인터", "저먼 핀셔", "저먼 헌팅 테리어", "진돗개", "차우차우", "차이니스 샤페이", "차이니스 크레스티드", "체서피크 베이 레트리버", "치와와", "카디건 웰시 코기", "카발리에 킹 찰스 스패니얼", "컬리코티드 레트리버", "케리 블루 테리어", "케언 테리어", "케이넌 도그", "케이스혼트", "코몬도르", "코커 스패니얼", "코튼 드 툴리어", "콜리", "쿠바스", "클럼버 스패니얼", "토이 폭스 테리어", "티베탄 마스티프", "티베탄 스패니얼", "티베탄 테리어", "파라오 하운드", "파슨 러셀 테리어", "파피용", "퍼그", "페키니즈", "펨브록 웰시 코기", "포르투갈 워터 도그", "포메라니안", "포인터", "폴리시 롤런드 시프도그", "푸들", "푸미", "풀리", "풍산개", "프렌치 불도그", "프티 바세 그리퐁 방댕", "플랫코티드 레트리버", "플롯 하운드", "피니시 스피츠", "피레니안 마스티프", "피레니안 쉽독", "피레니언 셰퍼드", "필드 스패니얼", "해리어", "허배너스", "홋카이도 이누", "휘핏" ]
+    "allPetTitles" : [ "고든 세터", "골든 리트리버", "그레이트 데인", "그레이트 스위스 마운틴 도그", "그레이트 피레네", "그레이하운드", "글렌 오브 이말 테리어", "기슈견", "네오폴리탄 마스티프", "노르웨이 엘크 하운드", "노르웨이안 부훈트", "노리치 테리어", "노바 스코셔 덕 톨링 레트리버", "노퍽 테리어", "뉴펀들랜드", "닥스훈트", "달마시안", "댄디 딘몬트 테리어", "도고 까나리오", "도그 드 보르도", "도베르만 핀셔", "도사견", "동경이", "라사압소", "라포니안 허더", "래브라도 레트리버", "레이크랜드 테리어", "로디지아 리지백", "로첸", "로트와일러", "마스티프", "맨체스터 테리어", "몰티즈", "미니어처 불 테리어", "미니어처 슈나우저", "미니어처 핀셔", "바센지", "바셋 하운드", "버니즈 마운틴 도그", "베들링턴 테리어", "벨기에 말리노이즈", "벨기에 시프도그", "벨기에 테뷰런", "벨지안 그리펀", "벨지안 셰퍼드 독", "보더 테리어", "보더콜리", "보르조이", "보스롱", "보스턴 테리어", "복서", "볼로네즈", "부비에 데 플랑드르", "불 마스티프", "불 테리어", "불도그", "브뤼셀 그리펀", "브리아드", "브리타니", "블랙 러시안 테리어", "블랙 앤드 탄 쿤하운드", "블러드 하운드", "비글", "비숑 프리제", "비어디드 콜리", "비즐라", "사모예드", "살루키", "삽살개", "서식스 스패니얼", "세인트 버나드", "셔틀랜드 시프도그", "소프트 코티드 휘튼 테리어", "스무드 폭스 테리어", "스위디쉬 발훈트", "스카이 테리어", "스코티시 디어하운드", "스코티시 테리어", "스키퍼키", "스태퍼드셔 불 테리어", "스탠더드 슈나우저", "스패니쉬 그레이 하운드", "스페니쉬 마스티프", "스피노네 이탈리아노", "스피츠", "시바 이누", "시베리언 허스키", "시추", "시코쿠견", "실리엄 테리어", "실키 테리어", "아나톨리아 셰퍼드", "아메리칸 불도그", "아메리칸 스태퍼드셔 테리어", "아메리칸 아키다", "아메리칸 에스키모 도그", "아메리칸 워터 스패니얼", "아메리칸 코커 스패니얼", "아메리칸 폭스하운드", "아이리쉬 소프트코티드 휘튼 테리어", "아이리시 레드 앤드 화이트 세터", "아이리시 세터", "아이리시 울프 하운드", "아이리시 워터 스패니얼", "아이리시 테리어", "아키타", "아펜핀셔", "아프간 하운드", "알래스칸 맬러뮤트", "에스트렐라 마운틴 독", "에어데일 테리어", "오스트레일리안 실키 테리어", "오스트레일리안 켈피", "오스트레일리언 셰퍼드", "오스트레일리언 캐틀 도그", "오스트레일리언 테리어", "오터 하운드", "올드 잉글리시 시프도그", "와이머라너", "와이어 폭스 테리어", "와이어헤어드 포인팅 그리펀", "요크셔 테리어", "웨스트 하이랜드 화이트 테리어", "웰시 스프링어 스패니얼", "웰시 코기", "웰시 테리어", "이비전 하운드", "이탤리언 그레이하운드", "잉글리시 세터", "잉글리시 스프링어 스패니얼", "잉글리시 코커 스패니얼", "잉글리시 토이 스패니얼", "잉글리시 폭스하운드", "자이언트 슈나우저", "재퍼니스 스피츠", "재퍼니스 친", "잭 러셀 테리어", "저먼 셰퍼드", "저먼 쇼트헤어드 포인터", "저먼 와이어헤어드 포인터", "저먼 핀셔", "저먼 헌팅 테리어", "진돗개", "차우차우", "차이니스 샤페이", "차이니스 크레스티드", "체서피크 베이 레트리버", "치와와", "카디건 웰시 코기", "카발리에 킹 찰스 스패니얼", "컬리코티드 레트리버", "케리 블루 테리어", "케언 테리어", "케이넌 도그", "케이스혼트", "코몬도르", "코커 스패니얼", "코튼 드 툴리어", "콜리", "쿠바스", "클럼버 스패니얼", "토이 폭스 테리어", "티베탄 마스티프", "티베탄 스패니얼", "티베탄 테리어", "파라오 하운드", "파슨 러셀 테리어", "파피용", "퍼그", "페키니즈", "펨브록 웰시 코기", "포르투갈 워터 도그", "포메라니안", "포인터", "폴리시 롤런드 시프도그", "푸들", "푸미", "풀리", "풍산개", "프렌치 불도그", "프티 바세 그리퐁 방댕", "플랫코티드 레트리버", "플롯 하운드", "피니시 스피츠", "피레니안 마스티프", "피레니안 쉽독", "피레니언 셰퍼드", "필드 스패니얼", "해리어", "허배너스", "홋카이도 이누", "휘핏" ]
   }
 }</code></pre>
 </div>
@@ -1636,7 +1601,7 @@ Content-Length: 4860
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTEiLCJpYXQiOjE1OTY2Mjg5NjUsImV4cCI6MTU5NzIzMzc2NX0.vCDb1ytPSakj6nN1I_ObgI3CWDYP_ZbxVzMm_SUcm1mIn-wHzyBslwatAdjTBRrbKG1wGJ-vpOpbBsW7ydubKg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTEiLCJpYXQiOjE1OTY3MjkyMjksImV4cCI6MTU5NzMzNDAyOX0.fidky5i-NOPvjg-61XMcuWQh7jQ-kYRcsiztJZAxOuZMcZtNvamld-Ypk_a1Rw_30qWitw8jhitC7I0JHqj0Pw
 Accept: application/json
 Content-Length: 29
 Host: localhost:8080
@@ -1648,7 +1613,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect4">
-<h5 id="petTitle-create_http_response"><a class="link" href="#petTitle-create_http_response">Example response</a></h5>
+<h5 id="petTitle-create_http_response"><a class="link" href="#petTitle-create_http_response">HTTP response</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1736,7 +1701,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTQiLCJpYXQiOjE1OTY2Mjg5NjYsImV4cCI6MTU5NzIzMzc2Nn0.WHiN_RIPoXY_gg5vc4D5Fmvr9NiULUUWrTAnPgX9B__0dG6fOaqOrY59tuIiznIIaOMw67GxGRySlTYciuX6Og
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTQiLCJpYXQiOjE1OTY3MjkyMzAsImV4cCI6MTU5NzMzNDAzMH0.-ulUdqxp9K_vDp-zZIR8Mf7XhJVWMCN2krLGpTJAEhYHA4sM5EtbPs23y5uEHHN11sFtx_FDjk6YORmhnVCAqw
 Accept: application/json
 Content-Length: 32
 Host: localhost:8080
@@ -1748,7 +1713,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect4">
-<h5 id="petTitle-remove_http_response"><a class="link" href="#petTitle-remove_http_response">Example response</a></h5>
+<h5 id="petTitle-remove_http_response"><a class="link" href="#petTitle-remove_http_response">HTTP response</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1825,14 +1790,14 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTMiLCJpYXQiOjE1OTY2Mjg5NjYsImV4cCI6MTU5NzIzMzc2Nn0.tqA_RALHcKvx3eMLvrurjeUMdq9pXNMC3XoVaHTHFUoKKfa3j8KlRGz5B1Q8kbxFVtTd1lQGxncRb7djo4TMrg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTMiLCJpYXQiOjE1OTY3MjkyMzAsImV4cCI6MTU5NzMzNDAzMH0.XDbTji9LaGMx5kJy4NPz0t2rsM_rdHNuFcTLe0U528Fkx3EGCytHlSlf8E7kSvxv_ZefEEV6qAerZmQJ78Y1hA
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="petAge-get_http_response"><a class="link" href="#petAge-get_http_response">Example response</a></h5>
+<h5 id="petAge-get_http_response"><a class="link" href="#petAge-get_http_response">HTTP response</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1924,7 +1889,7 @@ Content-Length: 183
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODciLCJpYXQiOjE1OTY2Mjg5NjQsImV4cCI6MTU5NzIzMzc2NH0.x965TyYZLYJURIoDUHsVbmdr7Asxq23YffOT2AmCdVlWc8mssQCDwuVUrU8S81eGZYD0YHgEdPVOyI_5JxJl_w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODciLCJpYXQiOjE1OTY3MjkyMjgsImV4cCI6MTU5NzMzNDAyOH0.3SqPNQo9rvETGfaVdlpvinZtjr8gv45gHro5Lo6Uow8mSvT_8RZxiMMSj_wAnGtHKcgkYRrh3Mt_Irsi4qv_Gw
 Accept: application/json
 Content-Length: 33
 Host: localhost:8080
@@ -1936,7 +1901,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect4">
-<h5 id="petAge-create_http_response"><a class="link" href="#petAge-create_http_response">Example response</a></h5>
+<h5 id="petAge-create_http_response"><a class="link" href="#petAge-create_http_response">HTTP response</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -2024,7 +1989,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODkiLCJpYXQiOjE1OTY2Mjg5NjQsImV4cCI6MTU5NzIzMzc2NH0.sMV7Pxs8vgdDgA1M3aX0r8SJw5Bc2PXrrXvjXwa1gCfXhFLwvTENLSXYTzDmQ2rPYbD5CVY5gjdAog1i0pMtcA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODkiLCJpYXQiOjE1OTY3MjkyMjgsImV4cCI6MTU5NzMzNDAyOH0.BdDVTEDH28Hpgc4fwQcg2eKPZDMVIfB3e1orbVGue_guzYCIGAUeELTQjndJUMmoPtNUueSDXYthrXapwx0UNg
 Accept: application/json
 Content-Length: 33
 Host: localhost:8080
@@ -2036,7 +2001,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect4">
-<h5 id="petAge-remove_http_response"><a class="link" href="#petAge-remove_http_response">Example response</a></h5>
+<h5 id="petAge-remove_http_response"><a class="link" href="#petAge-remove_http_response">HTTP response</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -2208,7 +2173,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODMiLCJpYXQiOjE1OTY2Mjg5NjMsImV4cCI6MTU5NzIzMzc2M30.BWqZAR3Jf0cCvRPrJH34rUvFbWyjzsvb2UutCPrI2J2Or0-GLPX2ruz8KlhZFvZIQ0Nflqs0Mbx3fYal88NVYw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODMiLCJpYXQiOjE1OTY3MjkyMjcsImV4cCI6MTU5NzMzNDAyN30.L41WB4zuem5_C8xBcUrykD4zwcetRXhbxjO7llhLuoq4SEaGSqOxhA6LKgLHB62IbT1_cZjPi35roC1imQdD8w
 Accept: application/json
 Content-Length: 525
 Host: localhost:8080
@@ -2233,7 +2198,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="board-create_http_response"><a class="link" href="#board-create_http_response">Example response</a></h4>
+<h4 id="board-create_http_response"><a class="link" href="#board-create_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -2261,12 +2226,227 @@ Content-Length: 176
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="show-board"><a class="link" href="#show-board">파양하기 게시글 단일 조회</a></h3>
+<div class="paragraph">
+<p>'GET/{id}' 요청을 사용하여 게시글을 조회할 수 있다.</p>
+</div>
+<div class="sect3">
+<h4 id="show-board_path_parameters"><a class="link" href="#show-board_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /api/boards/{id}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="show-board_response_fields"><a class="link" href="#show-board_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">해당 유저의 게시글입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.credit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">껌 (보증금)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.zone.province</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지역</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.gender</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">성별</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">나이(년)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.month</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">나이(개월)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petTitle.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">품종</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petAge.petRange</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">나이 범위</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.checkUp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">건강검진 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.lineAgeImage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">혈통서 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.neuteredImage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중성화 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">소개</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.boardImage1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">강아지 이미지1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.boardImage2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">강아지 이미지2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.boardImage3</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">강아지 이미지3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.zone.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">zoneID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petTitle.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">petTItleID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petAge.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">petAgeID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="show-board_http_request"><a class="link" href="#show-board_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/286 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODUiLCJpYXQiOjE1OTY3MjkyMjgsImV4cCI6MTU5NzMzNDAyOH0.KAySs7wjA5fRoZfkXSivANtSc3efwbnToQhuucwmAeKDyATZoNx4k3wCmB5fljKqtJyrmHL6-W1OFjkC_7tJUQ
+Accept: application/json
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="show-board_http_response"><a class="link" href="#show-board_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 833
+
+{
+  "success" : true,
+  "message" : "해당 유저의 게시글입니다.",
+  "data" : {
+    "id" : 286,
+    "title" : "버려진 포메 보호하고 있습니다",
+    "credit" : 100000,
+    "zone" : {
+      "id" : 70,
+      "province" : "서울특별시"
+    },
+    "gender" : "MALE",
+    "year" : 1,
+    "month" : 11,
+    "petTitle" : {
+      "id" : 238,
+      "title" : "치와와"
+    },
+    "petAge" : {
+      "id" : 89,
+      "petRange" : "1년~7년"
+    },
+    "checkUp" : "DataURL",
+    "lineAgeImage" : "DataURL",
+    "neuteredImage" : "DataURL",
+    "description" : "이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.",
+    "boardImage1" : "DataURL",
+    "boardImage2" : "DataURL",
+    "boardImage3" : "DataURL"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-05 09:27:21 KST
+Last updated 2020-08-06 13:18:11 KST
 </div>
 </div>
 </body>

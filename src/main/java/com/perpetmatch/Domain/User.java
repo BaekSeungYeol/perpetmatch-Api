@@ -14,7 +14,7 @@ import java.util.*;
 @AllArgsConstructor
 @Getter @Setter
 @EqualsAndHashCode(of = "id")
-public class User {
+public class User extends DateAudit{
 
     @Id @GeneratedValue
     private Long id;

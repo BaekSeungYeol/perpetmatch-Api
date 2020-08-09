@@ -5,15 +5,16 @@ import com.perpetmatch.Domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class UserPrincipal implements UserDetails {
+public class UserPrincipal implements OAuth2User, UserDetails {
     private Long id;
-
 
     private String username;
 
@@ -24,6 +25,9 @@ public class UserPrincipal implements UserDetails {
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
+
+
+    private Map<String,Object> attributes;
 
     public UserPrincipal(Long id,String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
@@ -47,10 +51,44 @@ public class UserPrincipal implements UserDetails {
         );
     }
 
+    public static UserPrincipal create(User user, Map<String, Object> attributes) {
+        UserPrincipal userPrincipal = UserPrincipal.create(user);
+        userPrincipal.setAttributes(attributes);
+        return userPrincipal;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+
+
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
     public String getEmail() {
         return email;
@@ -104,4 +142,10 @@ public class UserPrincipal implements UserDetails {
 
         return Objects.hash(id);
     }
+
+    @Override
+    public String getName() {
+        return this.getUsername();
+    }
+
 }

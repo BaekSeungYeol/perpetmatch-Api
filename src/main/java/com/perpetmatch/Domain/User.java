@@ -1,9 +1,11 @@
 package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.perpetmatch.jjwt.oauth2.user.AuthProvider;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -77,6 +79,15 @@ public class User extends DateAudit{
 
 
     private boolean profileDone;
+
+    //
+
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+
+    private String providerId;
+    private String imageUrl;
+
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

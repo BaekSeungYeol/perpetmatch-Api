@@ -493,6 +493,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#petAge-remove">관심 나이 제거</a></li>
 </ul>
 </li>
+<li><a href="#Zone">관심 지역</a>
+<ul class="sectlevel3">
+<li><a href="#petZone-get">관심 지역 조회</a></li>
+<li><a href="#petZone-create">관심 지역 등록</a></li>
+<li><a href="#petZone-remove">관심 지역 제거</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#board">파양하기 게시판</a>
@@ -877,7 +884,7 @@ Content-Length: 97
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Content-Length: 77
-Host: localhost:8080
+Host: perpetapi.com
 
 {
   "usernameOrEmail" : "beck22222@naver.com",
@@ -904,7 +911,7 @@ X-Frame-Options: DENY
 Content-Length: 224
 
 {
-  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDAiLCJpYXQiOjE1OTY3MjkyMzEsImV4cCI6MTU5NzMzNDAzMX0.71pE-BbqO2lydKWhcPclqEwBWeQTAarKAWcVKMdoVQQ6fOek7vMbh8S-JxITEHVK8ECBCtMAKxTCAe-4eD98NQ",
+  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDMiLCJpYXQiOjE1OTcxMTc4NDMsImV4cCI6MTU5NzcyMjY0M30.2NhtwVrZZxDrtTfMxp_60p13pyg0cR_MfVaRHBxIMP9LwoEHWQaKcIHgp5SlQzRjCXmDBvc_S5FbhHx9roLqAg",
   "tokenType" : "Bearer"
 }</code></pre>
 </div>
@@ -988,7 +995,7 @@ Content-Length: 224
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/profiles/password HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTgiLCJpYXQiOjE1OTY3MjkyMzAsImV4cCI6MTU5NzMzNDAzMH0.UBaaT5gytEGjVA0Vq_OmtMKQgPyxCi4DCU6idkCEc9hMFa20h-IzI0NAGLJEukjBr0C4N8KFpy5rbJkNmCAUEQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDAiLCJpYXQiOjE1OTcxMTc4NDEsImV4cCI6MTU5NzcyMjY0MX0.KeoMBQW5Ui_BjDQxOtijwr3YvnrkQpHIB3R3qRAraRavibYFessYP1lCAh53gXB6Kyl8u91s4LBcAfqDwjmLFQ
 Accept: application/json
 Content-Length: 74
 Host: localhost:8080
@@ -1195,11 +1202,11 @@ Content-Length: 89
 <h4 id="profile-show_http_request"><a class="link" href="#profile-show_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/292 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/294 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE1OTY3MjkyMjksImV4cCI6MTU5NzMzNDAyOX0.UkGoDgLCwOdQDlOaQJbF20Kt8uwVwODaRSE33cqLBqn16FojZzGL8XPnn1bzL1RlcqhvJE2xavFc5sxCfadmzQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTQiLCJpYXQiOjE1OTcxMTc4MzgsImV4cCI6MTU5NzcyMjYzOH0.kQWTq9Ub7HSUqyzFv0kBUi8pGtUYZYwDRxdJii41XTAEmCq2P8_fcmZh-Vx5YRCnpnO2QbC2xaRkldKhto4eBg
 Accept: application/json
-Host: localhost:8080</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -1224,11 +1231,11 @@ Content-Length: 763
   "success" : true,
   "message" : "요청 유저의 프로필 조회입니다.",
   "data" : {
-    "id" : 292,
+    "id" : 294,
     "age" : 1,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com",
-    "joinedAt" : "2020-08-06",
+    "joinedAt" : "2020-08-11",
     "petTitles" : [ ],
     "zones" : [ ],
     "petAges" : [ ],
@@ -1396,7 +1403,7 @@ Content-Length: 763
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTYiLCJpYXQiOjE1OTY3MjkyMzAsImV4cCI6MTU5NzMzNDAzMH0.pwE9rCFehJHtdR-b_f9bUGg8IIPVgPGnTMuXwNMY35w4_tDyCEkSW-17yjYtjVg1iBZmQb0YErL7Eq3rieGAdw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTgiLCJpYXQiOjE1OTcxMTc4NDAsImV4cCI6MTU5NzcyMjY0MH0.biRqMySQ7KWejtdg-jnfCl1azEw5ibDY-Z_M_Q6EiPvSfTeUWwgLHZ6zy9iMWMljETaYKrjBtUMFy0zyCtOGdA
 Accept: application/json
 Content-Length: 422
 Host: localhost:8080
@@ -1441,7 +1448,7 @@ Content-Length: 200
   "success" : true,
   "message" : "프로필이 등록 완료 되었습니다.",
   "data" : {
-    "id" : 296,
+    "id" : 298,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com"
   }
@@ -1502,9 +1509,9 @@ Content-Length: 200
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTAiLCJpYXQiOjE1OTY3MjkyMjksImV4cCI6MTU5NzMzNDAyOX0.liWrY1ERLltE3k1eK8elhM67-if6vzTPxe8YXS6K9LCUrzmpnwm1xRJePFqKIIp9g173bYSIyaN16rEMrIap-g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTAiLCJpYXQiOjE1OTcxMTc4MzYsImV4cCI6MTU5NzcyMjYzNn0.LVHQMIy_oJ5Ku1P0-IxF9-bzK91EPLhkK5U6My2yAkO0NmqIgMi4k13BC-BKbGpXbL_h39aYJ1_75tWaYYio7A
 Accept: application/json
-Host: localhost:8080</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -1601,7 +1608,7 @@ Content-Length: 4860
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTEiLCJpYXQiOjE1OTY3MjkyMjksImV4cCI6MTU5NzMzNDAyOX0.fidky5i-NOPvjg-61XMcuWQh7jQ-kYRcsiztJZAxOuZMcZtNvamld-Ypk_a1Rw_30qWitw8jhitC7I0JHqj0Pw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE1OTcxMTc4MzcsImV4cCI6MTU5NzcyMjYzN30.HOo4Au_v4VeQr2YPLvL6sMQrXzHjhNIysZa6o-ndFZ5KATdYV4NEyGDJyumFH4Jo4WUU9DSa4u1DcKsYOwdKFw
 Accept: application/json
 Content-Length: 29
 Host: localhost:8080
@@ -1701,7 +1708,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTQiLCJpYXQiOjE1OTY3MjkyMzAsImV4cCI6MTU5NzMzNDAzMH0.-ulUdqxp9K_vDp-zZIR8Mf7XhJVWMCN2krLGpTJAEhYHA4sM5EtbPs23y5uEHHN11sFtx_FDjk6YORmhnVCAqw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTYiLCJpYXQiOjE1OTcxMTc4MzksImV4cCI6MTU5NzcyMjYzOX0.t8bqGu_vgXJT5S9oMx2QF1hIGgsDxAxcA8owtpYTL9-WNAFBJZIlD32sTgtufIQtBfAtMDGTg0XzcEOTWuhtTQ
 Accept: application/json
 Content-Length: 32
 Host: localhost:8080
@@ -1790,9 +1797,9 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTMiLCJpYXQiOjE1OTY3MjkyMzAsImV4cCI6MTU5NzMzNDAzMH0.XDbTji9LaGMx5kJy4NPz0t2rsM_rdHNuFcTLe0U528Fkx3EGCytHlSlf8E7kSvxv_ZefEEV6qAerZmQJ78Y1hA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTUiLCJpYXQiOjE1OTcxMTc4MzksImV4cCI6MTU5NzcyMjYzOX0.wQYCermyiztIKLe73cG337wrXaC1Li8uQiow8Afw8S-TWJ_tZx3ZShq0oCq7DnSNgyTpFIRrzTSat5Xcu-Kadg
 Accept: application/json
-Host: localhost:8080</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -1889,7 +1896,7 @@ Content-Length: 183
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODciLCJpYXQiOjE1OTY3MjkyMjgsImV4cCI6MTU5NzMzNDAyOH0.3SqPNQo9rvETGfaVdlpvinZtjr8gv45gHro5Lo6Uow8mSvT_8RZxiMMSj_wAnGtHKcgkYRrh3Mt_Irsi4qv_Gw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODciLCJpYXQiOjE1OTcxMTc4MzUsImV4cCI6MTU5NzcyMjYzNX0.3dHOtRDv1a7PRj8sgOLb9IwoUziCrhiZKhnP0kBi4ZKIyej8PgYzNbVtTSh_Busg-UahzlaJnPVg2SHrmbflcA
 Accept: application/json
 Content-Length: 33
 Host: localhost:8080
@@ -1989,7 +1996,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODkiLCJpYXQiOjE1OTY3MjkyMjgsImV4cCI6MTU5NzMzNDAyOH0.BdDVTEDH28Hpgc4fwQcg2eKPZDMVIfB3e1orbVGue_guzYCIGAUeELTQjndJUMmoPtNUueSDXYthrXapwx0UNg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODkiLCJpYXQiOjE1OTcxMTc4MzYsImV4cCI6MTU5NzcyMjYzNn0.0IOgO-oM6pSRay4q53hm21VJT8zBm0sTsMprBt6s_VUAizUh90HKDJ_8S39zDaGPMvXcqdlBErYh8sIPjWGXBg
 Accept: application/json
 Content-Length: 33
 Host: localhost:8080
@@ -2020,6 +2027,294 @@ Content-Length: 88
 {
   "success" : true,
   "message" : "성공적으로 나이를 제거했습니다."
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Zone"><a class="link" href="#Zone">관심 지역</a></h3>
+<div class="sect3">
+<h4 id="petZone-get"><a class="link" href="#petZone-get">관심 지역 조회</a></h4>
+<div class="paragraph">
+<p>'GET' 요청을 사용하여 해당 유저의 관심 지역을 조회할 수 있다.</p>
+</div>
+<div class="sect4">
+<h5 id="petZone-get_response_fields"><a class="link" href="#petZone-get_response_fields">Response fields</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">해당 유저의 선호 지역입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.zones</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선호 지역</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.allZones</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선호 지역 리스트</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="petZone-get_http_request"><a class="link" href="#petZone-get_http_request">HTTP request</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/zone HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDEiLCJpYXQiOjE1OTcxMTc4NDIsImV4cCI6MTU5NzcyMjY0Mn0.UY5KLNegW51wJ1-chCRNTyr14Sk_xaNvW8GHwaT3NZ9OfSNa8rViX1hhDqFQC4zUzZ5f20Vdr4BvSCK_HH0uHw
+Accept: application/json
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="petZone-get_http_response"><a class="link" href="#petZone-get_http_response">HTTP response</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1308
+
+{
+  "success" : true,
+  "message" : "해당 유저의 지역입니다.",
+  "data" : {
+    "zones" : [ ],
+    "allZones" : [ "안동시", "안산시", "안성시", "안양시", "아산시", "보령시", "부천시", "부산광역시", "창원시", "천안시", "청주시", "춘천시", "충주시", "대구광역시", "대전광역시", "당진시", "동두천시", "동해시", "강릉시", "거제시", "김천시", "김해시", "김제시", "김포시", "공주시", "고양시", "구미시", "군포시", "군산시", "구리시", "과천시", "광주광역시", "광주시", "광명시", "광양시", "경주시", "경산시", "계룡시", "하남시", "화성시", "이천시", "익산시", "인천광역시", "제천시", "정읍시", "전주시", "제주시", "진주시", "나주시", "남양주시", "남원시", "논산시", "밀양시", "목포시", "문경시", "오산시", "파주시", "포천시", "포항시", "평택시", "사천시", "상주시", "삼척시", "세종특별자치시", "서귀포시", "성남시", "서산시", "서울특별시", "시흥시", "속초시", "순천시", "수원시", "태백시", "통영시", "의정부시", "의왕시", "울산광역시", "원주시", "양주시", "양산시", "여주시", "영천시", "영주시", "여수시", "용인시" ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="petZone-create"><a class="link" href="#petZone-create">관심 지역 등록</a></h4>
+<div class="paragraph">
+<p>'POST' 요청을 사용하여 해당 유저의 관심 지역을 등록할 수 있다.</p>
+</div>
+<div class="sect4">
+<h5 id="petZone-create_request_fields"><a class="link" href="#petZone-create_request_fields">Request fields</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>province</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">추가할 선호 지역들</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="petZone-create_response_fields"><a class="link" href="#petZone-create_response_fields">Response fields</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">성공적으로 지역을 추가했습니다.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="petZone-create_http_request"><a class="link" href="#petZone-create_http_request">HTTP request</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/zone HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTMiLCJpYXQiOjE1OTcxMTc4MzgsImV4cCI6MTU5NzcyMjYzOH0._cnuQH1Z-OlLoX-U58ax0wPYm3PVKjY50VH8-nQjgaxEnpCxVK2TxxsQFROXU7Hb5fVbJjwfEXgd06kesaWXUg
+Accept: application/json
+Content-Length: 38
+Host: localhost:8080
+
+{
+  "province" : "서울특별시"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="petZone-create_http_response"><a class="link" href="#petZone-create_http_response">HTTP response</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 88
+
+{
+  "success" : true,
+  "message" : "성공적으로 지역을 추가했습니다."
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="petZone-remove"><a class="link" href="#petZone-remove">관심 지역 제거</a></h4>
+<div class="paragraph">
+<p>'DELETE' 요청을 사용하여 해당 유저의 관심 지역을 제거할 수 있다.</p>
+</div>
+<div class="sect4">
+<h5 id="petZone-remove_request_fields"><a class="link" href="#petZone-remove_request_fields">Request fields</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>province</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제거할 선호 지역</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="petZone-remove_response_fields"><a class="link" href="#petZone-remove_response_fields">Response fields</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">성공적으로 지역을 제거했습니다.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="petZone-remove_http_request"><a class="link" href="#petZone-remove_http_request">HTTP request</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/zone HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTEiLCJpYXQiOjE1OTcxMTc4MzcsImV4cCI6MTU5NzcyMjYzN30.wQPoetkBvy9eV0Iqvx6M2xK6gaqJK17Hcl1fZ1cROVBeDLy1792gpeCXGddS6yoVJMCIqLrLsP0icPaTEjbbwQ
+Accept: application/json
+Content-Length: 38
+Host: localhost:8080
+
+{
+  "province" : "서울특별시"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="petZone-remove_http_response"><a class="link" href="#petZone-remove_http_response">HTTP response</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 88
+
+{
+  "success" : true,
+  "message" : "성공적으로 지역을 제거했습니다."
 }</code></pre>
 </div>
 </div>
@@ -2173,7 +2468,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODMiLCJpYXQiOjE1OTY3MjkyMjcsImV4cCI6MTU5NzMzNDAyN30.L41WB4zuem5_C8xBcUrykD4zwcetRXhbxjO7llhLuoq4SEaGSqOxhA6LKgLHB62IbT1_cZjPi35roC1imQdD8w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODMiLCJpYXQiOjE1OTcxMTc4MzMsImV4cCI6MTU5NzcyMjYzM30.6AC-ab7EBp4iY6bu-m4LTkoQ4eooS-vgYkjgfXV4hxqFdSN9P534zeNE4tnJBOXhP9wegT7voRBQKF2hgFZWyg
 Accept: application/json
 Content-Length: 525
 Host: localhost:8080
@@ -2285,6 +2580,11 @@ Content-Length: 176
 <td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.manager</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">작성자(관리자)</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
@@ -2383,7 +2683,7 @@ Content-Length: 176
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/286 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODUiLCJpYXQiOjE1OTY3MjkyMjgsImV4cCI6MTU5NzMzNDAyOH0.KAySs7wjA5fRoZfkXSivANtSc3efwbnToQhuucwmAeKDyATZoNx4k3wCmB5fljKqtJyrmHL6-W1OFjkC_7tJUQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODUiLCJpYXQiOjE1OTcxMTc4MzQsImV4cCI6MTU5NzcyMjYzNH0.6GFGb7SVOCJzCEA5cKB1R1f3T5Ld2cpXD2ToPjjAbkw70AprpOUAb9Q0Lzkun5HwcEhWf6MXMYwntDecy6xbrw
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -2404,13 +2704,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 833
+Content-Length: 872
 
 {
   "success" : true,
   "message" : "해당 유저의 게시글입니다.",
   "data" : {
     "id" : 286,
+    "manager" : "백승열입니다",
     "title" : "버려진 포메 보호하고 있습니다",
     "credit" : 100000,
     "zone" : {
@@ -2446,7 +2747,7 @@ Content-Length: 833
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-06 13:18:11 KST
+Last updated 2020-08-11 00:40:43 KST
 </div>
 </div>
 </body>

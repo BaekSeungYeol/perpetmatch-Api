@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import static com.perpetmatch.jjwt.oauth2.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
@@ -72,8 +73,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
+   
     private boolean isAuthorizedRedirectUri(String uri) {
         URI clientRedirectUri = URI.create(uri);
+        AppProperties.OAuth2 oauth2 = appProperties.getOauth2();
+        List<String> authorizedRedirectUris = oauth2.getAuthorizedRedirectUris();
 
         return appProperties.getOauth2().getAuthorizedRedirectUris()
                 .stream()

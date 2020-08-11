@@ -1,7 +1,12 @@
 package com.perpetmatch.jjwt.oauth2;
 
+import com.perpetmatch.Domain.Role;
+import com.perpetmatch.Domain.RoleName;
 import com.perpetmatch.Domain.User;
 import com.perpetmatch.Member.UserRepository;
+import com.perpetmatch.Member.UserService;
+import com.perpetmatch.Role.RoleRepository;
+import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.OAuth2AuthenticationProcessingException;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.oauth2.user.AuthProvider;
@@ -18,6 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -26,6 +34,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private UserService userService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -72,7 +84,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setNickname(oAuth2UserInfo.getName());
         user.setEmail(oAuth2UserInfo.getEmail());
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
-        return userRepository.save(user);
+        user.setJoinedAt(LocalDateTime.now());
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new AppException("User Role not set."));
+        user.setRoles(Collections.singleton(userRole));
+        user.generateEmailCheckToken();
+        User savedUser = userRepository.save(user);
+
+        userService.sendJoinMemberConfirmEmail(savedUser);
+        return savedUser;
     }
 
     private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {

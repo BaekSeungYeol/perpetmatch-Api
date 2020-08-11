@@ -161,11 +161,6 @@ class BoardApiControllerTest {
                 .andExpect(jsonPath("data.boardImage2").exists())
                 .andExpect(jsonPath("data.boardImage3").exists())
                 .andDo(document("show-board",
-                        preprocessRequest(modifyUris()
-                                .scheme("https")
-                                .host("perpetapi.com")
-                                .removePort(),
-                                prettyPrint()),
                         pathParameters(
                                 parameterWithName("id").description("아이디")
                         ),

@@ -182,6 +182,31 @@ operation::update-petAge[snippets='request-fields,response-fields,http-request,h
 
 operation::remove-petAge[snippets='request-fields,response-fields,http-request,http-response']
 
+[[Zone]]
+=== 관심 지역
+
+[[petZone-get]]
+==== 관심 지역 조회
+
+'GET' 요청을 사용하여 해당 유저의 관심 지역을 조회할 수 있다.
+
+operation::show-zone[snippets='response-fields,http-request,http-response']
+
+[[petZone-create]]
+==== 관심 지역 등록
+
+'POST' 요청을 사용하여 해당 유저의 관심 지역을 등록할 수 있다.
+
+operation::update-petZone[snippets='request-fields,response-fields,http-request,http-response']
+
+[[petZone-remove]]
+==== 관심 지역 제거
+
+'DELETE' 요청을 사용하여 해당 유저의 관심 지역을 제거할 수 있다.
+
+operation::remove-petZone[snippets='request-fields,response-fields,http-request,http-response']
+
+
 [[board]]
 == 파양하기 게시판
 

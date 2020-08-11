@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.User;
 import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Domain.PetAge;
+import com.perpetmatch.Domain.Zone;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
-import com.perpetmatch.api.dto.Profile.PasswordRequest;
-import com.perpetmatch.api.dto.Profile.PetAgeRequest;
-import com.perpetmatch.api.dto.Profile.PetForm;
-import com.perpetmatch.api.dto.Profile.ProfileRequest;
+import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.api.dto.Profile.*;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
@@ -41,6 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -75,6 +75,8 @@ class ProfileApiControllerTest {
     UserService userService;
     @Autowired
     PetAgeRepository petAgeRepository;
+    @Autowired
+    ZoneRepository zoneRepository;
 
     private String token = null;
     private Long id;
@@ -169,6 +171,11 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.expectedFeeForMonth").exists());
 
                 results.andDo(document("show-profile",
+                        preprocessRequest(modifyUris()
+                                        .scheme("https")
+                                        .host("perpetapi.com")
+                                        .removePort(),
+                                prettyPrint()),
                         pathParameters(
                                 parameterWithName("id").description("아이디")
                         ),
@@ -369,6 +376,11 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.petTitles").exists())
                 .andExpect(jsonPath("data.allPetTitles").exists())
                 .andDo(document("show-petTitle",
+                        preprocessRequest(modifyUris()
+                                        .scheme("https")
+                                        .host("perpetapi.com")
+                                        .removePort(),
+                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -475,6 +487,11 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.ages").exists())
                 .andExpect(jsonPath("data.allAges").exists())
                 .andDo(document("show-petAge",
+                        preprocessRequest(modifyUris()
+                                        .scheme("https")
+                                        .host("perpetapi.com")
+                                        .removePort(),
+                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -559,6 +576,107 @@ class ProfileApiControllerTest {
 
         PetAge petRange = petAgeRepository.findPetRange("1년이하");
         assertTrue(!userRepository.findByNickname("백승열입니다").get().getPetAges().contains(petRange));
+
+    }
+
+
+    @Test
+    @DisplayName(" 로그인 한 유저의 관심 지역 조회 " )
+    void showZone_success() throws Exception {
+
+        mockMvc.perform(get("/api/profiles/zone")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("data.zones").exists())
+                .andExpect(jsonPath("data.allZones").exists())
+                .andDo(document("show-zone",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 선호 지역입니다."),
+                                fieldWithPath("data.zones").type(JsonFieldType.ARRAY).description("선호 지역"),
+                                fieldWithPath("data.allZones").type(JsonFieldType.ARRAY).description("선호 지역 리스트")
+                        )));
+    }
+
+    @Test
+    @DisplayName("관심 지역 추가 성공 " )
+    void addZone_success() throws Exception {
+        ZoneForm zoneForm = new ZoneForm();
+        zoneForm.setProvince("서울특별시");
+
+        mockMvc.perform(post("/api/profiles/zone")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(zoneForm)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("성공적으로 지역을 추가했습니다."))
+                .andDo(document("update-petZone",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        requestFields(
+                                fieldWithPath("province").type(JsonFieldType.STRING).description("추가할 선호 지역들")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 지역을 추가했습니다."))
+                        ));
+
+        Zone zone = zoneRepository.findByProvince("서울특별시");
+        assertTrue(userRepository.findByNickname("백승열입니다").get().getZones().contains(zone));
+
+    }
+    @Test
+    @DisplayName("관심 나이 제거 성공 " )
+    void addZone_failed() throws Exception {
+        ZoneForm zoneForm = new ZoneForm();
+        zoneForm.setProvince("서울특별시");
+
+        mockMvc.perform(delete("/api/profiles/zone")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(zoneForm)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("성공적으로 지역을 제거했습니다."))
+                .andDo(document("remove-petZone",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+
+                        ),
+                        requestFields(
+                                fieldWithPath("province").type(JsonFieldType.STRING).description("제거할 선호 지역")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 지역을 제거했습니다.")
+                        )));
+
+        Zone zone = zoneRepository.findByProvince("서울특별시");
+        assertTrue(!userRepository.findByNickname("백승열입니다").get().getZones().contains(zone));
 
     }
 }

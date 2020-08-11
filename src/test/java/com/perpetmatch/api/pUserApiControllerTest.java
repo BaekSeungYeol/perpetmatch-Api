@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -75,6 +76,11 @@ class pUserApiControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk())
                 .andDo(document("sign-in",
+                        preprocessRequest(modifyUris()
+                                        .scheme("https")
+                                        .host("perpetapi.com")
+                                        .removePort(),
+                                prettyPrint()),
                 requestHeaders(
                         headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                         headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON")

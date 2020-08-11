@@ -73,11 +73,16 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
-   
+
     private boolean isAuthorizedRedirectUri(String uri) {
         URI clientRedirectUri = URI.create(uri);
         AppProperties.OAuth2 oauth2 = appProperties.getOauth2();
         List<String> authorizedRedirectUris = oauth2.getAuthorizedRedirectUris();
+        System.out.println("===*********************=======");
+        System.out.println(authorizedRedirectUris.get(0));
+        System.out.println("===*********************=======");
+        System.out.println(clientRedirectUri);
+        System.out.println("===*********************=======");
 
         return appProperties.getOauth2().getAuthorizedRedirectUris()
                 .stream()

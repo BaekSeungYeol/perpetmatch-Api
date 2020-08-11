@@ -2,6 +2,7 @@ package com.perpetmatch.api;
 
 import com.perpetmatch.Domain.User;
 import com.perpetmatch.Member.UserRepository;
+import com.perpetmatch.api.dto.User.UserDto;
 import com.perpetmatch.exception.ResourceNotFoundException;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
@@ -47,8 +48,9 @@ public class HelloController {
     }
 
     @GetMapping("/user/me")
-    public User getCurrentUser(@CurrentMember UserPrincipal userPrincipal) {
-        return userRepository.findById(userPrincipal.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+    public UserDto getCurrentUser(@CurrentMember UserPrincipal userPrincipal) {
+        User user = userRepository.findById(userPrincipal.getId()).get();
+
+        return new UserDto(user.getId(), user.getNickname(), user.getEmail());
     }
 }

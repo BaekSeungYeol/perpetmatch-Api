@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -160,6 +161,11 @@ class BoardApiControllerTest {
                 .andExpect(jsonPath("data.boardImage2").exists())
                 .andExpect(jsonPath("data.boardImage3").exists())
                 .andDo(document("show-board",
+                        preprocessRequest(modifyUris()
+                                .scheme("https")
+                                .host("perpetapi.com")
+                                .removePort(),
+                                prettyPrint()),
                         pathParameters(
                                 parameterWithName("id").description("아이디")
                         ),

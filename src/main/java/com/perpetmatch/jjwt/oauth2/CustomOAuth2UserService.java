@@ -38,8 +38,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final RoleRepository roleRepository;
 
-    private final UserService userService;
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
@@ -91,8 +89,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setRoles(Collections.singleton(userRole));
         user.generateEmailCheckToken();
         User savedUser = userRepository.save(user);
-
-        userService.sendJoinMemberConfirmEmail(savedUser);
         return savedUser;
     }
 

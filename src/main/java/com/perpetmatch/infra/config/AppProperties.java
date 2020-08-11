@@ -41,7 +41,6 @@ public class AppProperties {
         private List<String> authorizedRedirectUris = new ArrayList<>();
 
         public List<String> getAuthorizedRedirectUris() {
-            authorizedRedirectUris.add("http://localhost:3000/oauth2/redirect");
             return authorizedRedirectUris;
         }
 

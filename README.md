@@ -8,12 +8,12 @@
 
 > PERPET MATCH API 서버
 
+![image](https://user-images.githubusercontent.com/47316511/90139001-bba08d80-ddb2-11ea-9bdd-cba7c160c31c.png)
 
 
 
 
-
-퍼펫매치 API 서버 입니다.
+퍼펫매치(Perpet Match) API 서버 입니다.
 
 ## 개발서버
 
@@ -24,11 +24,7 @@ http://perpetapi.com:8080
 
 ```sh
 ```
-## Run tests
 
-```sh
-npm run test
-```
 
 ## Author
 

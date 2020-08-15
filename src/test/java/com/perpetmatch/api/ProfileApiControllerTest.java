@@ -402,9 +402,11 @@ class ProfileApiControllerTest {
     @Test
     @DisplayName("관심 품종 추가 성공 " )
     void addPetTag_success() throws Exception {
+        //Given
         PetForm petForm = new PetForm();
         petForm.setPetTitle("푸들");
 
+        // When
         mockMvc.perform(post("/api/profiles/pet/title")
                 .header("Authorization", token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -430,6 +432,7 @@ class ProfileApiControllerTest {
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 품종을 추가했습니다.")
                         )));
 
+        //Then
         Pet newPet = petRepository.findByTitle("푸들");
         assertTrue(newPet != null);
         assertTrue(userRepository.findByNickname("백승열입니다").get().getPetTitles().contains(newPet));

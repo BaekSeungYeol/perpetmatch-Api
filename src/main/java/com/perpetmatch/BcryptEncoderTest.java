@@ -8,8 +8,6 @@ public class BcryptEncoderTest {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         for(int i=1; i<=10; ++i) {
-            String encodedString = encoder.encode("password@@!23@#!");
-            System.out.println(encodedString);
-        }
+            String encodedString = encoder.encode("password@@!23@#!"); }
     }
 }

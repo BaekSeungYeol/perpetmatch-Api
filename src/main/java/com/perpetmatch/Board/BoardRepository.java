@@ -1,6 +1,8 @@
 package com.perpetmatch.Board;
 
 import com.perpetmatch.Domain.Board;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +17,10 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     @EntityGraph(attributePaths = {"petAge","zone","petTitle", "manager"})
     Board findZoneAndPetTitleAndPetAgeById(@Param("id") Long id);
 
+
     Board findByTitle(String s);
+
+    @EntityGraph(attributePaths = {"petAge","zone","petTitle"})
+    Page<Board> findAll(Pageable pageable);
+
 }

@@ -3,15 +3,15 @@ package com.perpetmatch.api;
 import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.Board.BoardService;
 import com.perpetmatch.Domain.Board;
-import com.perpetmatch.api.dto.Board.BoardGetResponseV1;
-import com.perpetmatch.api.dto.Board.BoardPostRequest;
-import com.perpetmatch.api.dto.Board.BoardResponse;
-import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
+import com.perpetmatch.api.dto.Board.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -27,7 +27,15 @@ public class BoardApiController {
     private final BoardService boardService;
     private final BoardRepository boardRepository;
 
-    // 다건 조회
+    // 입양하기 페이지 다건 조회
+    @GetMapping("/boards")
+    public ResponseEntity getBoards(Pageable pageable) {
+        Slice<Board> allBoards = boardService.findAllBoards();
+        Slice<BoardPageData> map = allBoards.map(board -> new BoardPageData(board));
+
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 다건 조회입니다.", map));
+
+    }
 
 
     // 단건 조회

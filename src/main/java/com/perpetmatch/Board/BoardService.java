@@ -10,6 +10,10 @@ import com.perpetmatch.exception.UpdateException;
 import com.perpetmatch.pet.PetRepository;
 import com.perpetmatch.Member.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -131,5 +135,10 @@ public class BoardService {
         else
             petAge = petAgeRepository.findPetRange("7년이상");
         return petAge;
+    }
+
+    public Slice<Board> findAllBoards() {
+        PageRequest pg = PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "publishedDateTime"));
+        return boardRepository.findAll(pg);
     }
 }

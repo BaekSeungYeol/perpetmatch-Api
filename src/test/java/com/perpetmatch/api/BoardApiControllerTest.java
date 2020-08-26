@@ -291,4 +291,18 @@ class BoardApiControllerTest {
         assertEquals(allBoards.getNumberOfElements(), 6);
 
     }
+
+    @Test
+    @DisplayName("입양하기 페이지 게시글 다건 조회 성공")
+    public void getAllBoards_Adoption_page() throws Exception {
+
+        mockMvc.perform(get("/api/boards")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("message").value("게시글 다건 조회입니다."))
+                .andExpect(jsonPath("data.content").exists());
+    }
 }

@@ -139,6 +139,6 @@ public class BoardService {
 
     public Slice<Board> findAllBoards() {
         PageRequest pg = PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "publishedDateTime"));
-        return boardRepository.findAll(pg);
+        return boardRepository.findAllBoards(pg);
     }
 }

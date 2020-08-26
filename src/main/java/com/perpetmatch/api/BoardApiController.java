@@ -34,7 +34,6 @@ public class BoardApiController {
         Slice<BoardPageData> map = allBoards.map(board -> new BoardPageData(board));
 
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 다건 조회입니다.", map));
-
     }
 
 

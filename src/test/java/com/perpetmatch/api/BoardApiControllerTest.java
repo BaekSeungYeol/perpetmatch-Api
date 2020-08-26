@@ -22,6 +22,8 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -31,6 +33,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -261,6 +266,29 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("id"),
                                 fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목")
                         )));
+
+    }
+
+    @Test
+    @DisplayName("페이지 기능 정상 동작")
+    public void slicing() {
+        boardRepository.save(new Board());
+        boardRepository.save(new Board());
+        boardRepository.save(new Board());
+        boardRepository.save(new Board());
+        boardRepository.save(new Board());
+        boardRepository.save(new Board());
+        boardRepository.save(new Board());
+
+        //when
+        PageRequest pageRequest = PageRequest.of(0,6);
+        Slice<Board> allBoards = boardRepository.findAllBoards(pageRequest);
+
+        //then
+        List<Board> content = allBoards.getContent();
+        assertEquals(content.size(), 6);
+        assertEquals(allBoards.getNumber(), 0);
+        assertEquals(allBoards.getNumberOfElements(), 6);
 
     }
 }

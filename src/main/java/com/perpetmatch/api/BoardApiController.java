@@ -3,6 +3,7 @@ package com.perpetmatch.api;
 import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.Board.BoardService;
 import com.perpetmatch.Domain.Board;
+import com.perpetmatch.Domain.User;
 import com.perpetmatch.api.dto.Board.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
@@ -85,7 +86,13 @@ public class BoardApiController {
 
     }
 
+    /**
+     * 신청하기를 누를 시
+     */
+    @PostMapping("/boards/apply")
+    public ResponseEntity apply(@CurrentMember UserPrincipal currentMember) {
 
+    }
 
 
 

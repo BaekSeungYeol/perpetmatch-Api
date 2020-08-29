@@ -225,6 +225,15 @@ operation::create-board[snippets='request-fields,response-fields,http-request,ht
 'GET/{id}' 요청을 사용하여 게시글을 조회할 수 있다.
 
 operation::show-board[snippets='path-parameters,response-fields,http-request,http-response']
+
+[[get-boards]]
+=== 파양하기 게시글 다건 조회
+
+'GET' 요청을 사용하여 게시글을 다건 조회할 수 있다.
+
+operation::get-boards[snippets='response-fields,http-request,http-response']
+
+
 //[[resources-events-get]]
 //=== 이벤트 조회
 //

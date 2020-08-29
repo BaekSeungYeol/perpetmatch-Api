@@ -2,6 +2,8 @@ package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perpetmatch.Board.Gender;
+import com.perpetmatch.jjwt.CurrentMember;
+import com.perpetmatch.jjwt.UserPrincipal;
 import lombok.*;
 
 import javax.persistence.*;
@@ -89,5 +91,19 @@ public class Board extends DateAudit{
 
     public void addManager(User member) {
         this.manager = member;
+    }
+
+    public boolean isMember(String username) {
+        for(User user : users) {
+            if(user.getNickname().equals(username))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isManager(String username) {
+        if(manager.getNickname().equals(username))
+            return true;
+        else return false;
     }
 }

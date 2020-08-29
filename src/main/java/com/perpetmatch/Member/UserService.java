@@ -1,5 +1,6 @@
 package com.perpetmatch.Member;
 
+import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
@@ -23,9 +24,8 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -43,6 +43,7 @@ public class UserService {
     private final PetAgeRepository petAgeRepository;
     private final TemplateEngine templateEngine;
     private final AppProperties appProperties;
+    private final BoardRepository boardRepository;
 
     public void sendJoinMemberConfirmEmail(User savedMember) {
         Context context = new Context();
@@ -219,5 +220,18 @@ public class UserService {
         Zone zone = zoneRepository.findByProvince(province);
         Optional<User> byId = userRepository.findById(id);
         byId.ifPresent(m -> m.getZones().remove(zone));
+    }
+
+    public List<String> apply(Long id, String username) {
+        Board board = boardRepository.findById(id).get();
+        Optional<User> user = userRepository.findByNickname(username);
+        user.ifPresent(u -> {
+            if(board.isMember(u.getNickname()))
+                board.removeMember(u);
+            else
+                board.addMember(u);
+        });
+        List<String> collect = board.getUsers().stream().map(u -> u.getNickname()).collect(Collectors.toList());
+        return collect;
     }
 }

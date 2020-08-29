@@ -4,6 +4,8 @@ import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.Board.BoardService;
 import com.perpetmatch.Domain.Board;
 import com.perpetmatch.Domain.User;
+import com.perpetmatch.Member.UserRepository;
+import com.perpetmatch.Member.UserService;
 import com.perpetmatch.api.dto.Board.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
@@ -19,6 +21,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -27,8 +32,12 @@ public class BoardApiController {
 
     private final BoardService boardService;
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
-    // 입양하기 페이지 다건 조회
+    /**
+     * 입양하기 페이지 다건 조회
+     */
     @GetMapping("/boards")
     public ResponseEntity getBoards(Pageable pageable) {
         Slice<Board> allBoards = boardService.findAllBoards();
@@ -88,14 +97,24 @@ public class BoardApiController {
 
     /**
      * 신청하기를 누를 시
+     * 없다면 신청이 되고 신청이 된 상태에서 다시 한번 누르면 신청이 취소된다.
      */
-    @PostMapping("/boards/apply")
-    public ResponseEntity apply(@CurrentMember UserPrincipal currentMember) {
+    @PostMapping("/boards/{id}/apply")
+    public ResponseEntity apply(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
+        if(currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
 
+        String username = currentMember.getUsername();
+        List<String> applyUsers = userService.apply(id, username);
+
+        // 현재 글에(id) 신청된 멤버들(users)를 보여주기
+        BoardApplyUsers boardResponse = new BoardApplyUsers(applyUsers);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 신청한 유저 목록입니다.",boardResponse));
     }
-
-
-
-
+    /**
+     * 관심글 등록을 누를 시
+     */
 
 }

@@ -1,6 +1,7 @@
 package com.perpetmatch.Board;
 
 import com.perpetmatch.Domain.Board;
+import com.perpetmatch.Domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
 

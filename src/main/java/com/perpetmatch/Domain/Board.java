@@ -106,4 +106,10 @@ public class Board extends DateAudit{
             return true;
         else return false;
     }
+    public void addMember(User user) {
+        this.getUsers().add(user);
+    }
+    public void removeMember(User user) {
+        this.getUsers().remove(user);
+    }
 }

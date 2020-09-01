@@ -222,7 +222,7 @@ public class UserService {
         byId.ifPresent(m -> m.getZones().remove(zone));
     }
 
-    public List<String> apply(Long id, String username) {
+    public boolean apply(Long id, String username) {
         Board board = boardRepository.findById(id).get();
         Optional<User> user = userRepository.findByNickname(username);
         user.ifPresent(u -> {
@@ -231,7 +231,16 @@ public class UserService {
             else
                 board.addMember(u);
         });
+        return board.isMember(username);
+    }
+    public List<String> applyUserList(Long id) {
+        Board board = boardRepository.findById(id).get();
         List<String> collect = board.getUsers().stream().map(u -> u.getNickname()).collect(Collectors.toList());
         return collect;
+    }
+
+    public boolean isManager(String username, Long id) {
+        Board board = boardRepository.findById(id).get();
+        return username.equals(board.getManager().getNickname());
     }
 }

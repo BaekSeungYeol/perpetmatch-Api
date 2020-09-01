@@ -45,6 +45,9 @@ public class User extends DateAudit{
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<PetAge> petAges = new HashSet<>();
 
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    private Set<Board> bookmark = new HashSet<>();
+
     private int credit;
 
     private String houseType;

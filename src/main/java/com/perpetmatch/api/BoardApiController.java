@@ -94,6 +94,33 @@ public class BoardApiController {
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 수정이 완료되었습니다.", boardResponse));
 
     }
+    /**
+     * 신청된 회원들은 글을 등록한 유저만(isManager) 표시가 되야 하며
+     * 입양하기 게시글 클릭시 보여지도록 하여야 한다.
+     * 이떄 보여주어야 할 것은 일단 image와 닉네임
+     */
+    @GetMapping("/board/{id}/manager")
+    public ResponseEntity isManager(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
+        if(currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        String username = currentMember.getUsername();
+        boolean isManager = userService.isManager(username, id);
+
+        if(!isManager) {
+            return new ResponseEntity<>(new ApiResponse(false, "글의 주인이 아닙니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+        else {
+            List<String> applyUsers = userService.applyUserList(id);
+            BoardApplyUsers boardResponse = new BoardApplyUsers(applyUsers);
+            return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 신청한 유저 목록입니다.",boardResponse));
+        }
+
+    }
+
 
     /**
      * 신청하기를 누를 시
@@ -107,14 +134,16 @@ public class BoardApiController {
         }
 
         String username = currentMember.getUsername();
-        List<String> applyUsers = userService.apply(id, username);
+        boolean userIn = userService.apply(id, username);
 
-        // 현재 글에(id) 신청된 멤버들(users)를 보여주기
-        BoardApplyUsers boardResponse = new BoardApplyUsers(applyUsers);
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 신청한 유저 목록입니다.",boardResponse));
+        // 현재 글에(id) 신청한 멤버의 id와 username 보여주기
+        BoardApply boardResponse = new BoardApply(userIn);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 신청한 유저 여부입니다.",boardResponse));
     }
+
     /**
      * 관심글 등록을 누를 시
      */
+
 
 }

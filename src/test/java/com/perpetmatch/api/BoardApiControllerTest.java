@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.Board.Gender;
 import com.perpetmatch.Domain.Board;
+import com.perpetmatch.Domain.User;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
@@ -34,8 +35,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -115,33 +118,9 @@ class BoardApiControllerTest {
     @Test
     @DisplayName("게시글 단일 조회 테스트 - 성공")
     public void getBoard() throws Exception {
-        BoardPostRequest boardRequest = BoardPostRequest.builder()
-                .title("버려진 포메 보호하고 있습니다")
-                .credit(100000)
-                .zone("서울특별시")
-                .gender(Gender.MALE)
-                .year(1)
-                .month(11)
-                .petTitle("치와와")
-                .checkUp("DataURL")
-                .lineAgeImage("DataURL")
-                .neuteredImage("DataURL")
-                .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
-                .boardImage1("DataURL")
-                .boardImage2("DataURL")
-                .boardImage3("DataURL")
-                .build();
+        Long id = getBoardId();
 
-        mockMvc.perform(post("/api/boards")
-                .header("Authorization", token)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(boardRequest)))
-                .andExpect(status().isOk());
-
-        id = boardRepository.findByTitle("버려진 포메 보호하고 있습니다").getId();
-
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/{id}", id)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/{id}", this.id)
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -202,6 +181,35 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.petAge.id").type(JsonFieldType.NUMBER).description("petAgeID")
                         )));
 
+    }
+
+    private Long getBoardId() throws Exception {
+        BoardPostRequest boardRequest = BoardPostRequest.builder()
+                .title("버려진 포메 보호하고 있습니다")
+                .credit(100000)
+                .zone("서울특별시")
+                .gender(Gender.MALE)
+                .year(1)
+                .month(11)
+                .petTitle("치와와")
+                .checkUp("DataURL")
+                .lineAgeImage("DataURL")
+                .neuteredImage("DataURL")
+                .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
+                .boardImage1("DataURL")
+                .boardImage2("DataURL")
+                .boardImage3("DataURL")
+                .build();
+
+        mockMvc.perform(post("/api/boards")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(boardRequest)))
+                .andExpect(status().isOk());
+
+        id = boardRepository.findByTitle("버려진 포메 보호하고 있습니다").getId();
+        return id;
     }
 
     @Test
@@ -356,4 +364,30 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.content[0].publishedDateTime").type(JsonFieldType.STRING).description("작성일")
                         )));
     }
+
+
+    @Test
+    @DisplayName("입양하기 게시글 신청하기 성공/제거 테스트")
+    public void adoption_board_apply_success() throws Exception {
+        //given
+        id = getBoardId();
+
+        //when
+        mockMvc.perform(post("/api/boards/{id}/apply", this.id)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("message").value("현재 신청한 유저 여부입니다."))
+                .andExpect(jsonPath("data.userIn").value(true));
+        //then
+        User user = userRepository.findByNickname("백승열입니다").get();
+        Board board = boardRepository.findById(id).get();
+        assertTrue(board.getUsers().contains(user));
+
+    }
+
+
+
 }

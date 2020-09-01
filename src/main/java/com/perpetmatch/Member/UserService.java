@@ -5,6 +5,7 @@ import com.perpetmatch.Domain.*;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
 import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.api.dto.Board.ApplyUsers;
 import com.perpetmatch.api.dto.Profile.PasswordRequest;
 import com.perpetmatch.api.dto.Profile.ProfileRequest;
 import com.perpetmatch.exception.AppException;
@@ -233,10 +234,11 @@ public class UserService {
         });
         return board.isMember(username);
     }
-    public List<String> applyUserList(Long id) {
+    public List<ApplyUsers> applyUserList(Long id) {
         Board board = boardRepository.findById(id).get();
-        List<String> collect = board.getUsers().stream().map(u -> u.getNickname()).collect(Collectors.toList());
-        return collect;
+        List<ApplyUsers> users = board.getUsers().stream().map(u -> new ApplyUsers(u.getId(),u.getNickname(),u.getProfileImage(),u.getDescription()))
+        .collect(Collectors.toList());
+        return users;
     }
 
     public boolean isManager(String username, Long id) {

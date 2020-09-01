@@ -66,7 +66,7 @@ public class User extends DateAudit{
 
     private String location;
 
-    @Lob @Basic(fetch = FetchType.LAZY)
+    @Lob @Basic(fetch = FetchType.EAGER)
     private String description;
 
     private boolean wantCheckUp;

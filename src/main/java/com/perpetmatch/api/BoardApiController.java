@@ -114,7 +114,7 @@ public class BoardApiController {
                     HttpStatus.BAD_REQUEST);
         }
         else {
-            List<String> applyUsers = userService.applyUserList(id);
+            List<ApplyUsers> applyUsers = userService.applyUserList(id);
             BoardApplyUsers boardResponse = new BoardApplyUsers(applyUsers);
             return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 신청한 유저 목록입니다.",boardResponse));
         }

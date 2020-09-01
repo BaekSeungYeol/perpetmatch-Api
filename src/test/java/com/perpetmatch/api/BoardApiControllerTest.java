@@ -373,20 +373,74 @@ class BoardApiControllerTest {
         id = getBoardId();
 
         //when
-        mockMvc.perform(post("/api/boards/{id}/apply", this.id)
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/boards/{id}/apply", this.id)
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("success").value(true))
                 .andExpect(jsonPath("message").value("현재 신청한 유저 여부입니다."))
-                .andExpect(jsonPath("data.userIn").value(true));
+                .andExpect(jsonPath("data.userIn").value(true))
+                .andDo(document("adopt-apply",
+                        pathParameters(
+                                parameterWithName("id").description("게시글 아이디")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 여부입니다."),
+                                fieldWithPath("data.userIn").type(JsonFieldType.BOOLEAN).description("신청시 true 취소시 false 반환"))
+                        ));
         //then
         User user = userRepository.findByNickname("백승열입니다").get();
         Board board = boardRepository.findById(id).get();
         assertTrue(board.getUsers().contains(user));
+    }
+
+    @Test
+    @DisplayName(" 입양 게시글 주인만 신청 목록을 받는다.")
+    public void adoption_apply_with_manager() throws Exception {
+        id = getBoardId();
+
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/board/{id}/manager", this.id)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("message").value("현재 신청한 유저 목록입니다."))
+                .andExpect(jsonPath("data.users").exists())
+                .andDo(document("apply-list",
+                        pathParameters(
+                                parameterWithName("id").description("게시글 아이디")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 목록입니다."),
+                                fieldWithPath("data.users").type(JsonFieldType.ARRAY).description("현재 신청한 유저들의 리스트 입니다."))));
+    }
+
+    @Test
+    @DisplayName("입양하기 글의 주인이 아니면 신청 목록을 얻지 못한다.")
+    public void adoption_apply_with_no_manager() {
 
     }
+
 
 
 

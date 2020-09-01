@@ -66,7 +66,7 @@
 | 환경 | Domain
 
 | 개발서버
-| `http://3.34.246.39:8080/`
+| `http://perpetapi:8080/`
 
 | 운영서버
 |
@@ -219,6 +219,7 @@ operation::remove-petZone[snippets='request-fields,response-fields,http-request,
 
 operation::create-board[snippets='request-fields,response-fields,http-request,http-response']
 
+
 [[show-board]]
 === 파양하기 게시글 단일 조회
 
@@ -233,6 +234,34 @@ operation::show-board[snippets='path-parameters,response-fields,http-request,htt
 
 operation::get-boards[snippets='response-fields,http-request,http-response']
 
+[[Adoption]]
+== 입양하기
+
+[[adopt-apply]]
+=== 입양하기 신청
+
+'POST' 요청을 사용하여 입양 게시글에 신청할 수 있다.  최초 누를 시 신청이 되고 신청이 된 상태에서 다시 한번 누르면 신청이 취소된다.
+operation::adopt-apply[snippets='path-parameters,request-fields,response-fields,http-request,http-response']
+
+
+[[apply-list]]
+=== 신청 리스트 보기
+
+'GET' 요청을 사용하여 해당 글의 주인은 입양 신청 리스트를 가져올 수 있다.
+
+
+operation::apply-list[snippets='path-parameters,response-fields,http-request,http-response']
+
+=== users 데이터
+users[0], users[1] 각각의 데이터는 다음과 같다.
+|====
+|코드|코드명|필수값
+
+|id|유저 아이디|true
+|nickname|유저 닉네임|true
+|profileImage|유저 프로필 이미지|true
+|description|유저 소개|true
+|====
 
 //[[resources-events-get]]
 //=== 이벤트 조회

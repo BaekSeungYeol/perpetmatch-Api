@@ -163,22 +163,19 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.manager").type(JsonFieldType.STRING).description("작성자(관리자)"),
                                 fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
-                                fieldWithPath("data.zone.province").type(JsonFieldType.STRING).description("지역"),
+                                fieldWithPath("data.zone").type(JsonFieldType.STRING).description("지역"),
                                 fieldWithPath("data.gender").type(JsonFieldType.STRING).description("성별"),
                                 fieldWithPath("data.year").type(JsonFieldType.NUMBER).description("나이(년)"),
                                 fieldWithPath("data.month").type(JsonFieldType.NUMBER).description("나이(개월)"),
-                                fieldWithPath("data.petTitle.title").type(JsonFieldType.STRING).description("품종"),
-                                fieldWithPath("data.petAge.petRange").type(JsonFieldType.STRING).description("나이 범위"),
+                                fieldWithPath("data.petTitle").type(JsonFieldType.STRING).description("품종"),
+                                fieldWithPath("data.petAge").type(JsonFieldType.STRING).description("나이 범위"),
                                 fieldWithPath("data.checkUp").type(JsonFieldType.STRING).description("건강검진 이미지"),
                                 fieldWithPath("data.lineAgeImage").type(JsonFieldType.STRING).description("혈통서 이미지"),
                                 fieldWithPath("data.neuteredImage").type(JsonFieldType.STRING).description("중성화 이미지"),
                                 fieldWithPath("data.description").type(JsonFieldType.STRING).description("소개"),
                                 fieldWithPath("data.boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
                                 fieldWithPath("data.boardImage2").type(JsonFieldType.STRING).description("강아지 이미지2"),
-                                fieldWithPath("data.boardImage3").type(JsonFieldType.STRING).description("강아지 이미지3"),
-                                fieldWithPath("data.zone.id").type(JsonFieldType.NUMBER).description("zoneID"),
-                                fieldWithPath("data.petTitle.id").type(JsonFieldType.NUMBER).description("petTItleID"),
-                                fieldWithPath("data.petAge.id").type(JsonFieldType.NUMBER).description("petAgeID")
+                                fieldWithPath("data.boardImage3").type(JsonFieldType.STRING).description("강아지 이미지3")
                         )));
 
     }
@@ -353,9 +350,9 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("포인트"),
                                 fieldWithPath("data.content[0].gender").type(JsonFieldType.STRING).description("성별"),
-                                fieldWithPath("data.content[0].zone.province").type(JsonFieldType.STRING).description("지역"),
-                                fieldWithPath("data.content[0].petTitle.title").type(JsonFieldType.STRING).description("품종"),
-                                fieldWithPath("data.content[0].petAge.petRange").type(JsonFieldType.STRING).description("나이 범위"),
+                                fieldWithPath("data.content[0].zone").type(JsonFieldType.STRING).description("지역"),
+                                fieldWithPath("data.content[0].petTitle").type(JsonFieldType.STRING).description("품종"),
+                                fieldWithPath("data.content[0].petAge").type(JsonFieldType.STRING).description("나이 범위"),
                                 fieldWithPath("data.content[0].year").type(JsonFieldType.NUMBER).description("나이 (년)"),
                                 fieldWithPath("data.content[0].month").type(JsonFieldType.NUMBER).description("나이 (월)"),
                                 fieldWithPath("data.content[0].hasCheckup").type(JsonFieldType.BOOLEAN).description("건강검진증 여부"),
@@ -409,6 +406,13 @@ class BoardApiControllerTest {
     public void adoption_apply_with_manager() throws Exception {
         id = getBoardId();
 
+
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/boards/{id}/apply", this.id)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
         mockMvc.perform(RestDocumentationRequestBuilders.get("/api/board/{id}/manager", this.id)
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
@@ -432,7 +436,10 @@ class BoardApiControllerTest {
                         responseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 목록입니다."),
-                                fieldWithPath("data.users").type(JsonFieldType.ARRAY).description("현재 신청한 유저들의 리스트 입니다."))));
+                                fieldWithPath("data.users[0].id").type(JsonFieldType.NUMBER).description("현재 신청한 유저의 아이디 입니다."),
+                                fieldWithPath("data.users[0].nickname").type(JsonFieldType.STRING).description("현재 신청한 유저의 닉네임 입니다."),
+                                fieldWithPath("data.users[0].profileImage").type(JsonFieldType.NULL).description("현재 신청한 유저의 프로필 이미지 입니다."),
+                                fieldWithPath("data.users[0].description").type(JsonFieldType.NULL).description("현재 신청한 유저의 소개 입니다."))));
     }
 
     @Test

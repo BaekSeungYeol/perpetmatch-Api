@@ -243,6 +243,6 @@ public class UserService {
 
     public boolean isManager(String username, Long id) {
         Board board = boardRepository.findById(id).get();
-        return username.equals(board.getManager().getNickname());
+        return board.isManager(username);
     }
 }

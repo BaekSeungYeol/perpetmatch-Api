@@ -21,9 +21,9 @@ public class BoardPageData {
     private String title;
     private int credit;
     private String gender;
-    private Zone zone;
-    private Pet petTitle;
-    private PetAge petAge;
+    private String zone;
+    private String petTitle;
+    private String petAge;
     private int year;
     private int month;
     private boolean hasCheckup;
@@ -37,9 +37,9 @@ public class BoardPageData {
         title=board.getTitle();
         credit =board.getCredit();
         gender=board.getGender().toString();
-        zone=board.getZone();
-        petTitle=board.getPetTitle();
-        petAge=board.getPetAge();
+        zone=board.getZone().getProvince();
+        petTitle=board.getPetTitle().getTitle();
+        petAge=board.getPetAge().getPetRange();
         year= board.getYear();
         month=board.getMonth();
         hasCheckup=board.isHasCheckUp();

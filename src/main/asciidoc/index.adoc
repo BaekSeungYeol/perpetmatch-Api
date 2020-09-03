@@ -66,7 +66,7 @@
 | 환경 | Domain
 
 | 개발서버
-| `http://perpetapi:8080/`
+| `http://perpetapi.com:8080/`
 
 | 운영서버
 |
@@ -241,6 +241,7 @@ operation::get-boards[snippets='response-fields,http-request,http-response']
 === 입양하기 신청
 
 'POST' 요청을 사용하여 입양 게시글에 신청할 수 있다.  최초 누를 시 신청이 되고 신청이 된 상태에서 다시 한번 누르면 신청이 취소된다.
+
 operation::adopt-apply[snippets='path-parameters,request-fields,response-fields,http-request,http-response']
 
 
@@ -257,10 +258,10 @@ users[0], users[1] 각각의 데이터는 다음과 같다.
 |====
 |코드|코드명|필수값
 
-|id|유저 아이디|true
-|nickname|유저 닉네임|true
-|profileImage|유저 프로필 이미지|true
-|description|유저 소개|true
+|id|NUMBER|true
+|nickname|STRING|true
+|profileImage|STRING|true
+|description|STRING|true
 |====
 
 //[[resources-events-get]]

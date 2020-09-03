@@ -109,10 +109,7 @@ public class BoardApiController {
         String username = currentMember.getUsername();
         boolean isManager = userService.isManager(username, id);
 
-        if(!isManager) {
-            return new ResponseEntity<>(new ApiResponse(false, "글의 주인이 아닙니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+        if(!isManager)  return new ResponseEntity<>(new ApiResponse(false, "글의 주인이 아닙니다."), HttpStatus.BAD_REQUEST);
         else {
             List<ApplyUsers> applyUsers = userService.applyUserList(id);
             BoardApplyUsers boardResponse = new BoardApplyUsers(applyUsers);

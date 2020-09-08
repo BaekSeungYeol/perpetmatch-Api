@@ -242,7 +242,7 @@ operation::get-boards[snippets='response-fields,http-request,http-response']
 
 'POST' 요청을 사용하여 입양 게시글에 신청할 수 있다.  최초 누를 시 신청이 되고 신청이 된 상태에서 다시 한번 누르면 신청이 취소된다.
 
-operation::adopt-apply[snippets='path-parameters,request-fields,response-fields,http-request,http-response']
+operation::adopt-apply[snippets='path-parameters,response-fields,http-request,http-response']
 
 
 [[apply-list]]

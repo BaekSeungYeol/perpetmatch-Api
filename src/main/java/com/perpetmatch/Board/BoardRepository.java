@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Set;
 
-public interface BoardRepository extends JpaRepository<Board,Long> {
+public interface BoardRepository extends JpaRepository<Board,Long>, BoardRepositoryCustom{
 
 
    // @Query("select distinct b from Board b left join fetch b.petAge left join fetch b.zone left join fetch b.petTitle where b.id = :id")

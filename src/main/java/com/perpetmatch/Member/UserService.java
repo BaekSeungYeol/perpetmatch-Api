@@ -245,4 +245,16 @@ public class UserService {
         Board board = boardRepository.findById(id).get();
         return board.isManager(username);
     }
+
+    public boolean likes(Long id, String username) {
+        Board board = boardRepository.findById(id).get();
+        Optional<User> user = userRepository.findByNickname(username);
+        user.ifPresent(u -> {
+            if(u.getLikeList().contains(board))
+                u.removeLikeBoard(board);
+            else
+                u.addLikeBoard(board);
+        });
+        return user.get().hasLikeBoard(board);
+    }
 }

@@ -22,7 +22,6 @@ public class AdoptApiController {
     public ResponseEntity searchBoard(String keyword) {
         List<AdoptBoard> boardList = boardRepository.findByKeyword(keyword);
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "입양 게시판 검색입니다.", boardList));
-
     }
 
 }

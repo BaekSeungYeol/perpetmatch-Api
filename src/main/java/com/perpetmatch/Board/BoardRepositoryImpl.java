@@ -1,7 +1,6 @@
 package com.perpetmatch.Board;
 
-import com.perpetmatch.Domain.Board;
-import com.perpetmatch.Domain.QBoard;
+import com.perpetmatch.Domain.*;
 import com.perpetmatch.api.dto.Board.AdoptBoard;
 import com.perpetmatch.api.dto.Board.QAdoptBoard;
 import com.querydsl.jpa.JPQLQuery;
@@ -24,6 +23,9 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                         .or(board.petTitle.title.containsIgnoreCase(keyword))
                         .or(board.zone.province.containsIgnoreCase(keyword))
                         .or(board.petAge.petRange.containsIgnoreCase(keyword)))
+                .leftJoin(board.petTitle, QPet.pet)
+                .leftJoin(board.zone, QZone.zone)
+                .leftJoin(board.petAge, QPetAge.petAge)
                 .select(new QAdoptBoard(
                         board.id,
                         board.title,

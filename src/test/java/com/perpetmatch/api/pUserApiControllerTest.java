@@ -47,10 +47,7 @@ class pUserApiControllerTest {
     @Autowired
     UserRepository userRepository;
 
-    @BeforeEach
-    public void setUp() {
-        userRepository.deleteAll();
-    }
+
 
     @Test
     @DisplayName("로그인 - 입력값 정상")

@@ -141,6 +141,20 @@ public class BoardApiController {
     /**
      * 관심글 등록을 누를 시
      */
+    @PostMapping("/boards/{id}/likes")
+    public ResponseEntity likes(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
+        if(currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        String username = currentMember.getUsername();
+        boolean likeApply = userService.likes(id, username);
+
+        // 현재 글에(id) 신청한 멤버의 id와 username 보여주기
+        BoardLike boardResponse = new BoardLike(likeApply);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 유저의 즐겨찾기 여부입니다. ",boardResponse));
+    }
 
 
 }

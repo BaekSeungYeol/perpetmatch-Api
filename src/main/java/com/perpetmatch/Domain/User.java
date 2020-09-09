@@ -45,6 +45,9 @@ public class User extends DateAudit{
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<PetAge> petAges = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Board> likeList = new HashSet<>();
+
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    private Set<Board> bookmark = new HashSet<>();
 
@@ -80,7 +83,6 @@ public class User extends DateAudit{
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
 
-
     private boolean profileDone;
 
     //
@@ -99,5 +101,16 @@ public class User extends DateAudit{
     public void completeSignup(String token) {
         this.setEmailVerified(true);
         this.setJoinedAt(LocalDateTime.now());
+    }
+
+    public void removeLikeBoard(Board board) {
+        this.getLikeList().remove(board);
+    }
+    public void addLikeBoard(Board board) {
+        this.getLikeList().add(board);
+    }
+
+    public boolean hasLikeBoard(Board board) {
+        return this.getLikeList().contains(board);
     }
 }

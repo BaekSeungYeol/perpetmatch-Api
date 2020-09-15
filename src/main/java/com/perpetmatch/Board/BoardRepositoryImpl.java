@@ -3,7 +3,11 @@ package com.perpetmatch.Board;
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.api.dto.Board.AdoptBoard;
 import com.perpetmatch.api.dto.Board.QAdoptBoard;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
@@ -17,7 +21,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
     }
 
     @Override
-    public List<AdoptBoard> findByKeyword(String keyword) {
+    public Page<AdoptBoard> findByKeyword(String keyword, Pageable pageable) {
         JPQLQuery<AdoptBoard> result = from(board)
                 .where(board.title.containsIgnoreCase(keyword)
                         .or(board.petTitle.title.containsIgnoreCase(keyword))
@@ -39,8 +43,12 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                         board.hasLineAgeImage,
                         board.neutered,
                         board.description,
-                        board.boardImage1));
+                        board.boardImage1,
+                        board.createdAt
+                ));
 
-        return result.fetch();
+        JPQLQuery<AdoptBoard> resultP = getQuerydsl().applyPagination(pageable, result);
+        QueryResults<AdoptBoard> fetchResults = resultP.fetchResults();
+        return new PageImpl<>(fetchResults.getResults(), pageable, fetchResults.getTotal());
     }
 }

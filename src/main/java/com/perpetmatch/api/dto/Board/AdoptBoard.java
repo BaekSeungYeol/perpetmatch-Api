@@ -1,5 +1,6 @@
 package com.perpetmatch.api.dto.Board;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perpetmatch.Board.Gender;
 import com.perpetmatch.Domain.Board;
 import com.querydsl.core.annotations.QueryProjection;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -25,9 +28,11 @@ public class AdoptBoard {
     private boolean hasNeutered;
     private String description;
     private String boardImage1;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDateTime createdAt;
 
     @QueryProjection
-    public AdoptBoard(Long id, String title, int credit, String zone, int year, int month, String petTitle, String petAge, boolean hasCheckUp, boolean hasLineAgeImage, boolean neutered, String description, String boardImage1) {
+    public AdoptBoard(Long id, String title, int credit, String zone, int year, int month, String petTitle, String petAge, boolean hasCheckUp, boolean hasLineAgeImage, boolean neutered, String description, String boardImage1, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.credit = credit;
@@ -41,5 +46,6 @@ public class AdoptBoard {
         this.hasNeutered = neutered;
         this.description = description;
         this.boardImage1 = boardImage1;
+        this.createdAt = createdAt;
     }
 }

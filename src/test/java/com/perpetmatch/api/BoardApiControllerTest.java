@@ -442,6 +442,45 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.users[0].description").type(JsonFieldType.NULL).description("현재 신청한 유저의 소개 입니다."))));
     }
 
+
+    @Test
+    @DisplayName("즐겨찾기 성공/제거 테스트")
+    public void likeBoard_success() throws Exception {
+        //given
+        id = getBoardId();
+
+        //when
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/boards/{id}/likes", this.id)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("message").value("현재 유저의 즐겨찾기 여부입니다. "))
+                .andExpect(jsonPath("data.like").value(true))
+                .andDo(document("like-apply",
+                        pathParameters(
+                                parameterWithName("id").description("게시글 아이디")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 여부입니다."),
+                                fieldWithPath("data.like").type(JsonFieldType.BOOLEAN).description("즐겨찾기 시 true 취소시 false 반환"))
+                ));
+        //then
+        User user = userRepository.findByNickname("백승열입니다").get();
+        Board board = boardRepository.findById(id).get();
+        assertTrue(user.getLikeList().contains(board));
+    }
+
     @Test
     @DisplayName("입양하기 글의 주인이 아니면 신청 목록을 얻지 못한다.")
     public void adoption_apply_with_no_manager() {

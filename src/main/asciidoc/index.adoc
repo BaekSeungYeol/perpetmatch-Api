@@ -269,7 +269,7 @@ users[0], users[1] 각각의 데이터는 다음과 같다.
 
 'POST' 요청을 사용하여 해당 글의 즐겨찾기를 등록할 수 있다. 최초 누를 시 즐겨찾기가 추가 되며 다시 한번 누를 시 제거 된다.
 
-operation::apply-list[snippets='path-parameters,response-fields,http-request,http-response']
+operation::like-apply[snippets='path-parameters,response-fields,http-request,http-response']
 
 [[search-board]]
 === 입양하기 검색
@@ -279,7 +279,7 @@ operation::apply-list[snippets='path-parameters,response-fields,http-request,htt
 keyword의 조건은 제목, 지역, 나이 범위, 픔종 이다.
 
 
-operation::apply-list[snippets='response-fields,http-request,http-response']
+operation::search-board[snippets='response-fields,http-request,http-response']
 
 
 //[[resources-events-get]]

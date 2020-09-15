@@ -264,6 +264,12 @@ users[0], users[1] 각각의 데이터는 다음과 같다.
 |description|STRING|true
 |====
 
+[[apply-like]]
+=== 즐겨찾기 등록하기
+
+'POST' 요청을 사용하여 해당 글의 즐겨찾기를 등록할 수 있다. 최초 누를 시 즐겨찾기가 추가 되며 다시 한번 누를 시 제거 된다.
+
+operation::apply-list[snippets='path-parameters,response-fields,http-request,http-response']
 
 [[search-board]]
 === 입양하기 검색

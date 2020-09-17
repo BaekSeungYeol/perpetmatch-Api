@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@Slf4j
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
@@ -70,6 +69,8 @@ public class AuthController {
             return new ResponseEntity<>(new ApiResponse(false, "이메일이 이미 존재합니다."),
                     HttpStatus.BAD_REQUEST);
         }
+
+        User result = userService.join(signUpRequest);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "회원가입이 성공적으로 완료되었습니다."));
     }

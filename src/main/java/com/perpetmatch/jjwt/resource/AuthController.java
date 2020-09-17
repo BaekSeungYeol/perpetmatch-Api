@@ -5,10 +5,12 @@ import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.Role.RoleRepository;
 import com.perpetmatch.exception.ResourceNotFoundException;
+import com.perpetmatch.infra.config.AppProperties;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.JwtTokenProvider;
 import com.perpetmatch.jjwt.UserPrincipal;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
@@ -38,6 +41,7 @@ public class AuthController {
 
     private final UserService userService;
 
+    private final AppProperties appProperties;
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateMember(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -66,8 +70,6 @@ public class AuthController {
             return new ResponseEntity<>(new ApiResponse(false, "이메일이 이미 존재합니다."),
                     HttpStatus.BAD_REQUEST);
         }
-
-        User result = userService.join(signUpRequest);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "회원가입이 성공적으로 완료되었습니다."));
     }

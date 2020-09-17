@@ -57,7 +57,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(RestDocsConfiguration.class)
 class ProfileApiControllerTest {
 
-
     @Autowired
     MockMvc mockMvc;
     @Autowired
@@ -173,8 +172,7 @@ class ProfileApiControllerTest {
                 results.andDo(document("show-profile",
                         preprocessRequest(modifyUris()
                                         .scheme("https")
-                                        .host("perpetapi.com")
-                                        .removePort(),
+                                        .host("perpetapi.com:8080"),
                                 prettyPrint()),
                         pathParameters(
                                 parameterWithName("id").description("아이디")

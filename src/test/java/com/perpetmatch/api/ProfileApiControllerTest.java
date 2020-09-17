@@ -172,10 +172,10 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.expectedFeeForMonth").exists());
 
                 results.andDo(document("show-profile",
-                        preprocessRequest(modifyUris()
-                                        .scheme("https")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("https")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         pathParameters(
                                 parameterWithName("id").description("아이디")
                         ),
@@ -247,10 +247,10 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("success").value(true))
                 .andExpect(jsonPath("message").value("프로필이 등록 완료 되었습니다."))
                 .andDo(document("create-profile",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -329,10 +329,10 @@ class ProfileApiControllerTest {
                .andExpect(jsonPath("success").value(true))
                .andExpect(jsonPath("message").value("패스워드 수정이 완료 되었습니다."))
                .andDo(document("update-password",
-                       preprocessRequest(modifyUris()
-                                       .scheme("http")
-                                       .host(appProperties.getHost()),
-                               prettyPrint()),
+//                       preprocessRequest(modifyUris()
+//                                       .scheme("http")
+//                                       .host(appProperties.getHost()),
+//                               prettyPrint()),
                        requestHeaders(
                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -384,10 +384,10 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.petTitles").exists())
                 .andExpect(jsonPath("data.allPetTitles").exists())
                 .andDo(document("show-petTitle",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -422,10 +422,10 @@ class ProfileApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("성공적으로 품종을 추가했습니다."))
                 .andDo(document("update-petTitle",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -469,10 +469,10 @@ class ProfileApiControllerTest {
                 .content(objectMapper.writeValueAsString(petForm)))
                 .andExpect(status().isOk())
                 .andDo(document("remove-petTitle",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -505,11 +505,10 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.ages").exists())
                 .andExpect(jsonPath("data.allAges").exists())
                 .andDo(document("show-petAge",
-                        preprocessRequest(modifyUris()
-                                        .scheme("https")
-                                        .host("perpetapi.com")
-                                        .removePort(),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("https")
+//                                        .host("perpetapi.com")
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -540,10 +539,10 @@ class ProfileApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("성공적으로 나이를 추가했습니다."))
                 .andDo(document("update-petAge",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -579,10 +578,10 @@ class ProfileApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("성공적으로 나이를 제거했습니다."))
                 .andDo(document("remove-petAge",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -618,10 +617,10 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.zones").exists())
                 .andExpect(jsonPath("data.allZones").exists())
                 .andDo(document("show-zone",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -653,10 +652,10 @@ class ProfileApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("성공적으로 지역을 추가했습니다."))
                 .andDo(document("update-petZone",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -692,10 +691,10 @@ class ProfileApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("성공적으로 지역을 제거했습니다."))
                 .andDo(document("remove-petZone",
-                        preprocessRequest(modifyUris()
-                                        .scheme("http")
-                                        .host(appProperties.getHost()),
-                                prettyPrint()),
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("http")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),

@@ -63,6 +63,7 @@ public class ProfileApiController {
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "요청 유저의 프로필 조회입니다.", profileResponse));
     }
 
+
     // 해당 유저의 프로필 수정
     @PostMapping("")
     public ResponseEntity profileUpdate(@CurrentMember UserPrincipal currentMember,

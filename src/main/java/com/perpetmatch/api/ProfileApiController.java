@@ -51,18 +51,7 @@ public class ProfileApiController {
     private final PetAgeRepository petAgeRepository;
 
 
-    // 회원 임시 탈퇴
-    @DeleteMapping("/user/{username}")
-    public ResponseEntity dUser(@PathVariable String username) {
-        Optional<User> user = userRepository.findByNickname(username);
-        user.ifPresent(u -> {
-                    userRepository.delete(u);
-                }
-        );
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "회원 탈퇴 되었습니다."));
-
-    }
 
     // 이름으로 유저 한명의 프로필 조회
     @GetMapping("/{id}")

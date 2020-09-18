@@ -47,6 +47,20 @@ public class AuthController {
     private final AppProperties appProperties;
 
 
+    // 회원 임시 탈퇴
+    @Transactional
+    @DeleteMapping("/user/{username}")
+    public ResponseEntity dUser(@PathVariable String username) {
+        Optional<User> user = userRepository.findByNickname(username);
+        user.ifPresent(u -> {
+                    userRepository.delete(u);
+                }
+        );
+
+        return ResponseEntity.ok().body(new ApiResponse(true, "회원 탈퇴 되었습니다."));
+
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateMember(@Valid @RequestBody LoginRequest loginRequest) {
 

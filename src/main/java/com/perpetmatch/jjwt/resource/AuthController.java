@@ -30,7 +30,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Transactional
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -46,19 +45,6 @@ public class AuthController {
     private final UserService userService;
 
     private final AppProperties appProperties;
-
-    // 회원 임시 탈퇴
-    @DeleteMapping("/user/{username}")
-    public ResponseEntity dUser(@PathVariable String username) {
-        Optional<User> user = userRepository.findByNickname(username);
-        user.ifPresent(u -> {
-            userRepository.delete(u);
-                }
-        );
-
-        return ResponseEntity.ok().body(new ApiResponse(true, "회원 탈퇴 되었습니다."));
-
-    }
 
 
     @PostMapping("/signin")

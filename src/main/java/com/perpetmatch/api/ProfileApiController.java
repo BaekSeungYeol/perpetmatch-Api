@@ -19,11 +19,13 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,6 +39,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/profiles")
 @RequiredArgsConstructor
+@Transactional
 public class ProfileApiController {
 
     private final ZoneRepository zoneRepository;
@@ -47,6 +50,19 @@ public class ProfileApiController {
     private final PetRepository petRepository;
     private final PetAgeRepository petAgeRepository;
 
+
+    // 회원 임시 탈퇴
+    @DeleteMapping("/user/{username}")
+    public ResponseEntity dUser(@PathVariable String username) {
+        Optional<User> user = userRepository.findByNickname(username);
+        user.ifPresent(u -> {
+                    userRepository.delete(u);
+                }
+        );
+
+        return ResponseEntity.ok().body(new ApiResponse(true, "회원 탈퇴 되었습니다."));
+
+    }
 
     // 이름으로 유저 한명의 프로필 조회
     @GetMapping("/{id}")

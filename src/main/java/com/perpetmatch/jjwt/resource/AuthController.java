@@ -49,9 +49,9 @@ public class AuthController {
 
     // 회원 임시 탈퇴
     @Transactional
-    @DeleteMapping("/user/{username}")
-    public ResponseEntity dUser(@PathVariable String username) {
-        Optional<User> user = userRepository.findByNickname(username);
+    @DeleteMapping("/user/{usernameOrEmail}")
+    public ResponseEntity dUser(@PathVariable String usernameOrEmail) {
+        Optional<User> user = userRepository.findByNicknameOrEmail(usernameOrEmail,usernameOrEmail);
         user.ifPresent(u -> {
                     userRepository.delete(u);
                 }
@@ -62,6 +62,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
+    @Transactional
     public ResponseEntity<?> authenticateMember(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -74,7 +75,10 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        String usernameOrEmail = loginRequest.getUsernameOrEmail();
+        Optional<User> user = userRepository.findByNicknameOrEmail(usernameOrEmail, usernameOrEmail);
+        String nickname = user.get().getNickname();
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,nickname));
     }
 
     @PostMapping("/signup")

@@ -99,7 +99,7 @@ public class UserService {
     }
 
     public User findOne(Long id) {
-        Optional<User> byId = userRepository.findById(id);
+        Optional<User> byId = userRepository.findByIdWithTags(id);
         return byId.get();
     }
 

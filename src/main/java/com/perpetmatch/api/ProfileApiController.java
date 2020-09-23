@@ -64,7 +64,7 @@ public class ProfileApiController {
 
         User byNickname = userService.findByParamId(id);
 
-        ProfileResponse profileResponse = modelMapper.map(byNickname, ProfileResponse.class);
+        ProfileResponse profileResponse = new ProfileResponse(byNickname);
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "요청 유저의 프로필 조회입니다.", profileResponse));
     }
 

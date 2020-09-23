@@ -1,7 +1,9 @@
 package com.perpetmatch.api;
 
 import com.perpetmatch.Board.BoardRepository;
+import com.perpetmatch.Board.BoardService;
 import com.perpetmatch.api.dto.Board.AdoptBoard;
+import com.perpetmatch.api.dto.Board.AdoptMatchCondition;
 import com.perpetmatch.api.dto.Board.AdoptMatchDto;
 import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +25,7 @@ import java.util.List;
 public class AdoptApiController {
 
     private final BoardRepository boardRepository;
+    private final BoardService boardService;
 
     @GetMapping("/boards/v1/search")
     public ResponseEntity searchBoard(String keyword,
@@ -30,13 +34,19 @@ public class AdoptApiController {
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "입양 게시판 검색입니다.", boardList));
     }
 
-//    @GetMapping("/boards/profile/search")
-//    public ResponseEntity searchByProfile(AdoptMatchDto matchDto,Pageable pageable) {
-//
-//        // TODO service 로직 profile 기반 처리
-//        // AdoptMatchCondition, AdoptMatchDto 참고
-////        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.", ));
-//
-//    }
+
+    /**
+     * 유저 프로필 기반 페이징 게시글 반환
+     */
+    @PostMapping("/boards/profile/search")
+    public ResponseEntity searchByProfile(AdoptMatchDto matchDto,Pageable pageable) {
+
+        AdoptMatchCondition condition = boardService.toCondition(matchDto);
+
+        // TODO service 로직 profile 기반 처리
+        // AdoptMatchCondition, AdoptMatchDto 참고
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.",new AdoptBoard()));
+
+    }
 
 }

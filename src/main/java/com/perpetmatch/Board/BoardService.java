@@ -3,6 +3,8 @@ package com.perpetmatch.Board;
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.api.dto.Board.AdoptMatchCondition;
+import com.perpetmatch.api.dto.Board.AdoptMatchDto;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
 import com.perpetmatch.exception.ResourceNotFoundException;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -140,5 +143,33 @@ public class BoardService {
     public Slice<Board> findAllBoards() {
         PageRequest pg = PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "publishedDateTime"));
         return boardRepository.findAllBoards(pg);
+    }
+
+    /*
+
+    List<String> zones;
+    List<String> petTitles;
+    List<String> petAges;
+    boolean wantCheckUp;
+    boolean wantLineAge;
+    boolean wantNeutered;
+    int credit;
+
+     */
+    public AdoptMatchCondition toCondition(AdoptMatchDto matchDto) {
+        AdoptMatchCondition condition = new AdoptMatchCondition();
+        List<String> zones = matchDto.getZones();
+        List<String> petTitle = matchDto.getPetTitles();
+        List<String> petAge = matchDto.getPetAges();
+
+        zones.stream().map(zoneRepository::findByProvince).forEachOrdered(zone -> condition.getZones().add(zone));
+        petTitle.stream().map(petRepository::findByTitle).forEachOrdered(pet -> condition.getPetTitles().add(pet));
+        petAge.stream().map(petAgeRepository::findPetRange).forEachOrdered(pAge -> condition.getPetAges().add(pAge));
+
+        condition.setWantCheckUp(matchDto.isWantCheckUp());
+        condition.setWantLineAge(matchDto.isWantLineAge());
+        condition.setWantNeutered(matchDto.isWantNeutered());
+        condition.setCredit(matchDto.getCredit());
+        return condition;
     }
 }

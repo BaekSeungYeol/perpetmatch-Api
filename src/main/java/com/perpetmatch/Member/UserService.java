@@ -135,7 +135,7 @@ public class UserService {
         member.setOccupation(profileRequest.getOccupation());
         member.setExperience(profileRequest.isExperience());
         member.setLiveAlone(profileRequest.isLiveAlone());
-        member.setHowManyPets(profileRequest.getHowManyPets());
+        member.setHasPet(profileRequest.isHasPet());
         member.setExpectedFeeForMonth(profileRequest.getExpectedFeeForMonth());
         member.setLocation(profileRequest.getLocation());
         member.setProfileImage(profileRequest.getProfileImage());

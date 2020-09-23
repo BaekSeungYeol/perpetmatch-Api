@@ -91,7 +91,8 @@ class pUserApiControllerTest {
                 ),
                 responseFields(
                         fieldWithPath("accessToken").type(JsonFieldType.STRING).description("JWT 토큰"),
-                        fieldWithPath("tokenType").type(JsonFieldType.STRING).description("Bearer 헤더")
+                        fieldWithPath("tokenType").type(JsonFieldType.STRING).description("Bearer 헤더"),
+                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임")
                 )
 
         ));

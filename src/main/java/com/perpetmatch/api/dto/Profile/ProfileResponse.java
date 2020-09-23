@@ -27,7 +27,7 @@ public class ProfileResponse {
     private boolean experience;
     private boolean liveAlone;
     private String phoneNumber;
-    private int howManyPets;
+    private boolean hasPet;
     private int expectedFeeForMonth;
     private String location;
     private String profileImage;

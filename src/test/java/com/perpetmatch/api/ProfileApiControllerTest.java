@@ -126,7 +126,7 @@ class ProfileApiControllerTest {
                 .houseType("아파트")
                 .experience(false)
                 .liveAlone(false)
-                .howManyPets(2)
+                .hasPet(true)
                 .profileImage("fdklfkdslfksdflks")
                 .phoneNumber("010-3926-6280")
                 .description("안녕하세요 누구누구입니다.")
@@ -162,7 +162,7 @@ class ProfileApiControllerTest {
                 .andExpect(jsonPath("data.houseType").exists())
                 .andExpect(jsonPath("data.experience").exists())
                 .andExpect(jsonPath("data.liveAlone").exists())
-                .andExpect(jsonPath("data.howManyPets").exists())
+                .andExpect(jsonPath("data.hasPet").exists())
                 .andExpect(jsonPath("data.profileImage").exists())
                 .andExpect(jsonPath("data.phoneNumber").exists())
                 .andExpect(jsonPath("data.description").exists())
@@ -202,9 +202,9 @@ class ProfileApiControllerTest {
                                 fieldWithPath("data.occupation").type(JsonFieldType.STRING).description("직업"),
                                 fieldWithPath("data.location").type(JsonFieldType.STRING).description("지역"),
                                 fieldWithPath("data.houseType").type(JsonFieldType.STRING).description("주택"),
+                                fieldWithPath("data.hasPet").type(JsonFieldType.BOOLEAN).description("반려동물을 현재 기르는지 여부 "),
                                 fieldWithPath("data.experience").type(JsonFieldType.BOOLEAN).description("반려동물 키워본 경험 유무"),
                                 fieldWithPath("data.liveAlone").type(JsonFieldType.BOOLEAN).description("혼자 사는지 아닌지 여부"),
-                                fieldWithPath("data.howManyPets").type(JsonFieldType.NUMBER).description("현재 키우는 반려동물의 수"),
                                 fieldWithPath("data.profileImage").type(JsonFieldType.STRING).description("프로필 이미지"),
                                 fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING).description("전화번호"),
                                 fieldWithPath("data.description").type(JsonFieldType.STRING).description("간단한 자기소개"),
@@ -227,7 +227,7 @@ class ProfileApiControllerTest {
                 .houseType("아파트")
                 .experience(false)
                 .liveAlone(false)
-                .howManyPets(2)
+                .hasPet(true)
                 .profileImage("fdklfkdslfksdflks")
                 .phoneNumber("010-3926-6280")
                 .description("안녕하세요 누구누구입니다.")
@@ -263,7 +263,7 @@ class ProfileApiControllerTest {
                                 fieldWithPath("houseType").type(JsonFieldType.STRING).description("주택 (필수)"),
                                 fieldWithPath("experience").type(JsonFieldType.BOOLEAN).description("반려동물 키워본 경험 유무 (필수)"),
                                 fieldWithPath("liveAlone").type(JsonFieldType.BOOLEAN).description("혼자 사는지 아닌지 여부 (필수)"),
-                                fieldWithPath("howManyPets").type(JsonFieldType.NUMBER).description("현재 키우는 반려동물의 수 (필수)"),
+                                fieldWithPath("hasPet").type(JsonFieldType.BOOLEAN).description("현재 키우고 있는 반려동물 여부 "),
                                 fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("전화번호 (필수)"),
                                 fieldWithPath("description").type(JsonFieldType.STRING).description("간단한 자기소개 (필수)"),
                                 fieldWithPath("profileImage").type(JsonFieldType.STRING).description("프로필 이미지"),
@@ -289,13 +289,14 @@ class ProfileApiControllerTest {
         User member = userRepository.findByNickname("백승열입니다").get();
         assertEquals(member.getHouseType(), "아파트");
     }
+
     @DisplayName("프로필 수정 실패 - 입력값 빈 값")
     @Test
     void updateProfile_failed() throws Exception {
         ProfileRequest profileRequest = ProfileRequest.builder()
                 .occupation("약사")
                 .experience(false)
-                .howManyPets(2)
+                .hasPet(true)
                 .expectedFeeForMonth(100000)
                 .profileImage("fdklfkdslfksdflks")
                 .phoneNumber("010-3926-6280")

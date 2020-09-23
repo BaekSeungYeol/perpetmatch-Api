@@ -28,7 +28,7 @@ public class ProfileRequest {
     @NotNull
     private boolean liveAlone;
     @NotNull
-    private int howManyPets;
+    private boolean hasPet;
     @NotNull
     private int expectedFeeForMonth;
     @NotBlank

@@ -61,7 +61,7 @@ public class User extends DateAudit{
 
     private boolean liveAlone;
 
-    private int howManyPets;
+    private boolean hasPet;
 
     private int expectedFeeForMonth;
 

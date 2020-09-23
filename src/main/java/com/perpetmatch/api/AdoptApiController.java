@@ -2,6 +2,7 @@ package com.perpetmatch.api;
 
 import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.api.dto.Board.AdoptBoard;
+import com.perpetmatch.api.dto.Board.AdoptMatchDto;
 import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,5 +29,14 @@ public class AdoptApiController {
         Page<AdoptBoard> boardList = boardRepository.findByKeyword(keyword, pageable);
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "입양 게시판 검색입니다.", boardList));
     }
+
+//    @GetMapping("/boards/profile/search")
+//    public ResponseEntity searchByProfile(AdoptMatchDto matchDto,Pageable pageable) {
+//
+//        // TODO service 로직 profile 기반 처리
+//        // AdoptMatchCondition, AdoptMatchDto 참고
+////        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.", ));
+//
+//    }
 
 }

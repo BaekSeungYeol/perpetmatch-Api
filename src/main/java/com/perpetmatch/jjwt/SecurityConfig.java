@@ -108,11 +108,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/auth/**", "/oauth2/**", "/login/**", "/user/me")
+                .antMatchers("/api/auth/**", "/oauth2/**", "/login/**", "/user/me", "/api/boards/**")
                 .permitAll()
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**", "/api/boards/**","/api/members/**")
+                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**", "/api/members/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

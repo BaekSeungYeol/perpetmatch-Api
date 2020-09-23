@@ -12,11 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,13 +37,13 @@ public class AdoptApiController {
      * 유저 프로필 기반 페이징 게시글 반환
      */
     @PostMapping("/boards/profile/search")
-    public ResponseEntity searchByProfile(AdoptMatchDto matchDto,Pageable pageable) {
+    public ResponseEntity searchByProfile(@RequestBody AdoptMatchDto matchDto, Pageable pageable) {
 
         AdoptMatchCondition condition = boardService.toCondition(matchDto);
+        Page<AdoptBoard> boardList = boardRepository.findByProfileKeyword(condition, pageable);
 
-        // TODO service 로직 profile 기반 처리
         // AdoptMatchCondition, AdoptMatchDto 참고
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.",new AdoptBoard()));
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.", boardList));
 
     }
 

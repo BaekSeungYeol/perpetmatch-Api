@@ -162,9 +162,18 @@ public class BoardService {
         List<String> petTitle = matchDto.getPetTitles();
         List<String> petAge = matchDto.getPetAges();
 
-        zones.stream().map(zoneRepository::findByProvince).forEachOrdered(zone -> condition.getZones().add(zone));
-        petTitle.stream().map(petRepository::findByTitle).forEachOrdered(pet -> condition.getPetTitles().add(pet));
-        petAge.stream().map(petAgeRepository::findPetRange).forEachOrdered(pAge -> condition.getPetAges().add(pAge));
+        for (String zone : zones) {
+            Zone byProvince = zoneRepository.findByProvince(zone);
+            condition.getZones().add(byProvince);
+        }
+        for (String s : petTitle) {
+            Pet pet = petRepository.findByTitle(s);
+            condition.getPetTitles().add(pet);
+        }
+        for (String s : petAge) {
+            PetAge pAge = petAgeRepository.findPetRange(s);
+            condition.getPetAges().add(pAge);
+        }
 
         condition.setWantCheckUp(matchDto.isWantCheckUp());
         condition.setWantLineAge(matchDto.isWantLineAge());

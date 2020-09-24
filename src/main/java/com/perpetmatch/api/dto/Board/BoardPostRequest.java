@@ -31,7 +31,7 @@ public class BoardPostRequest {
     @Max(value = 12)
     private int month;
     private String petTitle;
-    private String checkUp;
+    private String checkUpImage;
     private String lineAgeImage;
     private String neuteredImage;
     private String description;

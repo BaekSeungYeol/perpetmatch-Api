@@ -24,7 +24,7 @@ public class AdoptBoard {
     private String petTitle;
     private String petAge;
     private boolean hasCheckUp;
-    private boolean hasLineAgeImage;
+    private boolean hasLineAge;
     private boolean hasNeutered;
     private String description;
     private String boardImage1;
@@ -42,7 +42,7 @@ public class AdoptBoard {
         this.petTitle = petTitle;
         this.petAge = petAge;
         this.hasCheckUp = hasCheckUp;
-        this.hasLineAgeImage = hasLineAgeImage;
+        this.hasLineAge = hasLineAgeImage;
         this.hasNeutered = neutered;
         this.description = description;
         this.boardImage1 = boardImage1;

@@ -463,6 +463,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#profile-password_http_response">HTTP response</a></li>
 </ul>
 </li>
+<li><a href="#profile-show">자신의 프로필 조회</a>
+<ul class="sectlevel3">
+<li><a href="#profile-show_response_fields">Response fields</a></li>
+<li><a href="#profile-show_http_request">HTTP request</a></li>
+<li><a href="#profile-show_http_response">HTTP response</a></li>
+</ul>
+</li>
 <li><a href="#profile-show">프로필 단일 조회</a>
 <ul class="sectlevel3">
 <li><a href="#profile-show_path_parameters">Path parameters</a></li>
@@ -556,11 +563,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#apply-like_http_response">HTTP response</a></li>
 </ul>
 </li>
-<li><a href="#search-board">입양하기 검색</a>
+<li><a href="#search-board">입양하기 키워드 검색</a>
 <ul class="sectlevel3">
 <li><a href="#search-board_response_fields">Response fields</a></li>
 <li><a href="#search-board_http_request">HTTP request</a></li>
 <li><a href="#search-board_http_response">HTTP response</a></li>
+</ul>
+</li>
+<li><a href="#searchProfile-board">입양하기 프로필 기반 검색</a>
+<ul class="sectlevel3">
+<li><a href="#searchProfile-board_response_fields">Response fields</a></li>
+<li><a href="#searchProfile-board_http_request">HTTP request</a></li>
+<li><a href="#searchProfile-board_http_response">HTTP response</a></li>
+<li><a href="#_입양하기_프로필_객체">입양하기 프로필 객체</a></li>
 </ul>
 </li>
 </ul>
@@ -959,7 +974,7 @@ X-Frame-Options: DENY
 Content-Length: 262
 
 {
-  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjAiLCJpYXQiOjE2MDA4ODAzMjMsImV4cCI6MTYwMTQ4NTEyM30.WsOjOBsPdWn7TEVtrOYRzvINY8-zCCk9ve0UpgoLO3k3buVHkpqfrU_k3OP9srjurrirPP3Nc-2-1S51eGYs6A",
+  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjUiLCJpYXQiOjE2MDA5NzQ1NTcsImV4cCI6MTYwMTU3OTM1N30.VarswOk9NbWARpsUTw7uPQI-Zd7IozhshV8zvxpeDmZU_zhKy7xmZe9IhiarG_ayDd05t4CbIFsakZI24Dr8Ww",
   "tokenType" : "Bearer",
   "nickname" : "백승열입니다"
 }</code></pre>
@@ -1044,7 +1059,7 @@ Content-Length: 262
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/profiles/password HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTciLCJpYXQiOjE2MDA4ODAzMjIsImV4cCI6MTYwMTQ4NTEyMn0.G48C0_2XX8DaiF-l8Jyrvbbh5CHNs_ZiAwhovCVwxDUKHPcosfncY56In_oVEfKdEbA6_yqW3xduMniHswW3wA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjIiLCJpYXQiOjE2MDA5NzQ1NTYsImV4cCI6MTYwMTU3OTM1Nn0.G3rl7jF60Akc5AdbwASwe8LhL2BQeOw7zkVIaM94NINdu_0K4P4LPKAcQXX_PEg0PE-FdwkTdwwraGflg-UGpg
 Accept: application/json
 Content-Length: 74
 Host: perpetApi.com:8080
@@ -1076,6 +1091,211 @@ Content-Length: 89
 {
   "success" : true,
   "message" : "패스워드 수정이 완료 되었습니다."
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="profile-show"><a class="link" href="#profile-show">자신의 프로필 조회</a></h3>
+<div class="paragraph">
+<p>'GET' 요청을 사용하여 자신의 프로필을 조회할 수 있다.</p>
+</div>
+<div class="sect3">
+<h4 id="profile-show_response_fields"><a class="link" href="#profile-show_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">자신의 프로필 조회입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">유저 닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.joinedAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">가입일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petTitles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">원하는 품종</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.zones</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">원하는 지역</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petAges</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">원하는 나이</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.credit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">껌 (보증금)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.age</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">나이</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.occupation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">직업</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지역</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.houseType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주택</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.hasPet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">반려동물을 현재 기르는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.experience</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 키워본 경험 유무</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.liveAlone</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">혼자 사는지 아닌지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.profileImage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로필 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.phoneNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전화번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">간단한 자기소개</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.wantCheckUp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">건강검진을 원하는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.wantLineAge</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">혈통서를 원하는지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.wantNeutered</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">중성화가 필요한지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.expectedFeeForMonth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">한달 지출</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="profile-show_http_request"><a class="link" href="#profile-show_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTQiLCJpYXQiOjE2MDA5NzQ1NTQsImV4cCI6MTYwMTU3OTM1NH0.BQF1C2lCbzPQXKtkNMxbjEH-w5OpKh2u_ZE6hGJxdmp9defDxQc3q2zvxlWcgQQj0pjpJTlmt_xYle7_1kXHew
+Accept: application/json
+Host: perpetApi.com:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="profile-show_http_response"><a class="link" href="#profile-show_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 754
+
+{
+  "success" : true,
+  "message" : "자신의 프로필 조회입니다.",
+  "data" : {
+    "id" : 314,
+    "age" : 0,
+    "nickname" : "백승열입니다",
+    "email" : "beck22222@naver.com",
+    "joinedAt" : "2020-09-25",
+    "petTitles" : [ ],
+    "zones" : [ ],
+    "petAges" : [ ],
+    "credit" : 0,
+    "houseType" : "아파트",
+    "occupation" : "학생",
+    "experience" : false,
+    "liveAlone" : false,
+    "phoneNumber" : "010-3926-6280",
+    "hasPet" : true,
+    "expectedFeeForMonth" : 100000,
+    "location" : "서울",
+    "profileImage" : "fdklfkdslfksdflks",
+    "description" : "안녕하세요 누구누구입니다.",
+    "wantCheckUp" : true,
+    "wantLineAge" : true,
+    "wantNeutered" : true
+  }
 }</code></pre>
 </div>
 </div>
@@ -1251,9 +1471,9 @@ Content-Length: 89
 <h4 id="profile-show_http_request"><a class="link" href="#profile-show_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/311 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/316 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTEiLCJpYXQiOjE2MDA4ODAzMjEsImV4cCI6MTYwMTQ4NTEyMX0._vUzJmAv26vRn6XOz6EN1ByGbH3mNRG_CDZqmRKTnStVMKfvVF7nfGszjiG1Hki9_dki31A0XIukUL90jGCLCg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTYiLCJpYXQiOjE2MDA5NzQ1NTUsImV4cCI6MTYwMTU3OTM1NX0.c0UYhsy1pvNYxMILiyTTx7OIH2XQ1tzUvxcjmQqTdvmXXIcVGPgmiCsBApcc1BjHjWpxiouDiLr1-Y1TqsoVxw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1280,11 +1500,11 @@ Content-Length: 761
   "success" : true,
   "message" : "요청 유저의 프로필 조회입니다.",
   "data" : {
-    "id" : 311,
-    "age" : 1,
+    "id" : 316,
+    "age" : 0,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com",
-    "joinedAt" : "2020-09-24",
+    "joinedAt" : "2020-09-25",
     "petTitles" : [ ],
     "zones" : [ ],
     "petAges" : [ ],
@@ -1452,7 +1672,7 @@ Content-Length: 761
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTUiLCJpYXQiOjE2MDA4ODAzMjIsImV4cCI6MTYwMTQ4NTEyMn0.mkZd6YEOJ8slsiCWA3W1fDfnL6PQUeTzHux6T0EzN9DH2_7MSX6al6bjSh9oynAEwMoZz6wPHmyBVgFw5gWvtg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjAiLCJpYXQiOjE2MDA5NzQ1NTYsImV4cCI6MTYwMTU3OTM1Nn0.rDtwY82lS1g8N3lB1g3wqkR6f88hU7zODGpP73E-d0-NVKNlzfvSKLSGJb1e-3LwVAIdZ-EgxenOK3xz5tR2CQ
 Accept: application/json
 Content-Length: 420
 Host: perpetApi.com:8080
@@ -1497,7 +1717,7 @@ Content-Length: 200
   "success" : true,
   "message" : "프로필이 등록 완료 되었습니다.",
   "data" : {
-    "id" : 315,
+    "id" : 320,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com"
   }
@@ -1558,7 +1778,7 @@ Content-Length: 200
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDciLCJpYXQiOjE2MDA4ODAzMjAsImV4cCI6MTYwMTQ4NTEyMH0.eA7A3TW4yxDzMpv6Gs8OKNMBLwbCoqy9KBU2pgGpIKo2a7plIZLtniyHCbeoj2-8V5Bdr_bo578oKncbDEBoPA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTEiLCJpYXQiOjE2MDA5NzQ1NTQsImV4cCI6MTYwMTU3OTM1NH0.-RqcL_ILF3a4uGXc62NbpHLA9w0XIDv62bBWqUbN3CxJJYWICKiHkN5TtipBhSNbGxJuIz9XG1AaZBUZtE0jJw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1657,7 +1877,7 @@ Content-Length: 4860
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDkiLCJpYXQiOjE2MDA4ODAzMjAsImV4cCI6MTYwMTQ4NTEyMH0.TtPlcU8fU49jsFoXuJ6HfgZ84Y4ze_o4yUF56vfxvz95WMTuYyflDnT5zvmSJGSuNDkEM_PN6Gbl-AizhN3qrA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTMiLCJpYXQiOjE2MDA5NzQ1NTQsImV4cCI6MTYwMTU3OTM1NH0.jcg5fEOXvFLLSip6OXEPsblMs7y1A0fjvtty82zAjagaeyhb38Cajqv2wlBEP4xql2gXeQtbCwl8t_1fwUQI_w
 Accept: application/json
 Content-Length: 29
 Host: perpetApi.com:8080
@@ -1757,7 +1977,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTMiLCJpYXQiOjE2MDA4ODAzMjEsImV4cCI6MTYwMTQ4NTEyMX0.duDNNMcLSMIBytT1vKGtPKxX1gsdpEmlyIuuOnr4zZ9nhVwEC_MFxX8MM0ls4pbdn4k5gA6UbCaEaeVJ6VFbFA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTgiLCJpYXQiOjE2MDA5NzQ1NTYsImV4cCI6MTYwMTU3OTM1Nn0.0wfuzUuAPqctFgkSubPDooc1HAqdCWLn9ZwGpdQwxCS3CYOPa6_EppUu54IeVcvNZBtakHNobfYKuWuzPVhCmw
 Accept: application/json
 Content-Length: 32
 Host: perpetApi.com:8080
@@ -1846,7 +2066,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTIiLCJpYXQiOjE2MDA4ODAzMjEsImV4cCI6MTYwMTQ4NTEyMX0.doTJSIXIMN9f-NxZ-HTG2OX5Ve2pLwIomJSo1ZHCVv19J90nCFl_jWsU_Y6VDdfpXjW_IGRAls34Msx6egjSkA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTciLCJpYXQiOjE2MDA5NzQ1NTUsImV4cCI6MTYwMTU3OTM1NX0.HvxTpk82vZmMyfeHjL3fx3icfpgDBlF0tgp7vx-rp1QPD3x93m8DgVkA8onvqMUR87AAGcwelwqSowf_jVxBiQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1945,7 +2165,7 @@ Content-Length: 183
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDQiLCJpYXQiOjE2MDA4ODAzMTksImV4cCI6MTYwMTQ4NTExOX0.B07-BXEklbIpz14Sqnx_Kn7zipW6HGOgD04a-yWOIR0yTGgPrLQPIuD7fcHnoVjH6ZRcZoahhcbzuJDge8BqZw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDgiLCJpYXQiOjE2MDA5NzQ1NTMsImV4cCI6MTYwMTU3OTM1M30.zZ5JCge-UA7ScinsVJ_PmpBefv1MDKKnFCmJsCmuoYsOnJRQfAHrj5St6uu_EnqWWEucrnSo6U7Jx5UV0hnWhQ
 Accept: application/json
 Content-Length: 33
 Host: perpetApi.com:8080
@@ -2045,7 +2265,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDYiLCJpYXQiOjE2MDA4ODAzMjAsImV4cCI6MTYwMTQ4NTEyMH0.hF5HMxhQhvvwW0LSTpxEze4iFe0Mm56dApN7gAqy2ZrpD0qXshAJfFLsenV3tpPah4OQpunRI1qMQYX6Ta3cFg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTAiLCJpYXQiOjE2MDA5NzQ1NTMsImV4cCI6MTYwMTU3OTM1M30.n58bxzUgQ02wCfOWUEv2JdroWO3H1zzCJSoLVugNklO6fbWweCCt-ocYh2U5IgpriOdZRhPOVeEdgmdW2IuKPg
 Accept: application/json
 Content-Length: 33
 Host: perpetApi.com:8080
@@ -2134,7 +2354,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTgiLCJpYXQiOjE2MDA4ODAzMjIsImV4cCI6MTYwMTQ4NTEyMn0.MJyaHpxHfOFYnOaBaZ0irGhwh0A2d66GcehxETUtXnqHthZLmDT9FMJ0AlzinI748JVAsvkVjWHBNcYqh1UzyA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjMiLCJpYXQiOjE2MDA5NzQ1NTcsImV4cCI6MTYwMTU3OTM1N30.Z503Se1w5qAdGw8Ie4iHeZqn2zG_ZrKn-EqEPDpKa1lKlRCAjOifGcPy5r9p_1EF1ruA4-jWhht4GdbdRNI4qg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -2233,7 +2453,7 @@ Content-Length: 1308
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTAiLCJpYXQiOjE2MDA4ODAzMjEsImV4cCI6MTYwMTQ4NTEyMX0.rpsxPqI7r-JqdFGkxmCEkcNwsqT_Ho56fSa_ajh2hfDMqwjKlpPcnvzEf1fW8BxXzKyZK5_R8G7OH9iaN0Fgwg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTUiLCJpYXQiOjE2MDA5NzQ1NTUsImV4cCI6MTYwMTU3OTM1NX0.w_MITllH_dE-wy6C5vqkBm7JDFBYKaZ3ieXrQjdck8h1CpyVhwuoJNHSn6XbafjT7VxzQVKH1PZEUZCkyyKLpA
 Accept: application/json
 Content-Length: 38
 Host: perpetApi.com:8080
@@ -2333,7 +2553,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDgiLCJpYXQiOjE2MDA4ODAzMjAsImV4cCI6MTYwMTQ4NTEyMH0.5R9r_aCqYA18-3R9-ptQqKwqx-7zUVwKEsdj8oVoQQAB1jStYSO8u_FBL_xfzRW-D7wVkcru1iTTMSGcnySA0A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTIiLCJpYXQiOjE2MDA5NzQ1NTQsImV4cCI6MTYwMTU3OTM1NH0.g4DtgGNwu5ca1TNpHgIUOSdrBA4edj1O7j8AZMfrySm_8FpC0Yd6H1YsJAIlHha1NWpW50jABA9A-Ck990mNMQ
 Accept: application/json
 Content-Length: 38
 Host: perpetApi.com:8080
@@ -2435,7 +2655,7 @@ Content-Length: 88
 <td class="tableblock halign-left valign-top"><p class="tableblock">품종</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>checkUp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>checkUpImage</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">건강검진 이미지</p></td>
 </tr>
@@ -2517,9 +2737,9 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTQiLCJpYXQiOjE2MDA4ODAzMTgsImV4cCI6MTYwMTQ4NTExOH0.7MhgBnUGvPDVxDuLu3wR1kWBzud84KMP3RZSMlwjBq4F95ym1BvHfDnCn3h1RX84gO4VCWFsaochLpJQs1Yx-g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTgiLCJpYXQiOjE2MDA5NzQ1NTEsImV4cCI6MTYwMTU3OTM1MX0.jQlTA8QPxjo9IGzXuYPo-Nw9SmpfZH3cMeCEJ6q7JLn3PnD3tZkhwj0PUM06DfRsyJU9AOTbPIvGgsnvqWiNPw
 Accept: application/json
-Content-Length: 525
+Content-Length: 530
 Host: perpetApi.com:8080
 
 {
@@ -2530,7 +2750,7 @@ Host: perpetApi.com:8080
   "year" : 1,
   "month" : 11,
   "petTitle" : "치와와",
-  "checkUp" : "DataURL",
+  "checkUpImage" : "DataURL",
   "lineAgeImage" : "DataURL",
   "neuteredImage" : "DataURL",
   "description" : "이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.",
@@ -2562,7 +2782,7 @@ Content-Length: 176
   "success" : true,
   "message" : "게시글이 등록 되었습니다.",
   "data" : {
-    "id" : 295,
+    "id" : 299,
     "title" : "버려진 포메 보호하고 있습니다"
   }
 }</code></pre>
@@ -2674,7 +2894,7 @@ Content-Length: 176
 <td class="tableblock halign-left valign-top"><p class="tableblock">나이 범위</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.checkUp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.checkUpImage</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">건강검진 이미지</p></td>
 </tr>
@@ -2715,9 +2935,9 @@ Content-Length: 176
 <h4 id="show-board_http_request"><a class="link" href="#show-board_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/303 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/307 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDIiLCJpYXQiOjE2MDA4ODAzMTksImV4cCI6MTYwMTQ4NTExOX0.eCRCNBa5DmwxhYraqGND9YTur4rYwt1KDahIUO9lqOOiqbSZ-FcHTYC0a-emiDhIRsLSZK8ORF6kkkIPsZSYQg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDYiLCJpYXQiOjE2MDA5NzQ1NTMsImV4cCI6MTYwMTU3OTM1M30.NjLwwuH5KLOuLqY59ep939YylPr64_sMbWMkicfb3OkvVB24lyg-BZhld1ZrOXzih8jRE9MOUyGvcJjWjERHjg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -2738,13 +2958,13 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 733
+Content-Length: 738
 
 {
   "success" : true,
   "message" : "해당 유저의 게시글입니다.",
   "data" : {
-    "id" : 303,
+    "id" : 307,
     "manager" : "백승열입니다",
     "title" : "버려진 포메 보호하고 있습니다",
     "credit" : 100000,
@@ -2754,7 +2974,7 @@ Content-Length: 733
     "month" : 11,
     "petTitle" : "치와와",
     "petAge" : "1년~7년",
-    "checkUp" : "DataURL",
+    "checkUpImage" : "DataURL",
     "lineAgeImage" : "DataURL",
     "neuteredImage" : "DataURL",
     "description" : "이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.",
@@ -2814,26 +3034,6 @@ Content-Length: 733
 <td class="tableblock halign-left valign-top"><p class="tableblock">포인트</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].gender</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">성별</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].zone</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">지역</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].petTitle</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">품종</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].petAge</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">나이 범위</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].year</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">나이 (년)</p></td>
@@ -2844,22 +3044,12 @@ Content-Length: 733
 <td class="tableblock halign-left valign-top"><p class="tableblock">나이 (월)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].hasCheckup</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">건강검진증 여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].tags</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">태그들</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].hasLineAgeImage</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">혈통서 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].neutered</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">중성화 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].publishedDateTime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].createdAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">작성일</p></td>
 </tr>
@@ -2872,7 +3062,7 @@ Content-Length: 733
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTYiLCJpYXQiOjE2MDA4ODAzMTgsImV4cCI6MTYwMTQ4NTExOH0.yVhkbRxwcM4iBoQ1eXJtiPL-iiQX4nesBfMYAXvQHFdhxsyp0luNYmQmcIizuQ8XfNvnagaFzhhuxlXye__o2g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDAiLCJpYXQiOjE2MDA5NzQ1NTIsImV4cCI6MTYwMTU3OTM1Mn0.oNDCdS7_BXzHTbUySlphC8DaJ4VHvMPXhrzS4bhIOIGpCNf8nK7568t8jmlAE7IQYNgybjDzAgydblq220aYwg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -2893,26 +3083,20 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1010
+Content-Length: 897
 
 {
   "success" : true,
   "message" : "게시글 다건 조회입니다.",
   "data" : {
     "content" : [ {
-      "id" : 297,
+      "id" : 301,
       "title" : "버려진 포메 보호하고 있습니다",
       "credit" : 100000,
-      "gender" : "MALE",
-      "zone" : "서울특별시",
-      "petTitle" : "치와와",
-      "petAge" : "1년~7년",
       "year" : 1,
       "month" : 11,
-      "hasCheckup" : false,
-      "hasLineAgeImage" : false,
-      "neutered" : false,
-      "publishedDateTime" : "2020-09-24"
+      "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
+      "createdAt" : "2020-09-25"
     } ],
     "pageable" : {
       "sort" : {
@@ -2920,15 +3104,12 @@ Content-Length: 1010
         "unsorted" : false,
         "empty" : false
       },
-      "pageNumber" : 0,
-      "pageSize" : 6,
       "offset" : 0,
+      "pageSize" : 6,
+      "pageNumber" : 0,
       "paged" : true,
       "unpaged" : false
     },
-    "last" : true,
-    "numberOfElements" : 1,
-    "first" : true,
     "size" : 6,
     "number" : 0,
     "sort" : {
@@ -2936,6 +3117,9 @@ Content-Length: 1010
       "unsorted" : false,
       "empty" : false
     },
+    "last" : true,
+    "numberOfElements" : 1,
+    "first" : true,
     "empty" : false
   }
 }</code></pre>
@@ -3013,9 +3197,9 @@ Content-Length: 1010
 <h4 id="adopt-apply_http_request"><a class="link" href="#adopt-apply_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/292/apply HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/296/apply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTEiLCJpYXQiOjE2MDA4ODAzMTcsImV4cCI6MTYwMTQ4NTExN30.F_b5l9GBRn9qgb1mMPjenH3uNDcw2hkjwncCZhOzH4mUHqL5IBDfnE6bvzM-s9BB8Qo8cF6OFYgOEPsluDuE-w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTUiLCJpYXQiOjE2MDA5NzQ1NTEsImV4cCI6MTYwMTU3OTM1MX0.vYvCu_6WJKPUSfeyDkda_8yDxBnIfk1Sb0ZuImXWec90oqeuchxyXl3GjiEpx5S2areBK9VgmsOveP7_ZbJCSg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3129,9 +3313,9 @@ Content-Length: 124
 <h4 id="apply-list_http_request"><a class="link" href="#apply-list_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/board/299/manager HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/board/303/manager HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTgiLCJpYXQiOjE2MDA4ODAzMTgsImV4cCI6MTYwMTQ4NTExOH0.pvDrokL81IZrW6b-qdvtEWpMG3DlFZXcF3FUgBVzsI7bpg81BupPVCjBMwte9VsrJcC0KlkEPxZ7euWpJCW71g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDIiLCJpYXQiOjE2MDA5NzQ1NTIsImV4cCI6MTYwMTU3OTM1Mn0.dHp5_T7tSNUn8_h3nkEGtizRFAcTvkNcbuWPgpew_6ouHHdRVYd57Cld_PXaxajdMPe4n0AuTYJ-SnGn-hjIxA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3159,7 +3343,7 @@ Content-Length: 250
   "message" : "현재 신청한 유저 목록입니다.",
   "data" : {
     "users" : [ {
-      "id" : 298,
+      "id" : 302,
       "nickname" : "백승열입니다",
       "profileImage" : null,
       "description" : null
@@ -3277,9 +3461,9 @@ Content-Length: 250
 <h4 id="apply-like_http_request"><a class="link" href="#apply-like_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/301/likes HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/305/likes HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDAiLCJpYXQiOjE2MDA4ODAzMTgsImV4cCI6MTYwMTQ4NTExOH0.ACpYEmDj_YsT9ZfU43bzKKolxTnXt_XssAweP0j0kxeaYxRLJJnl0_NquG7Jc7PgPzsD0g3MirJi57t6NDBCAg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDQiLCJpYXQiOjE2MDA5NzQ1NTIsImV4cCI6MTYwMTU3OTM1Mn0.W5853yhWYd3rYI_C4MN4v0nUUOIhMXgwUVnmaY0knlj00eTnw2z7RpkXHcwo8aBmYhyMUqY6rDlIURc2ZqP9WQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3314,9 +3498,9 @@ Content-Length: 129
 </div>
 </div>
 <div class="sect2">
-<h3 id="search-board"><a class="link" href="#search-board">입양하기 검색</a></h3>
+<h3 id="search-board"><a class="link" href="#search-board">입양하기 키워드 검색</a></h3>
 <div class="paragraph">
-<p>'GET /api/boards/v1/search?keyword=' 요청을 사용하여 keyword 조건에 맞는 게시글을 불러올 수 있다.
+<p>'GET /api/boards/search?keyword=' 요청을 사용하여 keyword 조건에 맞는 게시글을 불러올 수 있다.
 keyword의 조건은 제목, 지역, 나이 범위, 픔종 이다.</p>
 </div>
 <div class="sect3">
@@ -3361,11 +3545,6 @@ keyword의 조건은 제목, 지역, 나이 범위, 픔종 이다.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">껌 (보증금)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].zone</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">지역</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].year</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">나이(년)</p></td>
@@ -3376,34 +3555,9 @@ keyword의 조건은 제목, 지역, 나이 범위, 픔종 이다.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">나이(개월)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].petTitle</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">품종</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].petAge</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">나이 범위</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].hasCheckUp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">건강검진 이미지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].hasLineAgeImage</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">혈통서 이미지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].hasNeutered</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">중성화 이미지 여부</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].description</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">소개</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].tags</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">태그들</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].boardImage1</code></p></td>
@@ -3447,9 +3601,8 @@ keyword의 조건은 제목, 지역, 나이 범위, 픔종 이다.</p>
 <h4 id="search-board_http_request"><a class="link" href="#search-board_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/v1/search?keyword=%ED%8F%AC%EB%A9%94 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/search?keyword=%ED%8F%AC%EB%A9%94 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODMiLCJpYXQiOjE2MDA4ODAzMDYsImV4cCI6MTYwMTQ4NTEwNn0.OuqxOkCyLbjEBfnUWOkFTnagLnwzuK20PA_ryKMv3x-C5Ar-yLDdc5c5pfy9qViVxyY1TSwjUgPxo_-UTwAU1A
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3470,7 +3623,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1214
+Content-Length: 980
 
 {
   "success" : true,
@@ -3480,17 +3633,11 @@ Content-Length: 1214
       "id" : 284,
       "title" : "버려진 포메 보호하고 있습니다",
       "credit" : 100000,
-      "zone" : "서울특별시",
       "year" : 1,
       "month" : 11,
-      "petTitle" : "치와와",
-      "petAge" : "1년~7년",
-      "hasCheckUp" : false,
-      "hasLineAgeImage" : false,
-      "hasNeutered" : false,
-      "description" : "이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.",
+      "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
       "boardImage1" : "DataURL",
-      "createdAt" : "2020-09-24"
+      "createdAt" : "2020-09-25"
     } ],
     "pageable" : {
       "sort" : {
@@ -3498,17 +3645,15 @@ Content-Length: 1214
         "unsorted" : false,
         "empty" : false
       },
-      "pageNumber" : 0,
-      "pageSize" : 9,
       "offset" : 0,
+      "pageSize" : 9,
+      "pageNumber" : 0,
       "paged" : true,
       "unpaged" : false
     },
     "last" : true,
-    "totalElements" : 1,
     "totalPages" : 1,
-    "numberOfElements" : 1,
-    "first" : true,
+    "totalElements" : 1,
     "size" : 9,
     "number" : 0,
     "sort" : {
@@ -3516,6 +3661,8 @@ Content-Length: 1214
       "unsorted" : false,
       "empty" : false
     },
+    "numberOfElements" : 1,
+    "first" : true,
     "empty" : false
   }
 }</code></pre>
@@ -3523,12 +3670,251 @@ Content-Length: 1214
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="searchProfile-board"><a class="link" href="#searchProfile-board">입양하기 프로필 기반 검색</a></h3>
+<div class="paragraph">
+<p>'GET /api/boards/profile/search' 요청을 사용하여 조건에 맞는 게시글을 불러올 수 있다.</p>
+</div>
+<div class="sect3">
+<h4 id="searchProfile-board_response_fields"><a class="link" href="#searchProfile-board_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">해당 유저의 게시글입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].credit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">껌 (보증금)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">나이(년)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].month</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">나이(개월)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].tags</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">태그들</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].boardImage1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">강아지 이미지1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성 날짜</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.totalElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">검색 조건과 부합하는 게시글 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.totalPages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 갯수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.first</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">처음 페이지 인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.last</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막 페이지 인지 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 넘버 -1, +1을 통해 다음 페이지로 가는 링크만들 수 있다</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="searchProfile-board_http_request"><a class="link" href="#searchProfile-board_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/profile/search HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyODUiLCJpYXQiOjE2MDA5NzQ1NTAsImV4cCI6MTYwMTU3OTM1MH0.TyN538SyEAYxR2PhqyjvZQXHewoyZMZXC5RHoS8N6neo3qke-EsZd6mjONPnpaNj7oVEWr-xt9zDB7r9z0LV7w
+Accept: application/json
+Content-Length: 160
+Host: perpetApi.com:8080
+
+{
+  "zones" : [ ],
+  "petTitles" : [ ],
+  "petAges" : [ ],
+  "wantCheckUp" : true,
+  "wantLineAge" : true,
+  "wantNeutered" : true,
+  "credit" : 10000
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="searchProfile-board_http_response"><a class="link" href="#searchProfile-board_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 987
+
+{
+  "success" : true,
+  "message" : "유저 기반 게시판 검색입니다.",
+  "data" : {
+    "content" : [ {
+      "id" : 286,
+      "title" : "버려진 포메 보호하고 있습니다",
+      "credit" : 100000,
+      "year" : 1,
+      "month" : 11,
+      "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
+      "boardImage1" : "DataURL",
+      "createdAt" : "2020-09-25"
+    } ],
+    "pageable" : {
+      "sort" : {
+        "sorted" : false,
+        "unsorted" : true,
+        "empty" : true
+      },
+      "offset" : 0,
+      "pageSize" : 20,
+      "pageNumber" : 0,
+      "paged" : true,
+      "unpaged" : false
+    },
+    "last" : true,
+    "totalPages" : 1,
+    "totalElements" : 1,
+    "size" : 20,
+    "number" : 0,
+    "sort" : {
+      "sorted" : false,
+      "unsorted" : true,
+      "empty" : true
+    },
+    "numberOfElements" : 1,
+    "first" : true,
+    "empty" : false
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>이때 'GET' 요청에 실어 보내야 할 객체는 다음과 같다.</p>
+</div>
+<div class="sect3">
+<h4 id="_입양하기_프로필_객체"><a class="link" href="#_입양하기_프로필_객체">입양하기 프로필 객체</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수값</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">zones</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ARRAY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">petTitles</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ARRAY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">petAges</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wantCheckUp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wantLineAge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wantNeutered</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">credit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-17 02:19:41 KST
+Last updated 2020-09-24 16:33:25 KST
 </div>
 </div>
 </body>

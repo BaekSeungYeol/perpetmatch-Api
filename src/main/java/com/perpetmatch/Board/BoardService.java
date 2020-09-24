@@ -55,9 +55,18 @@ public class BoardService {
         Pet byTitle = petRepository.findByTitle(boardRequest.getPetTitle());
         board.setPetTitle(byTitle);
 
-        board.setCheckUp(boardRequest.getCheckUp());
-        board.setLineAgeImage(boardRequest.getLineAgeImage());
-        board.setNeuteredImage(boardRequest.getNeuteredImage());
+        if(boardRequest.getCheckUpImage() != null){
+            board.setCheckUpImage(boardRequest.getCheckUpImage());
+            board.setHasCheckUp(true);
+        }
+        if(boardRequest.getLineAgeImage() != null){
+            board.setLineAgeImage(boardRequest.getLineAgeImage());
+            board.setHasLineAge(true);
+        }
+        if(boardRequest.getNeuteredImage() != null){
+            board.setNeuteredImage(boardRequest.getNeuteredImage());
+            board.setHasNeutered(true);
+        }
         board.setDescription(boardRequest.getDescription());
         board.setBoardImage1(boardRequest.getBoardImage1());
         board.setBoardImage2(boardRequest.getBoardImage2());
@@ -100,7 +109,7 @@ public class BoardService {
         Pet byTitle = petRepository.findByTitle(boardRequest.getPetTitle());
         board.setPetTitle(byTitle);
 
-        board.setCheckUp(boardRequest.getCheckUp());
+        board.setCheckUpImage(boardRequest.getCheckUp());
         board.setLineAgeImage(boardRequest.getLineAgeImage());
         board.setNeuteredImage(boardRequest.getNeuteredImage());
         board.setDescription(boardRequest.getDescription());
@@ -162,17 +171,23 @@ public class BoardService {
         List<String> petTitle = matchDto.getPetTitles();
         List<String> petAge = matchDto.getPetAges();
 
-        for (String zone : zones) {
-            Zone byProvince = zoneRepository.findByProvince(zone);
-            condition.getZones().add(byProvince);
+        if(zones != null) {
+            for (String zone : zones) {
+                Zone byProvince = zoneRepository.findByProvince(zone);
+                condition.getZones().add(byProvince);
+            }
         }
-        for (String s : petTitle) {
-            Pet pet = petRepository.findByTitle(s);
-            condition.getPetTitles().add(pet);
+        if(petTitle != null) {
+            for (String s : petTitle) {
+                Pet pet = petRepository.findByTitle(s);
+                condition.getPetTitles().add(pet);
+            }
         }
-        for (String s : petAge) {
-            PetAge pAge = petAgeRepository.findPetRange(s);
-            condition.getPetAges().add(pAge);
+        if(petAge != null) {
+            for (String s : petAge) {
+                PetAge pAge = petAgeRepository.findPetRange(s);
+                condition.getPetAges().add(pAge);
+            }
         }
 
         condition.setWantCheckUp(matchDto.isWantCheckUp());

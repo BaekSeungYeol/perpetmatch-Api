@@ -26,7 +26,7 @@ public class BoardGetResponseV1 {
     private int month;
     private String petTitle;
     private String petAge;
-    private String checkUp;
+    private String checkUpImage;
     private String lineAgeImage;
     private String neuteredImage;
     private String description;
@@ -45,7 +45,7 @@ public class BoardGetResponseV1 {
         month = board.getMonth();
         petTitle = board.getPetTitle().getTitle();
         petAge = board.getPetAge().getPetRange();
-        checkUp = board.getCheckUp();
+        checkUpImage = board.getCheckUpImage();
         lineAgeImage = board.getLineAgeImage();
         neuteredImage = board.getNeuteredImage();
         description = board.getDescription();

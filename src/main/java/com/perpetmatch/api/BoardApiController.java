@@ -80,6 +80,7 @@ public class BoardApiController {
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글이 등록 되었습니다.",boardResponse));
     }
 
+
     @PutMapping("/boards/{id}")
     public ResponseEntity updateBoard(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
                                       @RequestBody @Valid BoardUpdateRequest boardRequest, Errors errors) {
@@ -90,7 +91,7 @@ public class BoardApiController {
 
         boardService.updateBoard(currentMember.getId(), id, boardRequest);
         Board board = boardService.findByBoardId(id);
-        BoardGetResponseV1 boardResponse = new BoardGetResponseV1(board);
+        BoardResponse boardResponse = BoardResponse.builder().id(board.getId()).title(board.getTitle()).build();
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 수정이 완료되었습니다.", boardResponse));
 
     }

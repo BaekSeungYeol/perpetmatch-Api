@@ -3,6 +3,7 @@ package com.perpetmatch.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.Board.Gender;
+import com.perpetmatch.api.dto.Board.AdoptMatchDto;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
@@ -22,6 +23,10 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
@@ -37,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
+@Transactional
 @AutoConfigureMockMvc
 class AdoptApiControllerTest {
 
@@ -80,37 +86,42 @@ class AdoptApiControllerTest {
 
     @AfterEach
     void afterEach() {
+        boardRepository.deleteAll();
     }
 
     @Test
-    @DisplayName("입양하기 페이지 제목 검색 테스트 ")
-    public void AdoptSearch_keyword() throws Exception {
-        //given
+    @DisplayName("입양하기 페이지 프로필 기반 검색 테스트")
+    public void AdoptSearch_profile() throws Exception {
         Long id = getBoardId();
 
+        ArrayList<String> zones = new ArrayList<>();
+        List<String> petTitles = new ArrayList<>();
+        List<String> petAges = new ArrayList<>();
+        boolean wantCheckUp = true;
+        boolean wantLineAge = true;
+        boolean wantNeutered = true;
+        int credit = 10000;
+        AdoptMatchDto dto = new AdoptMatchDto(zones,petTitles,petAges,wantCheckUp,wantLineAge,wantNeutered,credit);
+
+
         //when
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/v1/search?keyword=포메")
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/profile/search")
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("입양 게시판 검색입니다."))
+                .andExpect(jsonPath("message").value("유저 기반 게시판 검색입니다."))
                 .andExpect(jsonPath("data.content[0].id").exists())
                 .andExpect(jsonPath("data.content[0].title").exists())
                 .andExpect(jsonPath("data.content[0].credit").exists())
-                .andExpect(jsonPath("data.content[0].zone").exists())
                 .andExpect(jsonPath("data.content[0].year").exists())
                 .andExpect(jsonPath("data.content[0].month").exists())
-                .andExpect(jsonPath("data.content[0].petTitle").exists())
-                .andExpect(jsonPath("data.content[0].petAge").exists())
-                .andExpect(jsonPath("data.content[0].hasCheckUp").exists())
-                .andExpect(jsonPath("data.content[0].hasLineAgeImage").exists())
-                .andExpect(jsonPath("data.content[0].hasNeutered").exists())
-                .andExpect(jsonPath("data.content[0].description").exists())
+                .andExpect(jsonPath("data.content[0].tags").exists())
                 .andExpect(jsonPath("data.content[0].boardImage1").exists())
                 .andExpect(jsonPath("data.content[0].createdAt").exists())
-                .andDo(document("search-board",
+                .andDo(document("searchProfile-board",
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
@@ -125,15 +136,57 @@ class AdoptApiControllerTest {
                                 fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("ID"),
                                 fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
-                                fieldWithPath("data.content[0].zone").type(JsonFieldType.STRING).description("지역"),
                                 fieldWithPath("data.content[0].year").type(JsonFieldType.NUMBER).description("나이(년)"),
                                 fieldWithPath("data.content[0].month").type(JsonFieldType.NUMBER).description("나이(개월)"),
-                                fieldWithPath("data.content[0].petTitle").type(JsonFieldType.STRING).description("품종"),
-                                fieldWithPath("data.content[0].petAge").type(JsonFieldType.STRING).description("나이 범위"),
-                                fieldWithPath("data.content[0].hasCheckUp").type(JsonFieldType.BOOLEAN).description("건강검진 이미지 여부"),
-                                fieldWithPath("data.content[0].hasLineAgeImage").type(JsonFieldType.BOOLEAN).description("혈통서 이미지 여부"),
-                                fieldWithPath("data.content[0].hasNeutered").type(JsonFieldType.BOOLEAN).description("중성화 이미지 여부"),
-                                fieldWithPath("data.content[0].description").type(JsonFieldType.STRING).description("소개"),
+                                fieldWithPath("data.content[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
+                                fieldWithPath("data.content[0].boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
+                                fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("생성 날짜"),
+                                fieldWithPath("data.totalElements").type(JsonFieldType.NUMBER).description("검색 조건과 부합하는 게시글 갯수"),
+                                fieldWithPath("data.totalPages").type(JsonFieldType.NUMBER).description("전체 페이지 갯수"),
+                                fieldWithPath("data.first").type(JsonFieldType.BOOLEAN).description("처음 페이지 인지 여부"),
+                                fieldWithPath("data.last").type(JsonFieldType.BOOLEAN).description("마지막 페이지 인지 여부"),
+                                fieldWithPath("data.number").type(JsonFieldType.NUMBER).description("현재 페이지 넘버 -1, +1을 통해 다음 페이지로 가는 링크만들 수 있다")
+                        )));
+    }
+
+    @Test
+    @DisplayName("입양하기 페이지 제목 검색 테스트 ")
+    public void AdoptSearch_keyword() throws Exception {
+        //given
+        Long id = getBoardId();
+
+        //when
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/search?keyword=포메")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("message").value("입양 게시판 검색입니다."))
+                .andExpect(jsonPath("data.content[0].id").exists())
+                .andExpect(jsonPath("data.content[0].title").exists())
+                .andExpect(jsonPath("data.content[0].credit").exists())
+                .andExpect(jsonPath("data.content[0].year").exists())
+                .andExpect(jsonPath("data.content[0].month").exists())
+                .andExpect(jsonPath("data.content[0].tags").exists())
+                .andExpect(jsonPath("data.content[0].boardImage1").exists())
+                .andExpect(jsonPath("data.content[0].createdAt").exists())
+                .andDo(document("search-board",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        relaxedResponseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 게시글입니다."),
+                                fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("ID"),
+                                fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
+                                fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
+                                fieldWithPath("data.content[0].year").type(JsonFieldType.NUMBER).description("나이(년)"),
+                                fieldWithPath("data.content[0].month").type(JsonFieldType.NUMBER).description("나이(개월)"),
+                                fieldWithPath("data.content[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
                                 fieldWithPath("data.content[0].boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
                                 fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("생성 날짜"),
                                 fieldWithPath("data.totalElements").type(JsonFieldType.NUMBER).description("검색 조건과 부합하는 게시글 갯수"),
@@ -153,7 +206,7 @@ class AdoptApiControllerTest {
                 .year(1)
                 .month(11)
                 .petTitle("치와와")
-                .checkUp("DataURL")
+                .checkUpImage("DataURL")
                 .lineAgeImage("DataURL")
                 .neuteredImage("DataURL")
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")

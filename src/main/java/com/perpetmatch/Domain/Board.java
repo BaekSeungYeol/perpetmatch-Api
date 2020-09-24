@@ -55,7 +55,7 @@ public class Board extends DateAudit{
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
-    private String checkUp;
+    private String checkUpImage;
 
     private boolean hasCheckUp;
 
@@ -63,13 +63,13 @@ public class Board extends DateAudit{
     @Basic(fetch = FetchType.EAGER)
     private String lineAgeImage;
 
-    private boolean hasLineAgeImage;
+    private boolean hasLineAge;
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
     private String neuteredImage;
 
-    private boolean neutered;
+    private boolean hasNeutered;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime publishedDateTime;

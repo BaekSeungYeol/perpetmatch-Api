@@ -52,7 +52,20 @@ public class ProfileApiController {
 
 
 
+    @GetMapping("")
+    public ResponseEntity profileMe(@CurrentMember UserPrincipal currentMember) {
+        if (currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
 
+        User byNickname = userService.findByParamId(currentMember.getId());
+
+        ProfileResponse profileResponse = new ProfileResponse(byNickname);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "자신의 프로필 조회입니다.", profileResponse));
+
+
+    }
     // 이름으로 유저 한명의 프로필 조회
     @GetMapping("/{id}")
     public ResponseEntity profileAll(@PathVariable Long id) {

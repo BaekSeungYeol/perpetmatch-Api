@@ -115,6 +115,102 @@ class ProfileApiControllerTest {
         userRepository.deleteAll();
     }
 
+    @DisplayName("자신의 프로필 조회 성공 - 입력값 정상")
+    @Test
+    void getMyProfile_success() throws Exception {
+        ProfileRequest profileRequest = ProfileRequest.builder()
+                .age(19)
+                .occupation("학생")
+                .location("서울")
+                .houseType("아파트")
+                .experience(false)
+                .liveAlone(false)
+                .hasPet(true)
+                .profileImage("fdklfkdslfksdflks")
+                .phoneNumber("010-3926-6280")
+                .description("안녕하세요 누구누구입니다.")
+                .wantCheckUp(true)
+                .wantLineAge(true)
+                .wantNeutered(true)
+                .expectedFeeForMonth(100000)
+                .build();
+
+        mockMvc.perform(post("/api/profiles")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(profileRequest)));
+
+        ResultActions results = this.mockMvc.perform(RestDocumentationRequestBuilders.get("/api/profiles")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("data.id").exists())
+                .andExpect(jsonPath("data.nickname").exists())
+                .andExpect(jsonPath("data.email").exists())
+                .andExpect(jsonPath("data.petTitles").exists())
+                .andExpect(jsonPath("data.zones").exists())
+                .andExpect(jsonPath("data.joinedAt").exists())
+                .andExpect(jsonPath("data.petAges").exists())
+                .andExpect(jsonPath("data.credit").exists())
+                .andExpect(jsonPath("data.age").exists())
+                .andExpect(jsonPath("data.occupation").exists())
+                .andExpect(jsonPath("data.location").exists())
+                .andExpect(jsonPath("data.houseType").exists())
+                .andExpect(jsonPath("data.experience").exists())
+                .andExpect(jsonPath("data.liveAlone").exists())
+                .andExpect(jsonPath("data.hasPet").exists())
+                .andExpect(jsonPath("data.profileImage").exists())
+                .andExpect(jsonPath("data.phoneNumber").exists())
+                .andExpect(jsonPath("data.description").exists())
+                .andExpect(jsonPath("data.wantCheckUp").exists())
+                .andExpect(jsonPath("data.wantLineAge").exists())
+                .andExpect(jsonPath("data.wantNeutered").exists())
+                .andExpect(jsonPath("data.expectedFeeForMonth").exists());
+
+        results.andDo(document("my-profile",
+//                        preprocessRequest(modifyUris()
+//                                        .scheme("https")
+//                                        .host(appProperties.getHost()),
+//                                prettyPrint()),
+
+                requestHeaders(
+                        headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                        headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                        headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                ),
+                responseHeaders(
+                        headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                ),
+                responseFields(
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("자신의 프로필 조회입니다."),
+                        fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("ID"),
+                        fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
+                        fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("data.joinedAt").type(JsonFieldType.STRING).description("가입일"),
+                        fieldWithPath("data.petTitles").type(JsonFieldType.ARRAY).description("원하는 품종"),
+                        fieldWithPath("data.zones").type(JsonFieldType.ARRAY).description("원하는 지역"),
+                        fieldWithPath("data.petAges").type(JsonFieldType.ARRAY).description("원하는 나이"),
+                        fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
+                        fieldWithPath("data.age").type(JsonFieldType.NUMBER).description("나이"),
+                        fieldWithPath("data.occupation").type(JsonFieldType.STRING).description("직업"),
+                        fieldWithPath("data.location").type(JsonFieldType.STRING).description("지역"),
+                        fieldWithPath("data.houseType").type(JsonFieldType.STRING).description("주택"),
+                        fieldWithPath("data.hasPet").type(JsonFieldType.BOOLEAN).description("반려동물을 현재 기르는지 여부 "),
+                        fieldWithPath("data.experience").type(JsonFieldType.BOOLEAN).description("반려동물 키워본 경험 유무"),
+                        fieldWithPath("data.liveAlone").type(JsonFieldType.BOOLEAN).description("혼자 사는지 아닌지 여부"),
+                        fieldWithPath("data.profileImage").type(JsonFieldType.STRING).description("프로필 이미지"),
+                        fieldWithPath("data.phoneNumber").type(JsonFieldType.STRING).description("전화번호"),
+                        fieldWithPath("data.description").type(JsonFieldType.STRING).description("간단한 자기소개"),
+                        fieldWithPath("data.wantCheckUp").type(JsonFieldType.BOOLEAN).description("건강검진을 원하는지 여부"),
+                        fieldWithPath("data.wantLineAge").type(JsonFieldType.BOOLEAN).description("혈통서를 원하는지 여부"),
+                        fieldWithPath("data.wantNeutered").type(JsonFieldType.BOOLEAN).description("중성화가 필요한지 여부"),
+                        fieldWithPath("data.expectedFeeForMonth").type(JsonFieldType.NUMBER).description("한달 지출"))
+        ));
+
+    }
     @DisplayName("프로필 조회 성공 - 입력값 정상")
     @Test
     void getOneUserProfile_success() throws Exception {

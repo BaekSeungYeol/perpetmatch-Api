@@ -121,6 +121,14 @@ operation::sign-in[snippets='request-fields,response-fields,http-request,http-re
 operation::update-password[snippets='request-fields,response-fields,http-request,http-response']
 
 [[profile-show]]
+=== 자신의 프로필 조회
+
+'GET' 요청을 사용하여 자신의 프로필을 조회할 수 있다.
+
+operation::my-profile[snippets='response-fields,http-request,http-response']
+
+
+[[profile-show]]
 === 프로필 단일 조회
 
 'GET/{id}' 요청을 사용하여 해당 유저의 프로필을 조회할 수 있다.
@@ -273,14 +281,38 @@ users[0], users[1] 각각의 데이터는 다음과 같다.
 operation::like-apply[snippets='path-parameters,response-fields,http-request,http-response']
 
 [[search-board]]
-=== 입양하기 검색
+=== 입양하기 키워드 검색
 
 
-'GET /api/boards/v1/search?keyword=' 요청을 사용하여 keyword 조건에 맞는 게시글을 불러올 수 있다.
+'GET /api/boards/search?keyword=' 요청을 사용하여 keyword 조건에 맞는 게시글을 불러올 수 있다.
 keyword의 조건은 제목, 지역, 나이 범위, 픔종 이다.
 
 
 operation::search-board[snippets='response-fields,http-request,http-response']
+
+
+[[searchProfile-board]]
+=== 입양하기 프로필 기반 검색
+
+
+'GET /api/boards/profile/search' 요청을 사용하여 조건에 맞는 게시글을 불러올 수 있다.
+
+operation::searchProfile-board[snippets='response-fields,http-request,http-response']
+
+
+이때 'GET' 요청에 실어 보내야 할 객체는 다음과 같다.
+
+==== 입양하기 프로필 객체
+|====
+|코드|코드명|필수값
+|zones|ARRAY|false
+|petTitles|ARRAY|false
+|petAges|STRING|false
+|wantCheckUp|Boolean|false
+|wantLineAge|Boolean|false
+|wantNeutered|Boolean|false
+|credit|Number|false
+|====
 
 
 //[[resources-events-get]]

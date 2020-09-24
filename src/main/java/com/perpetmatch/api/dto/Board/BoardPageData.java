@@ -9,6 +9,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @EqualsAndHashCode(of = "id")
 @Getter
@@ -20,31 +21,24 @@ public class BoardPageData {
     private Long id;
     private String title;
     private int credit;
-    private String gender;
-    private String zone;
-    private String petTitle;
-    private String petAge;
     private int year;
     private int month;
-    private boolean hasCheckup;
-    private boolean hasLineAgeImage;
-    private boolean neutered;
+    private ArrayList<String> tags = new ArrayList<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime publishedDateTime;
+    private LocalDateTime createdAt;
 
     public BoardPageData(Board board) {
         id = board.getId();
         title=board.getTitle();
         credit =board.getCredit();
-        gender=board.getGender().toString();
-        zone=board.getZone().getProvince();
-        petTitle=board.getPetTitle().getTitle();
-        petAge=board.getPetAge().getPetRange();
+        tags.add(board.getZone().getProvince());
+        tags.add(board.getPetTitle().getTitle());
+        tags.add(board.getPetAge().getPetRange());
         year= board.getYear();
         month=board.getMonth();
-        hasCheckup=board.isHasCheckUp();
-        hasLineAgeImage=board.isHasLineAgeImage();
-        neutered=board.isNeutered();
-        publishedDateTime = board.getPublishedDateTime();
+        if(board.isHasCheckUp()) tags.add("건강검진증");
+        if(board.isHasLineAge()) tags.add("혈통서");
+        if(board.isHasNeutered()) tags.add("중성화");
+        createdAt = board.getCreatedAt();
     }
 }

@@ -54,8 +54,8 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                         board.petTitle.title,
                         board.petAge.petRange,
                         board.hasCheckUp,
-                        board.hasLineAgeImage,
-                        board.neutered,
+                        board.hasLineAge,
+                        board.hasNeutered,
                         board.description,
                         board.boardImage1,
                         board.createdAt
@@ -87,10 +87,10 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
         return hasCheckUp ? board.hasCheckUp.eq(true) : null;
     }
     private BooleanExpression lineAgeEq(Boolean hasLineAge) {
-        return hasLineAge ? board.hasLineAgeImage.eq(true) : null;
+        return hasLineAge ? board.hasLineAge.eq(true) : null;
     }
     private BooleanExpression neuteredEq(Boolean neutered) {
-        return neutered ? board.neutered.eq(true) : null;
+        return neutered ? board.hasNeutered.eq(true) : null;
     }
     private BooleanExpression creditLoe(Integer credit) {
         return credit != null ? board.credit.loe(credit) : null;
@@ -109,8 +109,8 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                         board.petTitle.title,
                         board.petAge.petRange,
                         board.hasCheckUp,
-                        board.hasLineAgeImage,
-                        board.neutered,
+                        board.hasLineAge,
+                        board.hasNeutered,
                         board.description,
                         board.boardImage1,
                         board.createdAt

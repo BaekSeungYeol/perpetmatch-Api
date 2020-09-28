@@ -1,6 +1,7 @@
 package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.perpetmatch.jjwt.oauth2.user.AuthProvider;
 import lombok.*;
 
@@ -87,13 +88,24 @@ public class User extends DateAudit{
 
     private boolean profileDone;
 
-    //
-
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
     private String providerId;
     private String imageUrl;
+
+
+    /**
+     * 쇼핑하기
+     */
+
+    @Embedded
+    private Address address;
+
+    //member field에 의해 맵핑됨 읽기전용
+    @JsonIgnore
+    @OneToMany
+    private Set<Order> orders = new HashSet<>();
 
 
     public void generateEmailCheckToken() {

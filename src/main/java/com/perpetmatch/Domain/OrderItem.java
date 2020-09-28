@@ -46,7 +46,7 @@ public class OrderItem {
 
     //==비즈니스 로직==//
     public void cancel() {
-        getItem().addStcok(count);
+        getItem().addStock(count);
     }
 
     public int getTotalPrice() {

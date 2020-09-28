@@ -8,7 +8,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("Item")
+@DiscriminatorValue("Feed")
 @Getter
 @Setter
 public class Feed extends Item{

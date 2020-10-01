@@ -2,6 +2,10 @@ package com.perpetmatch.initDb;
 
 
 import com.perpetmatch.Domain.*;
+import com.perpetmatch.Domain.Item.Feed;
+import com.perpetmatch.Domain.Item.Goods;
+import com.perpetmatch.Domain.Item.Snack;
+import com.perpetmatch.Item.ItemRepository;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
 import com.perpetmatch.Zone.ZoneRepository;
@@ -30,16 +34,15 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-
 public class InitDB {
     private final InitService initService;
-
     @PostConstruct
     public void init() throws IOException {
         initService.initRoleData();
         initService.initZoneData();
         initService.initageRangeData();
         initService.petTitleData();
+        initService.putItems();
     }
 
     @Component
@@ -52,6 +55,8 @@ public class InitDB {
         private final ZoneRepository zoneRepository;
         private final PetAgeRepository petAgeRepository;
         private final PetRepository petRepository;
+        private final ItemRepository itemRepository;
+
 
         public void initRoleData() {
             if (roleRepository.count() == 0) {
@@ -131,6 +136,65 @@ public class InitDB {
                 list.add(b);
             }
             return list;
+        }
+
+        public void putItems() {
+            Feed feed1 = new Feed();
+            feed1.setName("네츄럴 코어 유기농 비프 애견사료");
+            feed1.setPrice(51990);
+            feed1.setStockQuantity(100);
+            itemRepository.save(feed1);
+
+            Feed feed2 = new Feed();
+            feed2.setName("하림 더리얼 치킨 애견사료");
+            feed2.setPrice(45990);
+            feed2.setStockQuantity(100);
+            itemRepository.save(feed2);
+
+            Feed feed3 = new Feed();
+            feed3.setName("뉴웨이브 유기농 애견사료");
+            feed3.setPrice(31990);
+            feed3.setStockQuantity(100);
+            itemRepository.save(feed3);
+
+            Snack snack1 = new Snack();
+            snack1.setName("터키츄 칠면조힘줄 스트립");
+            snack1.setPrice(8500);
+            snack1.setStockQuantity(100);
+            itemRepository.save(snack1);
+
+            Snack snack2 = new Snack();
+            snack2.setName("퓨리나 프로플랜 강아지 덴탈껌");
+            snack2.setPrice(10500);
+            snack2.setStockQuantity(100);
+            itemRepository.save(snack2);
+
+            Snack snack3 = new Snack();
+            snack3.setName("수제간식 질겅질겅 소떡심");
+            snack3.setPrice(4500);
+            snack3.setStockQuantity(100);
+            itemRepository.save(snack3);
+
+
+            Goods goods1 = new Goods();
+            goods1.setName("플라밍고 우디 스타 나무모양의 고무 장난감");
+            goods1.setPrice(8800);
+            goods1.setStockQuantity(100);
+            itemRepository.save(goods1);
+
+
+            Goods goods2 = new Goods();
+            goods2.setName("폭탄 간식놀이 노즈워크 장난감");
+            goods2.setPrice(4500);
+            goods2.setStockQuantity(100);
+            itemRepository.save(goods2);
+
+            Goods goods3 = new Goods();
+            goods3.setName("플레넷도그 오르비 터프볼");
+            goods3.setPrice(25000);
+            goods3.setStockQuantity(100);
+            itemRepository.save(goods3);
+
         }
     }
 }

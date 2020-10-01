@@ -25,4 +25,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("select distinct u from User u left join fetch u.petAges left join fetch u.petTitles left join fetch u.petAges where u.id = :id")
     Optional<User> findByIdWithTags(@Param("id") Long id);
+
+    @Query("select distinct u from User u left join fetch u.bag where u.id = :id")
+    User findByIdWithBags(@Param("id") Long id);
 }

@@ -2,6 +2,9 @@ package com.perpetmatch.Member;
 
 import com.perpetmatch.Board.BoardRepository;
 import com.perpetmatch.Domain.*;
+import com.perpetmatch.Domain.Item.Item;
+import com.perpetmatch.Item.ItemRepository;
+import com.perpetmatch.OrderItem.OrderItemRepository;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
 import com.perpetmatch.Zone.ZoneRepository;
@@ -25,7 +28,9 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -45,6 +50,8 @@ public class UserService {
     private final TemplateEngine templateEngine;
     private final AppProperties appProperties;
     private final BoardRepository boardRepository;
+    private final ItemRepository itemRepository;
+    private final OrderItemRepository orderItemRepository;
 
     public void sendJoinMemberConfirmEmail(User savedMember) {
         Context context = new Context();
@@ -256,5 +263,21 @@ public class UserService {
                 u.addLikeBoard(board);
         });
         return user.get().hasLikeBoard(board);
+    }
+
+    public void addBag(Long userId, Long id, int count) {
+        User user = userRepository.findByIdWithBags(userId);
+        Item item = itemRepository.findById(id).get();
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(item.getPrice());
+        orderItem.setCount(count);
+        user.getBag().add(orderItem);
+    }
+
+    public void removeBag(Long id, Long orderItemId) {
+        User user = userRepository.findByIdWithBags(id);
+        OrderItem orderItem = orderItemRepository.findById(orderItemId).get();
+        user.getBag().remove(orderItem);
     }
 }

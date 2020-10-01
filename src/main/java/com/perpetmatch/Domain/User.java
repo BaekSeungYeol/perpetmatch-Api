@@ -2,6 +2,7 @@ package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.jjwt.oauth2.user.AuthProvider;
 import lombok.*;
 
@@ -107,6 +108,8 @@ public class User extends DateAudit{
     @OneToMany
     private Set<Order> orders = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<OrderItem> bag = new HashSet<>();
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

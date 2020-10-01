@@ -13,7 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class OrderItem {
 
     @Id
@@ -40,7 +40,7 @@ public class OrderItem {
         orderItem.setOrderPrice(orderPrice);
         orderItem.setCount(count);
 
-        item.removeStock(count);
+       // item.removeStock(count);
         return orderItem;
     }
 

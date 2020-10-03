@@ -9,6 +9,7 @@ import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
 import com.perpetmatch.Zone.ZoneRepository;
 import com.perpetmatch.api.dto.Board.ApplyUsers;
+import com.perpetmatch.api.dto.Order.BagDetailsDto;
 import com.perpetmatch.api.dto.Profile.PasswordRequest;
 import com.perpetmatch.api.dto.Profile.ProfileRequest;
 import com.perpetmatch.exception.AppException;
@@ -28,9 +29,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -272,6 +271,8 @@ public class UserService {
         orderItem.setItem(item);
         orderItem.setOrderPrice(item.getPrice());
         orderItem.setCount(count);
+
+        orderItemRepository.save(orderItem);
         user.getBag().add(orderItem);
     }
 
@@ -279,5 +280,20 @@ public class UserService {
         User user = userRepository.findByIdWithBags(id);
         OrderItem orderItem = orderItemRepository.findById(orderItemId).get();
         user.getBag().remove(orderItem);
+    }
+
+    public Set<BagDetailsDto> getBags(Long id) {
+        User user = userRepository.findByIdWithBags(id);
+        Set<BagDetailsDto> collect = user.getBag().stream().map(o -> new BagDetailsDto(o.getId(),o.getItem().getName(), o.getOrderPrice(), o.getCount())).collect(Collectors.toSet());
+        return collect;
+    }
+
+    public int getTotalSum(Long id) {
+        User user = userRepository.findByIdWithBags(id);
+        int sum = 0;
+        for(OrderItem o : user.getBag())
+            sum += o.getTotalPrice();
+
+        return sum;
     }
 }

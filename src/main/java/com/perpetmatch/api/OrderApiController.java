@@ -2,23 +2,22 @@ package com.perpetmatch.api;
 
 import com.perpetmatch.Item.ItemRepository;
 import com.perpetmatch.Member.UserService;
-import com.perpetmatch.Order.OrderRepository;
 import com.perpetmatch.Order.OrderService;
-import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
+import com.perpetmatch.api.dto.Order.BagDetailsDto;
+import com.perpetmatch.api.dto.Order.BagDto;
 import com.perpetmatch.api.dto.Order.DeliveryDto;
-import com.perpetmatch.api.dto.Order.OrderDto;
-import com.perpetmatch.api.dto.Profile.ProfileRequest;
+import com.perpetmatch.api.dto.Order.GetBagDto;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
+import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -40,17 +39,33 @@ public class OrderApiController {
 //
 //    }
 
-    /**
-     * 장바구니 추가
-     */
-    @PostMapping("/order/bag/{id}")
-    public ResponseEntity addBag(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
-                                          @RequestParam("count") int count){
+
+    // TODO 장바구니 리스트 반환
+    @GetMapping("/order/bags")
+    public ResponseEntity getBags(@CurrentMember UserPrincipal currentMember) {
         if (currentMember == null) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
                     HttpStatus.BAD_REQUEST);
         }
-        userService.addBag(currentMember.getId(), id, count);
+
+        Set<BagDetailsDto> bags = userService.getBags(currentMember.getId());
+        int totalSum = userService.getTotalSum(currentMember.getId());
+        GetBagDto data = new GetBagDto(totalSum, bags);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "장바구니 리스트입니다.",data));
+    }
+
+
+    /**
+     * 장바구니 추가
+     */
+    @PostMapping("/order/bags/{id}")
+    public ResponseEntity addBag(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
+                                 @RequestBody BagDto bagDto){
+        if (currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+        userService.addBag(currentMember.getId(), id, bagDto.getCount());
 
         return ResponseEntity.ok().body(new ApiResponse(true, "장바구니에 아이템을 추가하였습니다."));
     }
@@ -58,7 +73,7 @@ public class OrderApiController {
     /**
      * 장바구니 삭제
      */
-    @DeleteMapping("/bag/{id}")
+    @DeleteMapping("/order/bags/details/{id}")
     public ResponseEntity removeBag(@CurrentMember UserPrincipal currentMember, @PathVariable Long id){
         if (currentMember == null) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),

@@ -5,7 +5,7 @@ import com.perpetmatch.Member.UserService;
 import com.perpetmatch.Order.OrderService;
 import com.perpetmatch.api.dto.Order.BagDetailsDto;
 import com.perpetmatch.api.dto.Order.BagDto;
-import com.perpetmatch.api.dto.Order.DeliveryDto;
+import com.perpetmatch.api.dto.Order.AddressDto;
 import com.perpetmatch.api.dto.Order.GetBagDto;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
@@ -89,13 +89,14 @@ public class OrderApiController {
      */
     @PostMapping("/order/{id}")
     public ResponseEntity addBag(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
-                                 @RequestBody DeliveryDto deliveryDto){
+                                 @RequestBody AddressDto addressDto){
         if (currentMember == null) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
                     HttpStatus.BAD_REQUEST);
         }
 
         // TODO 주문
+        orderService.createOrder(currentMember.getId(), addressDto);
 
         return ResponseEntity.ok().body(new ApiResponse(true, "주문 완료 하였습니다."));
     }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Table(name = "orders")
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Order {
 
@@ -53,9 +54,10 @@ public class Order {
 
 
     //== 생성 메서드 ==//
-    public static Order createOrder(User user,  OrderItem... orderItems) {
+    public static Order createOrder(User user,Delivery delivery, ArrayList<OrderItem> orderItems) {
         Order order = new Order();
         order.setUser(user);
+        order.setDelivery(delivery);
         for(OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
         }

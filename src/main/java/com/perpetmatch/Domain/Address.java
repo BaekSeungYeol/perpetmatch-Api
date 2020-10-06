@@ -2,6 +2,7 @@ package com.perpetmatch.Domain;
 
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Embeddable;
 
@@ -9,19 +10,21 @@ import javax.persistence.Embeddable;
 @Getter
 public class Address {
 
+    private String to;
+    private String zip;
     private String city;
     private String street;
-    private String zipcode;
     private String memo;
 
 
     protected  Address() {
     }
 
-    public Address(String city, String street, String zipcode) {
+    public Address(String to, String zipcode,String city, String street, String memo) {
+        this.to = to;
+        this.zip = zipcode;
         this.city = city;
         this.street = street;
-        this.zipcode = zipcode;
         this.memo = memo;
     }
 }

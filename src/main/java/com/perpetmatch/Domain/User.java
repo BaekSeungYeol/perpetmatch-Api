@@ -100,9 +100,6 @@ public class User extends DateAudit{
      * 쇼핑하기
      */
 
-    @Embedded
-    private Address address;
-
     //member field에 의해 맵핑됨 읽기전용
     @JsonIgnore
     @OneToMany
@@ -119,6 +116,10 @@ public class User extends DateAudit{
         this.setEmailVerified(true);
         this.setJoinedAt(LocalDateTime.now());
     }
+
+//    public void calculateCredit(int totalSum) {
+//        this.credit = Math.max(0, this.credit-totalSum);
+//    }
 
     public void removeLikeBoard(Board board) {
         this.getLikeList().remove(board);

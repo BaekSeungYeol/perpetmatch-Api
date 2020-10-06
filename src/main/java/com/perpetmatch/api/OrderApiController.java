@@ -87,8 +87,8 @@ public class OrderApiController {
     /**
      * 최종 결제시
      */
-    @PostMapping("/order/{id}")
-    public ResponseEntity addBag(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
+    @PostMapping("/order/bags/pay")
+    public ResponseEntity addBag(@CurrentMember UserPrincipal currentMember,
                                  @RequestBody AddressDto addressDto){
         if (currentMember == null) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),

@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 public class Address {
 
     private String to;
-    private String zip;
+    private String zipcode;
     private String city;
     private String street;
     private String memo;
@@ -22,7 +22,7 @@ public class Address {
 
     public Address(String to, String zipcode,String city, String street, String memo) {
         this.to = to;
-        this.zip = zipcode;
+        this.zipcode = zipcode;
         this.city = city;
         this.street = street;
         this.memo = memo;

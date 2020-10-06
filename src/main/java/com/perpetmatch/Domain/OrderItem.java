@@ -18,16 +18,16 @@ public class OrderItem {
 
     @Id
     @GeneratedValue
-    @Column(name = "order_item_id")
+    @Column
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "item_id")
+    @JoinColumn
     private Item item;
 
     @JsonIgnore
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "order_id")
+    @JoinColumn
     private Order order;
 
     private int orderPrice; // 주문 가격

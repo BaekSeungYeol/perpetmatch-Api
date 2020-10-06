@@ -16,7 +16,7 @@ public abstract class Item {
 
     @Id
     @GeneratedValue
-    @Column(name = "item_id")
+    @Column
     private Long id;
 
     private String name;

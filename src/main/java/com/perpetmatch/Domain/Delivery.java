@@ -2,50 +2,40 @@ package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.perpetmatch.api.dto.Order.AddressDto;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Delivery {
 
-    @Id
-    @GeneratedValue
-    @Column(name ="delivery_id")
+    @Id @GeneratedValue
     private Long id;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "delivery")
-    private Order order;
+    private String dear;
 
-    @Embedded
-    private Address address;
+    private String zipcode;
 
-    @Enumerated(EnumType.STRING)
-    private DeliveryStatus status; //READY, COMP
+    private String city;
+
+    private String street;
+
+    private String memo;
 
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    @Enumerated(EnumType.STRING)
+//    private DeliveryStatus status; //READY, COMP
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-    public void setAddress(AddressDto ad) {
-        Address address = new Address(ad.getTo(), ad.getZipcode(), ad.getCity(),ad.getStreet(),ad.getMemo());
-        this.address = address;
-    }
-
-    public void setStatus(DeliveryStatus status) {
-        this.status = status;
+    public void setAddress(AddressDto addressDto) {
+        this.dear = addressDto.getDear();
+        this.zipcode = addressDto.getZipcode();
+        this.city = addressDto.getCity();
+        this.street = addressDto.getStreet();
+        this.memo = addressDto.getMemo();
     }
 }

@@ -18,17 +18,17 @@ import static javax.persistence.FetchType.LAZY;
 public class Order {
 
     @Id @GeneratedValue
-    @Column(name = "order_id")
+    @Column
     private Long id;
 
     @ManyToOne(fetch = LAZY)
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+//    (mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany
     private Set<OrderItem> orderItems = new HashSet<>();
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_id")
+    @OneToOne(fetch = LAZY)
     private Delivery delivery;
 
     private LocalDateTime orderDate;
@@ -44,7 +44,6 @@ public class Order {
 
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
-        delivery.setOrder(this);
     }
 
     public void addOrderItem(OrderItem orderItem) {

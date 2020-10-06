@@ -1,5 +1,6 @@
 package com.perpetmatch.Order;
 
+import com.perpetmatch.Delivery.DeliveryRepository;
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.Item.ItemRepository;
@@ -22,8 +23,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
-    private final UserService userService;
-    private final OrderItemRepository orderItemRepository;
+    private final DeliveryRepository deliveryRepository;
 
     public void createOrder(Long id, AddressDto addressDto) {
 
@@ -33,33 +33,39 @@ public class OrderService {
         Delivery delivery = new Delivery();
         delivery.setAddress(addressDto);
 
-        Order order = makeOrder(user, orderItems, delivery);
+       deliveryRepository.save(delivery);
+
+        makeOrder(user, orderItems, delivery);
 
         calculate(user);
-
-        orderRepository.save(order);
     }
 
-    private Order makeOrder(User user, ArrayList<OrderItem> orderItems, Delivery delivery) {
+    private void makeOrder(User user, ArrayList<OrderItem> orderItems, Delivery delivery) {
         Order order = new Order();
         order.setUser(user);
-        order.setDelivery(delivery);
         for(OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
             removeStock(orderItem);
         }
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
-        return order;
+        Order savedOrder = orderRepository.save(order);
+        savedOrder.setDelivery(delivery);
     }
 
     private void removeStock(OrderItem orderItem) {
-        Item item = itemRepository.findById(orderItem.getId()).get();
-        item.removeStock(orderItem.getCount());
+        Item item = orderItem.getItem();
+        item.setStockQuantity(Math.max(0,item.getStockQuantity() - orderItem.getCount()));
+        itemRepository.save(item);
+        // item.removeStock(orderItem.getCount());
     }
 
     private void calculate(User user) {
-        int totalSum = userService.getTotalSum(user.getId());
-        //user.calculateCredit(totalSum);
+        int totalSum = 0;
+        Set<OrderItem> bags = user.getBag();
+        for (OrderItem bag : bags) {
+            totalSum += bag.getTotalPrice();
+        }
+        user.setCredit(Math.max(0,user.getCredit()-totalSum));
     }
 }

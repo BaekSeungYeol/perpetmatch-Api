@@ -39,7 +39,7 @@ public class AdoptApiController {
     /**
      * 유저 프로필 기반 페이징 게시글 반환
      */
-    @GetMapping("/boards/profile/search")
+    @PostMapping("/boards/profile/search")
     public ResponseEntity searchByProfile(@RequestBody AdoptMatchDto matchDto, Pageable pageable) {
 
         AdoptMatchCondition condition = boardService.toCondition(matchDto);

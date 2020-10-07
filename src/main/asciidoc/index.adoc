@@ -120,7 +120,7 @@ operation::sign-in[snippets='request-fields,response-fields,http-request,http-re
 
 operation::update-password[snippets='request-fields,response-fields,http-request,http-response']
 
-[[profile-show]]
+[[my-profile]]
 === 자신의 프로필 조회
 
 'GET' 요청을 사용하여 자신의 프로필을 조회할 수 있다.

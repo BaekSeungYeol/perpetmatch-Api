@@ -315,6 +315,15 @@ operation::searchProfile-board[snippets='response-fields,http-request,http-respo
 |====
 
 
+[[add-bag]]
+=== 쇼핑하기 장바구니 추가
+
+
+'POST /api/order/bags/{id}' 요청을 사용하여 조건에 맞는 게시글을 불러올 수 있다.
+
+operation::add-bag[snippets='path-parameters,response-fields,http-request,http-response']
+
+
 //[[resources-events-get]]
 //=== 이벤트 조회
 //

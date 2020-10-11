@@ -23,6 +23,7 @@ public class BoardPageData {
     private int credit;
     private int year;
     private int month;
+    private String boardImage1;
     private ArrayList<String> tags = new ArrayList<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
@@ -31,6 +32,7 @@ public class BoardPageData {
         id = board.getId();
         title=board.getTitle();
         credit =board.getCredit();
+        boardImage1 = board.getBoardImage1();
         tags.add(board.getZone().getProvince());
         tags.add(board.getPetTitle().getTitle());
         tags.add(board.getPetAge().getPetRange());

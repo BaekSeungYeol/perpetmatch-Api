@@ -415,6 +415,7 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("포인트"),
                                 fieldWithPath("data.content[0].year").type(JsonFieldType.NUMBER).description("나이 (년)"),
                                 fieldWithPath("data.content[0].month").type(JsonFieldType.NUMBER).description("나이 (월)"),
+                                fieldWithPath("data.content[0].boardImage1").type(JsonFieldType.STRING).description("대표 이미지"),
                                 fieldWithPath("data.content[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
                                 fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("작성일")
                         )));

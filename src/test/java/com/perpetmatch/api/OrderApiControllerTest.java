@@ -200,19 +200,6 @@ class OrderApiControllerTest {
     }
 
 
-//    // TODO 장바구니 리스트 반환
-//    @GetMapping("/order/bags")
-//    public ResponseEntity getBags(@CurrentMember UserPrincipal currentMember) {
-//        if (currentMember == null) {
-//            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-//                    HttpStatus.BAD_REQUEST);
-//        }
-//
-//        Set<BagDetailsDto> bags = userService.getBags(currentMember.getId());
-//        int totalSum = userService.getTotalSum(currentMember.getId());
-//        GetBagDto data = new GetBagDto(totalSum, bags);
-//        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "장바구니 리스트입니다.",data));
-//    }
 
     @Test
     @DisplayName("장바구니 리스트 반환")

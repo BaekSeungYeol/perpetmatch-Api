@@ -10,6 +10,7 @@ import com.perpetmatch.Item.ItemRepository;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.OrderItem.OrderItemRepository;
+import com.perpetmatch.api.dto.Order.AddressDto;
 import com.perpetmatch.api.dto.Order.BagDetailsDto;
 import com.perpetmatch.api.dto.Order.BagDto;
 import com.perpetmatch.api.dto.Order.GetBagDto;
@@ -39,14 +40,13 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import java.util.Optional;
 import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
@@ -244,6 +244,69 @@ class OrderApiControllerTest {
                                 fieldWithPath("data.bags[0].count").type(JsonFieldType.NUMBER).description("사는 아이템 갯수"))
 
                 ));
+    }
+
+
+    @Test
+    @DisplayName("결제 완료 후 크레딧 차감")
+    void payment_credit_deducted() throws Exception {
+
+        Long bagId = 286L;
+
+        User userId = userRepository.findByNickname("백승열입니다").get();
+        User user = userRepository.findByIdWithBags(userId.getId());
+        user.setCredit(100000);
+        Item item = itemRepository.findById(bagId).get();
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(item.getPrice());
+        orderItem.setCount(3);
+        orderItemRepository.save(orderItem);
+
+        user.getBag().add(orderItem);
+
+        AddressDto addressDto = new AddressDto();
+        addressDto.setDear("홍길동");
+        addressDto.setZipcode("12395");
+        addressDto.setCity("서울 OO구 OO동");
+        addressDto.setStreet("54-30");
+        addressDto.setMemo("부재시 경비실에 맡겨주세요");
+
+
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/order/bags/pay")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(addressDto)))
+                .andExpect(status().isOk())
+                .andDo(document("shop-payment",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("주문 완료 하였습니다."),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("주문 ID"),
+                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("주문자"),
+                                fieldWithPath("data.totalSum").type(JsonFieldType.NUMBER).description("주문 총합"),
+                                fieldWithPath("data.orderDate").type(JsonFieldType.STRING).description("주문 날짜"),
+                                fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("유저의 남아있는 잔액"))
+
+                                ));
+
+
+        Optional<Item> byId = itemRepository.findById(286L);
+        byId.ifPresent(i -> {
+            Assertions.assertThat(i.getStockQuantity()).isEqualTo(97);
+        });
+
+        User curUser = userRepository.findByIdWithBags(userId.getId());
+        Assertions.assertThat(curUser.getCredit()).isEqualTo(74500);
     }
 
 }

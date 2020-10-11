@@ -1,12 +1,10 @@
 package com.perpetmatch.api;
 
+import com.perpetmatch.Domain.Order;
 import com.perpetmatch.Item.ItemRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.Order.OrderService;
-import com.perpetmatch.api.dto.Order.BagDetailsDto;
-import com.perpetmatch.api.dto.Order.BagDto;
-import com.perpetmatch.api.dto.Order.AddressDto;
-import com.perpetmatch.api.dto.Order.GetBagDto;
+import com.perpetmatch.api.dto.Order.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
@@ -96,9 +94,10 @@ public class OrderApiController {
         }
 
         // TODO 주문
-        orderService.createOrder(currentMember.getId(), addressDto);
+        Order order = orderService.createOrder(currentMember.getId(), addressDto);
+        PaymentOrderDto dto = new PaymentOrderDto(order);
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "주문 완료 하였습니다."));
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "주문 완료 하였습니다.",dto));
     }
 
 

@@ -1,5 +1,6 @@
 package com.perpetmatch.Domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class Order {
     @OneToOne(fetch = LAZY)
     private Delivery delivery;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)

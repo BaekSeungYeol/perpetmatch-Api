@@ -25,7 +25,7 @@ public class OrderService {
     private final UserRepository userRepository;
     private final DeliveryRepository deliveryRepository;
 
-    public void createOrder(Long id, AddressDto addressDto) {
+    public Order createOrder(Long id, AddressDto addressDto) {
 
         User user = userRepository.findByIdWithBags(id);
         Set<OrderItem> items = user.getBag();
@@ -35,12 +35,14 @@ public class OrderService {
 
        deliveryRepository.save(delivery);
 
-        makeOrder(user, orderItems, delivery);
+        Order order = makeOrder(user, orderItems, delivery);
 
         calculate(user);
+
+        return orderRepository.findByIdWithUser(order.getId());
     }
 
-    private void makeOrder(User user, ArrayList<OrderItem> orderItems, Delivery delivery) {
+    private Order makeOrder(User user, ArrayList<OrderItem> orderItems, Delivery delivery) {
         Order order = new Order();
         order.setUser(user);
         for(OrderItem orderItem : orderItems) {
@@ -51,6 +53,7 @@ public class OrderService {
         order.setOrderDate(LocalDateTime.now());
         Order savedOrder = orderRepository.save(order);
         savedOrder.setDelivery(delivery);
+        return savedOrder;
     }
 
     private void removeStock(OrderItem orderItem) {
@@ -67,5 +70,6 @@ public class OrderService {
             totalSum += bag.getTotalPrice();
         }
         user.setCredit(Math.max(0,user.getCredit()-totalSum));
+        // TODO 0보다 작을때
     }
 }

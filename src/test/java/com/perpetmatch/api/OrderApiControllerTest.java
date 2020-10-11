@@ -10,11 +10,14 @@ import com.perpetmatch.Item.ItemRepository;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.OrderItem.OrderItemRepository;
+import com.perpetmatch.api.dto.Order.BagDetailsDto;
 import com.perpetmatch.api.dto.Order.BagDto;
+import com.perpetmatch.api.dto.Order.GetBagDto;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
+import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -37,11 +40,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 import static org.assertj.core.api.Assertions.*;
@@ -145,20 +151,6 @@ class OrderApiControllerTest {
         assertThat(curUser.getBag().size()).isEqualTo(1);
     }
 
-//    /**
-//     * 장바구니 삭제
-//     */
-//    @DeleteMapping("/order/bags/details/{id}")
-//    public ResponseEntity removeBag(@CurrentMember UserPrincipal currentMember, @PathVariable Long id){
-//        if (currentMember == null) {
-//            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-//                    HttpStatus.BAD_REQUEST);
-//        }
-//        userService.removeBag(currentMember.getId(), id);
-//
-//        return ResponseEntity.ok().body(new ApiResponse(true, "장바구니에 아이템을 제거했습니다."));
-//    }
-
     @Test
     @DisplayName("눌렀을 시 장바구니 아이템 삭제")
     void removeBagItem() throws Exception {
@@ -205,6 +197,66 @@ class OrderApiControllerTest {
 
         User curUser = userRepository.findByIdWithBags(userId.getId());
         assertThat(curUser.getBag().size()).isEqualTo(0);
+    }
+
+
+//    // TODO 장바구니 리스트 반환
+//    @GetMapping("/order/bags")
+//    public ResponseEntity getBags(@CurrentMember UserPrincipal currentMember) {
+//        if (currentMember == null) {
+//            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+//                    HttpStatus.BAD_REQUEST);
+//        }
+//
+//        Set<BagDetailsDto> bags = userService.getBags(currentMember.getId());
+//        int totalSum = userService.getTotalSum(currentMember.getId());
+//        GetBagDto data = new GetBagDto(totalSum, bags);
+//        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "장바구니 리스트입니다.",data));
+//    }
+
+    @Test
+    @DisplayName("장바구니 리스트 반환")
+    void bagList() throws Exception {
+
+        Long bagId = 283L;
+
+        User userId = userRepository.findByNickname("백승열입니다").get();
+        User user = userRepository.findByIdWithBags(userId.getId());
+        Item item = itemRepository.findById(bagId).get();
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(item.getPrice());
+        orderItem.setCount(3);
+        orderItemRepository.save(orderItem);
+
+        user.getBag().add(orderItem);
+
+
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/order/bags")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("bag-list",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("장바구니 리스트입니다."),
+                                fieldWithPath("data.totalSum").type(JsonFieldType.NUMBER).description("장바구니 총합 계산"),
+                                fieldWithPath("data.bags").type(JsonFieldType.ARRAY).description("장바구니"),
+                                fieldWithPath("data.bags[0].id").type(JsonFieldType.NUMBER).description("사는 아이템 ID"),
+                                fieldWithPath("data.bags[0].name").type(JsonFieldType.STRING).description("사는 아이템 이름"),
+                                fieldWithPath("data.bags[0].price").type(JsonFieldType.NUMBER).description("사는 아이템 가격"),
+                                fieldWithPath("data.bags[0].count").type(JsonFieldType.NUMBER).description("사는 아이템 갯수"))
+
+                ));
     }
 
 }

@@ -319,10 +319,23 @@ operation::searchProfile-board[snippets='response-fields,http-request,http-respo
 === 쇼핑하기 장바구니 추가
 
 
-'POST /api/order/bags/{id}' 요청을 사용하여 조건에 맞는 게시글을 불러올 수 있다.
+'POST /api/order/bags/{id}' 요청을 사용하여 장바구니에 아이템을 추가할 수 있다.
 
 operation::add-bag[snippets='path-parameters,response-fields,http-request,http-response']
 
+[[remove-bag]]
+=== 쇼핑하기 장바구니 삭제
+
+'DELETE /api/order/bags/details/{id}' 요청을 사용하여 해당 장바구니 아이템을 삭제할 수 있다.
+
+operation::remove-bag[snippets='path-parameters,response-fields,http-request,http-response']
+
+[[bag-list]]
+=== 유저의 쇼핑하기 장바구니 리스트 조회
+
+'GET /api/order/bags' 요청을 사용하여 해당 유저의 장바구니 리스트를 조회할 수 있다.
+
+operation::bag-list[snippets='response-fields,http-request,http-response']
 
 //[[resources-events-get]]
 //=== 이벤트 조회

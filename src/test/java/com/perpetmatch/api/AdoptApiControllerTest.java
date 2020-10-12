@@ -105,7 +105,7 @@ class AdoptApiControllerTest {
 
 
         //when
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/profile/search")
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/boards/profile/search")
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -237,7 +237,6 @@ class OrderApiControllerTest {
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("장바구니 리스트입니다."),
                                 fieldWithPath("data.totalSum").type(JsonFieldType.NUMBER).description("장바구니 총합 계산"),
-                                fieldWithPath("data.bags").type(JsonFieldType.ARRAY).description("장바구니"),
                                 fieldWithPath("data.bags[0].id").type(JsonFieldType.NUMBER).description("사는 아이템 ID"),
                                 fieldWithPath("data.bags[0].name").type(JsonFieldType.STRING).description("사는 아이템 이름"),
                                 fieldWithPath("data.bags[0].price").type(JsonFieldType.NUMBER).description("사는 아이템 가격"),

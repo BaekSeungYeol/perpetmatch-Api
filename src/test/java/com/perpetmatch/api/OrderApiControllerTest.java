@@ -1,9 +1,7 @@
 package com.perpetmatch.api;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Item.Item;
-import com.perpetmatch.Domain.Order;
 import com.perpetmatch.Domain.OrderItem;
 import com.perpetmatch.Domain.User;
 import com.perpetmatch.Item.ItemRepository;
@@ -11,14 +9,8 @@ import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.OrderItem.OrderItemRepository;
 import com.perpetmatch.api.dto.Order.AddressDto;
-import com.perpetmatch.api.dto.Order.BagDetailsDto;
 import com.perpetmatch.api.dto.Order.BagDto;
-import com.perpetmatch.api.dto.Order.GetBagDto;
 import com.perpetmatch.common.RestDocsConfiguration;
-import com.perpetmatch.jjwt.CurrentMember;
-import com.perpetmatch.jjwt.UserPrincipal;
-import com.perpetmatch.jjwt.resource.ApiResponse;
-import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -32,25 +24,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import java.util.Optional;
-import java.util.Set;
 
-import static javax.persistence.FetchType.LAZY;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -238,7 +221,7 @@ class OrderApiControllerTest {
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("장바구니 리스트입니다."),
                                 fieldWithPath("data.totalSum").type(JsonFieldType.NUMBER).description("장바구니 총합 계산"),
                                 fieldWithPath("data.bags[0].id").type(JsonFieldType.NUMBER).description("사는 아이템 ID"),
-                                fieldWithPath("data.bags[0].name").type(JsonFieldType.STRING).description("사는 아이템 이름"),
+                                fieldWithPath("data.bags[0].title").type(JsonFieldType.STRING).description("사는 아이템 이름"),
                                 fieldWithPath("data.bags[0].price").type(JsonFieldType.NUMBER).description("사는 아이템 가격"),
                                 fieldWithPath("data.bags[0].count").type(JsonFieldType.NUMBER).description("사는 아이템 갯수"))
 

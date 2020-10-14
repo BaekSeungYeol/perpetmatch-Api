@@ -284,8 +284,8 @@ public class UserService {
 
     public Set<BagDetailsDto> getBags(Long id) {
         User user = userRepository.findByIdWithBags(id);
-        Set<BagDetailsDto> collect = user.getBag().stream().map(o -> new BagDetailsDto(o.getId(),o.getItem().getName(), o.getOrderPrice(), o.getCount())).collect(Collectors.toSet());
-        return collect;
+        Set<BagDetailsDto> collect = user.getBag().stream().map(o -> new BagDetailsDto(o)).collect(Collectors.toSet());
+         return collect;
     }
 
     public int getTotalSum(Long id) {

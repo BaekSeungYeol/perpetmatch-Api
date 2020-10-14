@@ -19,9 +19,16 @@ public abstract class Item {
     @Column
     private Long id;
 
-    private String name;
+    private String title;
     private int price;
     private int stockQuantity;
+    private int sale;
+
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String image;
+
+    private String company;
 
     public void addStock(int quantity) {
         this.stockQuantity += quantity;

@@ -20,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.Basic;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.print.DocFlavor;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -138,62 +141,91 @@ public class InitDB {
             return list;
         }
 
+
+        private String company;
         public void putItems() {
             if(itemRepository.count() == 0) {
                 Feed feed1 = new Feed();
-                feed1.setName("네츄럴 코어 유기농 비프 애견사료");
+                feed1.setTitle("인섹트도그 미니 저알러지사료");
                 feed1.setPrice(51990);
                 feed1.setStockQuantity(100);
+                feed1.setCompany("벨리스");
+                feed1.setSale(20);
+                feed1.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/11.jpg");
                 itemRepository.save(feed1);
 
                 Feed feed2 = new Feed();
-                feed2.setName("하림 더리얼 치킨 애견사료");
+                feed2.setTitle("인섹트도그 베기도그 다이어트사료");
                 feed2.setPrice(45990);
                 feed2.setStockQuantity(100);
+                feed2.setCompany("벨리스");
+                feed2.setSale(15);
+                feed2.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/22.jpg");
                 itemRepository.save(feed2);
 
                 Feed feed3 = new Feed();
-                feed3.setName("뉴웨이브 유기농 애견사료");
+                feed3.setTitle("벨포아 홀리스틱 곤충사료 강아지 눈물사료");
                 feed3.setPrice(31990);
                 feed3.setStockQuantity(100);
+                feed3.setCompany("벨리스");
+                feed3.setSale(20);
+                feed3.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/33.jpg");
                 itemRepository.save(feed3);
 
                 Snack snack1 = new Snack();
-                snack1.setName("터키츄 칠면조힘줄 스트립");
+                snack1.setTitle("밸리스 만능 츄르");
                 snack1.setPrice(8500);
                 snack1.setStockQuantity(100);
+                snack1.setCompany("마이비펫");
+                snack1.setSale(10);
+                snack1.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80+42%402x.png");
                 itemRepository.save(snack1);
 
                 Snack snack2 = new Snack();
-                snack2.setName("퓨리나 프로플랜 강아지 덴탈껌");
+                snack2.setTitle("밸리스 날씬 츄르");
                 snack2.setPrice(10500);
                 snack2.setStockQuantity(100);
+                snack2.setCompany("마이비펫");
+                snack2.setSale(10);
+                snack2.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/2691714979_A1(1).jpg");
                 itemRepository.save(snack2);
 
                 Snack snack3 = new Snack();
-                snack3.setName("수제간식 질겅질겅 소떡심");
+                snack3.setTitle("밸리스 꿀잠 츄르");
                 snack3.setPrice(4500);
                 snack3.setStockQuantity(100);
+                snack3.setCompany("마이비펫");
+                snack3.setSale(10);
+                snack3.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/2949540189_B.jpg");
                 itemRepository.save(snack3);
 
 
                 Goods goods1 = new Goods();
-                goods1.setName("플라밍고 우디 스타 나무모양의 고무 장난감");
-                goods1.setPrice(8800);
+                goods1.setTitle("강아지 노즈워크 스니프 볼");
+                goods1.setPrice(27000);
                 goods1.setStockQuantity(100);
+                goods1.setCompany("까르페띠앙");
+                goods1.setSale(15);
+                goods1.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80+40%403x.png");
                 itemRepository.save(goods1);
 
 
                 Goods goods2 = new Goods();
-                goods2.setName("폭탄 간식놀이 노즈워크 장난감");
+                goods2.setTitle("노즈워크 종합 장난감");
                 goods2.setPrice(4500);
                 goods2.setStockQuantity(100);
+                goods2.setCompany("까르페띠앙");
+                goods2.setSale(15);
+                goods2.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/215025063170%403x.png");
                 itemRepository.save(goods2);
 
                 Goods goods3 = new Goods();
-                goods3.setName("플레넷도그 오르비 터프볼");
+                goods3.setTitle("플레넷도그 오르비 터프 방석");
                 goods3.setPrice(25000);
                 goods3.setStockQuantity(100);
+                goods3.setCompany("까르페띠앙");
+                goods3.setSale(15);
+                goods3.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80+41%403x.png");
                 itemRepository.save(goods3);
             }
         }

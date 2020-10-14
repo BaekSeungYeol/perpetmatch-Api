@@ -1,5 +1,6 @@
 package com.perpetmatch.api;
 
+import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.Domain.Order;
 import com.perpetmatch.Item.ItemRepository;
 import com.perpetmatch.Member.UserService;
@@ -15,7 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -27,15 +31,47 @@ public class OrderApiController {
     private final OrderService orderService;
     private final UserService userService;
 
-    /**
-     * feed인지, snack인지 goods인지
-     * stockPrice, count
-     */
 
-//    @GetMapping("/order/bag")
-//    public ResponseEntity showItem(@PathVariable Long id) {
-//
-//    }
+    @GetMapping("/shop/details/{id}")
+    public ResponseEntity getFeedOne(@PathVariable Long id) {
+
+        Optional<Item> item = itemRepository.findById(id);
+        if(item.isEmpty())
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+
+        Item curItem = item.get();
+        ItemDto itemDto = new ItemDto(curItem);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "아이템 단건 조회 입니다.",itemDto));
+    }
+
+
+    @GetMapping("/shop/feeds")
+    public ResponseEntity getFeedList() {
+
+        List<Item> items = itemRepository.findAllByCompany("벨리스");
+        Set<ItemDto> collect = items.stream().map(ItemDto::new).collect(Collectors.toSet());
+
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "사료 리스트 다건 조회 입니다.",collect));
+    }
+
+    @GetMapping("/shop/snacks")
+    public ResponseEntity getSnackList() {
+
+        List<Item> items = itemRepository.findAllByCompany("마이비펫");
+        Set<ItemDto> collect = items.stream().map(ItemDto::new).collect(Collectors.toSet());
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "간식 리스트 다건 조회 입니다.",collect));
+    }
+
+
+    @GetMapping("/shop/goods")
+    public ResponseEntity getGoodsList() {
+
+        List<Item> items = itemRepository.findAllByCompany("까르페띠앙");
+        Set<ItemDto> collect = items.stream().map(ItemDto::new).collect(Collectors.toSet());
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "용품 리스트 다건 조회 입니다.",collect));
+    }
+
 
 
     // TODO 장바구니 리스트 반환
@@ -99,21 +135,6 @@ public class OrderApiController {
 
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "주문 완료 하였습니다.",dto));
     }
-
-
-//    @PostMapping("/order/{id}")
-//    public ResponseEntity createOrderItem(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
-//                                   @RequestParam("count") int count){
-//        if (currentMember == null) {
-//            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-//                    HttpStatus.BAD_REQUEST);
-//        }
-//
-//        orderService.create(currentMember.getId(),id,count);
-//    }
-
-
-    //장바구니 추가, 장바구니 삭제
 
 
 }

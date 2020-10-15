@@ -21,7 +21,7 @@ public class BagDetailsDto {
 
     public BagDetailsDto(OrderItem o) {
         this.id = o.getId();
-        this.image = o.getItem().getImage();
+        this.image = o.getItem().getBoardImageHead();
         this.title = o.getItem().getTitle();
         this.company = o.getItem().getCompany();
         this.price = o.getOrderPrice();

@@ -146,30 +146,33 @@ public class InitDB {
         public void putItems() {
             if(itemRepository.count() == 0) {
                 Feed feed1 = new Feed();
-                feed1.setTitle("인섹트도그 미니 저알러지사료");
+                feed1.setTitle("벅스펫 국내산 유기농 베지믹스 관절건강 사료");
                 feed1.setPrice(51990);
                 feed1.setStockQuantity(100);
                 feed1.setCompany("벨리스");
                 feed1.setSale(20);
-                feed1.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/11.jpg");
+                feed1.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A41.jpg");
+                feed1.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A4d+1.jpg");
                 itemRepository.save(feed1);
 
                 Feed feed2 = new Feed();
-                feed2.setTitle("인섹트도그 베기도그 다이어트사료");
+                feed2.setTitle("인스팅트 RBK 피부건강 독키블 사료");
                 feed2.setPrice(45990);
                 feed2.setStockQuantity(100);
                 feed2.setCompany("벨리스");
                 feed2.setSale(15);
-                feed2.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/22.jpg");
+                feed2.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A42.jpg");
+                feed2.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A42+d.jpg");
                 itemRepository.save(feed2);
 
                 Feed feed3 = new Feed();
-                feed3.setTitle("벨포아 홀리스틱 곤충사료 강아지 눈물사료");
+                feed3.setTitle("인스팅트 독 생식본능 독키블");
                 feed3.setPrice(31990);
                 feed3.setStockQuantity(100);
                 feed3.setCompany("벨리스");
                 feed3.setSale(20);
-                feed3.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/33.jpg");
+                feed3.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A43.jpg");
+                feed3.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A43d.jpg");
                 itemRepository.save(feed3);
 
                 Snack snack1 = new Snack();
@@ -178,16 +181,18 @@ public class InitDB {
                 snack1.setStockQuantity(100);
                 snack1.setCompany("마이비펫");
                 snack1.setSale(10);
-                snack1.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80+42%402x.png");
+                snack1.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80+42%402x.png");
+                snack1.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%A7%8C%EB%8A%A5d.jpg");
                 itemRepository.save(snack1);
 
                 Snack snack2 = new Snack();
-                snack2.setTitle("밸리스 날씬 츄르");
+                snack2.setTitle("밸리스 에취 츄르");
                 snack2.setPrice(10500);
                 snack2.setStockQuantity(100);
                 snack2.setCompany("마이비펫");
                 snack2.setSale(10);
-                snack2.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/2691714979_A1(1).jpg");
+                snack2.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%97%90%EC%B8%84.jpg");
+                snack2.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%97%90%EC%B8%84d.jpg");
                 itemRepository.save(snack2);
 
                 Snack snack3 = new Snack();
@@ -196,7 +201,8 @@ public class InitDB {
                 snack3.setStockQuantity(100);
                 snack3.setCompany("마이비펫");
                 snack3.setSale(10);
-                snack3.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/2949540189_B.jpg");
+                snack3.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/2949540189_B.jpg");
+                snack3.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EA%BF%80%EC%9E%A0d.jpg");
                 itemRepository.save(snack3);
 
 
@@ -206,27 +212,10 @@ public class InitDB {
                 goods1.setStockQuantity(100);
                 goods1.setCompany("까르페띠앙");
                 goods1.setSale(15);
-                goods1.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80+40%403x.png");
+                goods1.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%8C%95%EB%83%A5.jpg");
+                goods1.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B0%A9%EC%84%9Dd.png");
                 itemRepository.save(goods1);
 
-
-                Goods goods2 = new Goods();
-                goods2.setTitle("노즈워크 종합 장난감");
-                goods2.setPrice(4500);
-                goods2.setStockQuantity(100);
-                goods2.setCompany("까르페띠앙");
-                goods2.setSale(15);
-                goods2.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/215025063170%403x.png");
-                itemRepository.save(goods2);
-
-                Goods goods3 = new Goods();
-                goods3.setTitle("플레넷도그 오르비 터프 방석");
-                goods3.setPrice(25000);
-                goods3.setStockQuantity(100);
-                goods3.setCompany("까르페띠앙");
-                goods3.setSale(15);
-                goods3.setImage("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80+41%403x.png");
-                itemRepository.save(goods3);
             }
         }
     }

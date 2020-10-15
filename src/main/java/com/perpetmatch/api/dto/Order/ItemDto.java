@@ -20,12 +20,14 @@ public class ItemDto {
     private int price;
     private int stockQuantity;
     private int sale;
-    private String image;
     private String company;
+    private String boardImageHead;
+    private String boardImageMain;
 
     public ItemDto(Item i) {
         this.id = i.getId();
-        this.image = i.getImage();
+        this.boardImageHead = i.getBoardImageHead();
+        this.boardImageMain = i.getBoardImageMain();
         this.title = i.getTitle();
         this.company = i.getCompany();
         this.price = i.getPrice();

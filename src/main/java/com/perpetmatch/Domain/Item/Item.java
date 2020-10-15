@@ -26,8 +26,11 @@ public abstract class Item {
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
-    private String image;
+    private String boardImageHead;
 
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    private String boardImageMain;
     private String company;
 
     public void addStock(int quantity) {

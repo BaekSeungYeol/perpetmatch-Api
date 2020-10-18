@@ -5,17 +5,23 @@ import com.perpetmatch.Domain.Order;
 import com.perpetmatch.Item.ItemRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.Order.OrderService;
+import com.perpetmatch.api.dto.Board.BoardPageData;
 import com.perpetmatch.api.dto.Order.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.parser.Entity;
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -72,6 +78,22 @@ public class OrderApiController {
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "용품 리스트 다건 조회 입니다.",collect));
     }
 
+    @GetMapping("/shop/items/best")
+    public ResponseEntity getItemsBest() {
+        PageRequest pg = PageRequest.of(0, 6, Sort.by(Sort.Direction.ASC, "publishedDateTime"));
+        Slice<Item> items = itemRepository.findAll(pg);
+        Slice<ItemDto> collect = items.map(item -> new ItemDto(item));
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "아이템 베스트 다건 조회 입니다.",collect));
+    }
+
+
+    @GetMapping("/shop/items/new")
+    public ResponseEntity getItemsNew() {
+        PageRequest pg = PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "publishedDateTime"));
+        Slice<Item> items = itemRepository.findAll(pg);
+        Slice<ItemDto> collect = items.map(item -> new ItemDto(item));
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "아이템 신규 다건 조회 입니다.",collect));
+    }
 
 
     // TODO 장바구니 리스트 반환

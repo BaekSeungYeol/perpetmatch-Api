@@ -30,6 +30,7 @@ import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -153,6 +154,8 @@ public class InitDB {
                 feed1.setSale(20);
                 feed1.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A41.jpg");
                 feed1.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A4d+1.jpg");
+                String dateString = "2020-10-01T10:11:30";
+                feed1.setPublishedDateTime(LocalDateTime.parse(dateString));
                 itemRepository.save(feed1);
 
                 Feed feed2 = new Feed();
@@ -163,6 +166,8 @@ public class InitDB {
                 feed2.setSale(15);
                 feed2.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A42.jpg");
                 feed2.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A42+d.jpg");
+                dateString = "2020-10-02T10:11:30";
+                feed2.setPublishedDateTime(LocalDateTime.parse(dateString));
                 itemRepository.save(feed2);
 
                 Feed feed3 = new Feed();
@@ -173,6 +178,8 @@ public class InitDB {
                 feed3.setSale(20);
                 feed3.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A43.jpg");
                 feed3.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A43d.jpg");
+                dateString = "2020-10-04T10:11:30";
+                feed3.setPublishedDateTime(LocalDateTime.parse(dateString));
                 itemRepository.save(feed3);
 
                 Snack snack1 = new Snack();
@@ -183,6 +190,8 @@ public class InitDB {
                 snack1.setSale(10);
                 snack1.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80+42%402x.png");
                 snack1.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%A7%8C%EB%8A%A5d.jpg");
+                dateString = "2020-10-03T10:11:30";
+                snack1.setPublishedDateTime(LocalDateTime.parse(dateString));
                 itemRepository.save(snack1);
 
                 Snack snack2 = new Snack();
@@ -193,6 +202,8 @@ public class InitDB {
                 snack2.setSale(10);
                 snack2.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%97%90%EC%B8%84.jpg");
                 snack2.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EC%97%90%EC%B8%84d.jpg");
+                dateString = "2020-10-05T10:11:30";
+                snack2.setPublishedDateTime(LocalDateTime.parse(dateString));
                 itemRepository.save(snack2);
 
                 Snack snack3 = new Snack();
@@ -203,6 +214,8 @@ public class InitDB {
                 snack3.setSale(10);
                 snack3.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/2949540189_B.jpg");
                 snack3.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EA%BF%80%EC%9E%A0d.jpg");
+                dateString = "2020-10-06T10:11:30";
+                snack3.setPublishedDateTime(LocalDateTime.parse(dateString));
                 itemRepository.save(snack3);
 
 
@@ -214,6 +227,8 @@ public class InitDB {
                 goods1.setSale(15);
                 goods1.setBoardImageHead("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%8C%95%EB%83%A5.jpg");
                 goods1.setBoardImageMain("https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B0%A9%EC%84%9Dd.png");
+                dateString = "2020-10-07T10:11:30";
+                goods1.setPublishedDateTime(LocalDateTime.parse(dateString));
                 itemRepository.save(goods1);
 
             }

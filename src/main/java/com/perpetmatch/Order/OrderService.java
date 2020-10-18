@@ -9,6 +9,8 @@ import com.perpetmatch.Member.UserService;
 import com.perpetmatch.OrderItem.OrderItemRepository;
 import com.perpetmatch.api.dto.Order.AddressDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

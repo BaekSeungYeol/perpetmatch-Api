@@ -340,6 +340,22 @@ operation::list-snacks[snippets='response-fields,http-request,http-response']
 
 operation::list-goods[snippets='response-fields,http-request,http-response']
 
+[[item-best]]
+=== 베스트 아이템 조회
+
+'GET /api/shop/items/best' 요청을 사용하여 베스트 아이템 리스트를 가져올 수 있다.
+
+operation::item-best[snippets='response-fields,http-request,http-response']
+
+[[item-new]]
+=== 신규 아이템 조회
+
+'GET /api/shop/items/new' 요청을 사용하여 신규 아이템 리스트를 가져올 수 있다.
+
+operation::item-new[snippets='response-fields,http-request,http-response']
+
+
+
 
 [[get-item]]
 === 쇼핑 아이템 단일 조회

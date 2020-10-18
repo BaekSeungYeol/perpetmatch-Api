@@ -39,8 +39,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -135,6 +134,71 @@ class OrderApiControllerTest {
         User user = userRepository.findByNickname("백승열입니다").get();
         User curUser = userRepository.findByIdWithBags(user.getId());
         assertThat(curUser.getBag().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("신규 아이템 조회")
+    void getNew() throws  Exception {
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/shop/items/new")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("message").value("아이템 신규 다건 조회 입니다."))
+                .andDo(document("item-new",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        relaxedResponseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("아이템 신규 다건 조회 입니다."),
+                                fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
+                                fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("아이템 제목 입니다."),
+                                fieldWithPath("data.content[0].price").type(JsonFieldType.NUMBER).description("아이템 가격 입니다."),
+                                fieldWithPath("data.content[0].stockQuantity").type(JsonFieldType.NUMBER).description("아이템 수량 입니다."),
+                                fieldWithPath("data.content[0].sale").type(JsonFieldType.NUMBER).description("아이템 세일 현황 입니다."),
+                                fieldWithPath("data.content[0].company").type(JsonFieldType.STRING).description("아이템 제조회사 입니다."),
+                                fieldWithPath("data.content[0].boardImageHead").type(JsonFieldType.STRING).description("아이템 이미지 입니다."),
+                                fieldWithPath("data.content[0].boardImageMain").type(JsonFieldType.STRING).description("아이템 상세정보 입니다.")
+                        )));
+    }
+    @Test
+    @DisplayName("베스트 아이템 조회")
+    void getBest() throws Exception {
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/shop/items/best")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("message").value("아이템 베스트 다건 조회 입니다."))
+                .andDo(document("item-best",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        relaxedResponseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("아이템 베스트 다건 조회 입니다."),
+                                fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
+                                fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("아이템 제목 입니다."),
+                                fieldWithPath("data.content[0].price").type(JsonFieldType.NUMBER).description("아이템 가격 입니다."),
+                                fieldWithPath("data.content[0].stockQuantity").type(JsonFieldType.NUMBER).description("아이템 수량 입니다."),
+                                fieldWithPath("data.content[0].sale").type(JsonFieldType.NUMBER).description("아이템 세일 현황 입니다."),
+                                fieldWithPath("data.content[0].company").type(JsonFieldType.STRING).description("아이템 제조회사 입니다."),
+                                fieldWithPath("data.content[0].boardImageHead").type(JsonFieldType.STRING).description("아이템 이미지 입니다."),
+                                fieldWithPath("data.content[0].boardImageMain").type(JsonFieldType.STRING).description("아이템 상세정보 입니다.")
+                        )));
     }
 
     @Test

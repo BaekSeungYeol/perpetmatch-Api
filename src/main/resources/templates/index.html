@@ -534,6 +534,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#get-boards_http_response">HTTP response</a></li>
 </ul>
 </li>
+<li><a href="#accept-credit">파양하기 입양 유저 수락</a>
+<ul class="sectlevel3">
+<li><a href="#accept-credit_path_parameters">Path parameters</a></li>
+<li><a href="#accept-credit_request_fields">Request fields</a></li>
+<li><a href="#accept-credit_response_fields">Response fields</a></li>
+<li><a href="#accept-credit_http_request">HTTP request</a></li>
+<li><a href="#accept-credit_http_response">HTTP response</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#Adoption">입양하기</a>
@@ -628,6 +637,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#add-bag">장바구니 추가</a>
 <ul class="sectlevel3">
 <li><a href="#add-bag_path_parameters">Path parameters</a></li>
+<li><a href="#add-bag_request_fields">Request fields</a></li>
 <li><a href="#add-bag_response_fields">Response fields</a></li>
 <li><a href="#add-bag_http_request">HTTP request</a></li>
 <li><a href="#add-bag_http_response">HTTP response</a></li>
@@ -650,6 +660,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#shop-payment">장바구니 결제하기</a>
 <ul class="sectlevel3">
+<li><a href="#shop-payment_request_fields">Request fields</a></li>
 <li><a href="#shop-payment_response_fields">Response fields</a></li>
 <li><a href="#shop-payment_http_request">HTTP request</a></li>
 <li><a href="#shop-payment_http_response">HTTP response</a></li>
@@ -1051,7 +1062,7 @@ X-Frame-Options: DENY
 Content-Length: 262
 
 {
-  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDgiLCJpYXQiOjE2MDMwMjQ5ODAsImV4cCI6MTYwMzYyOTc4MH0._f0nmrXeOnOdld6zz_8EeBsbF6k6UVjhBxkvHwk82LD_hojvZS_cFq-cVt8Hgxxo4E-IMPJG1eCyzFGq0rOJHA",
+  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTEiLCJpYXQiOjE2MDMxMjI4MzIsImV4cCI6MTYwMzcyNzYzMn0.s06NrrrvzgKJepQqYUGwzis8y6Q5Qs-kLXF-2NTaN3DMNxzeudRSpOUTOiLXKS04BG-sjBwGPSw1xunnS1Ty7A",
   "tokenType" : "Bearer",
   "nickname" : "백승열입니다"
 }</code></pre>
@@ -1136,7 +1147,7 @@ Content-Length: 262
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/profiles/password HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDUiLCJpYXQiOjE2MDMwMjQ5NzksImV4cCI6MTYwMzYyOTc3OX0.BiArM1L7Us7NGr_y_Q9Y2AcTz3_h7OeH746Kz9ybjppMGliIDsiPGK_zyx-sUCPMuxJhwogN7hyQAPEq3CY3ig
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDgiLCJpYXQiOjE2MDMxMjI4MzEsImV4cCI6MTYwMzcyNzYzMX0.Z-cuhZfXBa3rdXN2aS5S7Z8hmCDThO5xyw7clJPbQ9FjaY_zaU5SQOE_novQPSWR-oOdSDojo1vwzZbHffJhDw
 Accept: application/json
 Content-Length: 74
 Host: perpetApi.com:8080
@@ -1323,7 +1334,7 @@ Content-Length: 89
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzciLCJpYXQiOjE2MDMwMjQ5NzcsImV4cCI6MTYwMzYyOTc3N30.ACADizLC4DVatmit5yKzssam9Q1g6Z1iA_RfylhzGE_ZiQ1nq-6-ryjvRuy6Q7e6GOagLXuLwPeEpc75wOCoKg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDAiLCJpYXQiOjE2MDMxMjI4MjgsImV4cCI6MTYwMzcyNzYyOH0.bK2IR-N6RBTR8Ulr_hM5tkLq5aNvdjlSaVoy8kKw5y30-W1wGK6N13rotLBvK8q4W_5PO5KCbLy6ksoK08RTFQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1350,11 +1361,11 @@ Content-Length: 754
   "success" : true,
   "message" : "자신의 프로필 조회입니다.",
   "data" : {
-    "id" : 337,
+    "id" : 340,
     "age" : 0,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com",
-    "joinedAt" : "2020-10-18",
+    "joinedAt" : "2020-10-20",
     "petTitles" : [ ],
     "zones" : [ ],
     "petAges" : [ ],
@@ -1548,9 +1559,9 @@ Content-Length: 754
 <h4 id="profile-show_http_request"><a class="link" href="#profile-show_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/339 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/342 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzkiLCJpYXQiOjE2MDMwMjQ5NzgsImV4cCI6MTYwMzYyOTc3OH0.ftDMycK2YZaS6w8_0-aeUDO8hZBfqy2ziECkMCJoKHZJ4wOteiWuJ6FdCeUNjAQ7lxMXhQJdLS8ZG4WjgUg2PQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDIiLCJpYXQiOjE2MDMxMjI4MjksImV4cCI6MTYwMzcyNzYyOX0.PQ-UuFPcAGKxD2Fd6-vRfepohsAxs5s8C4FFUqrlD3rMe15ZTXkBhf9oFMqk_R7INM34G--mKbN3ZHuMIB_okQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1577,11 +1588,11 @@ Content-Length: 761
   "success" : true,
   "message" : "요청 유저의 프로필 조회입니다.",
   "data" : {
-    "id" : 339,
+    "id" : 342,
     "age" : 0,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com",
-    "joinedAt" : "2020-10-18",
+    "joinedAt" : "2020-10-20",
     "petTitles" : [ ],
     "zones" : [ ],
     "petAges" : [ ],
@@ -1749,7 +1760,7 @@ Content-Length: 761
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDMiLCJpYXQiOjE2MDMwMjQ5NzgsImV4cCI6MTYwMzYyOTc3OH0.3BQ_rtruBmx6pvheeDoO4AFtN9slxVbknig1uDwiZw-VmUsN031nclu3nME660dcWFxBSjpEkR07WpbCDSgH6w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDYiLCJpYXQiOjE2MDMxMjI4MzAsImV4cCI6MTYwMzcyNzYzMH0.T43yNpd_Quo5KCjHMh89vORqmC6wEgt0Tve8H8WNdBe5LLuLKpabYvQHN9tdGhQcdhslw7yeFKBduxcMpBZCiA
 Accept: application/json
 Content-Length: 420
 Host: perpetApi.com:8080
@@ -1794,7 +1805,7 @@ Content-Length: 200
   "success" : true,
   "message" : "프로필이 등록 완료 되었습니다.",
   "data" : {
-    "id" : 343,
+    "id" : 346,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com"
   }
@@ -1855,7 +1866,7 @@ Content-Length: 200
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzQiLCJpYXQiOjE2MDMwMjQ5NzcsImV4cCI6MTYwMzYyOTc3N30.Cj__NABw57eSnM3zHbPOcWGHWgVpm0claKk_DD0sqUZ4Z3mQKD7yBc2LO9njnFN1ZRSg0xnKY5nNxxXHXiPpEA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzciLCJpYXQiOjE2MDMxMjI4MjcsImV4cCI6MTYwMzcyNzYyN30.xU1WqGnczLUbD6IdyZMu_dDdVE5oRWiBe1OkVIVaDUk0MGShQCuXWpPy9Er3gExkbxD-8UzMstITRYN0UVXYeg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1954,7 +1965,7 @@ Content-Length: 4860
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzYiLCJpYXQiOjE2MDMwMjQ5NzcsImV4cCI6MTYwMzYyOTc3N30.cQfQGrLVb81QE4Aw5awGGHqGbakd0bcdJEyCPpNaehC-RGuymlKSkhLSP1CCmkRm4iHjkayNzD2TAV7uhPiPMw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzkiLCJpYXQiOjE2MDMxMjI4MjgsImV4cCI6MTYwMzcyNzYyOH0.wxzIvFw-lIUU0KJU_qssZ0_Jr1_AmSkNmPPchAgapVl4eQsqjrYUXX7JjiwrLnuVBTYlT7In8cp2lc-HXKUIOQ
 Accept: application/json
 Content-Length: 29
 Host: perpetApi.com:8080
@@ -2054,7 +2065,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDEiLCJpYXQiOjE2MDMwMjQ5NzgsImV4cCI6MTYwMzYyOTc3OH0.m7jkAnSizwm7BcOEfNjRcAi9djMs1sz7uQJ8RWSvWtGJKl3iIBQbDvk478p-4B0cUm3C6JKFKy9tsZu_VhvfKQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDQiLCJpYXQiOjE2MDMxMjI4MzAsImV4cCI6MTYwMzcyNzYzMH0.OfmqNXIn-hYvNG2Y6DWodAOsWtZqVXX2hTK9F0S0YwddCuMLnYRXm_dnushQ1CsKu-sOW9h7iJ5HOdgY9XJ4DA
 Accept: application/json
 Content-Length: 32
 Host: perpetApi.com:8080
@@ -2143,7 +2154,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDAiLCJpYXQiOjE2MDMwMjQ5NzgsImV4cCI6MTYwMzYyOTc3OH0.qgMvbg9NZGbV33YnEBKs8B-PQqXvEcG5aCTCGMxlO3_WQ6bXyhR6_jPkTRVWtVKUE-ZLYCDpFVYVCP12rBma7w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDMiLCJpYXQiOjE2MDMxMjI4MjksImV4cCI6MTYwMzcyNzYyOX0.xSf_lBw1PTs29329HAWpJUcTTjv1nNNYKCUuFwRQnrkPeI9vLwRC-QW6QcgIT3slioqxqUQt_09E4FH9aWUvZA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -2242,7 +2253,7 @@ Content-Length: 183
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzEiLCJpYXQiOjE2MDMwMjQ5NzYsImV4cCI6MTYwMzYyOTc3Nn0.jJNw884v7i4K0yHQfkE6JIYyTpQJoNtU6c6rIAM8FyCoz2TIxg0RVpEnaptZwtVIUK6iFVg3C_WuMKKl4ZFo0w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzQiLCJpYXQiOjE2MDMxMjI4MjYsImV4cCI6MTYwMzcyNzYyNn0.U0sV6e35sbFhkn9YlQmuWld4Imr-agBr_tPSYm-g9Mf3rzDiX_NnPSFaUGASEr4AVuVPvLcVaILb3pgVfyEEug
 Accept: application/json
 Content-Length: 33
 Host: perpetApi.com:8080
@@ -2342,7 +2353,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzMiLCJpYXQiOjE2MDMwMjQ5NzcsImV4cCI6MTYwMzYyOTc3N30.wqhQSDMi4fKsqGilVsS4KX0xpSEPGC38ANIJpeGwwhSPHp91KrrDX0GrwxT0QEWCml1jnhWFs_u43_A8J9DYDA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzYiLCJpYXQiOjE2MDMxMjI4MjcsImV4cCI6MTYwMzcyNzYyN30.uF_lgSlcqCsJDSm6IbHnAQgZIb6eMmef22dwsrF9NscxoetytKRX7MDQFlOLx9i4Wem6IBV-MVwi06Gd1qaD3w
 Accept: application/json
 Content-Length: 33
 Host: perpetApi.com:8080
@@ -2431,7 +2442,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDYiLCJpYXQiOjE2MDMwMjQ5NzksImV4cCI6MTYwMzYyOTc3OX0.cdYQE5-Fyh9yst-tWQ7vAjLLeoWTychpvDdFI9LUSBw1eYYKx0SVfnMsBOdu8ERJPkkB0VlNZZqDOzXJFuvBNw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDkiLCJpYXQiOjE2MDMxMjI4MzEsImV4cCI6MTYwMzcyNzYzMX0.R3t-VDtQyAENrItOETaaRJTwjjWDm4Jn1uB9i_hyStAyseEVeBjdNYyhuQAEGynQgELc0JKR1tRhdSF7h5louA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -2530,7 +2541,7 @@ Content-Length: 1308
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzgiLCJpYXQiOjE2MDMwMjQ5NzgsImV4cCI6MTYwMzYyOTc3OH0.iAgsgq2TiDUskFChFX0onAne3YMYJ0FlMliBbBpkTi1ffUpvjIEf_zT7c_h5okT-_FYJ1WDHwsSCiFIp3BXboA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDEiLCJpYXQiOjE2MDMxMjI4MjksImV4cCI6MTYwMzcyNzYyOX0.dRHt7jeyt-5k1zRFsJyeQyMsJblnmj_FJNSc8uC8Cc3gNWZtX99EEQPfK67m9uXCTf9w7F4bHb7Ghn5QrW9WQQ
 Accept: application/json
 Content-Length: 38
 Host: perpetApi.com:8080
@@ -2630,7 +2641,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzUiLCJpYXQiOjE2MDMwMjQ5NzcsImV4cCI6MTYwMzYyOTc3N30.qzaViO_b6K0DfJWMdSz35up_ZD-pteRjG04cnd9tLIMBVCUhoOLfeBg3NKKOigmP-y84umDrhDgz7kD_beL3dQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzgiLCJpYXQiOjE2MDMxMjI4MjcsImV4cCI6MTYwMzcyNzYyN30.qCBIHhFEB8QXwU-iuGNRgGk60TWh8ucfiuA67a3b2IxFNqbpU4Y76pCkumULt9AZYS8_SOkX6IxXBbZG5WcRrA
 Accept: application/json
 Content-Length: 38
 Host: perpetApi.com:8080
@@ -2814,7 +2825,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDUiLCJpYXQiOjE2MDMwMjQ5NzMsImV4cCI6MTYwMzYyOTc3M30.O0XVa1pz8hIagGducojyMYpOjTQ_50T-KPUUT5fOzvvW3JC-pO0LFjXR6xo_elkgaR4JdNSPpZDP2J3wk6dmXg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDUiLCJpYXQiOjE2MDMxMjI4MTksImV4cCI6MTYwMzcyNzYxOX0.IMz3gX_Mu6IKwJFpbW9kDRPT3xIn2HBU_HcOgY3iIAya57OmWTd07lC7pc6BwXrFJXtEYhua3xZEY7yVRgcwsQ
 Accept: application/json
 Content-Length: 530
 Host: perpetApi.com:8080
@@ -3012,9 +3023,9 @@ Content-Length: 176
 <h4 id="show-board_http_request"><a class="link" href="#show-board_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/314 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/317 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTMiLCJpYXQiOjE2MDMwMjQ5NzQsImV4cCI6MTYwMzYyOTc3NH0.1IRkqfGIYfer022j3PsQggPcXMv8mjfb6OWECFoL9vhqUReFbMWgzYb9bQr5phQnLK8XHfvD8m1yP-J-JEkSvw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTYiLCJpYXQiOjE2MDMxMjI4MjEsImV4cCI6MTYwMzcyNzYyMX0.eMVwKGu6-f3-EQcvnM3Q1vcWZ403jDB7odPzOm5ud7OM3K6UnXeF8BUBiK-51U93G8oOo2bcXx5uOnswTeRvPQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3041,7 +3052,7 @@ Content-Length: 738
   "success" : true,
   "message" : "해당 유저의 게시글입니다.",
   "data" : {
-    "id" : 314,
+    "id" : 317,
     "manager" : "백승열입니다",
     "title" : "버려진 포메 보호하고 있습니다",
     "credit" : 100000,
@@ -3144,7 +3155,7 @@ Content-Length: 738
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDciLCJpYXQiOjE2MDMwMjQ5NzMsImV4cCI6MTYwMzYyOTc3M30._ktP4RKFylRigIuQmmVGbapulMAGjFpNGy_i6mFj7cU0VwNCk9ttpBSiHOxG8O5zzIKLtp8A2tHyxs7LFPJJOg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDciLCJpYXQiOjE2MDMxMjI4MTksImV4cCI6MTYwMzcyNzYxOX0.F8LT2p4bDCkN1HZD8ft1aH-VGZGECBJ36sWzeZ5BtvMoixRyNAdimu3FAVEtQFCpKpph5Q4PEWscnGFxHnACvw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3179,7 +3190,7 @@ Content-Length: 931
       "month" : 11,
       "boardImage1" : "DataURL",
       "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
-      "createdAt" : "2020-10-18"
+      "createdAt" : "2020-10-20"
     } ],
     "pageable" : {
       "sort" : {
@@ -3204,6 +3215,148 @@ Content-Length: 931
     "numberOfElements" : 1,
     "first" : true,
     "empty" : false
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="accept-credit"><a class="link" href="#accept-credit">파양하기 입양 유저 수락</a></h3>
+<div class="paragraph">
+<p>'POST /api/boards/{id}/accept' 요청을 사용하여 수락할 유저를 선택할 수 있다.</p>
+</div>
+<div class="sect3">
+<h4 id="accept-credit_path_parameters"><a class="link" href="#accept-credit_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /api/boards/{id}/accept</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="accept-credit_request_fields"><a class="link" href="#accept-credit_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">껌을 채울 유저의 닉네임</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="accept-credit_response_fields"><a class="link" href="#accept-credit_response_fields">Response fields</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 신청한 유저 목록입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수락된 유저의 id 입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수락된 유저의 닉네임 입니다.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.credit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수락된 유저의 현재 껌(크레딧) 입니다.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="accept-credit_http_request"><a class="link" href="#accept-credit_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/314/accept HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTMiLCJpYXQiOjE2MDMxMjI4MjAsImV4cCI6MTYwMzcyNzYyMH0.5W_vvC2VwBJOsUV4ADNuqBn4-TVqVFZ5rXFDHOQyuwD4fGfirs2l9fpvIvrbdDdhJEyQHFOgboCXlBhX6U4JDg
+Accept: application/json
+Content-Length: 31
+Host: perpetApi.com:8080
+
+{
+  "nickname" : "testUser"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="accept-credit_http_response"><a class="link" href="#accept-credit_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 165
+
+{
+  "success" : true,
+  "message" : "수락이 완료되었습니다.",
+  "data" : {
+    "id" : 315,
+    "nickname" : "testUser",
+    "credit" : 100000
   }
 }</code></pre>
 </div>
@@ -3282,7 +3435,7 @@ Content-Length: 931
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/303/apply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDIiLCJpYXQiOjE2MDMwMjQ5NzIsImV4cCI6MTYwMzYyOTc3Mn0.Vh9FOQ6gLIkLj5REYiXP39douymZavlIXHTpyBzhEM2KbCon-OqPvW2jwwJNZzEQiF1fyUtVYTE4q_UIbHhqDw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDIiLCJpYXQiOjE2MDMxMjI4MTgsImV4cCI6MTYwMzcyNzYxOH0.t6V2pf7nvqxNypnVv-IBIdFB3LadQcGdPhNqX6QGOTi7QR5QSwosT3d2VRtX3Z5XGDalStu_m9BoyykRJNGKAg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3398,7 +3551,7 @@ Content-Length: 124
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/board/310/manager HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDkiLCJpYXQiOjE2MDMwMjQ5NzMsImV4cCI6MTYwMzYyOTc3M30.X9CAS66mXs3AvRUXpzCdZjx1lotxYeHSzrs1ZdOq8NaFkpnn-KQsfOmvTo_ZZfImhfXf0WqqNTO-RKMOF_Adhg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDkiLCJpYXQiOjE2MDMxMjI4MjAsImV4cCI6MTYwMzcyNzYyMH0.Q1s5WiCC5CKElqPN_8Xq4HEynhcET_L-8JsNmlVFQfVNH2bxzaLN3d-vuy9J48QF0jodeMYJyuNNeDvu9uAqSg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3546,7 +3699,7 @@ Content-Length: 250
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/312/likes HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTEiLCJpYXQiOjE2MDMwMjQ5NzQsImV4cCI6MTYwMzYyOTc3NH0.mTOcVqDdWmUrePJQBRSpvNnUWYC88q4Kg10EMxAxZKW3FSVT9CZARecndfFk_v-SW1VdAzvxmNVF2vmOlXEzWw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTEiLCJpYXQiOjE2MDMxMjI4MjAsImV4cCI6MTYwMzcyNzYyMH0.gSET8t6wwcT2LGYVnCS3mYAyBNwb0VnuDBV1CEuA_88-DimPUHSCnm4olAO0CFL1YixNlU_M2XkPn9oQEUbUng
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3720,7 +3873,7 @@ Content-Length: 980
       "month" : 11,
       "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
       "boardImage1" : "DataURL",
-      "createdAt" : "2020-10-18"
+      "createdAt" : "2020-10-20"
     } ],
     "pageable" : {
       "sort" : {
@@ -3858,7 +4011,7 @@ Content-Length: 980
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/profile/search HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE2MDMwMjQ5NzIsImV4cCI6MTYwMzYyOTc3Mn0.u-tJaccraznGuqLQitGWu7pK-1m4DEy0WtLd3RKUbiwmggXqTKvSh2v3eWpwV7J_OP93DoRvUKalil0chBdEbw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE2MDMxMjI4MTcsImV4cCI6MTYwMzcyNzYxN30.b7FIccIY28CcrVbj0FxcBDZEr-ObHMKgso24W1yX2pzWSFYDRgkVi4nzA403TtsejkxAsbbs8Cte3lt0fTP2RQ
 Accept: application/json
 Content-Length: 160
 Host: perpetApi.com:8080
@@ -3904,7 +4057,7 @@ Content-Length: 987
       "month" : 11,
       "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
       "boardImage1" : "DataURL",
-      "createdAt" : "2020-10-18"
+      "createdAt" : "2020-10-20"
     } ],
     "pageable" : {
       "sort" : {
@@ -4077,7 +4230,7 @@ Content-Length: 987
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/feeds HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjAiLCJpYXQiOjE2MDMwMjQ5NzUsImV4cCI6MTYwMzYyOTc3NX0.oK-WTyONtLQcuDA6QDE_9jElvtAUDqtuBaiWloeylGy9FGaWTOgITxR4EP5K8sjJ3i5o8wpnOx_QPR5I81wSJg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjMiLCJpYXQiOjE2MDMxMjI4MjMsImV4cCI6MTYwMzcyNzYyM30.Uj-uFMBkizyPuV2CNVwlyaCxHoQPwgYSzIobfctB2ww6qZt9RaBuBViO9qpNBrDbs1P4V7le-pZKZPZKuSZ1WA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4216,7 +4369,7 @@ Content-Length: 1287
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/snacks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTkiLCJpYXQiOjE2MDMwMjQ5NzUsImV4cCI6MTYwMzYyOTc3NX0.BYiVojNFBd1T3BG7XRJrjv8z8JIKbewQvQk5oHJheW4qJvxeJjpC7YutDz9rCW8g1vM6LHvsk7ePFBg-hKLlYw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjIiLCJpYXQiOjE2MDMxMjI4MjMsImV4cCI6MTYwMzcyNzYyM30.xVX2p1G7smW3W_ekCYzJ8pePl32uiQTeXwh5eaeD33PrMfBadDnzvJVTk79ABr0xxzSiNZWTpbiwm7DTAti_1g
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4355,7 +4508,7 @@ Content-Length: 1219
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/goods HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTciLCJpYXQiOjE2MDMwMjQ5NzQsImV4cCI6MTYwMzYyOTc3NH0.ZVvW84AivuLCd7CQXWMvJNAeAz1MFVOQoxmqeryUPNUj5EQu8EPGYSka1Q_ttRICyY6h96e6ETdUy_ex0R1t1w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjAiLCJpYXQiOjE2MDMxMjI4MjIsImV4cCI6MTYwMzcyNzYyMn0._d00xZAwWPtmmY4DbIbq7Xz9WdY0VWEKS3aywWrwUMCiAwNIDiXZwG-tnygbRN94TsdwBcX-Ln5pT3ODUmNUBQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4476,7 +4629,7 @@ Content-Length: 486
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/items/best HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjQiLCJpYXQiOjE2MDMwMjQ5NzYsImV4cCI6MTYwMzYyOTc3Nn0.QPbzFJmbVfkEaU90iMPs8jCCoKPq_FN0d87vrZx5UOzqyYpOJ_9YnKdzMQd7b1fa1-GJUX0U8czq03SHMsoMWg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjciLCJpYXQiOjE2MDMxMjI4MjUsImV4cCI6MTYwMzcyNzYyNX0.glDk73yqGF9xNcydnIL4R1w5d-PPvWZgHR4M_HjEUFE3ZqJFwR8fPvOD-eNcIIQ_r6tS72dd9zgsm4xD0INaTQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4669,7 +4822,7 @@ Content-Length: 3070
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/items/new HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTgiLCJpYXQiOjE2MDMwMjQ5NzUsImV4cCI6MTYwMzYyOTc3NX0.q4noh3btAWmlflXLYPDz9fMXWcbbWxIW47l6v0DslGTsAbVAONgVhiSeYoRHmxyg7jAmSZsA4udnXO_hOKWXIA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjEiLCJpYXQiOjE2MDMxMjI4MjMsImV4cCI6MTYwMzcyNzYyM30.HSxDiDW-2XZT6SSwTdGGhG7hxxb35-OoRNHP1NO30peZFCAHCFOjpQiThHrGU-JvS0OrQU2vycoaFd6i1g_ECw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4875,6 +5028,11 @@ Content-Length: 3044
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">아이템 상세정보 입니다.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.options</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">아이템 옵션 정보 입니다.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -4884,7 +5042,7 @@ Content-Length: 3044
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/details/283 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjMiLCJpYXQiOjE2MDMwMjQ5NzUsImV4cCI6MTYwMzYyOTc3NX0.XIFQNuy8dNmheZwX1xfGnaUjjuowyotzXUKpspyL5wFgQEF1lcCKwtBwawB1tpvDiy1GpceOMVQDTpHTyzdGUA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjYiLCJpYXQiOjE2MDMxMjI4MjQsImV4cCI6MTYwMzcyNzYyNH0.XHLnmzpkcWQU2zfp3DNqSiMcf4f1aG9OPTAdqk2X56noCKg6Gqox_EvAhk3-AXcvCCxrdy06gZky95n9-kC_AA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4905,7 +5063,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 498
+Content-Length: 542
 
 {
   "success" : true,
@@ -4918,7 +5076,8 @@ Content-Length: 498
     "sale" : 20,
     "company" : "벨리스",
     "boardImageHead" : "https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A41.jpg",
-    "boardImageMain" : "https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A4d+1.jpg"
+    "boardImageMain" : "https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A4d+1.jpg",
+    "options" : [ "일반", "유기농" ]
   }
 }</code></pre>
 </div>
@@ -4948,6 +5107,30 @@ Content-Length: 498
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">아이템 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="add-bag_request_fields"><a class="link" href="#add-bag_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">물품 사는 갯수</p></td>
 </tr>
 </tbody>
 </table>
@@ -4987,7 +5170,7 @@ Content-Length: 498
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/order/bags/283 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTUiLCJpYXQiOjE2MDMwMjQ5NzQsImV4cCI6MTYwMzYyOTc3NH0.PJfm2Z2Y6VWCpxmNezIXas6FMcY2QVahqis9V8IbTGZJvLqVW26k-rJxYLNaIun6JyXc3NkBxKMES-ucXokBDg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTgiLCJpYXQiOjE2MDMxMjI4MjIsImV4cCI6MTYwMzcyNzYyMn0.aTP5gKO5fJaBn3FE7Ro8q9QLuhBkudcWBz8G6bkEMvD5-z6L8NJ0SUYPtMXsXXXat33wZGGOxG_DDjLdkqnBRg
 Accept: application/json
 Content-Length: 19
 Host: perpetApi.com:8080
@@ -5083,9 +5266,9 @@ Content-Length: 94
 <h4 id="remove-bag_http_request"><a class="link" href="#remove-bag_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/order/bags/details/326 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/order/bags/details/329 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjUiLCJpYXQiOjE2MDMwMjQ5NzYsImV4cCI6MTYwMzYyOTc3Nn0.npPYvCyxbUbPVMv_IXp8ijZ952KJAAXA0E70LQGXBMxnIcn17Yb4OsdkCRXv9Rg95U4cNytjIg76qQSfGKpD2w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjgiLCJpYXQiOjE2MDMxMjI4MjUsImV4cCI6MTYwMzcyNzYyNX0.50oP4arTHv3a_oaGqdS3Ee6vBGH_YYylnoJ3TveYr1YNPP_DH5E0yVwac0ZC4kGWxCbMmBHNbYXplARkUaLtyA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -5191,7 +5374,7 @@ Content-Length: 91
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/order/bags HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjEiLCJpYXQiOjE2MDMwMjQ5NzUsImV4cCI6MTYwMzYyOTc3NX0.finb4qExQ69yhtkfcvFIYFZSkcOdoUH0A4LSpAd1Ghc1fUA68q3n8EFzozSBFdC7LWuTFKYnUCHpcRl4PhAr5g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjQiLCJpYXQiOjE2MDMxMjI4MjQsImV4cCI6MTYwMzcyNzYyNH0.4I8Q9EEZtPJIo5UWe1Rn-qxLzqnnuvqILNJ8hqXmV1Wc8j-wRSButZMzW1p5nnnKdr4T7cUFTMNkLd0O__fXTw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -5220,7 +5403,7 @@ Content-Length: 420
   "data" : {
     "totalSum" : 155970,
     "bags" : [ {
-      "id" : 322,
+      "id" : 325,
       "image" : "https://shopbucket.s3.ap-northeast-2.amazonaws.com/%EB%B2%85%EC%8A%A41.jpg",
       "title" : "벅스펫 국내산 유기농 베지믹스 관절건강 사료",
       "price" : 51990,
@@ -5237,6 +5420,50 @@ Content-Length: 420
 <h3 id="shop-payment"><a class="link" href="#shop-payment">장바구니 결제하기</a></h3>
 <div class="paragraph">
 <p>'POST /api/order/bags/pay' 요청을 사용하여 장바구니에 있는 아이템들을 결제할 수 있다.</p>
+</div>
+<div class="sect3">
+<h4 id="shop-payment_request_fields"><a class="link" href="#shop-payment_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dear</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">받는 사람</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>zipcode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">우편 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>city</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주소</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>street</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">세부사항</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">짧은 메모</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="shop-payment_response_fields"><a class="link" href="#shop-payment_response_fields">Response fields</a></h4>
@@ -5298,7 +5525,7 @@ Content-Length: 420
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/order/bags/pay HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjciLCJpYXQiOjE2MDMwMjQ5NzYsImV4cCI6MTYwMzYyOTc3Nn0.1tH3S4RBt0XR6tmxYQADwZ-RIKM0Ei5dmH8D1-pxjrXONw2p5IrouEi3UTHp7yUrvSBcsU0SE5ZlS-blh3QIcg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzAiLCJpYXQiOjE2MDMxMjI4MjUsImV4cCI6MTYwMzcyNzYyNX0.ZgUcm_boDHwpd_qC_LSTip9n_E7IN--riyyCXm4UDS7x6fCElS5_kXm6s5V6EmGXkytwBizLUzgTNpMbl1-3Ww
 Accept: application/json
 Content-Length: 163
 Host: perpetApi.com:8080
@@ -5334,10 +5561,10 @@ Content-Length: 230
   "success" : true,
   "message" : "주문 완료 하였습니다.",
   "data" : {
-    "id" : 330,
+    "id" : 333,
     "nickname" : "백승열입니다",
     "totalSum" : 25500,
-    "orderDate" : "2020-10-18",
+    "orderDate" : "2020-10-20",
     "credit" : 74500
   }
 }</code></pre>
@@ -5350,7 +5577,7 @@ Content-Length: 230
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-18 10:07:17 KST
+Last updated 2020-10-19 13:17:30 KST
 </div>
 </div>
 </body>

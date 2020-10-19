@@ -11,4 +11,6 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class Goods extends Item{
+
+
 }

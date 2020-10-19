@@ -235,7 +235,8 @@ class OrderApiControllerTest {
                                 fieldWithPath("data.sale").type(JsonFieldType.NUMBER).description("아이템 세일 현황 입니다."),
                                 fieldWithPath("data.company").type(JsonFieldType.STRING).description("아이템 제조회사 입니다."),
                                 fieldWithPath("data.boardImageHead").type(JsonFieldType.STRING).description("아이템 이미지 입니다."),
-                                fieldWithPath("data.boardImageMain").type(JsonFieldType.STRING).description("아이템 상세정보 입니다.")
+                                fieldWithPath("data.boardImageMain").type(JsonFieldType.STRING).description("아이템 상세정보 입니다."),
+                                fieldWithPath("data.options").type(JsonFieldType.ARRAY).description("아이템 옵션 정보 입니다.")
                         )));
     }
     // 사료 간식 용품

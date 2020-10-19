@@ -12,4 +12,5 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class Feed extends Item{
+
 }

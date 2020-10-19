@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -36,6 +38,11 @@ public abstract class Item {
     @Basic(fetch = FetchType.EAGER)
     private String boardImageMain;
     private String company;
+
+
+    @ElementCollection
+    private Set<String> options = new HashSet<>();
+
 
     public void addStock(int quantity) {
         this.stockQuantity += quantity;

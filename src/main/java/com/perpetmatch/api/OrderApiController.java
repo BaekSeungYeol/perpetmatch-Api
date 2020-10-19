@@ -47,7 +47,7 @@ public class OrderApiController {
                     HttpStatus.BAD_REQUEST);
 
         Item curItem = item.get();
-        ItemDto itemDto = new ItemDto(curItem);
+        ItemDtoOne itemDto = new ItemDtoOne(curItem);
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "아이템 단건 조회 입니다.",itemDto));
     }
 

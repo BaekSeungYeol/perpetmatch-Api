@@ -6,13 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDto {
+public class ItemDtoOne {
 
 
     private Long id;
@@ -23,9 +23,9 @@ public class ItemDto {
     private String company;
     private String boardImageHead;
     private String boardImageMain;
+    private Set<String> options;
 
-
-    public ItemDto(Item i) {
+    public ItemDtoOne(Item i) {
         this.id = i.getId();
         this.boardImageHead = i.getBoardImageHead();
         this.boardImageMain = i.getBoardImageMain();
@@ -34,5 +34,6 @@ public class ItemDto {
         this.price = i.getPrice();
         this.stockQuantity = i.getStockQuantity();
         this.sale = i.getSale();
+        this.options = i.getOptions();
     }
 }

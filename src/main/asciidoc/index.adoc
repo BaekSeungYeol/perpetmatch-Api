@@ -242,6 +242,14 @@ operation::show-board[snippets='path-parameters,response-fields,http-request,htt
 
 operation::get-boards[snippets='response-fields,http-request,http-response']
 
+[[accept-credit]]
+=== 파양하기 입양 유저 수락
+
+'POST /api/boards/{id}/accept' 요청을 사용하여 수락할 유저를 선택할 수 있다.
+
+operation::accept-credit[snippets='path-parameters,request-fields,response-fields,http-request,http-response']
+
+
 [[Adoption]]
 == 입양하기
 
@@ -370,7 +378,7 @@ operation::get-item[snippets='path-parameters,response-fields,http-request,http-
 
 'POST /api/order/bags/{id}' 요청을 사용하여 장바구니에 아이템을 추가할 수 있다.
 
-operation::add-bag[snippets='path-parameters,response-fields,http-request,http-response']
+operation::add-bag[snippets='path-parameters,request-fields,response-fields,http-request,http-response']
 
 [[remove-bag]]
 === 장바구니 삭제
@@ -391,7 +399,7 @@ operation::bag-list[snippets='response-fields,http-request,http-response']
 
 'POST /api/order/bags/pay' 요청을 사용하여 장바구니에 있는 아이템들을 결제할 수 있다.
 
-operation::shop-payment[snippets='response-fields,http-request,http-response']
+operation::shop-payment[snippets='request-fields,response-fields,http-request,http-response']
 
 //[[resources-events-get]]
 //=== 이벤트 조회

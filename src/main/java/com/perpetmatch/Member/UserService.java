@@ -9,6 +9,7 @@ import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Role.RoleRepository;
 import com.perpetmatch.Zone.ZoneRepository;
 import com.perpetmatch.api.dto.Board.ApplyUsers;
+import com.perpetmatch.api.dto.Board.NameDto;
 import com.perpetmatch.api.dto.Order.BagDetailsDto;
 import com.perpetmatch.api.dto.Profile.PasswordRequest;
 import com.perpetmatch.api.dto.Profile.ProfileRequest;
@@ -295,5 +296,17 @@ public class UserService {
             sum += o.getTotalPrice();
 
         return sum;
+    }
+
+    public User acceptUser(Long id, NameDto name) {
+        Board board = boardRepository.findById(id).get();
+        board.setClosed(true);
+
+        int credit = board.getCredit();
+
+        User user = userRepository.findByNickname(name.getNickname()).get();
+        user.setCredit(credit);
+
+        return user;
     }
 }

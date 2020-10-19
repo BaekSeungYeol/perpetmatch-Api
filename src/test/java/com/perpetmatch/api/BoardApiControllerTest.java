@@ -9,6 +9,8 @@ import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
+import com.perpetmatch.api.dto.Board.NameDto;
+import com.perpetmatch.api.dto.User.UserCredit;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
@@ -458,6 +460,50 @@ class BoardApiControllerTest {
         User user = userRepository.findByNickname("백승열입니다").get();
         Board board = boardRepository.findById(id).get();
         assertTrue(board.getUsers().contains(user));
+    }
+
+    @Test
+    @DisplayName("입양 게시글 수락 및 크레딧 결제")
+    public void credit_accept_success() throws Exception {
+        id = getBoardId();
+
+        User user = new User();
+        user.setNickname("testUser");
+        user.setEmail("beck33@naver.com");
+        user.setPassword("12345678");
+        userRepository.save(user);
+
+
+        NameDto nameDto = new NameDto("testUser");
+
+
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/boards/{id}/accept", this.id)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(nameDto)))
+                .andExpect(status().isOk())
+                .andDo(document("accept-credit",
+                        pathParameters(
+                                parameterWithName("id").description("게시글 아이디")
+                        ),
+                        requestFields(
+                                fieldWithPath("nickname").type(JsonFieldType.STRING).description("껌을 채울 유저의 닉네임")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 목록입니다."),
+                                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("수락된 유저의 id 입니다."),
+                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("수락된 유저의 닉네임 입니다."),
+                                fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("수락된 유저의 현재 껌(크레딧) 입니다.")
+                        )));
+
+        User userResult = userRepository.findByNickname("testUser").get();
+        assertEquals(userResult.getCredit(), 100000);
+
     }
 
     @Test

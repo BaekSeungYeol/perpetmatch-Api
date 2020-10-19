@@ -124,6 +124,9 @@ class OrderApiControllerTest {
                         responseHeaders(
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
+                        requestFields(
+                                fieldWithPath("count").type(JsonFieldType.NUMBER).description("물품 사는 갯수")
+                        ),
                         responseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("장바구니에 아이템을 추가하였습니다.")
@@ -477,6 +480,13 @@ class OrderApiControllerTest {
                         responseHeaders(
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
+                        requestFields(
+                                fieldWithPath("dear").type(JsonFieldType.STRING).description("받는 사람"),
+                                fieldWithPath("zipcode").type(JsonFieldType.STRING).description("우편 번호"),
+                                fieldWithPath("city").type(JsonFieldType.STRING).description("주소"),
+                                fieldWithPath("street").type(JsonFieldType.STRING).description("세부사항"),
+                                fieldWithPath("memo").type(JsonFieldType.STRING).description("짧은 메모")
+                                ),
                         responseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("주문 완료 하였습니다."),

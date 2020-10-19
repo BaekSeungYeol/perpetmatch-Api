@@ -7,6 +7,8 @@ import com.perpetmatch.Domain.User;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.api.dto.Board.*;
+import com.perpetmatch.api.dto.Order.BagDto;
+import com.perpetmatch.api.dto.User.UserCredit;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
@@ -117,6 +119,30 @@ public class BoardApiController {
             return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 신청한 유저 목록입니다.",boardResponse));
         }
 
+    }
+
+
+    /**
+     * 수락 버튼을 누를 시 결제가 되야 한다.
+     * 여기서 id는 board의 id
+     */
+    @PostMapping("/boards/{id}/accept")
+    public ResponseEntity accept(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
+                                 @RequestBody NameDto name) {
+        if(currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+        String username = currentMember.getUsername();
+        boolean isManager = userService.isManager(username, id);
+
+        if(!isManager)  return new ResponseEntity<>(new ApiResponse(false, "글의 주인이 아닙니다."), HttpStatus.BAD_REQUEST);
+
+
+        User user = userService.acceptUser(id, name);
+        UserCredit userCredit = new UserCredit(user);
+
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "수락이 완료되었습니다.",userCredit));
     }
 
 

@@ -153,6 +153,9 @@ public class BoardService {
         PageRequest pg = PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "publishedDateTime"));
         return boardRepository.findAllBoards(pg);
     }
+    public List<Board> findAllWith() {
+        return boardRepository.findAllWith();
+    }
 
     /*
 
@@ -193,7 +196,7 @@ public class BoardService {
         condition.setWantCheckUp(matchDto.isWantCheckUp());
         condition.setWantLineAge(matchDto.isWantLineAge());
         condition.setWantNeutered(matchDto.isWantNeutered());
-        condition.setCredit(matchDto.getCredit());
+        condition.setExpectedFeeForMonth(matchDto.getExpectedFeeForMonth());
         return condition;
     }
 }

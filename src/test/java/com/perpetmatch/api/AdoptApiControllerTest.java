@@ -113,14 +113,14 @@ class AdoptApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("success").value(true))
                 .andExpect(jsonPath("message").value("유저 기반 게시판 검색입니다."))
-                .andExpect(jsonPath("data.content[0].id").exists())
-                .andExpect(jsonPath("data.content[0].title").exists())
-                .andExpect(jsonPath("data.content[0].credit").exists())
-                .andExpect(jsonPath("data.content[0].year").exists())
-                .andExpect(jsonPath("data.content[0].month").exists())
-                .andExpect(jsonPath("data.content[0].tags").exists())
-                .andExpect(jsonPath("data.content[0].boardImage1").exists())
-                .andExpect(jsonPath("data.content[0].createdAt").exists())
+                .andExpect(jsonPath("data[0].id").exists())
+                .andExpect(jsonPath("data[0].title").exists())
+                .andExpect(jsonPath("data[0].credit").exists())
+                .andExpect(jsonPath("data[0].year").exists())
+                .andExpect(jsonPath("data[0].month").exists())
+                .andExpect(jsonPath("data[0].tags").exists())
+                .andExpect(jsonPath("data[0].boardImage1").exists())
+                .andExpect(jsonPath("data[0].createdAt").exists())
                 .andDo(document("searchProfile-board",
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
@@ -133,20 +133,16 @@ class AdoptApiControllerTest {
                         relaxedResponseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 게시글입니다."),
-                                fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("ID"),
-                                fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
-                                fieldWithPath("data.content[0].year").type(JsonFieldType.NUMBER).description("나이(년)"),
-                                fieldWithPath("data.content[0].month").type(JsonFieldType.NUMBER).description("나이(개월)"),
-                                fieldWithPath("data.content[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
-                                fieldWithPath("data.content[0].boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
-                                fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("생성 날짜"),
-                                fieldWithPath("data.totalElements").type(JsonFieldType.NUMBER).description("검색 조건과 부합하는 게시글 갯수"),
-                                fieldWithPath("data.totalPages").type(JsonFieldType.NUMBER).description("전체 페이지 갯수"),
-                                fieldWithPath("data.first").type(JsonFieldType.BOOLEAN).description("처음 페이지 인지 여부"),
-                                fieldWithPath("data.last").type(JsonFieldType.BOOLEAN).description("마지막 페이지 인지 여부"),
-                                fieldWithPath("data.number").type(JsonFieldType.NUMBER).description("현재 페이지 넘버 -1, +1을 통해 다음 페이지로 가는 링크만들 수 있다")
-                        )));
+                                fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("ID"),
+                                fieldWithPath("data[0].title").type(JsonFieldType.STRING).description("제목"),
+                                fieldWithPath("data[0].credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
+                                fieldWithPath("data[0].year").type(JsonFieldType.NUMBER).description("나이(년)"),
+                                fieldWithPath("data[0].month").type(JsonFieldType.NUMBER).description("나이(개월)"),
+                                fieldWithPath("data[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
+                                fieldWithPath("data[0].boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
+                                fieldWithPath("data[0].createdAt").type(JsonFieldType.STRING).description("생성 날짜")
+
+                                )));
     }
 
     @Test

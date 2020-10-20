@@ -26,6 +26,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -42,8 +43,9 @@ public class BoardApiController {
      */
     @GetMapping("/boards")
     public ResponseEntity getBoards(Pageable pageable) {
-        Slice<Board> allBoards = boardService.findAllBoards();
-        Slice<BoardPageData> map = allBoards.map(board -> new BoardPageData(board));
+        List<Board> allBoards = boardService.findAllWith();
+        List<BoardPageData> map = allBoards.stream().map(board -> new BoardPageData(board))
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 다건 조회입니다.", map));
     }

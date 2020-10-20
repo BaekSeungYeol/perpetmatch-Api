@@ -97,7 +97,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
     }
 
     @Override
-    public Page<AdoptBoard> findByProfileKeyword(AdoptMatchCondition condition, Pageable pageable) {
+    public List<AdoptBoard> findByProfileKeyword(AdoptMatchCondition condition, Pageable pageable) {
         QueryResults<AdoptBoard> results = queryFactory
                 .select(new QAdoptBoard(
                         board.id.as("id"),
@@ -126,14 +126,14 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                         .or(checkUpEq(condition.isWantCheckUp()))
                         .or(lineAgeEq(condition.isWantLineAge()))
                         .or(neuteredEq(condition.isWantNeutered()))
-                        .or(creditLoe(condition.getCredit())))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                        .or(creditLoe(condition.getExpectedFeeForMonth())))
+               // .offset(pageable.getOffset())
+                //.limit(pageable.getPageSize())
                 .fetchResults();
 
         List<AdoptBoard> content = results.getResults();
-        long total = results.getTotal();
+        //long total = results.getTotal();
 
-        return new PageImpl<>(content,pageable,total);
+        return content;
     }
 }

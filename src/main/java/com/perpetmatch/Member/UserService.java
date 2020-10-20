@@ -53,6 +53,26 @@ public class UserService {
     private final ItemRepository itemRepository;
     private final OrderItemRepository orderItemRepository;
 
+
+    public void sendAdoptionSuccessEmail(User user, Board board) {
+        Context context = new Context();
+        context.setVariable("link", "/check-email-token?token=" + user.getEmailCheckToken() + "&email="
+                + user.getEmail());
+        context.setVariable("nickname", user.getNickname());
+        context.setVariable("image", board.getBoardImage1());
+        context.setVariable("host", appProperties.getHost());
+
+        String message = templateEngine.process("mail/adopt", context);
+
+
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(user.getEmail())
+                .subject("퍼펫매치, 입양자로 선정되었습니다! ")
+                .message(message)
+                .build();
+
+        emailService.sendEmail(emailMessage);
+    }
     public void sendJoinMemberConfirmEmail(User savedMember) {
         Context context = new Context();
         context.setVariable("link", "/check-email-token?token=" + savedMember.getEmailCheckToken() + "&email="
@@ -306,6 +326,8 @@ public class UserService {
 
         User user = userRepository.findByNickname(name.getNickname()).get();
         user.setCredit(credit);
+
+        sendAdoptionSuccessEmail(user,board);
 
         return user;
     }

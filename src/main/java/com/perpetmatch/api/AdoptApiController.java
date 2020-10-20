@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -43,8 +44,8 @@ public class AdoptApiController {
     public ResponseEntity searchByProfile(@RequestBody AdoptMatchDto matchDto, Pageable pageable) {
 
         AdoptMatchCondition condition = boardService.toCondition(matchDto);
-        Page<AdoptBoard> boardList = boardRepository.findByProfileKeyword(condition, pageable);
-        Page<AdoptBoardV1> changed = boardList.map(AdoptBoardV1::new);
+        List<AdoptBoard> boardList = boardRepository.findByProfileKeyword(condition, pageable);
+        List<AdoptBoardV1> changed = boardList.stream().map(AdoptBoardV1::new).collect(Collectors.toList());
         // AdoptMatchCondition, AdoptMatchDto 참고
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.", changed));
 

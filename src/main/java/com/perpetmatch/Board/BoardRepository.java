@@ -26,4 +26,7 @@ public interface BoardRepository extends JpaRepository<Board,Long>, BoardReposit
     @Query("select distinct b from Board b left join fetch b.petAge left join fetch b.zone left join fetch b.petTitle")
     Slice<Board> findAllBoards(Pageable pageable);
 
+
+   @Query("select distinct b from Board b left join fetch b.petAge left join fetch b.zone left join fetch b.petTitle")
+   List<Board> findAllWith();
 }

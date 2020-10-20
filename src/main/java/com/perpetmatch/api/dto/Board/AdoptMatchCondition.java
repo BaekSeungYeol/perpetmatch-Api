@@ -19,6 +19,6 @@ public class AdoptMatchCondition {
     boolean wantCheckUp;
     boolean wantLineAge;
     boolean wantNeutered;
-    int credit;
+    int expectedFeeForMonth;
 
 }

@@ -22,6 +22,6 @@ public class AdoptMatchDto {
     boolean wantCheckUp;
     boolean wantLineAge;
     boolean wantNeutered;
-    int credit;
+    int expectedFeeForMonth;
 
 }

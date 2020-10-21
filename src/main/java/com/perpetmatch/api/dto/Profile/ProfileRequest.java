@@ -6,10 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileRequest {
@@ -43,6 +46,10 @@ public class ProfileRequest {
     private boolean wantLineAge;
 
     private boolean wantNeutered;
+
+    private List<String> zones = new ArrayList<>();
+    private List<String> petTitles = new ArrayList<>();
+    private List<String> petAges = new ArrayList<>();
 
 
 }

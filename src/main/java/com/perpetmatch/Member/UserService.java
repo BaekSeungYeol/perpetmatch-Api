@@ -157,7 +157,7 @@ public class UserService {
     }
 
     public User updateProfile(Long id, ProfileRequest profileRequest) {
-        User member = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
+        User member = userRepository.findByIdWithTags(id).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
         member.setHouseType(profileRequest.getHouseType());
         member.setAge(profileRequest.getAge());
         member.setOccupation(profileRequest.getOccupation());
@@ -172,6 +172,22 @@ public class UserService {
         member.setWantCheckUp(profileRequest.isWantCheckUp());
         member.setWantLineAge(profileRequest.isWantLineAge());
         member.setWantNeutered(profileRequest.isWantNeutered());
+
+        for(int i=0; i< profileRequest.getPetTitles().size(); ++i) {
+            String title = profileRequest.getPetTitles().get(i);
+            Pet petTitle = petRepository.findByTitle(title);
+            member.getPetTitles().add(petTitle);
+        }
+        for(int i=0; i< profileRequest.getPetAges().size(); ++i) {
+            String age = profileRequest.getPetAges().get(i);
+            PetAge petAge = petAgeRepository.findPetRange(age);
+            member.getPetAges().add(petAge);
+        }
+        for(int i=0; i< profileRequest.getZones().size(); ++i) {
+            String province = profileRequest.getZones().get(i);
+            Zone zone = zoneRepository.findByProvince(province);
+            member.getZones().add(zone);
+        }
         return member;
     }
 

@@ -118,22 +118,21 @@ class ProfileApiControllerTest {
     @DisplayName("자신의 프로필 조회 성공 - 입력값 정상")
     @Test
     void getMyProfile_success() throws Exception {
-        ProfileRequest profileRequest = ProfileRequest.builder()
-                .age(19)
-                .occupation("학생")
-                .location("서울")
-                .houseType("아파트")
-                .experience(false)
-                .liveAlone(false)
-                .hasPet(true)
-                .profileImage("fdklfkdslfksdflks")
-                .phoneNumber("010-3926-6280")
-                .description("안녕하세요 누구누구입니다.")
-                .wantCheckUp(true)
-                .wantLineAge(true)
-                .wantNeutered(true)
-                .expectedFeeForMonth(100000)
-                .build();
+        ProfileRequest profileRequest = new ProfileRequest();
+                profileRequest.setAge(19);
+                profileRequest.setOccupation("학생");
+                profileRequest.setLocation("서울");
+                profileRequest.setHouseType("아파트");
+                profileRequest.setExperience(false);
+                profileRequest.setLiveAlone(false);
+                profileRequest.setHasPet(true);
+                profileRequest.setProfileImage("DataURL");
+                profileRequest.setPhoneNumber("010-3926-6280");
+                profileRequest.setDescription("안녕하세요 누구 입니다.");
+                profileRequest.setWantCheckUp(true);
+                profileRequest.setWantLineAge(true);
+                profileRequest.setWantNeutered(true);
+                profileRequest.setExpectedFeeForMonth(100000);
 
         mockMvc.perform(post("/api/profiles")
                 .header("Authorization", token)
@@ -215,22 +214,21 @@ class ProfileApiControllerTest {
     @Test
     void getOneUserProfile_success() throws Exception {
 
-        ProfileRequest profileRequest = ProfileRequest.builder()
-                .age(19)
-                .occupation("학생")
-                .location("서울")
-                .houseType("아파트")
-                .experience(false)
-                .liveAlone(false)
-                .hasPet(true)
-                .profileImage("fdklfkdslfksdflks")
-                .phoneNumber("010-3926-6280")
-                .description("안녕하세요 누구누구입니다.")
-                .wantCheckUp(true)
-                .wantLineAge(true)
-                .wantNeutered(true)
-                .expectedFeeForMonth(100000)
-                .build();
+        ProfileRequest profileRequest = new ProfileRequest();
+        profileRequest.setAge(19);
+        profileRequest.setOccupation("학생");
+        profileRequest.setLocation("서울");
+        profileRequest.setHouseType("아파트");
+        profileRequest.setExperience(false);
+        profileRequest.setLiveAlone(false);
+        profileRequest.setHasPet(true);
+        profileRequest.setProfileImage("DataURL");
+        profileRequest.setPhoneNumber("010-3926-6280");
+        profileRequest.setDescription("안녕하세요 누구 입니다.");
+        profileRequest.setWantCheckUp(true);
+        profileRequest.setWantLineAge(true);
+        profileRequest.setWantNeutered(true);
+        profileRequest.setExpectedFeeForMonth(100000);
 
         mockMvc.perform(post("/api/profiles")
                 .header("Authorization", token)
@@ -316,22 +314,21 @@ class ProfileApiControllerTest {
     @Test
     void updateProfile_success() throws Exception {
 
-        ProfileRequest profileRequest = ProfileRequest.builder()
-                .age(19)
-                .occupation("학생")
-                .location("서울")
-                .houseType("아파트")
-                .experience(false)
-                .liveAlone(false)
-                .hasPet(true)
-                .profileImage("fdklfkdslfksdflks")
-                .phoneNumber("010-3926-6280")
-                .description("안녕하세요 누구누구입니다.")
-                .wantCheckUp(true)
-                .wantLineAge(true)
-                .wantNeutered(true)
-                .expectedFeeForMonth(100000)
-                .build();
+        ProfileRequest profileRequest = new ProfileRequest();
+        profileRequest.setAge(19);
+        profileRequest.setOccupation("학생");
+        profileRequest.setLocation("서울");
+        profileRequest.setHouseType("아파트");
+        profileRequest.setExperience(false);
+        profileRequest.setLiveAlone(false);
+        profileRequest.setHasPet(true);
+        profileRequest.setProfileImage("DataURL");
+        profileRequest.setPhoneNumber("010-3926-6280");
+        profileRequest.setDescription("안녕하세요 누구 입니다.");
+        profileRequest.setWantCheckUp(true);
+        profileRequest.setWantLineAge(true);
+        profileRequest.setWantNeutered(true);
+        profileRequest.setExpectedFeeForMonth(100000);
 
 
         mockMvc.perform(post("/api/profiles")
@@ -366,7 +363,10 @@ class ProfileApiControllerTest {
                                 fieldWithPath("wantCheckUp").type(JsonFieldType.BOOLEAN).description("건강검진을 원하는지 여부"),
                                 fieldWithPath("wantLineAge").type(JsonFieldType.BOOLEAN).description("혈통서를 원하는지 여부"),
                                 fieldWithPath("wantNeutered").type(JsonFieldType.BOOLEAN).description("중성화가 필요한지 여부"),
-                                fieldWithPath("expectedFeeForMonth").type(JsonFieldType.NUMBER).description("한달 지출")
+                                fieldWithPath("expectedFeeForMonth").type(JsonFieldType.NUMBER).description("한달 지출"),
+                                fieldWithPath("zones").type(JsonFieldType.ARRAY).description("유저 선호 지역"),
+                                fieldWithPath("petTitles").type(JsonFieldType.ARRAY).description("유저 선호 품종"),
+                                fieldWithPath("petAges").type(JsonFieldType.ARRAY).description("유저 선호 나이")
                         ),
                         responseHeaders(
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
@@ -389,14 +389,15 @@ class ProfileApiControllerTest {
     @DisplayName("프로필 수정 실패 - 입력값 빈 값")
     @Test
     void updateProfile_failed() throws Exception {
-        ProfileRequest profileRequest = ProfileRequest.builder()
-                .occupation("약사")
-                .experience(false)
-                .hasPet(true)
-                .expectedFeeForMonth(100000)
-                .profileImage("fdklfkdslfksdflks")
-                .phoneNumber("010-3926-6280")
-                .build();
+
+        ProfileRequest profileRequest = new ProfileRequest();
+        profileRequest.setOccupation("약사");
+        profileRequest.setExperience(false);
+        profileRequest.setHasPet(true);
+        profileRequest.setProfileImage("DataURL");
+        profileRequest.setPhoneNumber("010-3926-6280");
+        profileRequest.setExpectedFeeForMonth(100000);
+
 
         mockMvc.perform(post("/api/profiles")
                 .header("Authorization", token)

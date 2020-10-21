@@ -14,4 +14,9 @@ import javax.persistence.Id;
 public class ZoneForm {
 
     private String province;
+
+    @Override
+    public String toString() {
+        return province;
+    }
 }

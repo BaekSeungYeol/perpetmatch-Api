@@ -159,6 +159,7 @@ public class UserService {
     public User updateProfile(Long id, ProfileRequest profileRequest) {
         User member = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
         member.setHouseType(profileRequest.getHouseType());
+        member.setAge(profileRequest.getAge());
         member.setOccupation(profileRequest.getOccupation());
         member.setExperience(profileRequest.isExperience());
         member.setLiveAlone(profileRequest.isLiveAlone());

@@ -30,9 +30,10 @@ public class AdoptBoard {
     private String boardImage1;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
+    private boolean closed;
 
     @QueryProjection
-    public AdoptBoard(Long id, String title, int credit, String zone, int year, int month, String petTitle, String petAge, boolean hasCheckUp, boolean hasLineAgeImage, boolean neutered, String description, String boardImage1, LocalDateTime createdAt) {
+    public AdoptBoard(Long id, String title, int credit, String zone, int year, int month, String petTitle, String petAge, boolean hasCheckUp, boolean hasLineAgeImage, boolean neutered, String description, String boardImage1, LocalDateTime createdAt, boolean closed) {
         this.id = id;
         this.title = title;
         this.credit = credit;
@@ -47,5 +48,6 @@ public class AdoptBoard {
         this.description = description;
         this.boardImage1 = boardImage1;
         this.createdAt = createdAt;
+        this.closed = closed;
     }
 }

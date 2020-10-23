@@ -146,6 +146,7 @@ class BoardApiControllerTest {
                 .andExpect(jsonPath("data.boardImage1").exists())
                 .andExpect(jsonPath("data.boardImage2").exists())
                 .andExpect(jsonPath("data.boardImage3").exists())
+                .andExpect(jsonPath("data.closed").exists())
                 .andDo(document("show-board",
                         pathParameters(
                                 parameterWithName("id").description("아이디")
@@ -177,7 +178,8 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.description").type(JsonFieldType.STRING).description("소개"),
                                 fieldWithPath("data.boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
                                 fieldWithPath("data.boardImage2").type(JsonFieldType.STRING).description("강아지 이미지2"),
-                                fieldWithPath("data.boardImage3").type(JsonFieldType.STRING).description("강아지 이미지3")
+                                fieldWithPath("data.boardImage3").type(JsonFieldType.STRING).description("강아지 이미지3"),
+                                fieldWithPath("data.closed").type(JsonFieldType.BOOLEAN).description("게시글이 수락되었는지 여부")
                         )));
 
     }

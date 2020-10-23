@@ -26,6 +26,7 @@ public class AdoptBoardV1 {
     private String boardImage1;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
+    private boolean closed;
 
     public AdoptBoardV1(AdoptBoard board) {
         this.id = board.getId();
@@ -41,5 +42,6 @@ public class AdoptBoardV1 {
         if(board.isHasCheckUp()) tags.add("중성화");
         this.boardImage1 = board.getBoardImage1();
         this.createdAt = board.getCreatedAt();
+        this.closed = board.isClosed();
     }
 }

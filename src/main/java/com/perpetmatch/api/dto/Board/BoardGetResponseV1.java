@@ -33,6 +33,7 @@ public class BoardGetResponseV1 {
     private String boardImage1;
     private String boardImage2;
     private String boardImage3;
+    private boolean closed;
 
     public BoardGetResponseV1(Board board) {
         id = board.getId();
@@ -52,6 +53,7 @@ public class BoardGetResponseV1 {
         boardImage1 = board.getBoardImage1();
         boardImage2 = board.getBoardImage2();
         boardImage3 = board.getBoardImage3();
+        closed = board.isClosed();
     }
 
 }

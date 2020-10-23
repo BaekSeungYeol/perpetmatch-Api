@@ -58,7 +58,8 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                         board.hasNeutered,
                         board.description,
                         board.boardImage1,
-                        board.createdAt
+                        board.createdAt,
+                        board.closed
                 ));
 
         JPQLQuery<AdoptBoard> resultP = getQuerydsl().applyPagination(pageable, result);
@@ -113,7 +114,8 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
                         board.hasNeutered,
                         board.description,
                         board.boardImage1,
-                        board.createdAt
+                        board.createdAt,
+                        board.closed
                 ))
                 .from(board)
                 .leftJoin(board.petTitle, QPet.pet)

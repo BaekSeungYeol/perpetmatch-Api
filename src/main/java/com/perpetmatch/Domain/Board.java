@@ -76,6 +76,7 @@ public class Board extends DateAudit{
 
     private boolean closed;
 
+
     @Lob
     @Basic(fetch = FetchType.EAGER)
     private String description;

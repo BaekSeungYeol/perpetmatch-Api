@@ -150,7 +150,7 @@ public class BoardService {
     }
 
     public Slice<Board> findAllBoards() {
-        PageRequest pg = PageRequest.of(0, 6, Sort.by(Sort.Direction.DESC, "publishedDateTime"));
+        PageRequest pg = PageRequest.of(0, 15, Sort.by(Sort.Direction.DESC, "publishedDateTime"));
         return boardRepository.findAllBoards(pg);
     }
     public List<Board> findAllWith() {

@@ -43,9 +43,8 @@ public class BoardApiController {
      */
     @GetMapping("/boards")
     public ResponseEntity getBoards(Pageable pageable) {
-        List<Board> allBoards = boardService.findAllWith();
-        List<BoardPageData> map = allBoards.stream().map(board -> new BoardPageData(board))
-                .collect(Collectors.toList());
+        Slice<Board> allBoards = boardService.findAllBoards();
+        Slice<BoardPageData> map = allBoards.map(board -> new BoardPageData(board));
 
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 다건 조회입니다.", map));
     }

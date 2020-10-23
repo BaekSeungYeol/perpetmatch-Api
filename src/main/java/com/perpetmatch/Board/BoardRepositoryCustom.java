@@ -11,5 +11,5 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface BoardRepositoryCustom {
     Page<AdoptBoard> findByKeyword(String keyword, Pageable pageable);
-    List<AdoptBoard> findByProfileKeyword(AdoptMatchCondition condition, Pageable pageable);
+    Page<AdoptBoard> findByProfileKeyword(AdoptMatchCondition condition, Pageable pageable);
 }

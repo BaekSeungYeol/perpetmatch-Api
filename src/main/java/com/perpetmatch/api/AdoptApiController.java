@@ -41,14 +41,14 @@ public class AdoptApiController {
      * 유저 프로필 기반 페이징 게시글 반환
      */
     @PostMapping("/boards/profile/search")
-    public ResponseEntity searchByProfile(@RequestBody AdoptMatchDto matchDto, Pageable pageable) {
+    public ResponseEntity searchByProfile(@RequestBody AdoptMatchDto matchDto,
+                                          @PageableDefault(size=15, page = 0) Pageable pageable) {
 
         AdoptMatchCondition condition = boardService.toCondition(matchDto);
-        List<AdoptBoard> boardList = boardRepository.findByProfileKeyword(condition, pageable);
-        List<AdoptBoardV1> changed = boardList.stream().map(AdoptBoardV1::new).collect(Collectors.toList());
+        Page<AdoptBoard> boardList = boardRepository.findByProfileKeyword(condition, pageable);
+        Page<AdoptBoardV1> changed = boardList.map(AdoptBoardV1::new);
         // AdoptMatchCondition, AdoptMatchDto 참고
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.", changed));
-
     }
 
 }

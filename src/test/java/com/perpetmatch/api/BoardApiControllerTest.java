@@ -411,14 +411,14 @@ class BoardApiControllerTest {
                         relaxedResponseFields(
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("게시글 다건 조회입니다."),
-                                fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("id"),
-                                fieldWithPath("data[0].title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("data[0].credit").type(JsonFieldType.NUMBER).description("포인트"),
-                                fieldWithPath("data[0].year").type(JsonFieldType.NUMBER).description("나이 (년)"),
-                                fieldWithPath("data[0].month").type(JsonFieldType.NUMBER).description("나이 (월)"),
-                                fieldWithPath("data[0].boardImage1").type(JsonFieldType.STRING).description("대표 이미지"),
-                                fieldWithPath("data[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
-                                fieldWithPath("data[0].createdAt").type(JsonFieldType.STRING).description("작성일")
+                                fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("id"),
+                                fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
+                                fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("포인트"),
+                                fieldWithPath("data.content[0].year").type(JsonFieldType.NUMBER).description("나이 (년)"),
+                                fieldWithPath("data.content[0].month").type(JsonFieldType.NUMBER).description("나이 (월)"),
+                                fieldWithPath("data.content[0].boardImage1").type(JsonFieldType.STRING).description("대표 이미지"),
+                                fieldWithPath("data.content[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
+                                fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("작성일")
                         )));
     }
 

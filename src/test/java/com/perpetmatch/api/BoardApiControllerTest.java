@@ -593,7 +593,38 @@ class BoardApiControllerTest {
 
     }
 
+    @Test
+    @DisplayName("신청을 했는지 여부 ")
+    public void Applied_me() throws Exception {
+        //given
+        id = getBoardId();
 
+        //when
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/{id}/applied_me", this.id)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("success").value(false))
+                .andExpect(jsonPath("message").value("현재 신청하지 않은 유저입니다."))
+                .andDo(document("applied_me",
+                        pathParameters(
+                                parameterWithName("id").description("게시글 아이디")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("신청되었다면 true가 아니라면 false가 반환됩니다."),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("신청 여부의 메세지를 반환합니다.")
+                )));
+        
+    }
 
 
 }

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -199,4 +200,15 @@ public class BoardService {
         condition.setExpectedFeeForMonth(matchDto.getExpectedFeeForMonth());
         return condition;
     }
+
+    public boolean isApplied(Long id, String username) {
+        Board board = boardRepository.findByIdWithUsers(id);
+        Set<User> users = board.getUsers();
+
+        for(User u : users) {
+            if(u.getNickname().equals(username)) return true;
+        }
+
+        return false;
+   }
 }

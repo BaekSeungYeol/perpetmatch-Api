@@ -185,5 +185,25 @@ public class BoardApiController {
     }
 
 
+    /**
+     * 신청하기가 되었는지 조회
+     * applied_me
+     */
+    @GetMapping("/boards/{id}/applied_me")
+    public ResponseEntity isAppliedUser(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
+        if(currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        boolean applied = boardService.isApplied(id, currentMember.getUsername());
+
+        if(applied)
+            return ResponseEntity.ok().body(new ApiResponse(true, "현재 신청된 유저입니다."));
+        else
+            return ResponseEntity.ok().body(new ApiResponse(false, "현재 신청하지 않은 유저입니다."));
+
+    }
+
 
 }

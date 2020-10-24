@@ -121,6 +121,7 @@ class AdoptApiControllerTest {
                 .andExpect(jsonPath("data.content[0].tags").exists())
                 .andExpect(jsonPath("data.content[0].boardImage1").exists())
                 .andExpect(jsonPath("data.content[0].createdAt").exists())
+                .andExpect(jsonPath("data.content[0].closed").exists())
                 .andDo(document("searchProfile-board",
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
@@ -140,7 +141,8 @@ class AdoptApiControllerTest {
                                 fieldWithPath("data.content[0].month").type(JsonFieldType.NUMBER).description("나이(개월)"),
                                 fieldWithPath("data.content[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
                                 fieldWithPath("data.content[0].boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
-                                fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("생성 날짜")
+                                fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("생성 날짜"),
+                                fieldWithPath("data.content[0].closed").type(JsonFieldType.BOOLEAN).description("게시글이 닫혔는지 여부")
 
                                 )));
     }

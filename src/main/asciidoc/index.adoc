@@ -261,11 +261,11 @@ operation::accept-credit[snippets='path-parameters,request-fields,response-field
 operation::adopt-apply[snippets='path-parameters,response-fields,http-request,http-response']
 
 [[applied_me]]
-=== 파양하기 신청되었는지 여부 API
+=== 신청 여부 확인하기
 
 'GET /api/boards/{id}/applied_me' 요청을 사용하여 현재 신청한 유저인지 success = true,false 를 알 수 있다.
 
-operation::applied_me[snippets='path-parameters,request-fields,response-fields,http-request,http-response']
+operation::applied_me[snippets='path-parameters,response-fields,http-request,http-response']
 
 
 

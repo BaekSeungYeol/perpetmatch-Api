@@ -555,7 +555,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#adopt-apply_http_response">HTTP response</a></li>
 </ul>
 </li>
-<li><a href="#applied_me">파양하기 신청되었는지 여부 API</a>
+<li><a href="#applied_me">신청 여부 확인하기</a>
 <ul class="sectlevel3">
 <li><a href="#applied_me_path_parameters">Path parameters</a></li>
 <li><a href="#applied_me_request_fields">Request fields</a></li>
@@ -1071,7 +1071,7 @@ X-Frame-Options: DENY
 Content-Length: 262
 
 {
-  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTMiLCJpYXQiOjE2MDM1NDEyNDMsImV4cCI6MTYwNDE0NjA0M30.WLBiBDQ-707f77b8LYC9OOIcVeo2bFK-aM6fKzRLgp9_SupknAtkWEzTQVylAIi_PQjByaP6XiVQmZI9eCaALg",
+  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTMiLCJpYXQiOjE2MDM1NDI3MDgsImV4cCI6MTYwNDE0NzUwOH0.KADhXCimO9kXd_Yx3zQ340pZH6AQah6OvrAhGjQDlYQJt_mCgOGUIBuh0fDHOeDh0k33ScfK1qJde_aE_hgqCg",
   "tokenType" : "Bearer",
   "nickname" : "백승열입니다"
 }</code></pre>
@@ -1156,7 +1156,7 @@ Content-Length: 262
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/profiles/password HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTAiLCJpYXQiOjE2MDM1NDEyNDIsImV4cCI6MTYwNDE0NjA0Mn0.1T7iU3wPxWFs6nw6mx25Qo5jx_08Hw-x8JSVcsSq_A8nC6H-lEX9VLCje2dLBsSmzTb0aY7nnJNEb7GxmQg22w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTAiLCJpYXQiOjE2MDM1NDI3MDcsImV4cCI6MTYwNDE0NzUwN30.-7C_YBIxgFcaUBGs2DqKM0HimHkFbJlem33pN_yFYMdjoQ8yY4ZvD0hrYKfa31yA6SJOWH4S_cjkhW59_qlonw
 Accept: application/json
 Content-Length: 74
 Host: perpetApi.com:8080
@@ -1343,7 +1343,7 @@ Content-Length: 89
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDIiLCJpYXQiOjE2MDM1NDEyNDEsImV4cCI6MTYwNDE0NjA0MX0.r5vllUPJywxg948iZ5NM6Fy5ahWsSxpDrLipzrDUk-IY4_E9JoDyRWDAYyDbYVCXaaWms0pFnNRXiCy2xG1dBw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDIiLCJpYXQiOjE2MDM1NDI3MDUsImV4cCI6MTYwNDE0NzUwNX0.nHkX8JNd4DJQD6xynFecEmfxJ9fbdPIywytKqrH6i5n7D4YF2ohSG0jOi23FHG_kTzlVq0X7htIDp9jcSsE9Xw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1570,7 +1570,7 @@ Content-Length: 740
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/344 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDQiLCJpYXQiOjE2MDM1NDEyNDEsImV4cCI6MTYwNDE0NjA0MX0.xB413u-bO_10eJvmQ6M28dqkwSqvuMQrnCDUS-vBAb750TYpuc8jwszPNFyoYxN1rJDkk3GZHlCjYgxtMkwBIg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDQiLCJpYXQiOjE2MDM1NDI3MDUsImV4cCI6MTYwNDE0NzUwNX0.zL9lEv1aVSrGFwKavNEySg_hf4lTFY4Kt_mJLA5gD7IzsL4a1AYIDTQfnWEEKjGWUhzbub2WqAY8t_tG_-zrrA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1784,7 +1784,7 @@ Content-Length: 747
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDgiLCJpYXQiOjE2MDM1NDEyNDIsImV4cCI6MTYwNDE0NjA0Mn0.32Pi_tjzuQF7WDK6FEJBHNTtLqhM5KubIjgC5PiObJ7Y43kxUtRyoNZL36Gj1KVWP7KYF8omK1jObPpnEiQN9Q
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDgiLCJpYXQiOjE2MDM1NDI3MDYsImV4cCI6MTYwNDE0NzUwNn0.5aKj-bI2MbtOfGd4dyBlUaaXhCIocsje6OoYXLMoTL3Rn-OSuN7aFrXByA-6756B0wBCvx10sMxQtjR1eYgoWw
 Accept: application/json
 Content-Length: 465
 Host: perpetApi.com:8080
@@ -1893,7 +1893,7 @@ Content-Length: 200
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzkiLCJpYXQiOjE2MDM1NDEyNDAsImV4cCI6MTYwNDE0NjA0MH0.AVMpNbKmlNwVspbaFzUFzXSOQfFfn1Ne2pyiS9zsCO4MUJ2OUB2MUHNP4AJscxIrTgayDBmSeHzNCQtMag67ag
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzkiLCJpYXQiOjE2MDM1NDI3MDQsImV4cCI6MTYwNDE0NzUwNH0._cd2CKMphixPgLpXv73aKuyVM4SeKHBHpe6POsFJBFjifFcEoRj-ukURRNXBc5vC92cMUZUe2pGTrlFYPlo3Yw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -1921,7 +1921,7 @@ Content-Length: 4860
   "message" : "해당 유저의 선호 품종입니다.",
   "data" : {
     "petTitles" : [ ],
-    "allPetTitles" : [ "고든 세터", "골든 리트리버", "그레이트 데인", "그레이트 스위스 마운틴 도그", "그레이트 피레네", "그레이하운드", "글렌 오브 이말 테리어", "기슈견", "네오폴리탄 마스티프", "노르웨이 엘크 하운드", "노르웨이안 부훈트", "노리치 테리어", "노바 스코셔 덕 톨링 레트리버", "노퍽 테리어", "뉴펀들랜드", "닥스훈트", "달마시안", "댄디 딘몬트 테리어", "도고 까나리오", "도그 드 보르도", "도베르만 핀셔", "도사견", "동경이", "라사압소", "라포니안 허더", "래브라도 레트리버", "레이크랜드 테리어", "로디지아 리지백", "로첸", "로트와일러", "마스티프", "맨체스터 테리어", "몰티즈", "미니어처 불 테리어", "미니어처 슈나우저", "미니어처 핀셔", "바센지", "바셋 하운드", "버니즈 마운틴 도그", "베들링턴 테리어", "벨기에 말리노이즈", "벨기에 시프도그", "벨기에 테뷰런", "벨지안 그리펀", "벨지안 셰퍼드 독", "보더 테리어", "보더콜리", "보르조이", "보스롱", "보스턴 테리어", "복서", "볼로네즈", "부비에 데 플랑드르", "불 마스티프", "불 테리어", "불도그", "브뤼셀 그리펀", "브리아드", "브리타니", "블랙 러시안 테리어", "블랙 앤드 탄 쿤하운드", "블러드 하운드", "비글", "비숑 프리제", "비어디드 콜리", "비즐라", "사모예드", "살루키", "삽살개", "서식스 스패니얼", "세인트 버나드", "셔틀랜드 시프도그", "소프트 코티드 휘튼 테리어", "스무드 폭스 테리어", "스위디쉬 발훈트", "스카이 테리어", "스코티시 디어하운드", "스코티시 테리어", "스키퍼키", "스태퍼드셔 불 테리어", "스탠더드 슈나우저", "스패니쉬 그레이 하운드", "스페니쉬 마스티프", "스피노네 이탈리아노", "스피츠", "시바 이누", "시베리언 허스키", "시추", "시코쿠견", "실리엄 테리어", "실키 테리어", "아나톨리아 셰퍼드", "아메리칸 불도그", "아메리칸 스태퍼드셔 테리어", "아메리칸 아키다", "아메리칸 에스키모 도그", "아메리칸 워터 스패니얼", "아메리칸 코커 스패니얼", "아메리칸 폭스하운드", "아이리쉬 소프트코티드 휘튼 테리어", "아이리시 레드 앤드 화이트 세터", "아이리시 세터", "아이리시 울프 하운드", "아이리시 워터 스패니얼", "아이리시 테리어", "아키타", "아펜핀셔", "아프간 하운드", "알래스칸 맬러뮤트", "에스트렐라 마운틴 독", "에어데일 테리어", "오스트레일리안 실키 테리어", "오스트레일리안 켈피", "오스트레일리언 셰퍼드", "오스트레일리언 캐틀 도그", "오스트레일리언 테리어", "오터 하운드", "올드 잉글리시 시프도그", "와이머라너", "와이어 폭스 테리어", "와이어헤어드 포인팅 그리펀", "요크셔 테리어", "웨스트 하이랜드 화이트 테리어", "웰시 스프링어 스패니얼", "웰시 코기", "웰시 테리어", "이비전 하운드", "이탤리언 그레이하운드", "잉글리시 세터", "잉글리시 스프링어 스패니얼", "잉글리시 코커 스패니얼", "잉글리시 토이 스패니얼", "잉글리시 폭스하운드", "자이언트 슈나우저", "재퍼니스 스피츠", "재퍼니스 친", "잭 러셀 테리어", "저먼 셰퍼드", "저먼 쇼트헤어드 포인터", "저먼 와이어헤어드 포인터", "저먼 핀셔", "저먼 헌팅 테리어", "진돗개", "차우차우", "차이니스 샤페이", "차이니스 크레스티드", "체서피크 베이 레트리버", "치와와", "카디건 웰시 코기", "카발리에 킹 찰스 스패니얼", "컬리코티드 레트리버", "케리 블루 테리어", "케언 테리어", "케이넌 도그", "케이스혼트", "코몬도르", "코커 스패니얼", "코튼 드 툴리어", "콜리", "쿠바스", "클럼버 스패니얼", "토이 폭스 테리어", "티베탄 마스티프", "티베탄 스패니얼", "티베탄 테리어", "파라오 하운드", "파슨 러셀 테리어", "파피용", "퍼그", "페키니즈", "펨브록 웰시 코기", "포르투갈 워터 도그", "포메라니안", "포인터", "폴리시 롤런드 시프도그", "푸들", "푸미", "풀리", "풍산개", "프렌치 불도그", "프티 바세 그리퐁 방댕", "플랫코티드 레트리버", "플롯 하운드", "피니시 스피츠", "피레니안 마스티프", "피레니안 쉽독", "피레니언 셰퍼드", "필드 스패니얼", "해리어", "허배너스", "홋카이도 이누", "휘핏" ]
+    "allPetTitles" : [ "고든 세터", "골든 리트리버", "그레이트 데인", "그레이트 스위스 마운틴 도그", "그레이트 피레네", "그레이하운드", "글렌 오브 이말 테리어", "기슈견", "네오폴리탄 마스티프", "노르웨이안 부훈트", "노르웨이 엘크 하운드", "노리치 테리어", "노바 스코셔 덕 톨링 레트리버", "노퍽 테리어", "뉴펀들랜드", "닥스훈트", "달마시안", "댄디 딘몬트 테리어", "도고 까나리오", "도그 드 보르도", "도베르만 핀셔", "도사견", "동경이", "라사압소", "라포니안 허더", "래브라도 레트리버", "레이크랜드 테리어", "로디지아 리지백", "로첸", "로트와일러", "마스티프", "맨체스터 테리어", "몰티즈", "미니어처 불 테리어", "미니어처 슈나우저", "미니어처 핀셔", "바센지", "바셋 하운드", "버니즈 마운틴 도그", "베들링턴 테리어", "벨기에 말리노이즈", "벨기에 시프도그", "벨기에 테뷰런", "벨지안 그리펀", "벨지안 셰퍼드 독", "보더콜리", "보더 테리어", "보르조이", "보스롱", "보스턴 테리어", "복서", "볼로네즈", "부비에 데 플랑드르", "불도그", "불 마스티프", "불 테리어", "브뤼셀 그리펀", "브리아드", "브리타니", "블랙 러시안 테리어", "블랙 앤드 탄 쿤하운드", "블러드 하운드", "비글", "비숑 프리제", "비어디드 콜리", "비즐라", "사모예드", "살루키", "삽살개", "서식스 스패니얼", "세인트 버나드", "셔틀랜드 시프도그", "소프트 코티드 휘튼 테리어", "스무드 폭스 테리어", "스위디쉬 발훈트", "스카이 테리어", "스코티시 디어하운드", "스코티시 테리어", "스키퍼키", "스태퍼드셔 불 테리어", "스탠더드 슈나우저", "스패니쉬 그레이 하운드", "스페니쉬 마스티프", "스피노네 이탈리아노", "스피츠", "시바 이누", "시베리언 허스키", "시추", "시코쿠견", "실리엄 테리어", "실키 테리어", "아나톨리아 셰퍼드", "아메리칸 불도그", "아메리칸 스태퍼드셔 테리어", "아메리칸 아키다", "아메리칸 에스키모 도그", "아메리칸 워터 스패니얼", "아메리칸 코커 스패니얼", "아메리칸 폭스하운드", "아이리쉬 소프트코티드 휘튼 테리어", "아이리시 레드 앤드 화이트 세터", "아이리시 세터", "아이리시 울프 하운드", "아이리시 워터 스패니얼", "아이리시 테리어", "아키타", "아펜핀셔", "아프간 하운드", "알래스칸 맬러뮤트", "에스트렐라 마운틴 독", "에어데일 테리어", "오스트레일리안 실키 테리어", "오스트레일리안 켈피", "오스트레일리언 셰퍼드", "오스트레일리언 캐틀 도그", "오스트레일리언 테리어", "오터 하운드", "올드 잉글리시 시프도그", "와이머라너", "와이어 폭스 테리어", "와이어헤어드 포인팅 그리펀", "요크셔 테리어", "웨스트 하이랜드 화이트 테리어", "웰시 스프링어 스패니얼", "웰시 코기", "웰시 테리어", "이비전 하운드", "이탤리언 그레이하운드", "잉글리시 세터", "잉글리시 스프링어 스패니얼", "잉글리시 코커 스패니얼", "잉글리시 토이 스패니얼", "잉글리시 폭스하운드", "자이언트 슈나우저", "재퍼니스 친", "재퍼니스 스피츠", "잭 러셀 테리어", "저먼 셰퍼드", "저먼 쇼트헤어드 포인터", "저먼 와이어헤어드 포인터", "저먼 핀셔", "저먼 헌팅 테리어", "진돗개", "차우차우", "차이니스 샤페이", "차이니스 크레스티드", "체서피크 베이 레트리버", "치와와", "카디건 웰시 코기", "카발리에 킹 찰스 스패니얼", "컬리코티드 레트리버", "케리 블루 테리어", "케언 테리어", "케이넌 도그", "케이스혼트", "코몬도르", "코커 스패니얼", "코튼 드 툴리어", "콜리", "쿠바스", "클럼버 스패니얼", "토이 폭스 테리어", "티베탄 마스티프", "티베탄 스패니얼", "티베탄 테리어", "파라오 하운드", "파슨 러셀 테리어", "파피용", "퍼그", "페키니즈", "펨브록 웰시 코기", "포르투갈 워터 도그", "포메라니안", "포인터", "폴리시 롤런드 시프도그", "푸들", "푸미", "풀리", "풍산개", "프렌치 불도그", "프티 바세 그리퐁 방댕", "플랫코티드 레트리버", "플롯 하운드", "피니시 스피츠", "피레니안 마스티프", "피레니안 쉽독", "피레니언 셰퍼드", "필드 스패니얼", "해리어", "허배너스", "홋카이도 이누", "휘핏" ]
   }
 }</code></pre>
 </div>
@@ -1992,7 +1992,7 @@ Content-Length: 4860
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDEiLCJpYXQiOjE2MDM1NDEyNDAsImV4cCI6MTYwNDE0NjA0MH0.EtxctCR5mWDY_H2Bybf2G4DvLze_6LY7WPaGXBOyld-Hq3EVYPerfyEWS9S2c-QZekL0RN366GLHBPPIXvJzmw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDEiLCJpYXQiOjE2MDM1NDI3MDUsImV4cCI6MTYwNDE0NzUwNX0.a71lzzY5DGzbhXECaaMDVzyteSK4y-pyDdC6cUT01h5mPivDkJbWZv80DlWhduVex-hIESip6mi0ZZiLMZmGlA
 Accept: application/json
 Content-Length: 29
 Host: perpetApi.com:8080
@@ -2092,7 +2092,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDYiLCJpYXQiOjE2MDM1NDEyNDEsImV4cCI6MTYwNDE0NjA0MX0.eY4D7YHSJ1tJRaeoVaQ6uHAbsxhOK-JqzjdU_KVyiRebVf3ep6a0pjq6DO5hfhgIcXBJ67HgJthIUZBJzYoIyA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDYiLCJpYXQiOjE2MDM1NDI3MDYsImV4cCI6MTYwNDE0NzUwNn0.x0Cji9YHLRIDvZUb7D6k-3uGMC4kHwbtl-PodHXdhMRppPTEWp1v6KBJTWYRCQVYiZY-0CY2oCetE49JCggDBQ
 Accept: application/json
 Content-Length: 32
 Host: perpetApi.com:8080
@@ -2181,7 +2181,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDUiLCJpYXQiOjE2MDM1NDEyNDEsImV4cCI6MTYwNDE0NjA0MX0.ouSTRqjQrCNJHrEFY1YSWgES8o__afPBJWPIr7-J05OD3YRZvymSclAZtdjsCnQj_n_t5Q9Y32ULzhn1_10BqQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDUiLCJpYXQiOjE2MDM1NDI3MDYsImV4cCI6MTYwNDE0NzUwNn0.laxxegb9A0K3zG-I15jJr0rzGnWBepKRTGgmwHe5GujfAFVIzIGNbAUwgnOMhBFAtBixifrFkd8IHBMV8d_CYA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -2280,7 +2280,7 @@ Content-Length: 183
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzYiLCJpYXQiOjE2MDM1NDEyMzksImV4cCI6MTYwNDE0NjAzOX0.hc_Sy0ns8gqHq-T22rsl06q-MuaKiqp52HNeUGLOuJ0HmLfNwCYLPMJbygZcKuvHMk8Fkhh92VSaJpA9RcX2ng
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzYiLCJpYXQiOjE2MDM1NDI3MDMsImV4cCI6MTYwNDE0NzUwM30.kkl5jdNBykffJYtkqfgMPrhMlequA5K4OxrYyKv38fa3Zezl3QiVON6bsliIjag53oM5S7e5-jYV2ME8Y5O-4g
 Accept: application/json
 Content-Length: 33
 Host: perpetApi.com:8080
@@ -2380,7 +2380,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzgiLCJpYXQiOjE2MDM1NDEyNDAsImV4cCI6MTYwNDE0NjA0MH0.Dm_z8RNLa4BdBe8_F5Juib6Q8gHG5ngFpzlvEeS2gPomxrJFSi4kN8s2TdxDuBHpahe0Za1Z6MSoJafOWUn-iQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzgiLCJpYXQiOjE2MDM1NDI3MDQsImV4cCI6MTYwNDE0NzUwNH0.5ng9R8FwPakBBP_xG_hK9_f48nSFCwg94xBIly3ntwBx5LOQM53EzTuaQAS-K_wE3v-ggFWkLQY1JuNA_6GrOw
 Accept: application/json
 Content-Length: 33
 Host: perpetApi.com:8080
@@ -2469,7 +2469,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTEiLCJpYXQiOjE2MDM1NDEyNDMsImV4cCI6MTYwNDE0NjA0M30.SRogz1XKAsTeYMzDUXktoeBex1h4YGlUsZBBjC8-L-60wlt5X_sjtwblk-4l52KHRxthO34DxwvKfCUoa-4MCA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTEiLCJpYXQiOjE2MDM1NDI3MDcsImV4cCI6MTYwNDE0NzUwN30.Nl6GW0KzHqq72QSdlBoStt62mLgDTobL-4bEH765XFfWA72zkJkYRvtqCwKFfOb6FGWoxq7ioMvTbRm7hxQLjg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -2568,7 +2568,7 @@ Content-Length: 1308
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDMiLCJpYXQiOjE2MDM1NDEyNDEsImV4cCI6MTYwNDE0NjA0MX0.PGKI-UjCNDyRVRzvuPcZvBgI7I5cChHEbhpdcRwO2CXUtN8J4yktUybUq7-4s069tLG1uPAIH_qyB_38PiWwHA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDMiLCJpYXQiOjE2MDM1NDI3MDUsImV4cCI6MTYwNDE0NzUwNX0._KI-D3ELDtTYWLcZJ_VjOxGrpmPA3EflhsV6qFvDHKyPkFzmnEiHxdIzhAfcN9kEK_4Rq_7Y1PsXEF1xyUjgHQ
 Accept: application/json
 Content-Length: 38
 Host: perpetApi.com:8080
@@ -2668,7 +2668,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDAiLCJpYXQiOjE2MDM1NDEyNDAsImV4cCI6MTYwNDE0NjA0MH0.IYrk2Ka9H5X0GNXaFWW2d3DEu5CC95moyUqL3ImnQiq8binGvZDmP272Qh5qviED4qV3t0sPnQ7nNunynHgeUA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDAiLCJpYXQiOjE2MDM1NDI3MDQsImV4cCI6MTYwNDE0NzUwNH0.G2ksIvmf9HjrvYVikvmomTS4NOtas15HhtjxVDa4noo0XNhgATU_1HMxCbrjhVHpCDZpS7UB7yXAiDZszoZ5og
 Accept: application/json
 Content-Length: 38
 Host: perpetApi.com:8080
@@ -2852,7 +2852,7 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDUiLCJpYXQiOjE2MDM1NDEyMzUsImV4cCI6MTYwNDE0NjAzNX0.-U_rAPRnDyoLwjKjDR2YaN4oJ8hkt4N40vWNurV7J3hvDyLoI8Y5KRJqoeA3RoJYYmsL5npoY_pA4PcBwwXF9w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDUiLCJpYXQiOjE2MDM1NDI2OTksImV4cCI6MTYwNDE0NzQ5OX0.--NkapTWZwx44Hg2tyOIxH8lWu6qDXaCxYeiUbUcAvphxsl_IPPeuwxIsWWs3MGolgP4mxyRMJJAq5nS115-Fg
 Accept: application/json
 Content-Length: 530
 Host: perpetApi.com:8080
@@ -3057,7 +3057,7 @@ Content-Length: 176
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/319 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTgiLCJpYXQiOjE2MDM1NDEyMzcsImV4cCI6MTYwNDE0NjAzN30.nNCE3K2uLQendmUtEJOtG7-hza7QhwqPLg13PYKA356p54dgtzmy-nveV2JCrpzDQH0tTSFQRbpfVHEEGEJsGg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTgiLCJpYXQiOjE2MDM1NDI3MDAsImV4cCI6MTYwNDE0NzUwMH0.kOD2yTYh5ErPgd8ROv58oQjSvqSaRcXoeebn58EJx_8qta78Xb6EVXmB5eo8k4GDeu4wlhJzwH4m6V6Qf3ZMTg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3188,7 +3188,7 @@ Content-Length: 761
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDciLCJpYXQiOjE2MDM1NDEyMzUsImV4cCI6MTYwNDE0NjAzNX0.MvUbJ4F3NW-MVXFwKGc0EKyg-egpEHd6H6Opm-jZn1KCAGghe78r1hbMEAbayqwXGzCVpbDqvyxw8AMq8xhnrg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDciLCJpYXQiOjE2MDM1NDI2OTksImV4cCI6MTYwNDE0NzQ5OX0.1qldZ_EtbVD2Oh2iuENBUk0sF623zCI5hxHK32BLbKO-_7VQ3mwz31ZtR_TsE4wbtevcrNiylSkDPiq6oXjmgQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3232,10 +3232,10 @@ Content-Length: 933
         "empty" : false
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 15,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
     "size" : 15,
     "number" : 0,
@@ -3245,8 +3245,8 @@ Content-Length: 933
       "empty" : false
     },
     "numberOfElements" : 1,
-    "last" : true,
     "first" : true,
+    "last" : true,
     "empty" : false
   }
 }</code></pre>
@@ -3355,7 +3355,7 @@ Content-Length: 933
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/314/accept HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTMiLCJpYXQiOjE2MDM1NDEyMzYsImV4cCI6MTYwNDE0NjAzNn0.JgD_riZBZi3JTRcEE4aipGTHoVnsakcv6OQ4sl15P0FaQpkQIEeFW_FWdfNtUdnMoTGzmrWVCC7clxLEo4yZgw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTMiLCJpYXQiOjE2MDM1NDI3MDAsImV4cCI6MTYwNDE0NzUwMH0.10jBpLSTm8L-wRgwAU3h0qisvGK-C2b4t9CkvQp9tSx4LrHe1TrQEJxT-GSlee_2-NlmQZMRV9bVxESAPJcFIg
 Accept: application/json
 Content-Length: 31
 Host: perpetApi.com:8080
@@ -3468,7 +3468,7 @@ Content-Length: 165
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/303/apply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDIiLCJpYXQiOjE2MDM1NDEyMzUsImV4cCI6MTYwNDE0NjAzNX0.jUaj1AJmFc5i_wPoz1hDv4lTWSt2F3KbcC_fCF291X7kAOoLpQIpdehPhU76cng9y9lspvZ1wAvO9wjg6Hu3lA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDIiLCJpYXQiOjE2MDM1NDI2OTgsImV4cCI6MTYwNDE0NzQ5OH0.EXGeVuNia0fJbWhR4muMYe0XkceuOBC66deYOmHmIXgAZwWuvXlqK0jZ3A5Z1BS2LbwGFfu50Pjh2X3ZIriQ1g
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3503,7 +3503,7 @@ Content-Length: 124
 </div>
 </div>
 <div class="sect2">
-<h3 id="applied_me"><a class="link" href="#applied_me">파양하기 신청되었는지 여부 API</a></h3>
+<h3 id="applied_me"><a class="link" href="#applied_me">신청 여부 확인하기</a></h3>
 <div class="paragraph">
 <p>'GET /api/boards/{id}/applied_me' 요청을 사용하여 현재 신청한 유저인지 success = true,false 를 알 수 있다.</p>
 </div>
@@ -3570,7 +3570,7 @@ Content-Length: 124
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/317/applied_me HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTYiLCJpYXQiOjE2MDM1NDEyMzcsImV4cCI6MTYwNDE0NjAzN30.hhqyJMOSEtXJ9niPbJ653hK0o4GSx1RPfAiRUIhw3NI_jtYp-BTgsu3d6dYbfqsn_ezHgBO-PlaWC_HZRifgBg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTYiLCJpYXQiOjE2MDM1NDI3MDAsImV4cCI6MTYwNDE0NzUwMH0.b61pqRy2yW1gITRmnUca93tlN4mbSLNsHkjDYSnGpBwYWuVv7wnw_8AdLGjjzIlKmx85P3Zgkd6Rn46TDH8iEA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3683,7 +3683,7 @@ Content-Length: 87
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/board/310/manager HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDkiLCJpYXQiOjE2MDM1NDEyMzYsImV4cCI6MTYwNDE0NjAzNn0.NbM_uA0-abgnRoaNdqJdo3z7jWFOGZwmgVwcmytpLJ6kBR9948ARz79p45wvgzKc5R2YptwwcgyTqCIYzIVpCQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDkiLCJpYXQiOjE2MDM1NDI2OTksImV4cCI6MTYwNDE0NzQ5OX0.apG0tMkGpvk87fYyhA6K2NEqg4M1A9f5MuwQDFLXybDzeRaRcyrhOifdm015tpdpGdIc5PjgTxcttmUzXbnStg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -3831,7 +3831,7 @@ Content-Length: 250
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/312/likes HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTEiLCJpYXQiOjE2MDM1NDEyMzYsImV4cCI6MTYwNDE0NjAzNn0.jwQSgJIkEDyYN4MxekbyPwq0XUrZR_KW0ywBErmkMoWQz9-B4ps9jN7jMktlgcQSn8TrNwi4O5Az_MqsYESyXg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTEiLCJpYXQiOjE2MDM1NDI2OTksImV4cCI6MTYwNDE0NzQ5OX0.UiZGXLOublY1N3NOazz-_EjbugQHkGhgCFF_zB8NuWUfpip-trhA9_hiBKHzwvdM7VoTaLU6mGb-UQIiPwHX_Q
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4015,14 +4015,14 @@ Content-Length: 1005
         "empty" : false
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 9,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
-    "last" : true,
     "totalElements" : 1,
     "totalPages" : 1,
+    "last" : true,
     "size" : 9,
     "number" : 0,
     "sort" : {
@@ -4124,7 +4124,7 @@ Content-Length: 1005
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/profile/search HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE2MDM1NDEyMzQsImV4cCI6MTYwNDE0NjAzNH0.U6iwtdoKCoDaw5lP3dxLvPnpycqdeBGtIzt0kEunZih37rvJA4e1rPwzyWaExTHfulOKf7xRDn4ek5OB_l5hwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE2MDM1NDI2OTcsImV4cCI6MTYwNDE0NzQ5N30.eOuu--bRECSKD3sbtD6Wx_GyUo81UB0Y6fsPsTcrDTSLhLSmEcKDWlYkf1CGq3radWRqwLC4hdSKy1mm-_QE9w
 Accept: application/json
 Content-Length: 173
 Host: perpetApi.com:8080
@@ -4180,14 +4180,14 @@ Content-Length: 1012
         "empty" : true
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 15,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
-    "last" : true,
     "totalElements" : 1,
     "totalPages" : 1,
+    "last" : true,
     "size" : 15,
     "number" : 0,
     "sort" : {
@@ -4344,7 +4344,7 @@ Content-Length: 1012
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/feeds HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjUiLCJpYXQiOjE2MDM1NDEyMzgsImV4cCI6MTYwNDE0NjAzOH0.a_JXquEU72gN0-1wnMha5GOYmXjx9h29qiyYEw_fuiLSd9pU2RPjMkKUt1qeMvRu4XQtiZnwW5zA7mcWm02igA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjUiLCJpYXQiOjE2MDM1NDI3MDIsImV4cCI6MTYwNDE0NzUwMn0.bJ193Rb7b1laE2fe4C4KCahiUCLx5MVy9x10H1WpGo_3rJ-KPMYNhMLEbOQyw1j8Lpp2q4VbNFhhDvv_ueCGDg
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4483,7 +4483,7 @@ Content-Length: 1287
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/snacks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjQiLCJpYXQiOjE2MDM1NDEyMzgsImV4cCI6MTYwNDE0NjAzOH0.ytYAp4_C57ptZBNKa7m2ULSEEQcdKL9nv2u9tcHRxRqhbe_kohM6U9XdtFesbhyz9ObyyqSBTrmjjCVlT8td8A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjQiLCJpYXQiOjE2MDM1NDI3MDIsImV4cCI6MTYwNDE0NzUwMn0.5bVzz0md7KKDc0GedgVyTUQ3zWu47K3Hw4tJQEtsAis_1sMX3HKXDnyzqFR2YoK7u55f6qYn2Ia96zpXf2Yr7w
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4622,7 +4622,7 @@ Content-Length: 1219
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/goods HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjIiLCJpYXQiOjE2MDM1NDEyMzcsImV4cCI6MTYwNDE0NjAzN30.XsBJd0cn4L3ES8_DwJI9SYyVS3CNU2Sop0GerUuU5PBqXtH-jyKOlxGtWh1TYzC5aIsmL_9sVfc8vS_hdlbvWg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjIiLCJpYXQiOjE2MDM1NDI3MDEsImV4cCI6MTYwNDE0NzUwMX0.ECXYqwR-s03VfFzzQo052G5rGaDdz--Ferx0hPD2sTwLm9Qz7HgiKQQth5C8la-kpz7q8PHU928JWfI9RWOtXw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4743,7 +4743,7 @@ Content-Length: 486
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/items/best HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjkiLCJpYXQiOjE2MDM1NDEyMzksImV4cCI6MTYwNDE0NjAzOX0.IEaXeOWGgyLJxbOccAJs4Mpi-2F_7kpulcKtvS0vZbyuYGK6fzNR1g6PccioArL0qi_-pFg-PpPWxlhVC2QJXw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjkiLCJpYXQiOjE2MDM1NDI3MDMsImV4cCI6MTYwNDE0NzUwM30.qoCXMYQV8muGahtYvEohpoeluKRhLOn5tdxdogaFwf3FGcdnBqVXwN28BeSw4WEhIJn34AFpaKpvqRthVhDM-g
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -4832,14 +4832,14 @@ Content-Length: 3070
         "empty" : false
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 6,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
-    "last" : false,
     "totalElements" : 7,
     "totalPages" : 2,
+    "last" : false,
     "size" : 6,
     "number" : 0,
     "sort" : {
@@ -4936,7 +4936,7 @@ Content-Length: 3070
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/items/new HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjMiLCJpYXQiOjE2MDM1NDEyMzcsImV4cCI6MTYwNDE0NjAzN30.mKo9IMS_7hDwEwU2Zurp2SCiKtA0gUYr5-DdJwyChkgx6NTIU_-56Dt1UxASmQOpwd1xM9r-Dt7E-3HH3zl9_g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjMiLCJpYXQiOjE2MDM1NDI3MDEsImV4cCI6MTYwNDE0NzUwMX0.o0baVgYExFDMydtLdZnqqX-N8OIOaPOA8SZfNFe-ZpOeb0iFAwFnLpgcC6OJa5ELHkf8fGShHII5cAjNett7gA
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -5025,14 +5025,14 @@ Content-Length: 3044
         "empty" : false
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 6,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
-    "last" : false,
     "totalElements" : 7,
     "totalPages" : 2,
+    "last" : false,
     "size" : 6,
     "number" : 0,
     "sort" : {
@@ -5156,7 +5156,7 @@ Content-Length: 3044
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/details/283 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjgiLCJpYXQiOjE2MDM1NDEyMzgsImV4cCI6MTYwNDE0NjAzOH0.8DCpVeJOHL380REyt1WqEhayaqa0eHRS5uCWbOoA0ErvpDUkeeHKVRFJBMgnUAbO4JePGYrsya5-2UUVaWP0JA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjgiLCJpYXQiOjE2MDM1NDI3MDIsImV4cCI6MTYwNDE0NzUwMn0.xqE8K5Sy4Pom7xt8t4l5qSCI9QznmqWbIrhskrAP0OfMAvBRFbmfB0z1teGwazAg3r8rHkPy4XM9odjM-4WQ-Q
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -5284,7 +5284,7 @@ Content-Length: 542
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/order/bags/283 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjAiLCJpYXQiOjE2MDM1NDEyMzcsImV4cCI6MTYwNDE0NjAzN30.KgCmAM8EKkaMgDYIBbPDQ1uJgXOeVb0HSnKUEXVc_rBb5BZdTw8MgK64Sobd97PFRJqSDFPq6GE9FWCRhL2i0g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjAiLCJpYXQiOjE2MDM1NDI3MDAsImV4cCI6MTYwNDE0NzUwMH0.KvG4oc9Sf8gsD-sUyl8V-ltRjcKdXaHBRdbJoBjp9DHQXReMM39B9IZT0s8sAj8hsmhA3AdvEiorEmy27B8qBA
 Accept: application/json
 Content-Length: 19
 Host: perpetApi.com:8080
@@ -5382,7 +5382,7 @@ Content-Length: 94
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/order/bags/details/331 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzAiLCJpYXQiOjE2MDM1NDEyMzksImV4cCI6MTYwNDE0NjAzOX0.uodD0tmtaHWoSlLbtk8qsbYxC_ZweZG6w_ftI8v5uVFUveFMfBMqYhkAiRg9ILSOj_ufg0EAG7t4H7lWaSbg5w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzAiLCJpYXQiOjE2MDM1NDI3MDMsImV4cCI6MTYwNDE0NzUwM30.z0bcGkpQYHPbc8RQU3zyBEJstH6i6pX5zkYie6TC5u4chicJm8LdXHHjQAKfwaURz9vMpFsJLeuqmBODnM3ztQ
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -5488,7 +5488,7 @@ Content-Length: 91
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/order/bags HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjYiLCJpYXQiOjE2MDM1NDEyMzgsImV4cCI6MTYwNDE0NjAzOH0.RYCvfueiy02BFMyblH2BO6xhE01GBlMTYlcQzq2pR0030bbsMR5cEXbSdDAsmICw5GzBa2xG0EEeJ4FIzkjAXw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjYiLCJpYXQiOjE2MDM1NDI3MDIsImV4cCI6MTYwNDE0NzUwMn0.6lOZQ4RXP5tNAXs9dWhHrlydBJlddKx4sI8Y8_-sef6RiRTrBPO0Bvr75IY1CN_Ai-M9VCFLBygCwhx-f5p2qw
 Accept: application/json
 Host: perpetApi.com:8080</code></pre>
 </div>
@@ -5639,7 +5639,7 @@ Content-Length: 420
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/order/bags/pay HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzIiLCJpYXQiOjE2MDM1NDEyMzksImV4cCI6MTYwNDE0NjAzOX0.WqrO8EKsljRiZKSkGZK_CQE7k0kNNBHShGy61mljjjqLWNzIs4InWSA3ZBVrRnRv5bi-rIYDYj8J381gQ6Cf8g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzIiLCJpYXQiOjE2MDM1NDI3MDMsImV4cCI6MTYwNDE0NzUwM30.g1-uXToqfGrXCjL-GRbI25X5K6hNoybVUFmRPsVdlpgs5Qhq8pO6Q1mIX5PRG7YfLNqoi7UHtAEHDAWUhZia0w
 Accept: application/json
 Content-Length: 163
 Host: perpetApi.com:8080
@@ -5691,7 +5691,7 @@ Content-Length: 230
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-24 09:26:01 KST
+Last updated 2020-10-24 09:55:57 KST
 </div>
 </div>
 </body>

@@ -11,6 +11,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Basic;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,12 +30,22 @@ public class BoardGetResponseV1 {
     private int month;
     private String petTitle;
     private String petAge;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String checkUpImage;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String lineAgeImage;
     private Boolean hasNeutered;
     private String description;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String boardImage1;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String boardImage2;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String boardImage3;
     private boolean closed;
 

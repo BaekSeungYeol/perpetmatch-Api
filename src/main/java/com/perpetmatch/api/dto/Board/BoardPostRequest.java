@@ -34,6 +34,7 @@ public class BoardPostRequest {
     private String checkUpImage;
     private String lineAgeImage;
     private String neuteredImage;
+    private Boolean hasNeutered;
     private String description;
     private String boardImage1;
     private String boardImage2;

@@ -64,10 +64,12 @@ public class BoardService {
             board.setLineAgeImage(boardRequest.getLineAgeImage());
             board.setHasLineAge(true);
         }
-        if(boardRequest.getNeuteredImage() != null){
-            board.setNeuteredImage(boardRequest.getNeuteredImage());
-            board.setHasNeutered(true);
-        }
+        board.setHasNeutered(boardRequest.getHasNeutered());
+
+//        if(boardRequest.getNeuteredImage() != null){
+//            board.setNeuteredImage(boardRequest.getNeuteredImage());
+//            board.setHasNeutered(true);
+//        }
         board.setDescription(boardRequest.getDescription());
         board.setBoardImage1(boardRequest.getBoardImage1());
         board.setBoardImage2(boardRequest.getBoardImage2());

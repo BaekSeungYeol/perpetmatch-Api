@@ -522,7 +522,7 @@ class BoardApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/board/{id}/manager", this.id)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/{id}/manager", this.id)
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -548,7 +548,7 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.users[0].id").type(JsonFieldType.NUMBER).description("현재 신청한 유저의 아이디 입니다."),
                                 fieldWithPath("data.users[0].nickname").type(JsonFieldType.STRING).description("현재 신청한 유저의 닉네임 입니다."),
                                 fieldWithPath("data.users[0].profileImage").type(JsonFieldType.NULL).description("현재 신청한 유저의 프로필 이미지 입니다."),
-                                fieldWithPath("data.users[0].description").type(JsonFieldType.NULL).description("현재 신청한 유저의 소개 입니다."))));
+                                fieldWithPath("data.users[0].phoneNumber").type(JsonFieldType.NULL).description("현재 신청한 유저의 소개 입니다."))));
     }
 
 

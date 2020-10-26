@@ -284,7 +284,7 @@ public class UserService {
         List<ApplyUsers> collect = new ArrayList<>();
         Set<User> users = board.getUsers();
         for(User u : users) {
-            User user = userRepository.findByIdWithTags(u.getId()).get();
+            User user = userRepository.findById(u.getId()).get();
             ApplyUsers applyUser = new ApplyUsers(user);
             collect.add(applyUser);
         }

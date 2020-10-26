@@ -207,6 +207,7 @@ class AdoptApiControllerTest {
                 .checkUpImage("DataURL")
                 .lineAgeImage("DataURL")
                 .neuteredImage("DataURL")
+                .hasNeutered(true)
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
                 .boardImage1("DataURL")
                 .boardImage2("DataURL")

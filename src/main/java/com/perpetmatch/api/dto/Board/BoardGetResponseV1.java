@@ -28,7 +28,7 @@ public class BoardGetResponseV1 {
     private String petAge;
     private String checkUpImage;
     private String lineAgeImage;
-    private String neuteredImage;
+    private Boolean hasNeutered;
     private String description;
     private String boardImage1;
     private String boardImage2;
@@ -48,7 +48,7 @@ public class BoardGetResponseV1 {
         petAge = board.getPetAge().getPetRange();
         checkUpImage = board.getCheckUpImage();
         lineAgeImage = board.getLineAgeImage();
-        neuteredImage = board.getNeuteredImage();
+        hasNeutered = board.isHasNeutered();
         description = board.getDescription();
         boardImage1 = board.getBoardImage1();
         boardImage2 = board.getBoardImage2();

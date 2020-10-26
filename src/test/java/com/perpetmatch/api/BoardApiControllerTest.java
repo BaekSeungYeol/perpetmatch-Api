@@ -141,7 +141,6 @@ class BoardApiControllerTest {
                 .andExpect(jsonPath("data.petAge").exists())
                 .andExpect(jsonPath("data.checkUpImage").exists())
                 .andExpect(jsonPath("data.lineAgeImage").exists())
-                .andExpect(jsonPath("data.neuteredImage").exists())
                 .andExpect(jsonPath("data.description").exists())
                 .andExpect(jsonPath("data.boardImage1").exists())
                 .andExpect(jsonPath("data.boardImage2").exists())
@@ -174,7 +173,7 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.petAge").type(JsonFieldType.STRING).description("나이 범위"),
                                 fieldWithPath("data.checkUpImage").type(JsonFieldType.STRING).description("건강검진 이미지"),
                                 fieldWithPath("data.lineAgeImage").type(JsonFieldType.STRING).description("혈통서 이미지"),
-                                fieldWithPath("data.neuteredImage").type(JsonFieldType.STRING).description("중성화 이미지"),
+                                fieldWithPath("data.hasNeutered").type(JsonFieldType.BOOLEAN).description("중성화 여부"),
                                 fieldWithPath("data.description").type(JsonFieldType.STRING).description("소개"),
                                 fieldWithPath("data.boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
                                 fieldWithPath("data.boardImage2").type(JsonFieldType.STRING).description("강아지 이미지2"),
@@ -196,6 +195,7 @@ class BoardApiControllerTest {
                 .checkUpImage("DataURL")
                 .lineAgeImage("DataURL")
                 .neuteredImage("DataURL")
+                .hasNeutered(true)
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
                 .boardImage1("DataURL")
                 .boardImage2("DataURL")
@@ -227,6 +227,7 @@ class BoardApiControllerTest {
                 .checkUpImage("DataURL")
                 .lineAgeImage("DataURL")
                 .neuteredImage("DataURL")
+                .hasNeutered(true)
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
                 .boardImage1("DataURL")
                 .boardImage2("DataURL")
@@ -261,6 +262,7 @@ class BoardApiControllerTest {
                                 fieldWithPath("checkUpImage").type(JsonFieldType.STRING).description("건강검진 이미지"),
                                 fieldWithPath("lineAgeImage").type(JsonFieldType.STRING).description("혈통서 이미지"),
                                 fieldWithPath("neuteredImage").type(JsonFieldType.STRING).description("중성화 이미지"),
+                                fieldWithPath("hasNeutered").type(JsonFieldType.BOOLEAN).description("중성화 여부"),
                                 fieldWithPath("description").type(JsonFieldType.STRING).description("소개"),
                                 fieldWithPath("boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
                                 fieldWithPath("boardImage2").type(JsonFieldType.STRING).description("강아지 이미지2"),
@@ -381,6 +383,7 @@ class BoardApiControllerTest {
                 .checkUpImage("DataURL")
                 .lineAgeImage("DataURL")
                 .neuteredImage("DataURL")
+                .hasNeutered(true)
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
                 .boardImage1("DataURL")
                 .boardImage2("DataURL")

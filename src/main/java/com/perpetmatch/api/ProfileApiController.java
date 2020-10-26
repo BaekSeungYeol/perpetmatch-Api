@@ -292,4 +292,15 @@ public class ProfileApiController {
         return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 나이를 제거했습니다."));
 
     }
+
+    @GetMapping("/credit")
+    public ResponseEntity getCreditMyself(@CurrentMember UserPrincipal currentMember) {
+        if (currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+        User user = userRepository.findById(currentMember.getId()).get();
+        CreditDto dto = new CreditDto(user.getCredit());
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "자신의 껌입니다.",dto));
+    }
 }

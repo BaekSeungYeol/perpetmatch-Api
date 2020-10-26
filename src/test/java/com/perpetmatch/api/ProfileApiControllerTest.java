@@ -814,4 +814,30 @@ class ProfileApiControllerTest {
         assertTrue(!userRepository.findByNickname("백승열입니다").get().getZones().contains(zone));
 
     }
+    
+    @Test
+    @DisplayName("자신의 껌(크레딧) 조회하기")
+    void getCreditMyself() throws Exception {
+        mockMvc.perform(get("/api/profiles/credit")
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("자신의 껌입니다."))
+                .andDo(document("get-credit",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("자신의 껌입니다."),
+                                fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("자신의 껌(크레딧)입니다.")
+                        )));
+
+    }
 }

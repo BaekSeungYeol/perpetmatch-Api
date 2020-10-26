@@ -142,6 +142,14 @@ operation::show-profile[snippets='path-parameters,response-fields,http-request,h
 
 operation::create-profile[snippets='request-fields,response-fields,http-request,http-response']
 
+[[my-credit]]
+=== 자신의 크레딧(껌) 조회
+
+'GET /api/profiles/credit' 요청을 사용하여 자신의 껌(크레딧)을 조회할 수 있다.
+
+operation::get-credit[snippets='response-fields,http-request,http-response']
+
+
 [[petTitle]]
 === 관심 품종
 

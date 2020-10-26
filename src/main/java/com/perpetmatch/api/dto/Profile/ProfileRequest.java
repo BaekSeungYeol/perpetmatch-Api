@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Basic;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,6 +42,9 @@ public class ProfileRequest {
     @NotBlank
     private String description;
 
+
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String profileImage;
 
     private boolean wantCheckUp;

@@ -103,7 +103,7 @@ public class BoardApiController {
      * 입양하기 게시글 클릭시 보여지도록 하여야 한다.
      * 이떄 보여주어야 할 것은 일단 image와 닉네임
      */
-    @GetMapping("/board/{id}/manager")
+    @GetMapping("/boards/{id}/manager")
     public ResponseEntity isManager(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
         if(currentMember == null) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),

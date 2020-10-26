@@ -279,10 +279,16 @@ public class UserService {
         return board.isMember(username);
     }
     public List<ApplyUsers> applyUserList(Long id) {
-        Board board = boardRepository.findById(id).get();
-        List<ApplyUsers> users = board.getUsers().stream().map(u -> new ApplyUsers(u.getId(),u.getNickname(),u.getProfileImage(),u.getDescription()))
-        .collect(Collectors.toList());
-        return users;
+
+        Board board = boardRepository.findZoneAndPetTitleAndPetAgeById(id);
+        List<ApplyUsers> collect = new ArrayList<>();
+        Set<User> users = board.getUsers();
+        for(User u : users) {
+            User user = userRepository.findByIdWithTags(u.getId()).get();
+            ApplyUsers applyUser = new ApplyUsers(user);
+            collect.add(applyUser);
+        }
+        return collect;
     }
 
     public boolean isManager(String username, Long id) {

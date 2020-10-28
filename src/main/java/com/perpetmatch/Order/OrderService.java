@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -70,6 +71,7 @@ public class OrderService {
         Set<OrderItem> bags = user.getBag();
         for (OrderItem bag : bags) {
             totalSum += bag.getTotalPrice();
+            user.getBag().remove(bag);
         }
         user.setCredit(Math.max(0,user.getCredit()-totalSum));
         // TODO 0보다 작을때

@@ -1,13 +1,16 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.Domain.User;
 import com.perpetmatch.Domain.Pet;
 import com.perpetmatch.Domain.PetAge;
+import com.perpetmatch.Domain.User;
 import com.perpetmatch.Domain.Zone;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
+import com.perpetmatch.Order.OrderService;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.api.dto.Order.MyPageDetailsDto;
+import com.perpetmatch.api.dto.Order.MyPageOrderDto;
 import com.perpetmatch.api.dto.Profile.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
@@ -49,6 +52,7 @@ public class ProfileApiController {
     private final ModelMapper modelMapper;
     private final PetRepository petRepository;
     private final PetAgeRepository petAgeRepository;
+    private final OrderService orderService;
 
 
 
@@ -303,4 +307,30 @@ public class ProfileApiController {
         CreditDto dto = new CreditDto(user.getCredit());
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "자신의 껌입니다.",dto));
     }
+
+    @GetMapping("/mypage/{id}")
+    public ResponseEntity myPageUpward(@PathVariable Long id) {
+
+        if (!userRepository.existsById(id)) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.findByParamId(id);
+
+        MyPage dto = new MyPage(user);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "요청 유저의 마이페이지 프로필 조회입니다.", dto));
+    }
+
+    @GetMapping("/mypage/orders/{id}")
+    public ResponseEntity MyPageOrderDetails(@PathVariable Long id) {
+        if (!userRepository.existsById(id)) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        Set<MyPageDetailsDto> orders = userService.findOrders(id);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "요청 유저의 마이페이지 주문 조회입니다.", orders));
+    }
+
 }

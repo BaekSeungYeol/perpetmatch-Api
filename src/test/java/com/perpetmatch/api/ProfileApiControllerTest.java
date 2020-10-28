@@ -1,14 +1,16 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.PetAge;
-import com.perpetmatch.Domain.Zone;
+import com.perpetmatch.Domain.*;
+import com.perpetmatch.Domain.Item.Item;
+import com.perpetmatch.Item.ItemRepository;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
+import com.perpetmatch.Order.OrderRepository;
+import com.perpetmatch.OrderItem.OrderItemRepository;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.api.dto.Order.AddressDto;
 import com.perpetmatch.api.dto.Profile.*;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.infra.config.AppProperties;
@@ -34,6 +36,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Set;
 
 import static com.sun.activation.registries.LogSupport.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -79,6 +85,12 @@ class ProfileApiControllerTest {
     ZoneRepository zoneRepository;
     @Autowired
     AppProperties appProperties;
+    @Autowired
+    ItemRepository itemRepository;
+    @Autowired
+    OrderItemRepository orderItemRepository;
+    @Autowired
+    OrderRepository orderRepository;
     private String token = null;
     private Long id;
 
@@ -837,6 +849,111 @@ class ProfileApiControllerTest {
                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("자신의 껌입니다."),
                                 fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("자신의 껌(크레딧)입니다.")
+                        )));
+
+    }
+
+    @Test
+    @DisplayName("마이페이지 프로필 조회")
+    public void getMyPageProfile() throws Exception{
+
+        User user = userRepository.findById(id).get();
+        user.setAge(19);
+        user.setOccupation("학생");
+        user.setLocation("서울");
+        user.setHouseType("아파트");
+        user.setExperience(false);
+        user.setLiveAlone(false);
+        user.setHasPet(true);
+        user.setProfileImage("DataURL");
+        user.setPhoneNumber("010-3926-6280");
+        user.setDescription("안녕하세요 누구 입니다.");
+        user.setWantCheckUp(true);
+        user.setWantLineAge(true);
+        user.setWantNeutered(true);
+        user.setExpectedFeeForMonth(100000);
+
+        mockMvc.perform(get("/api/profiles/mypage/{id}", this.id)
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("요청 유저의 마이페이지 프로필 조회입니다."))
+                .andDo(document("mypage-profile",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청 유저의 마이페이지 프로필 조회입니다."),
+                                fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                fieldWithPath("data.profileImage").type(JsonFieldType.STRING).description("프로필 이미지"),
+                                fieldWithPath("data.description").type(JsonFieldType.STRING).description("짧은소개"),
+                                fieldWithPath("data.tags").type(JsonFieldType.ARRAY).description("유저의 프로필 첫 페이지 태그 입니다.")
+                        )));
+
+    }
+
+    @Test
+    @DisplayName("마이페이지 주문내역 조회")
+    public void getMyPageOrder() throws Exception{
+        Long bagId = 286L;
+
+        User userId = userRepository.findByNickname("백승열입니다").get();
+        User user = userRepository.findByIdWithBags(userId.getId());
+        user.setCredit(100000);
+        Item item = itemRepository.findById(bagId).get();
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(item.getPrice());
+        orderItem.setCount(3);
+        orderItemRepository.save(orderItem);
+
+        user.getBag().add(orderItem);
+
+        AddressDto addressDto = new AddressDto();
+        addressDto.setDear("홍길동");
+        addressDto.setZipcode("12395");
+        addressDto.setCity("서울 OO구 OO동");
+        addressDto.setStreet("54-30");
+        addressDto.setMemo("부재시 경비실에 맡겨주세요");
+
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/order/bags/pay")
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(addressDto)));
+
+        mockMvc.perform(get("/api/profiles/mypage/orders/{id}", this.id)
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("요청 유저의 마이페이지 주문 조회입니다."))
+                .andDo(document("mypage-orders",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청 유저의 마이페이지 주문내역 조회입니다."),
+                                fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("주문 아이디"),
+                                fieldWithPath("data[0].image").type(JsonFieldType.STRING).description("상품 이미지"),
+                                fieldWithPath("data[0].title").type(JsonFieldType.STRING).description("상품 이름"),
+                                fieldWithPath("data[0].price").type(JsonFieldType.NUMBER).description("상품 가격"),
+                                fieldWithPath("data[0].company").type(JsonFieldType.STRING).description("상품 회사"),
+                                fieldWithPath("data[0].count").type(JsonFieldType.NUMBER).description("주문 갯수"),
+                                fieldWithPath("data[0].orderDate").type(JsonFieldType.STRING).description("주문 날짜")
                         )));
 
     }

@@ -68,12 +68,12 @@ public class OrderService {
 
     private void calculate(User user) {
         int totalSum = 0;
-        Set<OrderItem> bags = user.getBag();
-        for (OrderItem bag : bags) {
+        for (OrderItem bag : user.getBag()) {
             totalSum += bag.getTotalPrice();
-            user.getBag().remove(bag);
         }
+        user.getBag().clear();
         user.setCredit(Math.max(0,user.getCredit()-totalSum));
         // TODO 0보다 작을때
     }
+
 }

@@ -223,8 +223,20 @@ operation::update-petZone[snippets='request-fields,response-fields,http-request,
 operation::remove-petZone[snippets='request-fields,response-fields,http-request,http-response']
 
 
-[[board]]
-== 파양하기 게시판
+[[mypage-profile]]
+=== 마이페이지 유저 프로필 조회
+
+'GET /api/profiles/mypage/{id}' 요청을 사용하여 해당 유저의 마이페이지 프로필을 조회할 수 있다.
+
+operation::mypage-profile[snippets='path-parameters,response-fields,http-request,http-response']
+
+[[mypage-orders]]
+=== 마이페이지 유저 주문내역 조회
+
+'GET /api/profiles/mypage/orders{id}' 요청을 사용하여 해당 유저의 마이페이지 주문내역을 조회할 수 있다.
+
+operation::mypage-orders[snippets='path-parameters,response-fields,http-request,http-response']
+
 
 파양하기 관련
 

@@ -11,6 +11,8 @@ import com.perpetmatch.Zone.ZoneRepository;
 import com.perpetmatch.api.dto.Board.ApplyUsers;
 import com.perpetmatch.api.dto.Board.NameDto;
 import com.perpetmatch.api.dto.Order.BagDetailsDto;
+import com.perpetmatch.api.dto.Order.MyPageDetailsDto;
+import com.perpetmatch.api.dto.Order.MyPageOrderDto;
 import com.perpetmatch.api.dto.Profile.PasswordRequest;
 import com.perpetmatch.api.dto.Profile.ProfileRequest;
 import com.perpetmatch.exception.AppException;
@@ -353,5 +355,16 @@ public class UserService {
         sendAdoptionSuccessEmail(user,board);
 
         return user;
+    }
+
+    public Set<MyPageDetailsDto> findOrders(Long id) {
+
+        User user = userRepository.findById(id).get();
+        Set<MyPageOrderDto> collect = user.getOrders().stream().map(MyPageOrderDto::new).collect(Collectors.toSet());
+        Set<MyPageDetailsDto> ret  = new HashSet<>();
+        for(MyPageOrderDto c : collect) {
+            ret.addAll(c.getOrders());
+        }
+        return ret;
     }
 }

@@ -20,7 +20,7 @@ public class BagDetailsDto {
     private int count;
 
     public BagDetailsDto(OrderItem o) {
-        this.id = o.getId();
+        this.id = o.getItem().getId();
         this.image = o.getItem().getBoardImageHead();
         this.title = o.getItem().getTitle();
         this.company = o.getItem().getCompany();

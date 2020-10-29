@@ -894,7 +894,8 @@ class ProfileApiControllerTest {
                                 fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("닉네임"),
                                 fieldWithPath("data.profileImage").type(JsonFieldType.STRING).description("프로필 이미지"),
                                 fieldWithPath("data.description").type(JsonFieldType.STRING).description("짧은소개"),
-                                fieldWithPath("data.tags").type(JsonFieldType.ARRAY).description("유저의 프로필 첫 페이지 태그 입니다.")
+                                fieldWithPath("data.tags").type(JsonFieldType.ARRAY).description("유저의 프로필 첫 페이지 태그 입니다."),
+                                fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("유저의 크레딧 입니다.")
                         )));
 
     }

@@ -56,11 +56,11 @@ public class BoardService {
         Pet byTitle = petRepository.findByTitle(boardRequest.getPetTitle());
         board.setPetTitle(byTitle);
 
-        if(boardRequest.getCheckUpImage() != null){
+        if(!boardRequest.getCheckUpImage().isEmpty()){
             board.setCheckUpImage(boardRequest.getCheckUpImage());
             board.setHasCheckUp(true);
         }
-        if(boardRequest.getLineAgeImage() != null){
+        if(!boardRequest.getLineAgeImage().isEmpty()){
             board.setLineAgeImage(boardRequest.getLineAgeImage());
             board.setHasLineAge(true);
         }

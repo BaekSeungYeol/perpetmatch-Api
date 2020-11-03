@@ -78,7 +78,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         URI clientRedirectUri = URI.create(uri);
         AppProperties.OAuth2 oauth2 = appProperties.getOauth2();
         List<String> authorizedRedirectUris = oauth2.getAuthorizedRedirectUris();
-        appProperties.getOauth2().getAuthorizedRedirectUris().add("http://localhost:3000/oauth2/redirect");
+        appProperties.getOauth2().getAuthorizedRedirectUris().add("https://www.perpetmatch.com/oauth2/redirect");
 
         System.out.println("===*********************=======");
         System.out.println(authorizedRedirectUris.get(0));

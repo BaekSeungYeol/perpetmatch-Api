@@ -78,7 +78,18 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         URI clientRedirectUri = URI.create(uri);
         AppProperties.OAuth2 oauth2 = appProperties.getOauth2();
         List<String> authorizedRedirectUris = oauth2.getAuthorizedRedirectUris();
-        appProperties.getOauth2().getAuthorizedRedirectUris().add("https://www.perpetmatch.com/oauth2/redirect");
+//        System.out.println(authorizedRedirectUris.size());
+//        for(int i=0; i< authorizedRedirectUris.size(); ++i)
+//            System.out.println(authorizedRedirectUris.get(i));
+
+         appProperties.getOauth2().getAuthorizedRedirectUris().add("https://www.perpetmatch.com");
+         appProperties.getOauth2().getAuthorizedRedirectUris().add("http://www.perpetmatch.com");
+         appProperties.getOauth2().getAuthorizedRedirectUris().add("https://perpetmatch.com");
+         appProperties.getOauth2().getAuthorizedRedirectUris().add("http//perpetmatch.com");
+
+//        System.out.println(clientRedirectUri.getHost()); // localhost:3000
+//        URI authorizedURI2 = URI.create(authorizedRedirectUris.get(0)); // www.perpetmatch.com app properties
+//        System.out.println(authorizedURI2.getHost());
 
         System.out.println("===*********************=======");
         System.out.println(authorizedRedirectUris.get(0));
@@ -91,8 +102,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .anyMatch(authorizedRedirectUri -> {
                     // Only validate host and port. Let the clients use different paths if they want to
                     URI authorizedURI = URI.create(authorizedRedirectUri);
-                    if(authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-                            && authorizedURI.getPort() == clientRedirectUri.getPort()) {
+                    if(authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())) {
                         return true;
                     }
                     return false;

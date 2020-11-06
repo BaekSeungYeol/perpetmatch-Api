@@ -71,6 +71,7 @@ public class CommuService {
         commu.setChecked(commuPostDto.isChecked());
         commu.setDescription(commuPostDto.getDescription());
         commu.setLikes(commuPostDto.getLikes());
+        commu.setProfileImage(user.getProfileImage());
         Commu savedCommu = commuRepository.save(commu);
 
         user.getCommus().add(savedCommu);

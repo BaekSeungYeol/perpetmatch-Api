@@ -224,6 +224,46 @@ class CommuControllerTest {
                                 fieldWithPath("data[0].text").type(JsonFieldType.STRING).description("소통 댓글 리스트 입니다."))));
     }
 
+    @Test
+    @DisplayName("소통 게시글 조회 조회")
+    public void getCommuBoard() throws Exception {
+
+        Event event = getBoardId();
+        Long userId = event.userId;
+        Long Id = event.CommuId;
+        Long commentsId = event.CommentId;
+
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/commu/boards")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("commu-list",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        relaxedResponseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("소통 댓글 리스트 입니다."),
+                                fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("소통 글 ID"),
+                                fieldWithPath("data[0].nickname").type(JsonFieldType.STRING).description("글 작성자 닉네임"),
+                                fieldWithPath("data[0].profileImage").type(JsonFieldType.STRING).description("게시글 작성자 프로필 이미지"),
+                                fieldWithPath("data[0].description").type(JsonFieldType.STRING).description("글"),
+                                fieldWithPath("data[0].createdAt").type(JsonFieldType.STRING).description("생성 날짜"),
+                                fieldWithPath("data[0].likes").type(JsonFieldType.NUMBER).description("좋아요"),
+                                fieldWithPath("data[0].image").type(JsonFieldType.STRING).description("이미지"),
+                                fieldWithPath("data[0].checked").type(JsonFieldType.BOOLEAN).description("인공지능 글 여부"),
+                                fieldWithPath("data[0].comments[0].id").type(JsonFieldType.NUMBER).description("댓글 아이디"),
+                                fieldWithPath("data[0].comments[0].nickname").type(JsonFieldType.STRING).description("댓글 작성자 닉네임"),
+                                fieldWithPath("data[0].comments[0].profileImage").type(JsonFieldType.STRING).description("댓글 작성자 이미지"),
+                                fieldWithPath("data[0].comments[0].text").type(JsonFieldType.STRING).description("댓글"))));
+    }
+
     private Event getBoardId() throws Exception {
 
         User user = userRepository.findByNickname("백승열입니다").get();
@@ -232,7 +272,9 @@ class CommuControllerTest {
         commu.setNickname(user.getNickname());
         commu.setDescription("제 강아지좀 보세요");
         commu.setLikes(1);
+        commu.setImage("DataURL");
         commu.setChecked(false);
+        commu.setProfileImage("DataURL");
 
         Comment comment = new Comment();
         comment.setNickname(user.getNickname());

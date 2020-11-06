@@ -10,7 +10,6 @@ import com.perpetmatch.Member.UserService;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.api.dto.Board.NameDto;
-import com.perpetmatch.api.dto.User.UserCredit;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
@@ -37,18 +36,16 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

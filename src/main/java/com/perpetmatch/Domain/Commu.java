@@ -23,6 +23,10 @@ public class Commu extends DateAudit{
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
+    private String profileImage;
+
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String image;
 
     private int likes;

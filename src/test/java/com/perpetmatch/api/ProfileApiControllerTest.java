@@ -99,7 +99,7 @@ class ProfileApiControllerTest {
         SignUpRequest request = SignUpRequest.builder()
                 .nickname("백승열입니다")
                 .email("beck22222@naver.com")
-                .password("12345678").build();
+                .password("@!dighfkddl").build();
 
         mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -108,7 +108,7 @@ class ProfileApiControllerTest {
 
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
-                .password("12345678")
+                .password("@!dighfkddl")
                 .build();
 
         MvcResult mvcResult = mockMvc.perform(post("/api/auth/signin")
@@ -426,8 +426,8 @@ class ProfileApiControllerTest {
     void updatePassword_success() throws Exception {
 
        PasswordRequest passwordRequest = new PasswordRequest();
-       passwordRequest.setNewPassword("123456789");
-       passwordRequest.setNewPasswordConfirm("123456789");
+       passwordRequest.setNewPassword("@!dighfkddd");
+       passwordRequest.setNewPasswordConfirm("@!dighfkddd");
 
 
        mockMvc.perform(put("/api/profiles/password")
@@ -462,7 +462,7 @@ class ProfileApiControllerTest {
                        )
                ));
        User member = userRepository.findByNickname("백승열입니다").get();
-        assertTrue(passwordEncoder.matches("123456789", member.getPassword()));
+        assertTrue(passwordEncoder.matches("@!dighfkddd", member.getPassword()));
    }
 
     @Test
@@ -470,8 +470,8 @@ class ProfileApiControllerTest {
     void updatePassword_failed() throws Exception {
 
         PasswordRequest passwordRequest = new PasswordRequest();
-        passwordRequest.setNewPassword("123456789");
-        passwordRequest.setNewPasswordConfirm("12345678");
+        passwordRequest.setNewPassword("@!dighfkddd");
+        passwordRequest.setNewPasswordConfirm("@!dighfkddf");
 
         mockMvc.perform(put("/api/profiles/password")
                 .header("Authorization", token)

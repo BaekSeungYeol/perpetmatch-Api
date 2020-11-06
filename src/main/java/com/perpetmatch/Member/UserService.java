@@ -162,6 +162,7 @@ public class UserService {
         User member = userRepository.findByIdWithTags(id).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
         member.setHouseType(profileRequest.getHouseType());
         member.setAge(profileRequest.getAge());
+        member.setProfileImage(profileRequest.getProfileImage());
         member.setOccupation(profileRequest.getOccupation());
         member.setExperience(profileRequest.isExperience());
         member.setLiveAlone(profileRequest.isLiveAlone());

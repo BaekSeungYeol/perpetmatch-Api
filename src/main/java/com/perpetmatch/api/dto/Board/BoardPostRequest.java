@@ -8,7 +8,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-@EqualsAndHashCode(of = "id")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,8 +18,6 @@ public class BoardPostRequest {
     @Length(max = 50)
     private String title;
 
-    @Min(value = 30000)
-    @Max(value = 150000)
     private int credit;
 
     private String zone;

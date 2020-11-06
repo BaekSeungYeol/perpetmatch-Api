@@ -50,6 +50,9 @@ public class User extends DateAudit{
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Board> likeList = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<Commu> commus = new HashSet<>();
+
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    private Set<Board> bookmark = new HashSet<>();
 

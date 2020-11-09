@@ -67,7 +67,7 @@ public class CommuService {
         User user = userRepository.findById(id).get();
         Commu commu = new Commu();
         commu.setNickname(user.getNickname());
-        commu.setImage(user.getProfileImage());
+        commu.setImage(commuPostDto.getImage());
         commu.setChecked(commuPostDto.isChecked());
         commu.setDescription(commuPostDto.getDescription());
         commu.setLikes(commuPostDto.getLikes());

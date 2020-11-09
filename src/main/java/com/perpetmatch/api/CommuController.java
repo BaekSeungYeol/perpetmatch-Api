@@ -15,16 +15,19 @@ import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
+@Transactional
 @RequestMapping("/api/commu")
 @RequiredArgsConstructor
 public class CommuController {
@@ -32,6 +35,19 @@ public class CommuController {
     private final CommuService commuService;
     private final CommentRepository commentRepository;
     private final CommuRepository commuRepository;
+
+    @PostMapping("/boards/{id}/likes")
+    public ResponseEntity likes(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
+        if(currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+        Optional<Commu> byId = commuRepository.findById(id);
+        byId.ifPresent(u -> u.setLikes(u.getLikes() + 1));
+
+        return ResponseEntity.ok().body(new ApiResponse(true, "좋아요"));
+    }
+
 
     @PostMapping("/boards")
     public ResponseEntity createBoard(@CurrentMember UserPrincipal currentMember, @RequestBody @Valid CommuPostDto commuPostDto

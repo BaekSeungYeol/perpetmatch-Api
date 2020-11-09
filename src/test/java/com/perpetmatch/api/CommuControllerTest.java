@@ -223,6 +223,35 @@ class CommuControllerTest {
                                 fieldWithPath("data[0].profileImage").type(JsonFieldType.STRING).description("소통 댓글 리스트 입니다."),
                                 fieldWithPath("data[0].text").type(JsonFieldType.STRING).description("소통 댓글 리스트 입니다."))));
     }
+    @Test
+    @DisplayName("좋아요")
+    public void AddLikes() throws Exception {
+        Event event = getBoardId();
+        Long userId = event.userId;
+        Long Id = event.CommuId;
+
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/api/commu/boards/{Id}/likes", Id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("add-likes",
+                        pathParameters(
+                                parameterWithName("Id").description("소통 게시글 아이디")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("JSON"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("JSON"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 토큰")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
+                        ),
+                        responseFields(
+                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("좋아요"))));
+
+    }
 
     @Test
     @DisplayName("소통 게시글 조회 조회")

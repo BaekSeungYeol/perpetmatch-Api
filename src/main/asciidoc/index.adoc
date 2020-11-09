@@ -471,6 +471,13 @@ operation::delete-text[snippets='path-parameters,http-request,http-response']
 
 operation::text-list[snippets='path-parameters,http-request,http-response']
 
+[[likes]]
+=== 좋아요 추가
+
+'POST /api/commu/boards/{id}/likes' 요청을 사용하여 해당 게시글에 좋아요를 추가할 수 있다.
+
+
+operation::add-likes[snippets='path-parameters,http-request,http-response']
 
 //[[resources-events-get]]
 //=== 이벤트 조회

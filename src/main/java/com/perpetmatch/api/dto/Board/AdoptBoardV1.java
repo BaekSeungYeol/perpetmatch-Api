@@ -38,8 +38,8 @@ public class AdoptBoardV1 {
         tags.add(board.getPetTitle());
         tags.add(board.getPetAge());
         if(board.isHasCheckUp()) tags.add("건강검진증");
-        if(board.isHasCheckUp()) tags.add("혈통서");
-        if(board.isHasCheckUp()) tags.add("중성화");
+        if(board.isHasLineAge()) tags.add("혈통서");
+        if(board.isHasNeutered()) tags.add("중성화");
         this.boardImage1 = board.getBoardImage1();
         this.createdAt = board.getCreatedAt();
         this.closed = board.isClosed();

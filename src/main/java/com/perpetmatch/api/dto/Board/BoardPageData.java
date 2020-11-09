@@ -27,6 +27,7 @@ public class BoardPageData {
     private ArrayList<String> tags = new ArrayList<>();
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
+    private boolean closed;
 
     public BoardPageData(Board board) {
         id = board.getId();
@@ -42,5 +43,6 @@ public class BoardPageData {
         if(board.isHasLineAge()) tags.add("혈통서");
         if(board.isHasNeutered()) tags.add("중성화");
         createdAt = board.getCreatedAt();
+        closed = board.isClosed();
     }
 }

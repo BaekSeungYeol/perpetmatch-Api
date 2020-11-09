@@ -420,7 +420,8 @@ class BoardApiControllerTest {
                                 fieldWithPath("data.content[0].month").type(JsonFieldType.NUMBER).description("나이 (월)"),
                                 fieldWithPath("data.content[0].boardImage1").type(JsonFieldType.STRING).description("대표 이미지"),
                                 fieldWithPath("data.content[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
-                                fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("작성일")
+                                fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("작성일"),
+                                fieldWithPath("data.content[0].closed").type(JsonFieldType.BOOLEAN).description("입양 완료 여부")
                         )));
     }
 

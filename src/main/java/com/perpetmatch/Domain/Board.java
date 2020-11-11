@@ -57,11 +57,12 @@ public class Board extends DateAudit{
     @Basic(fetch = FetchType.EAGER)
     private String checkUpImage;
 
-    private boolean hasCheckUp;
-
     @Lob
     @Basic(fetch = FetchType.EAGER)
     private String lineAgeImage;
+
+    private boolean hasCheckUp;
+
 
     private boolean hasLineAge;
 

@@ -28,6 +28,7 @@ public class AdoptBoardV1 {
     private LocalDateTime createdAt;
     private boolean hasCheckUp;
     private boolean hasLineAge;
+    private boolean closed;
 
 
     public AdoptBoardV1(AdoptBoard board) {
@@ -46,5 +47,6 @@ public class AdoptBoardV1 {
         this.createdAt = board.getCreatedAt();
         this.hasCheckUp = board.isHasCheckUp();
         this.hasLineAge = board.isHasLineAge();
+        this.closed = board.isClosed();
     }
 }

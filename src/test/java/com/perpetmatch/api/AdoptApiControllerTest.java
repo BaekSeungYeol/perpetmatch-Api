@@ -142,8 +142,9 @@ class AdoptApiControllerTest {
                                 fieldWithPath("data.content[0].tags").type(JsonFieldType.ARRAY).description("태그들"),
                                 fieldWithPath("data.content[0].boardImage1").type(JsonFieldType.STRING).description("강아지 이미지1"),
                                 fieldWithPath("data.content[0].createdAt").type(JsonFieldType.STRING).description("생성 날짜"),
-                                fieldWithPath("data.content[0].closed").type(JsonFieldType.BOOLEAN).description("게시글이 닫혔는지 여부")
-
+                                fieldWithPath("data.content[0].closed").type(JsonFieldType.BOOLEAN).description("게시글이 닫혔는지 여부"),
+                                fieldWithPath("data.content[0].hasCheckUp").type(JsonFieldType.BOOLEAN).description("건강검진 여부"),
+                                fieldWithPath("data.content[0].hasLineAge").type(JsonFieldType.BOOLEAN).description("혈통서 여부")
                                 )));
     }
 

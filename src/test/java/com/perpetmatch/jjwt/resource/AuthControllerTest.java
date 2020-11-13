@@ -45,7 +45,7 @@ class AuthControllerTest {
         SignUpRequest request = SignUpRequest.builder()
                 .nickname("백승열입니다")
                 .email("beck22222@naver.com")
-                .password("12345678").build();
+                .password("@qortmdduf").build();
 
         mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -65,7 +65,7 @@ class AuthControllerTest {
 
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
-                .password("12345678")
+                .password("@qortmdduf")
                 .build();
 
         mockMvc.perform(post("/api/auth/signin")
@@ -84,7 +84,7 @@ class AuthControllerTest {
 
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("백승열입니다")
-                .password("12345678")
+                .password("@qortmdduf")
                 .build();
 
         mockMvc.perform(post("/api/auth/signin")
@@ -102,7 +102,7 @@ class AuthControllerTest {
 
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("익명입니다")
-                .password("12345678")
+                .password("@qortmdduf")
                 .build();
 
         mockMvc.perform(post("/api/auth/signin")

@@ -34,4 +34,7 @@ public interface BoardRepository extends JpaRepository<Board,Long>, BoardReposit
     @Query("select b from Board b left join fetch b.users where b.id = :id")
     Board findByIdWithUsers(@Param("id") Long id);
 
+    @Query("select distinct b from Board b left join fetch b.petAge left join fetch b.zone left join fetch b.petTitle left join fetch b.manager where b.manager = :user")
+    List<Board> findWithManager(@Param("user") User user);
+
 }

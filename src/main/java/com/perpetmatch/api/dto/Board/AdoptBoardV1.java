@@ -49,4 +49,22 @@ public class AdoptBoardV1 {
         this.hasLineAge = board.isHasLineAge();
         this.closed = board.isClosed();
     }
+    public AdoptBoardV1(Board board) {
+        this.id = board.getId();
+        this.title = board.getTitle();
+        this.credit = board.getCredit();
+        this.year = board.getYear();
+        this.month = board.getMonth();
+        tags.add(board.getZone().toString());
+        tags.add(board.getPetTitle().toString());
+        tags.add(board.getPetAge().toString());
+        if(board.isHasCheckUp()) tags.add("건강검진증");
+        if(board.isHasLineAge()) tags.add("혈통서");
+        if(board.isHasNeutered()) tags.add("중성화");
+        this.boardImage1 = board.getBoardImage1();
+        this.createdAt = board.getCreatedAt();
+        this.hasCheckUp = board.isHasCheckUp();
+        this.hasLineAge = board.isHasLineAge();
+        this.closed = board.isClosed();
+    }
 }

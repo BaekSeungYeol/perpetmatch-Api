@@ -1,14 +1,14 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.PetAge;
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.Domain.Zone;
+import com.perpetmatch.Board.BoardRepository;
+import com.perpetmatch.Domain.*;
 import com.perpetmatch.Member.UserRepository;
 import com.perpetmatch.Member.UserService;
 import com.perpetmatch.Order.OrderService;
 import com.perpetmatch.PetAge.PetAgeRepository;
 import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.api.dto.Board.AdoptBoard;
+import com.perpetmatch.api.dto.Board.AdoptBoardV1;
 import com.perpetmatch.api.dto.Order.MyPageDetailsDto;
 import com.perpetmatch.api.dto.Order.MyPageOrderDto;
 import com.perpetmatch.api.dto.Profile.*;
@@ -20,6 +20,11 @@ import com.perpetmatch.pet.PetRepository;
 import com.perpetmatch.pet.PetService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +58,7 @@ public class ProfileApiController {
     private final PetRepository petRepository;
     private final PetAgeRepository petAgeRepository;
     private final OrderService orderService;
+    private final BoardRepository boardRepository;
 
 
 
@@ -333,4 +339,18 @@ public class ProfileApiController {
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "요청 유저의 마이페이지 주문 조회입니다.", orders));
     }
 
+    //GET api/profiles/mypage/myboard
+    @GetMapping("/mypage/board")
+    public ResponseEntity searchBoard(@CurrentMember UserPrincipal currentMember) {
+        if (currentMember == null) {
+            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        Long id = currentMember.getId();
+        User user = userRepository.findById(id).get();
+        List<Board> boards = boardRepository.findWithManager(user);
+        List<AdoptBoardV1> changed = boards.stream().map(AdoptBoardV1::new).collect(Collectors.toList());
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "파양 게시판 마이페이지 검색입니다.",changed));
+    }
 }

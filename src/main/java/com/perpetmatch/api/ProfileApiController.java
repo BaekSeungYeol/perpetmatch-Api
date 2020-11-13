@@ -340,14 +340,13 @@ public class ProfileApiController {
     }
 
     //GET api/profiles/mypage/myboard
-    @GetMapping("/mypage/board")
-    public ResponseEntity searchBoard(@CurrentMember UserPrincipal currentMember) {
-        if (currentMember == null) {
+    @GetMapping("/mypage/boards/{id}")
+    public ResponseEntity searchBoard(@PathVariable Long id) {
+        if (!userRepository.existsById(id)) {
             return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
                     HttpStatus.BAD_REQUEST);
         }
 
-        Long id = currentMember.getId();
         User user = userRepository.findById(id).get();
         List<Board> boards = boardRepository.findWithManager(user);
         List<AdoptBoardV1> changed = boards.stream().map(AdoptBoardV1::new).collect(Collectors.toList());

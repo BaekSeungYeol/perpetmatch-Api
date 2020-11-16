@@ -21,12 +21,11 @@
 
 ## 개발서버
 
-- https://www.perpetmatch.com
-```
+- http://www.perpetmatch.com:8080
+
 ## 운영서버
 
-```sh
-```
+- https://www.perpetmatch.com
 
 
 ## Author

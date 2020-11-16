@@ -1,9 +1,6 @@
 <h1 align="center">Welcome to PERPET MATCH API SERVER 👋</h1>
 <p align="center">
     <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/BaekSeungYeol/perpetmatch-Api/blob/master/README.md" target="_blank">
-    <img alt="Documentation" src="https://perpetapi.com" />
-  </a>
   <a href="https://github.com/BaekSeungYeol/perpetmatch-Api/">
     <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
   </a>
@@ -13,6 +10,7 @@
   <a href="https://github.com/BaekSeungYeol/perpetmatch-Api/">
     <img src="https://img.shields.io/badge/changelog-gitmoji-brightgreen.svg" alt="gitmoji-changelog">
   </a>
+    <img src="https://img.shields.io/github/last-commit/BaekSeungYeol/perpetmatch-Api" />
 </p>
 
 <p align="center">
@@ -33,13 +31,13 @@
 
 ## 개발서버
 
-- http://www.perpetmatch.com:8080
+- http://www.perpetapi.com:8080
 
 ## 운영서버
-- https://www.perpetmatch.com
+- https://www.perpetapi.com
 
 </br>
-
+</br>
 <p>
   <img width="700" src="https://user-images.githubusercontent.com/47316511/99285719-40e88200-287b-11eb-8307-ed187a9e7748.png" alt="cli output"/>
 </p>

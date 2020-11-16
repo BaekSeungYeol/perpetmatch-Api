@@ -29,6 +29,17 @@
 
 </br>
 </br>
+</br>
+
+## 개발서버
+
+- http://www.perpetmatch.com:8080
+
+## 운영서버
+- https://www.perpetmatch.com
+
+</br>
+
 <p>
   <img width="700" src="https://user-images.githubusercontent.com/47316511/99285719-40e88200-287b-11eb-8307-ed187a9e7748.png" alt="cli output"/>
 </p>
@@ -53,17 +64,7 @@
   <img width="700" src="https://user-images.githubusercontent.com/47316511/99286163-d3892100-287b-11eb-83a7-3568fd220931.PNG" alt="cli output"/>
 </p>
 </br>
-
-
-## 개발서버
-
-- http://www.perpetmatch.com:8080
-```
-```
-## 운영서버
-- https://www.perpetmatch.com
-```
-```
+</br>
 
 
 ## Author
@@ -75,6 +76,5 @@
 
 ## 📝 License
 
-Copyright © 2019 [Franck Abgrall](https://github.com/kefranabg).<br />
 This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
 

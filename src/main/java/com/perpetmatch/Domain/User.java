@@ -60,9 +60,9 @@ public class User extends DateAudit{
 
     private int credit;
 
-    private String houseType;
+    private String houseType = "apartment";
 
-    private String occupation;
+    private String occupation = "";
 
     private boolean experience;
 
@@ -74,7 +74,7 @@ public class User extends DateAudit{
 
     private String phoneNumber;
 
-    private String location;
+    private String location = "서울특별시";
 
     @Lob @Basic(fetch = FetchType.EAGER)
     private String description;

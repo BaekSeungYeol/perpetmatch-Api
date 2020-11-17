@@ -74,4 +74,9 @@
 
 ## 📝 License
 
+<<<<<<< HEAD
 This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
+=======
+This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
+
+>>>>>>> 413d07279ebc98bb3988a59bca5fd1e01db25a73

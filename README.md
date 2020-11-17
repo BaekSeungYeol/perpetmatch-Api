@@ -30,7 +30,6 @@
 </br>
 
 ## 개발서버
-
 - http://www.perpetapi.com:8080
 
 ## 운영서버
@@ -74,9 +73,4 @@
 
 ## 📝 License
 
-<<<<<<< HEAD
-This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
-=======
-This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
-
->>>>>>> 413d07279ebc98bb3988a59bca5fd1e01db25a73
+This project is [MIT](https://github.com/BaekSeungYeol/perpetmatch-Api) licensed.

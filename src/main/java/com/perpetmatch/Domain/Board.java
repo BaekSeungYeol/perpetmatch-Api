@@ -1,16 +1,12 @@
 package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.perpetmatch.Board.Gender;
-import com.perpetmatch.jjwt.CurrentMember;
-import com.perpetmatch.jjwt.UserPrincipal;
+import com.perpetmatch.modules.Board.Gender;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity

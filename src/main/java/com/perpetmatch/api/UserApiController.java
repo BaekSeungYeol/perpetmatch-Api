@@ -2,8 +2,8 @@ package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
 import com.perpetmatch.jjwt.JwtTokenProvider;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.JwtAuthenticationResponse;

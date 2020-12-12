@@ -2,10 +2,9 @@ package com.perpetmatch.api;
 
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.Domain.Order;
-import com.perpetmatch.Item.ItemRepository;
-import com.perpetmatch.Member.UserService;
-import com.perpetmatch.Order.OrderService;
-import com.perpetmatch.api.dto.Board.BoardPageData;
+import com.perpetmatch.modules.Item.ItemRepository;
+import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Order.OrderService;
 import com.perpetmatch.api.dto.Order.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
@@ -20,8 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

@@ -3,20 +3,20 @@ package com.perpetmatch.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Domain.Item.Item;
-import com.perpetmatch.Item.ItemRepository;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
-import com.perpetmatch.Order.OrderRepository;
-import com.perpetmatch.OrderItem.OrderItemRepository;
-import com.perpetmatch.PetAge.PetAgeRepository;
-import com.perpetmatch.Zone.ZoneRepository;
+import com.perpetmatch.modules.Item.ItemRepository;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Order.OrderRepository;
+import com.perpetmatch.modules.OrderItem.OrderItemRepository;
+import com.perpetmatch.modules.PetAge.PetAgeRepository;
+import com.perpetmatch.modules.Zone.ZoneRepository;
 import com.perpetmatch.api.dto.Order.AddressDto;
 import com.perpetmatch.api.dto.Profile.*;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.infra.config.AppProperties;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
-import com.perpetmatch.pet.PetRepository;
+import com.perpetmatch.modules.pet.PetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,17 +37,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Set;
-
 import static com.sun.activation.registries.LogSupport.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -138,7 +133,7 @@ class ProfileApiControllerTest {
                 profileRequest.setExperience(false);
                 profileRequest.setLiveAlone(false);
                 profileRequest.setHasPet(true);
-                profileRequest.setProfileImage("DataURL");
+                profileRequest.setProfileImage("https://s3image.org/");
                 profileRequest.setPhoneNumber("010-3926-6280");
                 profileRequest.setDescription("안녕하세요 누구 입니다.");
                 profileRequest.setWantCheckUp(true);
@@ -234,7 +229,7 @@ class ProfileApiControllerTest {
         profileRequest.setExperience(false);
         profileRequest.setLiveAlone(false);
         profileRequest.setHasPet(true);
-        profileRequest.setProfileImage("DataURL");
+        profileRequest.setProfileImage("https://s3image.org/");
         profileRequest.setPhoneNumber("010-3926-6280");
         profileRequest.setDescription("안녕하세요 누구 입니다.");
         profileRequest.setWantCheckUp(true);
@@ -334,7 +329,7 @@ class ProfileApiControllerTest {
         profileRequest.setExperience(false);
         profileRequest.setLiveAlone(false);
         profileRequest.setHasPet(true);
-        profileRequest.setProfileImage("DataURL");
+        profileRequest.setProfileImage("https://s3image.org/");
         profileRequest.setPhoneNumber("010-3926-6280");
         profileRequest.setDescription("안녕하세요 누구 입니다.");
         profileRequest.setWantCheckUp(true);
@@ -406,7 +401,7 @@ class ProfileApiControllerTest {
         profileRequest.setOccupation("약사");
         profileRequest.setExperience(false);
         profileRequest.setHasPet(true);
-        profileRequest.setProfileImage("DataURL");
+        profileRequest.setProfileImage("https://s3image.org/");
         profileRequest.setPhoneNumber("010-3926-6280");
         profileRequest.setExpectedFeeForMonth(100000);
 
@@ -855,7 +850,7 @@ class ProfileApiControllerTest {
 
     @Test
     @DisplayName("마이페이지 프로필 조회")
-    public void getMyPageProfile() throws Exception{
+    void getMyPageProfile() throws Exception{
 
         User user = userRepository.findById(id).get();
         user.setAge(19);
@@ -865,7 +860,7 @@ class ProfileApiControllerTest {
         user.setExperience(false);
         user.setLiveAlone(false);
         user.setHasPet(true);
-        user.setProfileImage("DataURL");
+        user.setProfileImage("https://s3image.org/");
         user.setPhoneNumber("010-3926-6280");
         user.setDescription("안녕하세요 누구 입니다.");
         user.setWantCheckUp(true);
@@ -902,7 +897,7 @@ class ProfileApiControllerTest {
 
     @Test
     @DisplayName("마이페이지 주문내역 조회")
-    public void getMyPageOrder() throws Exception{
+    void getMyPageOrder() throws Exception{
         Long bagId = 286L;
 
         User userId = userRepository.findByNickname("백승열입니다").get();

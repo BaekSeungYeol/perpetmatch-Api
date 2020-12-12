@@ -1,19 +1,19 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Board.BoardRepository;
-import com.perpetmatch.Board.Gender;
+import com.perpetmatch.modules.Board.BoardRepository;
+import com.perpetmatch.modules.Board.Gender;
 import com.perpetmatch.Domain.Board;
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
-import com.perpetmatch.PetAge.PetAgeRepository;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.PetAge.PetAgeRepository;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.api.dto.Board.NameDto;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
-import com.perpetmatch.pet.PetRepository;
+import com.perpetmatch.modules.pet.PetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -116,7 +116,7 @@ class BoardApiControllerTest {
 
     @Test
     @DisplayName("게시글 단일 조회 테스트 - 성공")
-    public void getBoard() throws Exception {
+    void getBoard() throws Exception {
         Long id = getBoardId();
 
         mockMvc.perform(RestDocumentationRequestBuilders.get("/api/boards/{id}", this.id)
@@ -189,14 +189,14 @@ class BoardApiControllerTest {
                 .year(1)
                 .month(11)
                 .petTitle("치와와")
-                .checkUpImage("DataURL")
-                .lineAgeImage("DataURL")
-                .neuteredImage("DataURL")
+                .checkUpImage("https://S3image.org")
+                .lineAgeImage("https://S3image.org")
+                .neuteredImage("https://S3image.org")
                 .hasNeutered(true)
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
-                .boardImage1("DataURL")
-                .boardImage2("DataURL")
-                .boardImage3("DataURL")
+                .boardImage1("https://S3image.org")
+                .boardImage2("https://S3image.org")
+                .boardImage3("https://S3image.org")
                 .build();
 
         mockMvc.perform(post("/api/boards")
@@ -212,7 +212,7 @@ class BoardApiControllerTest {
 
     @Test
     @DisplayName("게시글 등록 테스트 - 성공 ")
-    public void createBoard() throws Exception {
+    void createBoard() throws Exception {
         BoardPostRequest boardRequest = BoardPostRequest.builder()
                 .title("버려진 포메 보호하고 있습니다")
                 .credit(100000)
@@ -221,14 +221,14 @@ class BoardApiControllerTest {
                 .year(1)
                 .month(11)
                 .petTitle("치와와")
-                .checkUpImage("DataURL")
-                .lineAgeImage("DataURL")
-                .neuteredImage("DataURL")
+                .checkUpImage("https://S3image.org")
+                .lineAgeImage("https://S3image.org")
+                .neuteredImage("https://S3image.org")
                 .hasNeutered(true)
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
-                .boardImage1("DataURL")
-                .boardImage2("DataURL")
-                .boardImage3("DataURL")
+                .boardImage1("https://S3image.org")
+                .boardImage2("https://S3image.org")
+                .boardImage3("https://S3image.org")
                 .build();
 
         mockMvc.perform(post("/api/boards")
@@ -279,7 +279,7 @@ class BoardApiControllerTest {
 
 //    @Test
 //    @DisplayName("게시글 수정 테스트 - 성공 ")
-//    public void updateBoard() throws Exception {
+//    void updateBoard() throws Exception {
 //        BoardPostRequest boardRequest = BoardPostRequest.builder()
 //                .title("버려진 포메 보호하고 있습니다")
 //                .credit(100000)
@@ -288,13 +288,13 @@ class BoardApiControllerTest {
 //                .year(1)
 //                .month(11)
 //                .petTitle("치와와")
-//                .checkUpImage("DataURL")
-//                .lineAgeImage("DataURL")
-//                .neuteredImage("DataURL")
+//                .checkUpImage("https://S3image.org")
+//                .lineAgeImage("https://S3image.org")
+//                .neuteredImage("https://S3image.org")
 //                .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
-//                .boardImage1("DataURL")
-//                .boardImage2("DataURL")
-//                .boardImage3("DataURL")
+//                .boardImage1("https://S3image.org")
+//                .boardImage2("https://S3image.org")
+//                .boardImage3("https://S3image.org")
 //                .build();
 //
 //        mockMvc.perform(put("/api/boards")
@@ -343,7 +343,7 @@ class BoardApiControllerTest {
 //    }
     @Test
     @DisplayName("페이지 기능 정상 동작")
-    public void slicing() {
+    void slicing() {
         boardRepository.save(new Board());
         boardRepository.save(new Board());
         boardRepository.save(new Board());
@@ -366,7 +366,7 @@ class BoardApiControllerTest {
 
     @Test
     @DisplayName("입양하기 페이지 게시글 다건 조회 성공")
-    public void getAllBoards_Adoption_page() throws Exception {
+    void getAllBoards_Adoption_page() throws Exception {
 
         //when
         BoardPostRequest boardRequest = BoardPostRequest.builder()
@@ -377,14 +377,14 @@ class BoardApiControllerTest {
                 .year(1)
                 .month(11)
                 .petTitle("치와와")
-                .checkUpImage("DataURL")
-                .lineAgeImage("DataURL")
-                .neuteredImage("DataURL")
+                .checkUpImage("https://S3image.org")
+                .lineAgeImage("https://S3image.org")
+                .neuteredImage("https://S3image.org")
                 .hasNeutered(true)
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
-                .boardImage1("DataURL")
-                .boardImage2("DataURL")
-                .boardImage3("DataURL")
+                .boardImage1("https://S3image.org")
+                .boardImage2("https://S3image.org")
+                .boardImage3("https://S3image.org")
                 .build();
 
         mockMvc.perform(post("/api/boards")
@@ -428,7 +428,7 @@ class BoardApiControllerTest {
 
     @Test
     @DisplayName("입양하기 게시글 신청하기 성공/제거 테스트")
-    public void adoption_board_apply_success() throws Exception {
+    void adoption_board_apply_success() throws Exception {
         //given
         id = getBoardId();
 
@@ -466,7 +466,7 @@ class BoardApiControllerTest {
 
     @Test
     @DisplayName("입양 게시글 수락 및 크레딧 결제")
-    public void credit_accept_success() throws Exception {
+    void credit_accept_success() throws Exception {
         id = getBoardId();
 
         User user = new User();
@@ -510,7 +510,7 @@ class BoardApiControllerTest {
 
     @Test
     @DisplayName(" 입양 게시글 주인만 신청 목록을 받는다.")
-    public void adoption_apply_with_manager() throws Exception {
+    void adoption_apply_with_manager() throws Exception {
         id = getBoardId();
 
 
@@ -552,7 +552,7 @@ class BoardApiControllerTest {
 
     @Test
     @DisplayName("즐겨찾기 성공/제거 테스트")
-    public void likeBoard_success() throws Exception {
+    void likeBoard_success() throws Exception {
         //given
         id = getBoardId();
 
@@ -590,13 +590,13 @@ class BoardApiControllerTest {
 
     @Test
     @DisplayName("입양하기 글의 주인이 아니면 신청 목록을 얻지 못한다.")
-    public void adoption_apply_with_no_manager() {
+    void adoption_apply_with_no_manager() {
 
     }
 
     @Test
     @DisplayName("신청을 했는지 여부 ")
-    public void Applied_me() throws Exception {
+    void Applied_me() throws Exception {
         //given
         id = getBoardId();
 

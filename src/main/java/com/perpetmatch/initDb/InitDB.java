@@ -3,11 +3,11 @@ package com.perpetmatch.initDb;
 
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Domain.Item.*;
-import com.perpetmatch.Item.ItemRepository;
-import com.perpetmatch.PetAge.PetAgeRepository;
-import com.perpetmatch.Role.RoleRepository;
-import com.perpetmatch.Zone.ZoneRepository;
-import com.perpetmatch.pet.PetRepository;
+import com.perpetmatch.modules.Item.ItemRepository;
+import com.perpetmatch.modules.PetAge.PetAgeRepository;
+import com.perpetmatch.modules.Role.RoleRepository;
+import com.perpetmatch.modules.Zone.ZoneRepository;
+import com.perpetmatch.modules.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;

@@ -1,13 +1,13 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Comment.CommentRepository;
-import com.perpetmatch.Commu.CommuRepository;
+import com.perpetmatch.modules.Comment.CommentRepository;
+import com.perpetmatch.modules.Commu.CommuRepository;
 import com.perpetmatch.Domain.Comment;
 import com.perpetmatch.Domain.Commu;
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
 import com.perpetmatch.api.dto.Commu.CommentDto;
 import com.perpetmatch.api.dto.Commu.CommuPostDto;
 import com.perpetmatch.common.RestDocsConfiguration;
@@ -91,10 +91,10 @@ class CommuControllerTest {
 
     @Test
     @DisplayName("소통 게시판 만들기 성공 테스트")
-    public void createCommuBoard() throws Exception {
+    void createCommuBoard() throws Exception {
         CommuPostDto commuPostDto = CommuPostDto.builder()
                 .checked(false)
-                .image("DataURL")
+                .image("https://s3image.org/")
                 .description("제 강아지 어때요??")
                 .likes(0).build();
 
@@ -126,7 +126,7 @@ class CommuControllerTest {
 
     @Test
     @DisplayName("소통 댓글 등록")
-    public void getCommuComments() throws Exception {
+    void getCommuComments() throws Exception {
 
         Event event = getBoardId();
         Long userId = event.userId;
@@ -159,7 +159,7 @@ class CommuControllerTest {
 
     @Test
     @DisplayName("소통 댓글 삭제")
-    public void removeCommuComments() throws Exception {
+    void removeCommuComments() throws Exception {
 
         Event event = getBoardId();
         Long userId = event.userId;
@@ -191,7 +191,7 @@ class CommuControllerTest {
 
     @Test
     @DisplayName("해당 게시글에 소통 댓글 조회")
-    public void getCommuCOmments() throws Exception {
+    void getCommuCOmments() throws Exception {
 
         Event event = getBoardId();
         Long userId = event.userId;
@@ -225,7 +225,7 @@ class CommuControllerTest {
     }
     @Test
     @DisplayName("좋아요")
-    public void AddLikes() throws Exception {
+    void AddLikes() throws Exception {
         Event event = getBoardId();
         Long userId = event.userId;
         Long Id = event.CommuId;
@@ -255,7 +255,7 @@ class CommuControllerTest {
 
     @Test
     @DisplayName("소통 게시글 조회 조회")
-    public void getCommuBoard() throws Exception {
+    void getCommuBoard() throws Exception {
 
         Event event = getBoardId();
         Long userId = event.userId;
@@ -296,14 +296,14 @@ class CommuControllerTest {
     private Event getBoardId() throws Exception {
 
         User user = userRepository.findByNickname("백승열입니다").get();
-        user.setProfileImage("DataURL");
+        user.setProfileImage("https://s3image.org/");
         Commu commu = new Commu();
         commu.setNickname(user.getNickname());
         commu.setDescription("제 강아지좀 보세요");
         commu.setLikes(1);
-        commu.setImage("DataURL");
+        commu.setImage("https://s3image.org/");
         commu.setChecked(false);
-        commu.setProfileImage("DataURL");
+        commu.setProfileImage("https://s3image.org/");
 
         Comment comment = new Comment();
         comment.setNickname(user.getNickname());
@@ -320,7 +320,7 @@ class CommuControllerTest {
         Long CommuId;
         Long CommentId;
 
-        public Event(Long userId, Long commuId, Long commentId) {
+        Event(Long userId, Long commuId, Long commentId) {
             this.userId = userId;
             CommuId = commuId;
             CommentId = commentId;

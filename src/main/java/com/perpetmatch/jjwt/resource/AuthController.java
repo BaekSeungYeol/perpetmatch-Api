@@ -1,9 +1,9 @@
 package com.perpetmatch.jjwt.resource;
 
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
-import com.perpetmatch.Role.RoleRepository;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Role.RoleRepository;
 import com.perpetmatch.infra.config.AppProperties;
 import com.perpetmatch.jjwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

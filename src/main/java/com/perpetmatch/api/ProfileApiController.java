@@ -1,30 +1,23 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.Board.BoardRepository;
+import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.Domain.*;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
-import com.perpetmatch.Order.OrderService;
-import com.perpetmatch.PetAge.PetAgeRepository;
-import com.perpetmatch.Zone.ZoneRepository;
-import com.perpetmatch.api.dto.Board.AdoptBoard;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Order.OrderService;
+import com.perpetmatch.modules.PetAge.PetAgeRepository;
+import com.perpetmatch.modules.Zone.ZoneRepository;
 import com.perpetmatch.api.dto.Board.AdoptBoardV1;
 import com.perpetmatch.api.dto.Order.MyPageDetailsDto;
-import com.perpetmatch.api.dto.Order.MyPageOrderDto;
 import com.perpetmatch.api.dto.Profile.*;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.ApiResponseWithData;
-import com.perpetmatch.pet.PetRepository;
-import com.perpetmatch.pet.PetService;
+import com.perpetmatch.modules.pet.PetRepository;
+import com.perpetmatch.modules.pet.PetService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 

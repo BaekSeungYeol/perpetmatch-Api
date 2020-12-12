@@ -1,8 +1,8 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Board.BoardRepository;
-import com.perpetmatch.Board.Gender;
+import com.perpetmatch.modules.Board.BoardRepository;
+import com.perpetmatch.modules.Board.Gender;
 import com.perpetmatch.api.dto.Board.AdoptMatchDto;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.common.RestDocsConfiguration;
@@ -28,12 +28,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -91,7 +89,7 @@ class AdoptApiControllerTest {
 
     @Test
     @DisplayName("입양하기 페이지 프로필 기반 검색 테스트")
-    public void AdoptSearch_profile() throws Exception {
+    void AdoptSearch_profile() throws Exception {
         Long id = getBoardId();
 
         ArrayList<String> zones = new ArrayList<>();
@@ -150,7 +148,7 @@ class AdoptApiControllerTest {
 
     @Test
     @DisplayName("입양하기 페이지 제목 검색 테스트 ")
-    public void AdoptSearch_keyword() throws Exception {
+    void AdoptSearch_keyword() throws Exception {
         //given
         Long id = getBoardId();
 
@@ -205,14 +203,14 @@ class AdoptApiControllerTest {
                 .year(1)
                 .month(11)
                 .petTitle("치와와")
-                .checkUpImage("DataURL")
-                .lineAgeImage("DataURL")
-                .neuteredImage("DataURL")
+                .checkUpImage("https://S3image.org/")
+                .lineAgeImage("https://S3image.org/")
+                .neuteredImage("https://S3image.org/")
                 .hasNeutered(true)
                 .description("이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.")
-                .boardImage1("DataURL")
-                .boardImage2("DataURL")
-                .boardImage3("DataURL")
+                .boardImage1("https://S3image.org/")
+                .boardImage2("https://S3image.org/")
+                .boardImage3("https://S3image.org/")
                 .build();
 
         mockMvc.perform(post("/api/boards")

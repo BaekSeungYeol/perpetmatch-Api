@@ -1,9 +1,8 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.Comment.CommentRepository;
-import com.perpetmatch.Commu.CommuRepository;
-import com.perpetmatch.Commu.CommuService;
-import com.perpetmatch.Domain.Comment;
+import com.perpetmatch.modules.Comment.CommentRepository;
+import com.perpetmatch.modules.Commu.CommuRepository;
+import com.perpetmatch.modules.Commu.CommuService;
 import com.perpetmatch.Domain.Commu;
 import com.perpetmatch.api.dto.Commu.CommentDetailsDto;
 import com.perpetmatch.api.dto.Commu.CommentDto;
@@ -20,7 +19,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

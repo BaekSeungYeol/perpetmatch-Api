@@ -2,11 +2,10 @@ package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserRepository;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ class pUserApiControllerTest {
 
     @Test
     @DisplayName("로그인 - 입력값 정상")
-    public void signin() throws Exception {
+    void signin() throws Exception {
         SignUpRequest request = SignUpRequest.builder()
                 .nickname("백승열입니다")
                 .email("beck22222@naver.com")
@@ -100,7 +99,7 @@ class pUserApiControllerTest {
 
     @Test
     @DisplayName("회원가입 - 입력값 정상")
-    public void createmember() throws Exception {
+    void createmember() throws Exception {
 
         SignUpRequest member = SignUpRequest.builder()
                 .nickname("야호랑이")
@@ -146,7 +145,7 @@ class pUserApiControllerTest {
 
     @Test
     @DisplayName("회원가입 - 입력값 오류")
-    public void createmember_bad_request_Test() throws Exception {
+    void createmember_bad_request_Test() throws Exception {
         User member = new User();
         member.setNickname("백승");
         member.setPassword("125");
@@ -162,7 +161,7 @@ class pUserApiControllerTest {
 
     @Test
     @DisplayName("회원가입 - 중복 처리")
-    public void createmember_bad_request_Double() throws Exception {
+    void createmember_bad_request_Double() throws Exception {
         SignUpRequest member = SignUpRequest.builder()
                 .nickname("야호랑이")
                 .password("123456789")
@@ -191,7 +190,7 @@ class pUserApiControllerTest {
     }
     @Test
     @DisplayName("회원 가입 - 빈 입력값")
-    public void createmember_bad_request_Test_Empty() throws Exception {
+    void createmember_bad_request_Test_Empty() throws Exception {
         User member = new User();
         member.setNickname("");
         member.setPassword("");

@@ -1,20 +1,18 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.Board.BoardRepository;
-import com.perpetmatch.Board.BoardService;
+import com.perpetmatch.modules.Board.BoardRepository;
+import com.perpetmatch.modules.Board.BoardService;
 import com.perpetmatch.Domain.Board;
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
 import com.perpetmatch.api.dto.Board.*;
-import com.perpetmatch.api.dto.Order.BagDto;
 import com.perpetmatch.api.dto.User.UserCredit;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
@@ -24,9 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -204,6 +199,7 @@ public class BoardApiController {
             return ResponseEntity.ok().body(new ApiResponse(false, "현재 신청하지 않은 유저입니다."));
 
     }
+
 
 
 }

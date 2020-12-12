@@ -1,8 +1,7 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.Board.BoardRepository;
-import com.perpetmatch.Board.BoardService;
-import com.perpetmatch.Domain.Board;
+import com.perpetmatch.modules.Board.BoardRepository;
+import com.perpetmatch.modules.Board.BoardService;
 import com.perpetmatch.api.dto.Board.*;
 import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -30,10 +25,9 @@ public class AdoptApiController {
     public ResponseEntity searchBoard(String keyword,
                                       @PageableDefault(size=9, page = 0, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<AdoptBoard> boardList = boardRepository.findByKeyword(keyword, pageable);
-        Slice<Board> allBoards = boardService.findAllBoards();
-        Slice<AdoptBoardV1> changed = boardList.map(AdoptBoardV1::new);
+        Slice<AdoptBoardV1> boardListWithKeyword = boardList.map(AdoptBoardV1::new);
 
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "입양 게시판 검색입니다.", changed));
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "입양 게시판 검색입니다.", boardListWithKeyword));
     }
 
 
@@ -44,11 +38,10 @@ public class AdoptApiController {
     public ResponseEntity searchByProfile(@RequestBody AdoptMatchDto matchDto,
                                           @PageableDefault(size=15, page = 0) Pageable pageable) {
 
-        AdoptMatchCondition condition = boardService.toCondition(matchDto);
+        AdoptMatchCondition condition = boardService.makeCondition(matchDto);
         Page<AdoptBoard> boardList = boardRepository.findByProfileKeyword(condition, pageable);
-        Page<AdoptBoardV1> changed = boardList.map(AdoptBoardV1::new);
-        // AdoptMatchCondition, AdoptMatchDto 참고
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.", changed));
+        Page<AdoptBoardV1> boardListWithProfile = boardList.map(AdoptBoardV1::new);
+        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.", boardListWithProfile));
     }
 
 }

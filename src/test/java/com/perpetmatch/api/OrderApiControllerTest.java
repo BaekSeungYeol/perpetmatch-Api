@@ -1,17 +1,15 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.Item.Goods;
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.Domain.OrderItem;
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.Item.ItemRepository;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
-import com.perpetmatch.OrderItem.OrderItemRepository;
+import com.perpetmatch.modules.Item.ItemRepository;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.OrderItem.OrderItemRepository;
 import com.perpetmatch.api.dto.Order.AddressDto;
 import com.perpetmatch.api.dto.Order.BagDto;
-import com.perpetmatch.api.dto.Order.ItemDto;
 import com.perpetmatch.common.RestDocsConfiguration;
 import com.perpetmatch.jjwt.resource.LoginRequest;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
@@ -32,7 +30,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Optional;
 

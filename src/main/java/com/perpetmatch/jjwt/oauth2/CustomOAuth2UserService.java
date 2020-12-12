@@ -3,9 +3,8 @@ package com.perpetmatch.jjwt.oauth2;
 import com.perpetmatch.Domain.Role;
 import com.perpetmatch.Domain.RoleName;
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.Member.UserRepository;
-import com.perpetmatch.Member.UserService;
-import com.perpetmatch.Role.RoleRepository;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Role.RoleRepository;
 import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.OAuth2AuthenticationProcessingException;
 import com.perpetmatch.jjwt.UserPrincipal;
@@ -13,7 +12,6 @@ import com.perpetmatch.jjwt.oauth2.user.AuthProvider;
 import com.perpetmatch.jjwt.oauth2.user.OAuth2UserInfo;
 import com.perpetmatch.jjwt.oauth2.user.OAuth2UserInfoFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -25,9 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
 @Service
 @Transactional

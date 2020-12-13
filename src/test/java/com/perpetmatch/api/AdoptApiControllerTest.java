@@ -1,6 +1,8 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.perpetmatch.jjwt.resource.ApiResponse;
+import com.perpetmatch.jjwt.resource.ApiResponseCode;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.Gender;
 import com.perpetmatch.api.dto.Board.AdoptMatchDto;
@@ -109,8 +111,8 @@ class AdoptApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("유저 기반 게시판 검색입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.content[0].id").exists())
                 .andExpect(jsonPath("data.content[0].title").exists())
                 .andExpect(jsonPath("data.content[0].credit").exists())
@@ -130,7 +132,7 @@ class AdoptApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         relaxedResponseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 게시글입니다."),
                                 fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("ID"),
                                 fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
@@ -157,8 +159,8 @@ class AdoptApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("입양 게시판 검색입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.content[0].id").exists())
                 .andExpect(jsonPath("data.content[0].title").exists())
                 .andExpect(jsonPath("data.content[0].credit").exists())
@@ -176,8 +178,8 @@ class AdoptApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         relaxedResponseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 게시글입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("ID"),
                                 fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
@@ -195,6 +197,7 @@ class AdoptApiControllerTest {
     }
 
     private Long getBoardId() throws Exception {
+        //given
         BoardPostRequest boardRequest = BoardPostRequest.builder()
                 .title("버려진 포메 보호하고 있습니다")
                 .credit(100000)
@@ -213,7 +216,8 @@ class AdoptApiControllerTest {
                 .boardImage3("https://S3image.org/")
                 .build();
 
-        mockMvc.perform(post("/api/boards")
+        //when
+        this.mockMvc.perform(post("/api/boards")
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)

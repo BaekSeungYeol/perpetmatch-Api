@@ -3,7 +3,7 @@ package com.perpetmatch.api;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.BoardService;
 import com.perpetmatch.api.dto.Board.*;
-import com.perpetmatch.jjwt.resource.ApiResponseWithData;
+import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +27,7 @@ public class AdoptApiController {
         Page<AdoptBoard> boardList = boardRepository.findByKeyword(keyword, pageable);
         Slice<AdoptBoardV1> boardListWithKeyword = boardList.map(AdoptBoardV1::new);
 
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "입양 게시판 검색입니다.", boardListWithKeyword));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(boardListWithKeyword));
     }
 
 
@@ -39,9 +39,9 @@ public class AdoptApiController {
                                           @PageableDefault(size=15, page = 0) Pageable pageable) {
 
         AdoptMatchCondition condition = boardService.makeCondition(matchDto);
-        Page<AdoptBoard> boardList = boardRepository.findByProfileKeyword(condition, pageable);
+        Page<AdoptBoard> boardList = boardRepository.findByProfileTags(condition, pageable);
         Page<AdoptBoardV1> boardListWithProfile = boardList.map(AdoptBoardV1::new);
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "유저 기반 게시판 검색입니다.", boardListWithProfile));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(boardListWithProfile));
     }
 
 }

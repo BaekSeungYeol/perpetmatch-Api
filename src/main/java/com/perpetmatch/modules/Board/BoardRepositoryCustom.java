@@ -9,5 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface BoardRepositoryCustom {
     Page<AdoptBoard> findByKeyword(String keyword, Pageable pageable);
-    Page<AdoptBoard> findByProfileKeyword(AdoptMatchCondition condition, Pageable pageable);
+    Page<AdoptBoard> findByProfileTags(AdoptMatchCondition condition, Pageable pageable);
 }

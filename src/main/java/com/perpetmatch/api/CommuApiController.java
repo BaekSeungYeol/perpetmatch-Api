@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Transactional
 @RequestMapping("/api/commu")
 @RequiredArgsConstructor
-public class CommuController {
+public class CommuApiController {
 
     private final CommuService commuService;
     private final CommentRepository commentRepository;

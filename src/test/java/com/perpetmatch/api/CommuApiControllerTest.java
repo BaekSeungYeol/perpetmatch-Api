@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
-class CommuControllerTest {
+class CommuApiControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired

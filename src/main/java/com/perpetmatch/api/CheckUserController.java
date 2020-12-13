@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-public class HelloController {
+public class CheckUserController {
 
 
     private final UserRepository userRepository;

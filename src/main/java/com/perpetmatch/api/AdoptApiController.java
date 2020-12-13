@@ -24,7 +24,7 @@ public class AdoptApiController {
     @GetMapping("/boards/search")
     public ResponseEntity searchBoard(String keyword,
                                       @PageableDefault(size=9, page = 0, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<AdoptBoard> boardList = boardRepository.findByKeyword(keyword, pageable);
+        Slice<AdoptBoard> boardList = boardRepository.findByKeyword(keyword, pageable);
         Slice<AdoptBoardV1> boardListWithKeyword = boardList.map(AdoptBoardV1::new);
 
         return ResponseEntity.ok().body(ApiResponseDto.createOK(boardListWithKeyword));

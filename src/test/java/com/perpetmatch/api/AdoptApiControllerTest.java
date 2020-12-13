@@ -1,17 +1,25 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.perpetmatch.Domain.Board;
+import com.perpetmatch.Domain.Pet;
+import com.perpetmatch.Domain.User;
+import com.perpetmatch.Domain.Zone;
+import com.perpetmatch.api.dto.Profile.ZoneResponseOne;
+import com.perpetmatch.jjwt.resource.*;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.Gender;
 import com.perpetmatch.api.dto.Board.AdoptMatchDto;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.common.RestDocsConfiguration;
-import com.perpetmatch.jjwt.resource.LoginRequest;
-import com.perpetmatch.jjwt.resource.SignUpRequest;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Zone.ZoneRepository;
+import com.perpetmatch.modules.pet.PetRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,7 +35,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -46,30 +58,28 @@ class AdoptApiControllerTest {
 
 
     @Autowired
-    MockMvc  mockMvc;
-
+    MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
     BoardRepository boardRepository;
+    @Autowired
+    AuthController authController;
+    @Autowired
+    BoardApiController boardApiController;
 
     private String token;
 
     @BeforeEach
     void beforeEach() throws Exception {
-        SignUpRequest request = SignUpRequest.builder()
-                .nickname("백승열입니다")
-                .email("beck22222@naver.com")
-                .password("12345678").build();
+        signUp();
+        getToken();
+    }
 
-        mockMvc.perform(post("/api/auth/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)));
-
+    private void getToken() throws Exception {
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
-                .password("12345678")
+                .password("@!test1234")
                 .build();
 
         MvcResult mvcResult = mockMvc.perform(post("/api/auth/signin")
@@ -78,8 +88,18 @@ class AdoptApiControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk()).andReturn();
 
+
         TokenTest findToken = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TokenTest.class);
         token = findToken.getTokenType() + " " + findToken.getAccessToken();
+    }
+
+    private void signUp() {
+        SignUpRequest request = SignUpRequest.builder()
+                .nickname("백승열입니다")
+                .email("beck22222@naver.com")
+                .password("@!test1234").build();
+
+        authController.registerMember(request);
     }
 
     @AfterEach
@@ -90,17 +110,9 @@ class AdoptApiControllerTest {
     @Test
     @DisplayName("입양하기 페이지 프로필 기반 검색 테스트")
     void AdoptSearch_profile() throws Exception {
+        //given
         Long id = getBoardId();
-
-        ArrayList<String> zones = new ArrayList<>();
-        List<String> petTitles = new ArrayList<>();
-        List<String> petAges = new ArrayList<>();
-        boolean wantCheckUp = true;
-        boolean wantLineAge = true;
-        boolean wantNeutered = true;
-        int credit = 10000;
-        AdoptMatchDto dto = new AdoptMatchDto(zones,petTitles,petAges,wantCheckUp,wantLineAge,wantNeutered,credit);
-
+        AdoptMatchDto dto = createAdoptMatchDto();
 
         //when
         mockMvc.perform(RestDocumentationRequestBuilders.post("/api/boards/profile/search")
@@ -109,8 +121,8 @@ class AdoptApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("유저 기반 게시판 검색입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.content[0].id").exists())
                 .andExpect(jsonPath("data.content[0].title").exists())
                 .andExpect(jsonPath("data.content[0].credit").exists())
@@ -130,7 +142,7 @@ class AdoptApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         relaxedResponseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK),
                                 fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 게시글입니다."),
                                 fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("ID"),
                                 fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
@@ -146,6 +158,17 @@ class AdoptApiControllerTest {
                                 )));
     }
 
+    private AdoptMatchDto createAdoptMatchDto() {
+        ArrayList<String> zones = new ArrayList<>();
+        List<String> petTitles = new ArrayList<>();
+        List<String> petAges = new ArrayList<>();
+        boolean wantCheckUp = true;
+        boolean wantLineAge = true;
+        boolean wantNeutered = true;
+        int credit = 10000;
+        return new AdoptMatchDto(zones,petTitles,petAges,wantCheckUp,wantLineAge,wantNeutered,credit);
+    }
+
     @Test
     @DisplayName("입양하기 페이지 제목 검색 테스트 ")
     void AdoptSearch_keyword() throws Exception {
@@ -157,8 +180,8 @@ class AdoptApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("입양 게시판 검색입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.content[0].id").exists())
                 .andExpect(jsonPath("data.content[0].title").exists())
                 .andExpect(jsonPath("data.content[0].credit").exists())
@@ -176,8 +199,8 @@ class AdoptApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         relaxedResponseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 게시글입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("ID"),
                                 fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("껌 (보증금)"),
@@ -195,6 +218,7 @@ class AdoptApiControllerTest {
     }
 
     private Long getBoardId() throws Exception {
+        //given
         BoardPostRequest boardRequest = BoardPostRequest.builder()
                 .title("버려진 포메 보호하고 있습니다")
                 .credit(100000)
@@ -213,7 +237,8 @@ class AdoptApiControllerTest {
                 .boardImage3("https://S3image.org/")
                 .build();
 
-        mockMvc.perform(post("/api/boards")
+        //when
+        this.mockMvc.perform(post("/api/boards")
                 .header("Authorization", token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)

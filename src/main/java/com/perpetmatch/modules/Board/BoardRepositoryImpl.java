@@ -94,7 +94,7 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
     }
 
     @Override
-    public Page<AdoptBoard> findByProfileKeyword(AdoptMatchCondition condition, Pageable pageable) {
+    public Page<AdoptBoard> findByProfileTags(AdoptMatchCondition condition, Pageable pageable) {
         QueryResults<AdoptBoard> results = queryFactory
                 .select(new QAdoptBoard(
                         board.id.as("id"),

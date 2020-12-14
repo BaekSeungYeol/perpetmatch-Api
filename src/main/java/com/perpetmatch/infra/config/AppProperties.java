@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Component
 @ConfigurationProperties("app")
 public class AppProperties {
 

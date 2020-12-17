@@ -149,7 +149,7 @@ public class OrderApiController {
         }
 
         // TODO 주문
-        Order order = orderService.createOrder(currentMember.getId(), addressDto);
+        Order order = orderService.makeAndPayOrders(currentMember.getId(), addressDto);
         PaymentOrderDto dto = new PaymentOrderDto(order);
 
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "주문 완료 하였습니다.",dto));

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 @Service
@@ -24,21 +25,23 @@ public class OrderService {
     private final UserRepository userRepository;
     private final DeliveryRepository deliveryRepository;
 
-    public Order createOrder(Long id, AddressDto addressDto) {
+    public Order makeAndPayOrders(Long id, AddressDto addressDto) {
 
         User user = userRepository.findByIdWithBags(id);
-        Set<OrderItem> items = user.getBag();
-        ArrayList<OrderItem> orderItems = new ArrayList<>(items);
-        Delivery delivery = new Delivery();
-        delivery.setAddress(addressDto);
 
-       deliveryRepository.save(delivery);
+        ArrayList<OrderItem> orderItems = makeOrderItems(user,id);
+        Delivery delivery = makeDelivery(addressDto);
 
         Order order = makeOrder(user, orderItems, delivery);
 
-        calculate(user);
-
+        user.calculate();
         return orderRepository.findByIdWithUser(order.getId());
+    }
+
+    public Delivery makeDelivery(AddressDto addressDto) {
+        Delivery delivery = new Delivery();
+        delivery.setAddress(addressDto);
+        return deliveryRepository.save(delivery);
     }
 
     private Order makeOrder(User user, ArrayList<OrderItem> orderItems, Delivery delivery) {
@@ -61,15 +64,9 @@ public class OrderService {
         itemRepository.save(item);
         // item.removeStock(orderItem.getCount());
     }
+    public ArrayList<OrderItem> makeOrderItems(User user, Long id) {
+        return new ArrayList<OrderItem>(user.getBag());
 
-    private void calculate(User user) {
-        int totalSum = 0;
-        for (OrderItem bag : user.getBag()) {
-            totalSum += bag.getTotalPrice();
-        }
-        user.getBag().clear();
-        user.setCredit(Math.max(0,user.getCredit()-totalSum));
-        // TODO 0보다 작을때
     }
 
 }

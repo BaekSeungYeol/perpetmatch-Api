@@ -33,4 +33,5 @@ public abstract class DateAudit implements Serializable {
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime updatedAt;
+
 }

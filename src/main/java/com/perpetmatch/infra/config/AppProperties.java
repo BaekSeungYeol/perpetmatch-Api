@@ -2,6 +2,7 @@ package com.perpetmatch.infra.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,11 +10,13 @@ import java.util.List;
 
 @Data
 @ConfigurationProperties("app")
+@ConstructorBinding
 public class AppProperties {
 
     private String host;
     private final Auth auth = new Auth();
     private final OAuth2 oauth2 = new OAuth2();
+
 
     public static class Auth {
         private String jwtSecret;

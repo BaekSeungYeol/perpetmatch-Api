@@ -134,4 +134,13 @@ public class User extends DateAudit{
     public boolean hasLikeBoard(Board board) {
         return this.getLikeList().contains(board);
     }
+
+    public void calculate() {
+        int totalSum = 0;
+        for (OrderItem bag : this.bag) {
+            totalSum += bag.getTotalPrice();
+        }
+        this.bag.clear();
+        this.credit = Math.max(0, credit - totalSum);
+    }
 }

@@ -23,8 +23,6 @@ public class UserApiController {
 
     private final UserService userService;
     private final UserRepository userRepository;
-    private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
 

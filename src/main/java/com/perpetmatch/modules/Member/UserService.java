@@ -1,13 +1,7 @@
 package com.perpetmatch.modules.Member;
 
-import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Domain.Item.Item;
-import com.perpetmatch.modules.Item.ItemRepository;
-import com.perpetmatch.modules.OrderItem.OrderItemRepository;
-import com.perpetmatch.modules.PetAge.PetAgeRepository;
-import com.perpetmatch.modules.Role.RoleRepository;
-import com.perpetmatch.modules.Zone.ZoneRepository;
 import com.perpetmatch.api.dto.Board.ApplyUsers;
 import com.perpetmatch.api.dto.Board.NameDto;
 import com.perpetmatch.api.dto.Order.BagDetailsDto;
@@ -21,6 +15,12 @@ import com.perpetmatch.infra.config.AppProperties;
 import com.perpetmatch.infra.mail.EmailMessage;
 import com.perpetmatch.infra.mail.EmailService;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
+import com.perpetmatch.modules.Board.BoardRepository;
+import com.perpetmatch.modules.Item.ItemRepository;
+import com.perpetmatch.modules.OrderItem.OrderItemRepository;
+import com.perpetmatch.modules.PetAge.PetAgeRepository;
+import com.perpetmatch.modules.Role.RoleRepository;
+import com.perpetmatch.modules.Zone.ZoneRepository;
 import com.perpetmatch.modules.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +47,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final PetRepository petRepository;
-    private final ModelMapper modelMapper;
     private final PetAgeRepository petAgeRepository;
     private final TemplateEngine templateEngine;
     private final AppProperties appProperties;
@@ -313,7 +312,7 @@ public class UserService {
 
     public void addBag(Long userId, Long id, int count) {
         User user = userRepository.findByIdWithBags(userId);
-        Item item = itemRepository.findById(id).get();
+        Item item = itemRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
         orderItem.setOrderPrice(item.getPrice());

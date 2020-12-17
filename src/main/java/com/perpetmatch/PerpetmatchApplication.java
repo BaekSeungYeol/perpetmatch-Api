@@ -29,15 +29,11 @@ public class PerpetmatchApplication {
     public ApplicationRunner applicationRunner() {
         return new ApplicationRunner() {
             @Autowired
-            JwtTokenProvider tokenProvider;
-            @Autowired
             AppProperties appProperties;
 
             @Override
             public void run(ApplicationArguments args) throws Exception {
-                System.out.println(appProperties.getOauth2().getAuthorizedRedirectUris());
-                System.out.println(appProperties.getAuth().getJwtExpirationInMs());
-                System.out.println(appProperties.getAuth().getJwtSecret());
+                System.out.println(appProperties.getHost());
             }
         };
     }

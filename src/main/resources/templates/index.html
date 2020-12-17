@@ -731,6 +731,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#get-Comments_http_response">HTTP response</a></li>
 </ul>
 </li>
+<li><a href="#likes">좋아요 추가</a>
+<ul class="sectlevel3">
+<li><a href="#likes_path_parameters">Path parameters</a></li>
+<li><a href="#likes_http_request">HTTP request</a></li>
+<li><a href="#likes_http_response">HTTP response</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -820,6 +827,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>404 Not Found</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">요청한 리소스가 없음.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>500 Server Error</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">서버 에러 입니다.</p></td>
 </tr>
 </tbody>
 </table>
@@ -988,13 +999,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/auth/signup HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 100
-Host: perpetApi.com
+Content-Length: 101
+Host: perpetapi.com
 
 {
   "nickname" : "야호랑이",
   "email" : "beck33333@naver.com",
-  "password" : "123456789"
+  "password" : "@Dighfkddl"
 }</code></pre>
 </div>
 </div>
@@ -1099,12 +1110,12 @@ Content-Length: 97
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/auth/signin HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 77
+Content-Length: 79
 Host: perpetapi.com
 
 {
   "usernameOrEmail" : "beck22222@naver.com",
-  "password" : "12345678"
+  "password" : "@Dighfkddl"
 }</code></pre>
 </div>
 </div>
@@ -1127,7 +1138,7 @@ X-Frame-Options: DENY
 Content-Length: 262
 
 {
-  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzQiLCJpYXQiOjE2MDQ2NjIwNDUsImV4cCI6MTYwNTI2Njg0NX0.F9DzWOKvbPp2OR45nQc30NSKLNzpDgLXa6ToAK5IzJKuNaMo_SNGBMvGuPeuFU6fj-xgdV5wuI3CNxADoOIY2Q",
+  "accessToken" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzciLCJpYXQiOjE2MDgyMDA0NDAsImV4cCI6MTYwODgwNTI0MH0.EhUmg46UOeIi4PzcCthDebVhYWcVdSHLxbVBg8caafq23lA7rrj82b01A69u9Y9pqKVY9sKc9XpyHB5L0vN5UA",
   "tokenType" : "Bearer",
   "nickname" : "백승열입니다"
 }</code></pre>
@@ -1212,10 +1223,10 @@ Content-Length: 262
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/profiles/password HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzEiLCJpYXQiOjE2MDQ2NjIwNDQsImV4cCI6MTYwNTI2Njg0NH0.cmkws3-ChOHR_PiXbudm40vJzr4RQ4jAOvsB4TRS5KI--hpBCmOJPzJjFgvhp54_jGfXQvCrcP2MCH3Z2V3Wuw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzQiLCJpYXQiOjE2MDgyMDA0MzksImV4cCI6MTYwODgwNTIzOX0.sqHffHIlTju6tLbbrGVkg-j0Azv73uwVg1x2AbnGAjqmr7vE7O3sWiBpg2DpVEmmJtlXsEYkJEPNho0sTwe-FQ
 Accept: application/json
 Content-Length: 78
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "newPassword" : "@!dighfkddd",
@@ -1399,9 +1410,9 @@ Content-Length: 89
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTkiLCJpYXQiOjE2MDQ2NjIwNDIsImV4cCI6MTYwNTI2Njg0Mn0.Zu2GwB_6KAGp7rCsiFg0ReOGqkZKJTDWIwSqmC_eiZuGUpJkxPt2u1sWOvIbHpTHRlZ4H330BmkhIUKMfiuBmQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjIiLCJpYXQiOjE2MDgyMDA0MzgsImV4cCI6MTYwODgwNTIzOH0.SyFtySCa96NPeseBVAiSbsR4Hx4bgAYDdq4EJ43dQj_KH8x1DUo_WUYHZduakumFq33hHn6EM3L3zMByxBjEhg
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -1420,17 +1431,17 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 740
+Content-Length: 753
 
 {
   "success" : true,
   "message" : "자신의 프로필 조회입니다.",
   "data" : {
-    "id" : 359,
+    "id" : 362,
     "age" : 19,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com",
-    "joinedAt" : "2020-11-06",
+    "joinedAt" : "2020-12-17",
     "petTitles" : [ ],
     "zones" : [ ],
     "petAges" : [ ],
@@ -1443,7 +1454,7 @@ Content-Length: 740
     "hasPet" : true,
     "expectedFeeForMonth" : 100000,
     "location" : "서울",
-    "profileImage" : "DataURL",
+    "profileImage" : "https://s3image.org/",
     "description" : "안녕하세요 누구 입니다.",
     "wantCheckUp" : true,
     "wantLineAge" : true,
@@ -1624,11 +1635,11 @@ Content-Length: 740
 <h4 id="profile-show_http_request"><a class="link" href="#profile-show_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/361 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/364 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjEiLCJpYXQiOjE2MDQ2NjIwNDMsImV4cCI6MTYwNTI2Njg0M30.6M3eaIU70snqNvm4kjhIaoq2pxnTr9YuWHi4GThnB7v5Ip3MgoLlhOtC0uZsXfYA5hZY59Q0VoTbyirWLqAf-w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjQiLCJpYXQiOjE2MDgyMDA0MzgsImV4cCI6MTYwODgwNTIzOH0.SFJxbvK7QJ91W8WMa5Mwo3nHKQpG2EqMir-VtA4_9gTzs8VjsogutTBvVA0pHxP0sg6a-mPE1SFleV-1qosRdQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -1647,17 +1658,17 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 747
+Content-Length: 760
 
 {
   "success" : true,
   "message" : "요청 유저의 프로필 조회입니다.",
   "data" : {
-    "id" : 361,
+    "id" : 364,
     "age" : 19,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com",
-    "joinedAt" : "2020-11-06",
+    "joinedAt" : "2020-12-17",
     "petTitles" : [ ],
     "zones" : [ ],
     "petAges" : [ ],
@@ -1670,7 +1681,7 @@ Content-Length: 747
     "hasPet" : true,
     "expectedFeeForMonth" : 100000,
     "location" : "서울",
-    "profileImage" : "DataURL",
+    "profileImage" : "https://s3image.org/",
     "description" : "안녕하세요 누구 입니다.",
     "wantCheckUp" : true,
     "wantLineAge" : true,
@@ -1840,10 +1851,10 @@ Content-Length: 747
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjUiLCJpYXQiOjE2MDQ2NjIwNDMsImV4cCI6MTYwNTI2Njg0M30.tK9ZX4tGORoiG2V5D9Xf_FduB8flo0RJ_OEetyjmrpKoRJOMJm1lQhu_iq6meMeSZyyCZ3zg5vAhtoacf0RAJA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjgiLCJpYXQiOjE2MDgyMDA0MzksImV4cCI6MTYwODgwNTIzOX0.y5jzvxYRYuHLKhkB2ukJnJ_9UNhljN_FmKO1w7jriV_qyAfKqiWLjwf9D952XcDNSnurTWgQWQpQPncC5-EYZA
 Accept: application/json
-Content-Length: 465
-Host: perpetApi.com
+Content-Length: 478
+Host: perpetapi.com
 
 {
   "age" : 19,
@@ -1856,7 +1867,7 @@ Host: perpetApi.com
   "expectedFeeForMonth" : 100000,
   "phoneNumber" : "010-3926-6280",
   "description" : "안녕하세요 누구 입니다.",
-  "profileImage" : "DataURL",
+  "profileImage" : "https://s3image.org/",
   "wantCheckUp" : true,
   "wantLineAge" : true,
   "wantNeutered" : true,
@@ -1888,7 +1899,7 @@ Content-Length: 200
   "success" : true,
   "message" : "프로필이 등록 완료 되었습니다.",
   "data" : {
-    "id" : 365,
+    "id" : 368,
     "nickname" : "백승열입니다",
     "email" : "beck22222@naver.com"
   }
@@ -1942,9 +1953,9 @@ Content-Length: 200
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/credit HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTciLCJpYXQiOjE2MDQ2NjIwNDIsImV4cCI6MTYwNTI2Njg0Mn0.Uv9e9DNWrUWwdCTO-A2OCPDgQJhaFm29zMIByDR8dGHqSnH9tuWUfo3vLhbeDyhloo3IHmSy15ebkv_UEAiyQQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjAiLCJpYXQiOjE2MDgyMDA0MzcsImV4cCI6MTYwODgwNTIzN30.h0O0D3eVOiF8Tw_QNzBLneGS_qKIX5eFoASoY5Y5HJtIJTwlV3RSwBrpO5d4lP3FXAKuyvBAmuA_O3aDzyUdtQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -2028,9 +2039,9 @@ Content-Length: 104
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTUiLCJpYXQiOjE2MDQ2NjIwNDEsImV4cCI6MTYwNTI2Njg0MX0.77p8kBQOYOVdEXVKvoJvgHznOqw9szU5a89CoEKqrTsBzQcyUTznrHB7P0FAOg1dDvdIUj0H01Ldz2Jyav-3IA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTgiLCJpYXQiOjE2MDgyMDA0MzcsImV4cCI6MTYwODgwNTIzN30.JIkxvTux-QLViFY09PpQtM6GCwkDUqyb7_-lZyiVB3639hZgGj4Km0EkwURrklhnb7Di1xWdVI3v9p9NUJVMiA
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -2056,7 +2067,7 @@ Content-Length: 4860
   "message" : "해당 유저의 선호 품종입니다.",
   "data" : {
     "petTitles" : [ ],
-    "allPetTitles" : [ "고든 세터", "골든 리트리버", "그레이트 데인", "그레이트 스위스 마운틴 도그", "그레이트 피레네", "그레이하운드", "글렌 오브 이말 테리어", "기슈견", "네오폴리탄 마스티프", "노르웨이 엘크 하운드", "노르웨이안 부훈트", "노리치 테리어", "노바 스코셔 덕 톨링 레트리버", "노퍽 테리어", "뉴펀들랜드", "닥스훈트", "달마시안", "댄디 딘몬트 테리어", "도고 까나리오", "도그 드 보르도", "도베르만 핀셔", "도사견", "동경이", "라사압소", "라포니안 허더", "래브라도 레트리버", "레이크랜드 테리어", "로디지아 리지백", "로첸", "로트와일러", "마스티프", "맨체스터 테리어", "몰티즈", "미니어처 불 테리어", "미니어처 슈나우저", "미니어처 핀셔", "바센지", "바셋 하운드", "버니즈 마운틴 도그", "베들링턴 테리어", "벨기에 말리노이즈", "벨기에 시프도그", "벨기에 테뷰런", "벨지안 그리펀", "벨지안 셰퍼드 독", "보더 테리어", "보더콜리", "보르조이", "보스롱", "보스턴 테리어", "복서", "볼로네즈", "부비에 데 플랑드르", "불 마스티프", "불 테리어", "불도그", "브뤼셀 그리펀", "브리아드", "브리타니", "블랙 러시안 테리어", "블랙 앤드 탄 쿤하운드", "블러드 하운드", "비글", "비숑 프리제", "비어디드 콜리", "비즐라", "사모예드", "살루키", "삽살개", "서식스 스패니얼", "세인트 버나드", "셔틀랜드 시프도그", "소프트 코티드 휘튼 테리어", "스무드 폭스 테리어", "스위디쉬 발훈트", "스카이 테리어", "스코티시 디어하운드", "스코티시 테리어", "스키퍼키", "스태퍼드셔 불 테리어", "스탠더드 슈나우저", "스패니쉬 그레이 하운드", "스페니쉬 마스티프", "스피노네 이탈리아노", "스피츠", "시바 이누", "시베리언 허스키", "시추", "시코쿠견", "실리엄 테리어", "실키 테리어", "아나톨리아 셰퍼드", "아메리칸 불도그", "아메리칸 스태퍼드셔 테리어", "아메리칸 아키다", "아메리칸 에스키모 도그", "아메리칸 워터 스패니얼", "아메리칸 코커 스패니얼", "아메리칸 폭스하운드", "아이리쉬 소프트코티드 휘튼 테리어", "아이리시 레드 앤드 화이트 세터", "아이리시 세터", "아이리시 울프 하운드", "아이리시 워터 스패니얼", "아이리시 테리어", "아키타", "아펜핀셔", "아프간 하운드", "알래스칸 맬러뮤트", "에스트렐라 마운틴 독", "에어데일 테리어", "오스트레일리안 실키 테리어", "오스트레일리안 켈피", "오스트레일리언 셰퍼드", "오스트레일리언 캐틀 도그", "오스트레일리언 테리어", "오터 하운드", "올드 잉글리시 시프도그", "와이머라너", "와이어 폭스 테리어", "와이어헤어드 포인팅 그리펀", "요크셔 테리어", "웨스트 하이랜드 화이트 테리어", "웰시 스프링어 스패니얼", "웰시 코기", "웰시 테리어", "이비전 하운드", "이탤리언 그레이하운드", "잉글리시 세터", "잉글리시 스프링어 스패니얼", "잉글리시 코커 스패니얼", "잉글리시 토이 스패니얼", "잉글리시 폭스하운드", "자이언트 슈나우저", "재퍼니스 스피츠", "재퍼니스 친", "잭 러셀 테리어", "저먼 셰퍼드", "저먼 쇼트헤어드 포인터", "저먼 와이어헤어드 포인터", "저먼 핀셔", "저먼 헌팅 테리어", "진돗개", "차우차우", "차이니스 샤페이", "차이니스 크레스티드", "체서피크 베이 레트리버", "치와와", "카디건 웰시 코기", "카발리에 킹 찰스 스패니얼", "컬리코티드 레트리버", "케리 블루 테리어", "케언 테리어", "케이넌 도그", "케이스혼트", "코몬도르", "코커 스패니얼", "코튼 드 툴리어", "콜리", "쿠바스", "클럼버 스패니얼", "토이 폭스 테리어", "티베탄 마스티프", "티베탄 스패니얼", "티베탄 테리어", "파라오 하운드", "파슨 러셀 테리어", "파피용", "퍼그", "페키니즈", "펨브록 웰시 코기", "포르투갈 워터 도그", "포메라니안", "포인터", "폴리시 롤런드 시프도그", "푸들", "푸미", "풀리", "풍산개", "프렌치 불도그", "프티 바세 그리퐁 방댕", "플랫코티드 레트리버", "플롯 하운드", "피니시 스피츠", "피레니안 마스티프", "피레니안 쉽독", "피레니언 셰퍼드", "필드 스패니얼", "해리어", "허배너스", "홋카이도 이누", "휘핏" ]
+    "allPetTitles" : [ "고든 세터", "골든 리트리버", "그레이트 데인", "그레이트 스위스 마운틴 도그", "그레이트 피레네", "그레이하운드", "글렌 오브 이말 테리어", "기슈견", "네오폴리탄 마스티프", "노르웨이안 부훈트", "노르웨이 엘크 하운드", "노리치 테리어", "노바 스코셔 덕 톨링 레트리버", "노퍽 테리어", "뉴펀들랜드", "닥스훈트", "달마시안", "댄디 딘몬트 테리어", "도고 까나리오", "도그 드 보르도", "도베르만 핀셔", "도사견", "동경이", "라사압소", "라포니안 허더", "래브라도 레트리버", "레이크랜드 테리어", "로디지아 리지백", "로첸", "로트와일러", "마스티프", "맨체스터 테리어", "몰티즈", "미니어처 불 테리어", "미니어처 슈나우저", "미니어처 핀셔", "바센지", "바셋 하운드", "버니즈 마운틴 도그", "베들링턴 테리어", "벨기에 말리노이즈", "벨기에 시프도그", "벨기에 테뷰런", "벨지안 그리펀", "벨지안 셰퍼드 독", "보더콜리", "보더 테리어", "보르조이", "보스롱", "보스턴 테리어", "복서", "볼로네즈", "부비에 데 플랑드르", "불도그", "불 마스티프", "불 테리어", "브뤼셀 그리펀", "브리아드", "브리타니", "블랙 러시안 테리어", "블랙 앤드 탄 쿤하운드", "블러드 하운드", "비글", "비숑 프리제", "비어디드 콜리", "비즐라", "사모예드", "살루키", "삽살개", "서식스 스패니얼", "세인트 버나드", "셔틀랜드 시프도그", "소프트 코티드 휘튼 테리어", "스무드 폭스 테리어", "스위디쉬 발훈트", "스카이 테리어", "스코티시 디어하운드", "스코티시 테리어", "스키퍼키", "스태퍼드셔 불 테리어", "스탠더드 슈나우저", "스패니쉬 그레이 하운드", "스페니쉬 마스티프", "스피노네 이탈리아노", "스피츠", "시바 이누", "시베리언 허스키", "시추", "시코쿠견", "실리엄 테리어", "실키 테리어", "아나톨리아 셰퍼드", "아메리칸 불도그", "아메리칸 스태퍼드셔 테리어", "아메리칸 아키다", "아메리칸 에스키모 도그", "아메리칸 워터 스패니얼", "아메리칸 코커 스패니얼", "아메리칸 폭스하운드", "아이리쉬 소프트코티드 휘튼 테리어", "아이리시 레드 앤드 화이트 세터", "아이리시 세터", "아이리시 울프 하운드", "아이리시 워터 스패니얼", "아이리시 테리어", "아키타", "아펜핀셔", "아프간 하운드", "알래스칸 맬러뮤트", "에스트렐라 마운틴 독", "에어데일 테리어", "오스트레일리안 실키 테리어", "오스트레일리안 켈피", "오스트레일리언 셰퍼드", "오스트레일리언 캐틀 도그", "오스트레일리언 테리어", "오터 하운드", "올드 잉글리시 시프도그", "와이머라너", "와이어 폭스 테리어", "와이어헤어드 포인팅 그리펀", "요크셔 테리어", "웨스트 하이랜드 화이트 테리어", "웰시 스프링어 스패니얼", "웰시 코기", "웰시 테리어", "이비전 하운드", "이탤리언 그레이하운드", "잉글리시 세터", "잉글리시 스프링어 스패니얼", "잉글리시 코커 스패니얼", "잉글리시 토이 스패니얼", "잉글리시 폭스하운드", "자이언트 슈나우저", "재퍼니스 친", "재퍼니스 스피츠", "잭 러셀 테리어", "저먼 셰퍼드", "저먼 쇼트헤어드 포인터", "저먼 와이어헤어드 포인터", "저먼 핀셔", "저먼 헌팅 테리어", "진돗개", "차우차우", "차이니스 샤페이", "차이니스 크레스티드", "체서피크 베이 레트리버", "치와와", "카디건 웰시 코기", "카발리에 킹 찰스 스패니얼", "컬리코티드 레트리버", "케리 블루 테리어", "케언 테리어", "케이넌 도그", "케이스혼트", "코몬도르", "코커 스패니얼", "코튼 드 툴리어", "콜리", "쿠바스", "클럼버 스패니얼", "토이 폭스 테리어", "티베탄 마스티프", "티베탄 스패니얼", "티베탄 테리어", "파라오 하운드", "파슨 러셀 테리어", "파피용", "퍼그", "페키니즈", "펨브록 웰시 코기", "포르투갈 워터 도그", "포메라니안", "포인터", "폴리시 롤런드 시프도그", "푸들", "푸미", "풀리", "풍산개", "프렌치 불도그", "프티 바세 그리퐁 방댕", "플랫코티드 레트리버", "플롯 하운드", "피니시 스피츠", "피레니안 마스티프", "피레니안 쉽독", "피레니언 셰퍼드", "필드 스패니얼", "해리어", "허배너스", "홋카이도 이누", "휘핏" ]
   }
 }</code></pre>
 </div>
@@ -2127,10 +2138,10 @@ Content-Length: 4860
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTgiLCJpYXQiOjE2MDQ2NjIwNDIsImV4cCI6MTYwNTI2Njg0Mn0.6HsC9eD_bygc30yyEwDr_pFqC2467RLx8YMZiGjqMsbROqPLvooclLMTxaNKVWlIeJkyorScSCRYhsMpBg752w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjEiLCJpYXQiOjE2MDgyMDA0MzgsImV4cCI6MTYwODgwNTIzOH0.1wsqAQHet6gAxykwFQAmsc8MEJ08h4RqBIDjdwEJLyuLFJFm58pQ0HpPURb-cGe3B-FkIM9MHLx7OV_Wl_mD2g
 Accept: application/json
 Content-Length: 29
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "petTitle" : "푸들"
@@ -2227,10 +2238,10 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjMiLCJpYXQiOjE2MDQ2NjIwNDMsImV4cCI6MTYwNTI2Njg0M30.XlQqGey5LHaaj1MopsCUaobOVulK-dJbueJD0FsuKlRCl4e0J2xCOjKvqokjhR4cPsTW1Bo9cAMAJPLIG0yHgQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjYiLCJpYXQiOjE2MDgyMDA0MzksImV4cCI6MTYwODgwNTIzOX0.hcxm8A2XO4cJuJqU_j5Pgmvp-zyvllyyC86iDaFxVwNgEur98kd1pnjlGRyyPp8B-YuhYF_JZQ0or4SVTFD_mA
 Accept: application/json
 Content-Length: 32
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "petTitle" : "말티즈"
@@ -2316,9 +2327,9 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjIiLCJpYXQiOjE2MDQ2NjIwNDMsImV4cCI6MTYwNTI2Njg0M30.EVW6g8nflmt1mA_WwtlMr2A1WPqibwMRpBFr_j8yo68v5gHmXI1bp8mAWEMjg1oZuYhs0-YN0l13gT3XSZgwSw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjUiLCJpYXQiOjE2MDgyMDA0MzgsImV4cCI6MTYwODgwNTIzOH0.tWDXs_wPnZoNbWluTcONOQey4d6jXOPYlRriJvt9JOmk1OALsI5m-TtbLE3ofXekmGBeR4FaIoJCURyQTiln7Q
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -2415,10 +2426,10 @@ Content-Length: 183
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTEiLCJpYXQiOjE2MDQ2NjIwNDEsImV4cCI6MTYwNTI2Njg0MX0.SA4klXHsAtCb6wZmsivXiIQ8DGrWyvGJXrnJqISootGt0NHNHnwSlpJ-oZoXG4zvUdUqlpoTQVEa8CafbkQY_A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTQiLCJpYXQiOjE2MDgyMDA0MzYsImV4cCI6MTYwODgwNTIzNn0.2_PglphKxK5VG1uFXSaJB_bHKRoXcoslTOPJRrZ7rhY5n7UjW-NdU5fvzFfLZ5zAojYbA6zXAA4JwEdpIPhAKA
 Accept: application/json
 Content-Length: 33
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "petRange" : "1년이하"
@@ -2515,10 +2526,10 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/pet/age HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTMiLCJpYXQiOjE2MDQ2NjIwNDEsImV4cCI6MTYwNTI2Njg0MX0.j55As6nx_GP6m_Vgr1HPpj9FfggJgOUZxYq_OFWX37l4C6k3tNYuwI9ZmY_tL2yqOAncPoaytvJc9_wpuYs34A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTYiLCJpYXQiOjE2MDgyMDA0MzcsImV4cCI6MTYwODgwNTIzN30.yWckG4o2fmuo8JJ-N8uufVpmmpSeWQ62M3NrCKA-cgNBit-lfFL5PueXTqQnUmhDVSGl2GeLMkA_HO1Q2iCNfg
 Accept: application/json
 Content-Length: 33
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "petRange" : "1년이하"
@@ -2604,9 +2615,9 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzIiLCJpYXQiOjE2MDQ2NjIwNDQsImV4cCI6MTYwNTI2Njg0NH0.dYUAZa-lUkZjwsIEDxkixCwaJmxVbEloLOM6Jx7eAwMHQ8KLbSUHwm5E5CSlxI4-Q9iX_wP6IqTNNaUx4pIzbg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzUiLCJpYXQiOjE2MDgyMDA0NDAsImV4cCI6MTYwODgwNTI0MH0.5oQ3tE3g-HuCq5jn-AQrwcSdpbKoBb9f6e7tvnu_SIGImQllurAtzVTKcmZtQ_HhU3fNFMPYUqldKtBHwj__RQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -2703,10 +2714,10 @@ Content-Length: 1308
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjAiLCJpYXQiOjE2MDQ2NjIwNDMsImV4cCI6MTYwNTI2Njg0M30.f0CURIg_qoa4QpoQ6guwComXiBcQ1N5Z-cqmM5PINnpR2weGe-00LtXyG_ZzOhhr8VIOoU-esh8gor53iiFH2A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjMiLCJpYXQiOjE2MDgyMDA0MzgsImV4cCI6MTYwODgwNTIzOH0.6P-m09YiKVPaH9gIuI8fIecDQF79tBi7xelHD5o1PbKLziyrFZE0HpqZhygFw5PaCCFJTI7KSuisfds1jJ08Zw
 Accept: application/json
 Content-Length: 38
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "province" : "서울특별시"
@@ -2803,10 +2814,10 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/profiles/zone HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTYiLCJpYXQiOjE2MDQ2NjIwNDIsImV4cCI6MTYwNTI2Njg0Mn0.vHUaNuIcm689zfmfg-7ARB4p5oxPS7x05SyTEq275JiL4N-MKdgXSLIFgNzD6_vOj8nAcZsGt9W3tp4eTDE-9w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTkiLCJpYXQiOjE2MDgyMDA0MzcsImV4cCI6MTYwODgwNTIzN30.-1ymNcbD_f4rSiDNKja9aZi5BwZZEBAB0mfPxxPU0oCdTO6WM5Ebnf5hp1nyCsB08qXHAKSdChwW91rjIGX-Bg
 Accept: application/json
 Content-Length: 38
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "province" : "서울특별시"
@@ -2903,11 +2914,11 @@ Content-Length: 88
 <h4 id="mypage-profile_http_request"><a class="link" href="#mypage-profile_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/mypage/354 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/mypage/357 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTQiLCJpYXQiOjE2MDQ2NjIwNDEsImV4cCI6MTYwNTI2Njg0MX0.DQGw-hsbTV05kQTBmqAIDs3o9Q0Fw6D-zWC93oPHwWpO_BAsq4_rUEuOCcErSnEuuovcGwk6ZCqNE94AjUJ-KQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTciLCJpYXQiOjE2MDgyMDA0MzcsImV4cCI6MTYwODgwNTIzN30.aIwp6-EYdmC_1yi4mLhHnWEWzZ8pE8L4dwaEh4zWCe3YmivMavnS209tGrVPDp-Ez35nJnm2BKxANJEMw_DnAw
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -2926,14 +2937,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 331
+Content-Length: 344
 
 {
   "success" : true,
   "message" : "요청 유저의 마이페이지 프로필 조회입니다.",
   "data" : {
     "tags" : [ "서울", "보호자", "19살", "학생" ],
-    "profileImage" : "DataURL",
+    "profileImage" : "https://s3image.org/",
     "nickname" : "백승열입니다",
     "description" : "안녕하세요 누구 입니다.",
     "credit" : 0
@@ -3016,11 +3027,11 @@ Content-Length: 331
 <h4 id="mypage-orders_http_request"><a class="link" href="#mypage-orders_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/mypage/orders/367 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/profiles/mypage/orders/370 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNjciLCJpYXQiOjE2MDQ2NjIwNDQsImV4cCI6MTYwNTI2Njg0NH0.HeRVvFkr8g_f_EAmGcv5qlH-GAC8IzrmVPWwSgZkdkTb58aG5knoRyxuLqduZYw3N3I_6h4rkHTjgEaBQvlsgw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzAiLCJpYXQiOjE2MDgyMDA0MzksImV4cCI6MTYwODgwNTIzOX0.RPs0Zi_KzfebvAi6lFjwF7kuKFYdT94mg1_Vxe9-zdRHXJ1HUanAGT35mJQ8P8AUQppaUubgosoinZocBDFkBQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -3051,7 +3062,7 @@ Content-Length: 395
     "price" : 8500,
     "company" : "마이비펫",
     "count" : 3,
-    "orderDate" : "2020-11-06"
+    "orderDate" : "2020-12-17"
   } ]
 }</code></pre>
 </div>
@@ -3205,10 +3216,10 @@ Content-Length: 395
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDUiLCJpYXQiOjE2MDQ2NjIwMzUsImV4cCI6MTYwNTI2NjgzNX0.3AkRJzmX_9EIR-uE73-sY8CObWIIoo8uIrQIKShFcGQmMstsGCZUfhee93QveXP0A0DpqxjiguVL7P4DwhrgZA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDUiLCJpYXQiOjE2MDgyMDA0MzIsImV4cCI6MTYwODgwNTIzMn0.HeCZAVtWUkNADK3JfSnD25MKw3EDxvlnWmuzZ3Qv2eioG2P7_UL7MHXk1z7XmbEzwzI0kkiYa63hDiXiREFmNg
 Accept: application/json
-Content-Length: 555
-Host: perpetApi.com
+Content-Length: 627
+Host: perpetapi.com
 
 {
   "title" : "버려진 포메 보호하고 있습니다",
@@ -3218,14 +3229,14 @@ Host: perpetApi.com
   "year" : 1,
   "month" : 11,
   "petTitle" : "치와와",
-  "checkUpImage" : "DataURL",
-  "lineAgeImage" : "DataURL",
-  "neuteredImage" : "DataURL",
+  "checkUpImage" : "https://S3image.org",
+  "lineAgeImage" : "https://S3image.org",
+  "neuteredImage" : "https://S3image.org",
   "hasNeutered" : true,
   "description" : "이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.",
-  "boardImage1" : "DataURL",
-  "boardImage2" : "DataURL",
-  "boardImage3" : "DataURL"
+  "boardImage1" : "https://S3image.org",
+  "boardImage2" : "https://S3image.org",
+  "boardImage3" : "https://S3image.org"
 }</code></pre>
 </div>
 </div>
@@ -3411,9 +3422,9 @@ Content-Length: 176
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/319 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTgiLCJpYXQiOjE2MDQ2NjIwMzYsImV4cCI6MTYwNTI2NjgzNn0.S6hG5YurC9bOr7zVb377e8xoGzC1rUNJwkOeGZUlGemTYQjr3Q52lgGC6vbAPWDmKBp3LP4VUtHKyrLmV0PWMA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTgiLCJpYXQiOjE2MDgyMDA0MzMsImV4cCI6MTYwODgwNTIzM30.9bpdCSIRbP1BHx6kyicRUZQ13kv12F2aMIBjrn1IceYOfASvm_AaBK3jYmbs8VFCi4XGOfNVk-UQJsvaHULujQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -3432,7 +3443,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 754
+Content-Length: 814
 
 {
   "success" : true,
@@ -3448,13 +3459,13 @@ Content-Length: 754
     "month" : 11,
     "petTitle" : "치와와",
     "petAge" : "1년~7년",
-    "checkUpImage" : "DataURL",
-    "lineAgeImage" : "DataURL",
+    "checkUpImage" : "https://S3image.org",
+    "lineAgeImage" : "https://S3image.org",
     "hasNeutered" : true,
     "description" : "이 친구는 어떠 어떠하며 어떠 어떠한 특성을 가지고 있고 어떠 어떠한 습관을 가지고 있어요.",
-    "boardImage1" : "DataURL",
-    "boardImage2" : "DataURL",
-    "boardImage3" : "DataURL",
+    "boardImage1" : "https://S3image.org",
+    "boardImage2" : "https://S3image.org",
+    "boardImage3" : "https://S3image.org",
     "closed" : false
   }
 }</code></pre>
@@ -3533,6 +3544,11 @@ Content-Length: 754
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">작성일</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].closed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">입양 완료 여부</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -3542,9 +3558,9 @@ Content-Length: 754
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDciLCJpYXQiOjE2MDQ2NjIwMzUsImV4cCI6MTYwNTI2NjgzNX0.X77-R7FwXidc25heScI_ydXT5jbysu1Bv2it7tijBLRKaaXqIet-GFy45QzWvSTUP7sco_QiNTDs4BB18jIrEg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDciLCJpYXQiOjE2MDgyMDA0MzIsImV4cCI6MTYwODgwNTIzMn0.FiUpC32mDMjYu3wz19KoOvZbmODqtjvt7UAN_FSD7SCR1k8O7uUTRA3WlGNKhYeMD9P4V2xBy8fBYi8Zmsn6RA
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -3563,7 +3579,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 933
+Content-Length: 970
 
 {
   "success" : true,
@@ -3575,9 +3591,10 @@ Content-Length: 933
       "credit" : 100000,
       "year" : 1,
       "month" : 11,
-      "boardImage1" : "DataURL",
+      "boardImage1" : "https://S3image.org",
       "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
-      "createdAt" : "2020-11-06"
+      "createdAt" : "2020-12-17",
+      "closed" : false
     } ],
     "pageable" : {
       "sort" : {
@@ -3586,10 +3603,10 @@ Content-Length: 933
         "empty" : false
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 15,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
     "size" : 15,
     "number" : 0,
@@ -3598,9 +3615,9 @@ Content-Length: 933
       "unsorted" : false,
       "empty" : false
     },
-    "first" : true,
     "numberOfElements" : 1,
     "last" : true,
+    "first" : true,
     "empty" : false
   }
 }</code></pre>
@@ -3709,10 +3726,10 @@ Content-Length: 933
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/314/accept HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTMiLCJpYXQiOjE2MDQ2NjIwMzYsImV4cCI6MTYwNTI2NjgzNn0.tS1Fq7nyNe3yew2_j2a1IFBa49f7BxJZm5_Q6c57tLI1zlp3LT47jvzQTf4WG1moN9Lvbdu3YnwDrJ2bkh2Ekw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTMiLCJpYXQiOjE2MDgyMDA0MzMsImV4cCI6MTYwODgwNTIzM30.kIWWWxN55u2vuKov2BqrrRdvCG4bpCmbMGgCn2x2q8XMeBtYSTkl5lt27VwQw2ZHfYI_Yh1U1FspKkMWDgiClw
 Accept: application/json
 Content-Length: 31
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "nickname" : "testUser"
@@ -3822,9 +3839,9 @@ Content-Length: 165
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/303/apply HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDIiLCJpYXQiOjE2MDQ2NjIwMzQsImV4cCI6MTYwNTI2NjgzNH0.h4s5QaXog7RFKIRYn_TwUsdsK8cI_27l6mqE1fSKgRVsK8JmwEbMVvdLHxZAHX-SCS7HJZRHB2hyCEY_8rqp4A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDIiLCJpYXQiOjE2MDgyMDA0MzEsImV4cCI6MTYwODgwNTIzMX0.pm2Sze3ZzO4xiBKqTbWjGdGWPTsJ6RTecFr0GYwwmx_qwlFiklp1s-wuv5wTAw20eORWP_PAoM-d8sleGqiUOw
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -3918,9 +3935,9 @@ Content-Length: 124
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/317/applied_me HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTYiLCJpYXQiOjE2MDQ2NjIwMzYsImV4cCI6MTYwNTI2NjgzNn0.yIJteubZx2LRhF4NKVQAiOuSI8Ch8D2wfdQUAp2UkoZA1YQVfxXt_M5LbdJxri8cH-ZEgG_kFK_m8Y6nGX2zsQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTYiLCJpYXQiOjE2MDgyMDA0MzMsImV4cCI6MTYwODgwNTIzM30.OBQW05Rz0YycBvg3SBBqhf9DIQmf300trkGLvb11TUBBMuWDOEupRcfZ6_hk0sEY5taEOlRQqALmxZe5D9eyNA
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -4031,9 +4048,9 @@ Content-Length: 87
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/310/manager HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDkiLCJpYXQiOjE2MDQ2NjIwMzUsImV4cCI6MTYwNTI2NjgzNX0.QqCK0xCArglqs8vHx-Z8_EjYCyTq8HV6PJGJQZSL4FmCTiHcpXjWo237TaLGQrzWBqvADc7cZY6ezXkLNoB8Dw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDkiLCJpYXQiOjE2MDgyMDA0MzIsImV4cCI6MTYwODgwNTIzMn0.r97y6mKdPctO7vHu9xYQoZtdE23qH6iwOaqwTcM6Az9bFwa-BXcQ6O8SKMf0i-CZ4a4e7DA6BXtIg9k75rp_aQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -4179,9 +4196,9 @@ Content-Length: 250
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/312/likes HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTEiLCJpYXQiOjE2MDQ2NjIwMzYsImV4cCI6MTYwNTI2NjgzNn0.mIyV-EN5eaQnPTR77V-ao-c6GAXb8ShXcbzi137G5uV4f5GX-UDcVJ141exywutPa-eWVcy8cSurYVi_oYnRXg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMTEiLCJpYXQiOjE2MDgyMDA0MzIsImV4cCI6MTYwODgwNTIzMn0.HnOszAo8ThcaK8Y4xAhJZ0ltzebkNkYcTSkKJB801yuPgpzozEekZEqG1btkvmQyUgT_D0z-lJdo0S96Z6hi7w
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -4236,14 +4253,14 @@ keyword의 조건은 제목, 지역, 나이 범위, 픔종 이다.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OK</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">해당 유저의 게시글입니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">요청이 성공하였습니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].id</code></p></td>
@@ -4320,7 +4337,7 @@ keyword의 조건은 제목, 지역, 나이 범위, 픔종 이다.</p>
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/boards/search?keyword=%ED%8F%AC%EB%A9%94 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -4339,11 +4356,11 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1005
+Content-Length: 1070
 
 {
-  "success" : true,
-  "message" : "입양 게시판 검색입니다.",
+  "code" : "OK",
+  "message" : "요청이 성공하였습니다.",
   "data" : {
     "content" : [ {
       "id" : 291,
@@ -4352,8 +4369,10 @@ Content-Length: 1005
       "year" : 1,
       "month" : 11,
       "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
-      "boardImage1" : "DataURL",
-      "createdAt" : "2020-11-06",
+      "boardImage1" : "https://S3image.org/",
+      "createdAt" : "2020-12-17",
+      "hasCheckUp" : true,
+      "hasLineAge" : true,
       "closed" : false
     } ],
     "pageable" : {
@@ -4363,14 +4382,14 @@ Content-Length: 1005
         "empty" : false
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 9,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
-    "totalPages" : 1,
-    "totalElements" : 1,
     "last" : true,
+    "totalElements" : 1,
+    "totalPages" : 1,
     "size" : 9,
     "number" : 0,
     "sort" : {
@@ -4378,8 +4397,8 @@ Content-Length: 1005
       "unsorted" : false,
       "empty" : false
     },
-    "first" : true,
     "numberOfElements" : 1,
+    "first" : true,
     "empty" : false
   }
 }</code></pre>
@@ -4409,9 +4428,9 @@ Content-Length: 1005
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OK</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
@@ -4463,6 +4482,16 @@ Content-Length: 1005
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">게시글이 닫혔는지 여부</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].hasCheckUp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">건강검진 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content[0].hasLineAge</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">혈통서 여부</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -4472,10 +4501,10 @@ Content-Length: 1005
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/boards/profile/search HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE2MDQ2NjIwMzQsImV4cCI6MTYwNTI2NjgzNH0.TvJLn0Af3cukWj89Zc-sDcl-BDwym3OxOm3ZqgtnqLweIrnr30Atb1izRa8DwvLaK9_3MAwN_GzH3wZ2DOw55Q
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOTIiLCJpYXQiOjE2MDgyMDA0MzEsImV4cCI6MTYwODgwNTIzMX0.b9YSG8GqBXuMhP7dlHL-DnPlFdLI60ANC7bP8wTVa4B60Ff2BGaPtKegUiQ5xa8LmPEp_HrXKf5ydQhnYuGLqQ
 Accept: application/json
 Content-Length: 173
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "zones" : [ ],
@@ -4504,11 +4533,11 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1012
+Content-Length: 1070
 
 {
-  "success" : true,
-  "message" : "유저 기반 게시판 검색입니다.",
+  "code" : "OK",
+  "message" : "요청이 성공하였습니다.",
   "data" : {
     "content" : [ {
       "id" : 293,
@@ -4517,8 +4546,10 @@ Content-Length: 1012
       "year" : 1,
       "month" : 11,
       "tags" : [ "서울특별시", "치와와", "1년~7년", "건강검진증", "혈통서", "중성화" ],
-      "boardImage1" : "DataURL",
-      "createdAt" : "2020-11-06",
+      "boardImage1" : "https://S3image.org/",
+      "createdAt" : "2020-12-17",
+      "hasCheckUp" : true,
+      "hasLineAge" : true,
       "closed" : false
     } ],
     "pageable" : {
@@ -4528,14 +4559,14 @@ Content-Length: 1012
         "empty" : true
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 15,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
-    "totalPages" : 1,
-    "totalElements" : 1,
     "last" : true,
+    "totalElements" : 1,
+    "totalPages" : 1,
     "size" : 15,
     "number" : 0,
     "sort" : {
@@ -4543,8 +4574,8 @@ Content-Length: 1012
       "unsorted" : true,
       "empty" : true
     },
-    "first" : true,
     "numberOfElements" : 1,
+    "first" : true,
     "empty" : false
   }
 }</code></pre>
@@ -4692,9 +4723,9 @@ Content-Length: 1012
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/feeds HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDAiLCJpYXQiOjE2MDQ2NjIwMzksImV4cCI6MTYwNTI2NjgzOX0.08nKtzAsM8velVQGUpvZ6mGwCAlK2VxIdAlXy8x8_xUrRaacLHX5PpkxaYKvezmXiqNrxRXSoxeZe6xVEMc-bA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDMiLCJpYXQiOjE2MDgyMDA0MzUsImV4cCI6MTYwODgwNTIzNX0._cBboM2ZLsh8KjLxJmJaOHW97Q8dleJAbxX7ikscH21i6yHYcoNOfjRxhb1RhQoE24zRqvWtCG2r2okC-HlJIg
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -4831,9 +4862,9 @@ Content-Length: 1287
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/snacks HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzkiLCJpYXQiOjE2MDQ2NjIwMzksImV4cCI6MTYwNTI2NjgzOX0.2_BG2kkEuu4OzuQOA4X2naTKxMcsXGPB4vvIKA-WHiTtNEStqfHjrF4DYuNH9OXm3QVGNxQ9_J87OmSS_5h0uQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDIiLCJpYXQiOjE2MDgyMDA0MzUsImV4cCI6MTYwODgwNTIzNX0.nj_LB1IVd2hX2CPlDnnEW_OAV_ehSAj2GR6LRvlGY35cvjQOGJVQWifim3U1CMjvwxfzFrgwWFd4QrS2CBNgkQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -4970,9 +5001,9 @@ Content-Length: 1219
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/goods HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzciLCJpYXQiOjE2MDQ2NjIwMzgsImV4cCI6MTYwNTI2NjgzOH0.5DKJGB5b86aLPM7ksBDOz_a6iWvYJRNgrdOt4nBe-0JFgKSFVWnlIA-RKkuuWEBU2RoktyO0RdW05X6_-AjNlQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDAiLCJpYXQiOjE2MDgyMDA0MzUsImV4cCI6MTYwODgwNTIzNX0.PCROlAKZI1wtWc_OwYJ8EP56YQFWAdlA860GfHjovfpf3b4z02ccFuELVkc_8WqbBft3WVNWgDrg6FCuY2VPIA
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -5091,9 +5122,9 @@ Content-Length: 486
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/items/best HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDQiLCJpYXQiOjE2MDQ2NjIwNDAsImV4cCI6MTYwNTI2Njg0MH0.d04sk3tNhAAkYwGA0aSPNzC4yZkIotoJROgfew6VdnxxVwkgLGTgeMx51q_lLucq3O7drrFivIXSu_WZnInj9A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDciLCJpYXQiOjE2MDgyMDA0MzYsImV4cCI6MTYwODgwNTIzNn0.t78gblW2sdyYwV9qWzwk0HA0aR85IHFg5YCRQRSUtqMXfORfTaEZVAbwFrNEGIIMSc2mydmCVYXzz2UqbKDviA
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -5180,14 +5211,14 @@ Content-Length: 3070
         "empty" : false
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 6,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
-    "totalPages" : 2,
-    "totalElements" : 7,
     "last" : false,
+    "totalElements" : 7,
+    "totalPages" : 2,
     "size" : 6,
     "number" : 0,
     "sort" : {
@@ -5195,8 +5226,8 @@ Content-Length: 3070
       "unsorted" : false,
       "empty" : false
     },
-    "first" : true,
     "numberOfElements" : 6,
+    "first" : true,
     "empty" : false
   }
 }</code></pre>
@@ -5284,9 +5315,9 @@ Content-Length: 3070
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/items/new HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzgiLCJpYXQiOjE2MDQ2NjIwMzksImV4cCI6MTYwNTI2NjgzOX0.CnL3Fp_kcG7uyQQHvJ6XETYSo-YXh_hnXYWMx2ZE01oSijj5H9QLz2OhaEtKXWkS4Qffvt7WI5zSHHLUl4O1Ug
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDEiLCJpYXQiOjE2MDgyMDA0MzUsImV4cCI6MTYwODgwNTIzNX0.fW0ic3fsGsujKw0nnKx3P6QNcgIGXuAGQotSyRrbXarrB6TlIp8R5RTqMVPABYtd03H18keTxOKvtfMrCgP7kQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -5373,14 +5404,14 @@ Content-Length: 3044
         "empty" : false
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 6,
-      "paged" : true,
-      "unpaged" : false
+      "pageNumber" : 0,
+      "unpaged" : false,
+      "paged" : true
     },
-    "totalPages" : 2,
-    "totalElements" : 7,
     "last" : false,
+    "totalElements" : 7,
+    "totalPages" : 2,
     "size" : 6,
     "number" : 0,
     "sort" : {
@@ -5388,8 +5419,8 @@ Content-Length: 3044
       "unsorted" : false,
       "empty" : false
     },
-    "first" : true,
     "numberOfElements" : 6,
+    "first" : true,
     "empty" : false
   }
 }</code></pre>
@@ -5504,9 +5535,9 @@ Content-Length: 3044
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/shop/details/283 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDMiLCJpYXQiOjE2MDQ2NjIwNDAsImV4cCI6MTYwNTI2Njg0MH0.xkNHZT1LBcxtfZIB09A7z15adtGjpd_PdTxk_5AHni5CVbbclhGf0DmUzxaEO1oaXHABdiOLfKyA6VmDKGtBKA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDYiLCJpYXQiOjE2MDgyMDA0MzYsImV4cCI6MTYwODgwNTIzNn0.Ch8oh24FZLNDUzE6ibVXoRLOvi1rtztf7x6ENW-x7jiJEZrKsUYKDlAvFniqjPHAC0X9IxjtTpD7pUw9BPG_RQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -5632,10 +5663,10 @@ Content-Length: 542
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/order/bags/283 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzUiLCJpYXQiOjE2MDQ2NjIwMzgsImV4cCI6MTYwNTI2NjgzOH0.rU4CUPt6cn3VqMRZNUiQsnvqfJe6ljuNvLy6FPLN5JblU17qQJkU2mQwFzU0QtzX5D6_UFKJfI6Th2zOikwkkw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzgiLCJpYXQiOjE2MDgyMDA0MzQsImV4cCI6MTYwODgwNTIzNH0.W6lL5Ze7Yu2uVwIpwGxEuO3MCy7BzTrwnwmEXQd_C8KQ46SaNR9O4Wd2_FobiPiWxaDeAb7pnWTQDg_VKvZ8_g
 Accept: application/json
 Content-Length: 19
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "count" : 3
@@ -5728,11 +5759,11 @@ Content-Length: 94
 <h4 id="remove-bag_http_request"><a class="link" href="#remove-bag_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/order/bags/details/346 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/order/bags/details/349 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDUiLCJpYXQiOjE2MDQ2NjIwNDAsImV4cCI6MTYwNTI2Njg0MH0.rAYZnxM3W64mdYTiZUj0MofoULAV_hZs3SjYYvW2l_HXSAktHK4hfVm2ec3VkAtkvie5bNggyo0Mo3LCQX6Zmg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDgiLCJpYXQiOjE2MDgyMDA0MzYsImV4cCI6MTYwODgwNTIzNn0.FJI6KVnTHN8Jvux_W5wWDc5sfR07Y5HcAXdBMyIr_M0mM2d5VCR5KP6kYhUEjbn0xQHpHirAl8QJ7TszmtWlCA
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -5836,9 +5867,9 @@ Content-Length: 91
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/order/bags HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDEiLCJpYXQiOjE2MDQ2NjIwMzksImV4cCI6MTYwNTI2NjgzOX0.uUSxBUKtC88FOGbKZy0-Ug5eZZTzoUxvqtVvLeNZS0TKPYPHW-GYU_rI-QVvzqINFfsazYWgPj0uF6Ifa3J4uA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDQiLCJpYXQiOjE2MDgyMDA0MzUsImV4cCI6MTYwODgwNTIzNX0.QzKum_DllythHlv-qssT9Tlxp445S1P0ilNRaGrYDxb_gc3C8Mjy-p5mEaiVLzFVvypFaVPKy0a3AA4AesQU8g
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -5987,10 +6018,10 @@ Content-Length: 420
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/order/bags/pay HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNDciLCJpYXQiOjE2MDQ2NjIwNDAsImV4cCI6MTYwNTI2Njg0MH0.THhozmlZjBr9SRP4YXV5mWvZUpFCoeqUKQQhyr0Rscn0o6cbsuI2DpbIFrFHEdMRfmTU0ypzKYvh71fn7ZN6ZQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNTAiLCJpYXQiOjE2MDgyMDA0MzYsImV4cCI6MTYwODgwNTIzNn0.tH_I6WOiwVNvkZviaSOjE_fd25qdL3V_XIssPoK8twLduro5eJt2Ey5HZX-KP702O8Rkx1qt0_9UEc-HnTY_8Q
 Accept: application/json
 Content-Length: 163
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "dear" : "홍길동",
@@ -6023,10 +6054,10 @@ Content-Length: 230
   "success" : true,
   "message" : "주문 완료 하였습니다.",
   "data" : {
-    "id" : 350,
+    "id" : 353,
     "nickname" : "백승열입니다",
     "totalSum" : 25500,
-    "orderDate" : "2020-11-06",
+    "orderDate" : "2020-12-17",
     "credit" : 74500
   }
 }</code></pre>
@@ -6118,14 +6149,14 @@ Content-Length: 230
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/commu/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjMiLCJpYXQiOjE2MDQ2NjIwMzcsImV4cCI6MTYwNTI2NjgzN30.byBANWtJmblTNaxTwURj3LPZJCW27DfRUTOi8g0t4wXPZxq1up8P3R7JqURHSeYaDwNwi_23r38nagIMs0BQCQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjYiLCJpYXQiOjE2MDgyMDA0MzQsImV4cCI6MTYwODgwNTIzNH0.H-2r5L9NWLUtEQEYip3bY6hkGUfNtDHy5aL_D8UHmxs6kjh6w3-rXsvr1zjvhMme3yxY6BA--e1sap92IfydWg
 Accept: application/json
-Content-Length: 113
-Host: perpetApi.com
+Content-Length: 126
+Host: perpetapi.com
 
 {
   "checked" : false,
-  "image" : "DataURL",
+  "image" : "https://s3image.org/",
   "likes" : 0,
   "description" : "제 강아지 어때요??"
 }</code></pre>
@@ -6257,9 +6288,9 @@ Content-Length: 86
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/commu/boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjgiLCJpYXQiOjE2MDQ2NjIwMzcsImV4cCI6MTYwNTI2NjgzN30.LZffF-mL2K5z5eFW3rSvgb6ujqTQyMzoaHjFyN08FNmIxAqBLioU4_nBw--NiFEu8xc4exmOFKjkxJRpfpXZaA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzEiLCJpYXQiOjE2MDgyMDA0MzQsImV4cCI6MTYwODgwNTIzNH0.GGTWXBvfuSGWF7rKB6fI_4DxPPSpdgrgRbP5ncGLesUxjXhtbGelfuQC8XN1EaYi-gCRAguI4RtEYnrHoFNSaA
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -6278,25 +6309,25 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 519
+Content-Length: 558
 
 {
   "success" : true,
   "message" : "소통 리스트 입니다.",
   "data" : [ {
-    "createdAt" : "2020-11-06",
-    "updatedAt" : "2020-11-06",
-    "id" : 330,
+    "createdAt" : "2020-12-17",
+    "updatedAt" : "2020-12-17",
+    "id" : 333,
     "checked" : false,
     "nickname" : "백승열입니다",
-    "profileImage" : "DataURL",
-    "image" : "DataURL",
+    "profileImage" : "https://s3image.org/",
+    "image" : "https://s3image.org/",
     "likes" : 1,
     "description" : "제 강아지좀 보세요",
     "comments" : [ {
-      "id" : 329,
+      "id" : 332,
       "nickname" : "백승열입니다",
-      "profileImage" : "DataURL",
+      "profileImage" : "https://s3image.org/",
       "text" : "Test"
     } ]
   } ]
@@ -6336,12 +6367,12 @@ Content-Length: 519
 <h4 id="post-Comments_http_request"><a class="link" href="#post-Comments_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/commu/boards/333/comments HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/commu/boards/336/comments HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzEiLCJpYXQiOjE2MDQ2NjIwMzgsImV4cCI6MTYwNTI2NjgzOH0.wurMtF7XS5EqejOcYlWj1rGCsAe8fFDiR_1dRFJc8G5hO9VPsDQuCKiQJL_pcWPBIChMfm0PBJEsvByKSg9_hQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzQiLCJpYXQiOjE2MDgyMDA0MzQsImV4cCI6MTYwODgwNTIzNH0.y7thfm1Sq2JiT5XBVmp6EzfsF5z5AEpISjQuSdOjewk_X6rygFaAZBaJ50Mn5mz4rF6nEHknRtol7fZ8CBOMmA
 Accept: application/json
 Content-Length: 49
-Host: perpetApi.com
+Host: perpetapi.com
 
 {
   "text" : "제 강아지좀 봐주세요."
@@ -6411,9 +6442,9 @@ Content-Length: 88
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/commu/boards/322/comments/321 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjAiLCJpYXQiOjE2MDQ2NjIwMzcsImV4cCI6MTYwNTI2NjgzN30.K3I83_28jl0dXNjX3FLzndJWTDxeHZoK6EnwNocWDTVbBtSDCn06J-rnZfn_dz_-p54JYYJVD3oxSQo3WnehhQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjAiLCJpYXQiOjE2MDgyMDA0MzMsImV4cCI6MTYwODgwNTIzM30.7FWFefP2kIwNEhZLVWifXIXHtyhQwceV2XoUaqW18jKFyH9iLE2SAwEWq34Hpdf-dr73EYlcj-FrfJOJEm1-wg
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -6473,11 +6504,11 @@ Content-Length: 88
 <h4 id="get-Comments_http_request"><a class="link" href="#get-Comments_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/commu/boards/327/comments HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/commu/boards/330/comments HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjUiLCJpYXQiOjE2MDQ2NjIwMzcsImV4cCI6MTYwNTI2NjgzN30.5d0-jGyxD68EDvyaUjK8Ry1CURNcxkhV4e5BB4XrWaIIX3XV4_JynMMW37lfJt6S3Sdciz7TCEAxFBoWa5O4bg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjgiLCJpYXQiOjE2MDgyMDA0MzQsImV4cCI6MTYwODgwNTIzNH0.NEIBbwOCtyBZ0sXxJU3prXT0BY8XQtYxZsXghs-R6L71DUsz06FMN6bf-mZycgnuLhul0c6e9xwsTHrKh-qAPQ
 Accept: application/json
-Host: perpetApi.com</code></pre>
+Host: perpetapi.com</code></pre>
 </div>
 </div>
 </div>
@@ -6496,17 +6527,81 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 212
+Content-Length: 225
 
 {
   "success" : true,
   "message" : "소통 댓글 리스트 입니다.",
   "data" : [ {
-    "id" : 326,
+    "id" : 329,
     "nickname" : "백승열입니다",
-    "profileImage" : "DataURL",
+    "profileImage" : "https://s3image.org/",
     "text" : "Test"
   } ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="likes"><a class="link" href="#likes">좋아요 추가</a></h3>
+<div class="paragraph">
+<p>'POST /api/commu/boards/{id}/likes' 요청을 사용하여 해당 게시글에 좋아요를 추가할 수 있다.</p>
+</div>
+<div class="sect3">
+<h4 id="likes_path_parameters"><a class="link" href="#likes_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /api/commu/boards/{Id}/likes</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">소통 게시글 아이디</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="likes_http_request"><a class="link" href="#likes_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/commu/boards/325/likes HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMjMiLCJpYXQiOjE2MDgyMDA0MzMsImV4cCI6MTYwODgwNTIzM30.c4wwWX3_ZZcsQZnm3Gllm1bINr3dWrmggnPnmJUf3xoice1427uNbBwZ0_92Y4HJlB5Xm_rrC8Ih_rUtqemSDg
+Accept: application/json
+Host: perpetapi.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="likes_http_response"><a class="link" href="#likes_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 52
+
+{
+  "success" : true,
+  "message" : "좋아요"
 }</code></pre>
 </div>
 </div>
@@ -6517,7 +6612,7 @@ Content-Length: 212
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-06 08:48:58 KST
+Last updated 2020-12-13 14:37:52 KST
 </div>
 </div>
 </body>

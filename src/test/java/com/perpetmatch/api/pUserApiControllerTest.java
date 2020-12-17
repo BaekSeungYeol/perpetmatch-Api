@@ -54,7 +54,7 @@ class pUserApiControllerTest {
         SignUpRequest request = SignUpRequest.builder()
                 .nickname("백승열입니다")
                 .email("beck22222@naver.com")
-                .password("12345678").build();
+                .password("@Dighfkddl").build();
 
         mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -63,7 +63,7 @@ class pUserApiControllerTest {
 
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
-                .password("12345678")
+                .password("@Dighfkddl")
                 .build();
 
         mockMvc.perform(post("/api/auth/signin")
@@ -104,7 +104,7 @@ class pUserApiControllerTest {
         SignUpRequest member = SignUpRequest.builder()
                 .nickname("야호랑이")
                 .email("beck33333@naver.com")
-                .password("123456789")
+                .password("@Dighfkddl")
                 .build();
 
         mockMvc.perform(post("/api/auth/signup")
@@ -164,7 +164,7 @@ class pUserApiControllerTest {
     void createmember_bad_request_Double() throws Exception {
         SignUpRequest member = SignUpRequest.builder()
                 .nickname("야호랑이")
-                .password("123456789")
+                .password("@Dighfkddl")
                 .email("beck33333@naver.com")
                 .build();
 
@@ -175,7 +175,7 @@ class pUserApiControllerTest {
 
         SignUpRequest member2 = SignUpRequest.builder()
                 .nickname("야호랑이")
-                .password("123456789")
+                .password("@Dighfkddl")
                 .email("beck33333@naver.com")
                 .build();
 

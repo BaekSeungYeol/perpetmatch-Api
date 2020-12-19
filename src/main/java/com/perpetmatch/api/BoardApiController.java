@@ -56,36 +56,33 @@ public class BoardApiController {
     @PostMapping("/boards")
     public ResponseEntity createBoard(@CurrentMember UserPrincipal currentMember, @RequestBody @Valid BoardPostRequest boardRequest
     , Errors errors) {
-        if(errors.hasErrors()) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 입력입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
-        if(currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+        if(errors.hasErrors() || currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
-        Board newBoard = boardService.createNewBoard(currentMember.getId(), boardRequest);
-        BoardResponse boardResponse = BoardResponse.builder().id(newBoard.getId()).title(newBoard.getTitle()).build();
+        Board board = boardService.createNewBoard(currentMember.getId(), boardRequest);
+        BoardResponse createdBoardIdAndTitle = BoardResponse.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .build();
 
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글이 등록 되었습니다.",boardResponse));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(createdBoardIdAndTitle));
     }
 
 
     @PutMapping("/boards/{id}")
     public ResponseEntity updateBoard(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
                                       @RequestBody @Valid BoardUpdateRequest boardRequest, Errors errors) {
-        if(errors.hasErrors()) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 입력입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+
+        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
         boardService.updateBoard(currentMember.getId(), id, boardRequest);
-        Board board = boardService.findOneBoard(id);
-        BoardResponse boardResponse = BoardResponse.builder().id(board.getId()).title(board.getTitle()).build();
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 수정이 완료되었습니다.", boardResponse));
 
+        Board board = boardService.findOneBoard(id);
+        BoardResponse createdBoardIdAndTitle = BoardResponse.builder().id(board.getId()).title(board.getTitle()).build();
+
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(createdBoardIdAndTitle));
     }
+
+
     /**
      * 신청된 회원들은 글을 등록한 유저만(isManager) 표시가 되야 하며
      * 입양하기 게시글 클릭시 보여지도록 하여야 한다.

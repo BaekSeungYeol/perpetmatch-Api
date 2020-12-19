@@ -1,6 +1,7 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.perpetmatch.jjwt.resource.ApiResponseCode;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.Gender;
 import com.perpetmatch.Domain.Board;
@@ -124,8 +125,7 @@ class BoardApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("해당 유저의 게시글입니다."))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.id").exists())
                 .andExpect(jsonPath("data.title").exists())
                 .andExpect(jsonPath("data.manager").exists())
@@ -156,8 +156,8 @@ class BoardApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 게시글입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("ID"),
                                 fieldWithPath("data.manager").type(JsonFieldType.STRING).description("작성자(관리자)"),
                                 fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
@@ -237,8 +237,8 @@ class BoardApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(boardRequest)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("게시글이 등록 되었습니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.id").exists())
                 .andExpect(jsonPath("data.title").exists())
 
@@ -269,8 +269,8 @@ class BoardApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("해당 유저의 프로필 조회입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("id"),
                                 fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목")
                         )));
@@ -399,8 +399,7 @@ class BoardApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("게시글 다건 조회입니다."))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andDo(document("get-boards",
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
@@ -411,8 +410,8 @@ class BoardApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         relaxedResponseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("게시글 다건 조회입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.content[0].id").type(JsonFieldType.NUMBER).description("id"),
                                 fieldWithPath("data.content[0].title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("data.content[0].credit").type(JsonFieldType.NUMBER).description("포인트"),

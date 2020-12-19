@@ -1,12 +1,17 @@
 package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.perpetmatch.api.dto.Board.BoardPostRequest;
+import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
 import com.perpetmatch.modules.Board.Gender;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,11 +25,9 @@ public class Board extends DateAudit{
     @GeneratedValue
     private Long id;
 
-    // 관리자
     @OneToOne(fetch = FetchType.LAZY)
     private User manager;
 
-    // 신청자들
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
@@ -90,6 +93,7 @@ public class Board extends DateAudit{
     @Basic(fetch = FetchType.EAGER)
     private String boardImage3;
 
+
     public void addManager(User member) {
         this.manager = member;
     }
@@ -112,5 +116,22 @@ public class Board extends DateAudit{
     }
     public void removeMember(User user) {
         this.getUsers().remove(user);
+    }
+
+    public void updateBoard(BoardUpdateRequest boardRequest, Zone city, Pet byTitle, PetAge Age) {
+        credit = boardRequest.getCredit();
+        petTitle = byTitle;
+        zone = city;
+        petAge = Age;
+        gender = boardRequest.getGender();
+        year= boardRequest.getYear();
+        month = boardRequest.getMonth();
+        checkUpImage = boardRequest.getCheckUp();
+        lineAgeImage = boardRequest.getLineAgeImage();
+        neuteredImage = boardRequest.getNeuteredImage();
+        description = boardRequest.getDescription();
+        boardImage1 = boardRequest.getBoardImage1();
+        boardImage2 = boardRequest.getBoardImage2();
+        boardImage3 = boardRequest.getBoardImage3();
     }
 }

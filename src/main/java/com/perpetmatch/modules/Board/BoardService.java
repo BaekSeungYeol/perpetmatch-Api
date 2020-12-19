@@ -75,9 +75,8 @@ public class BoardService {
         return savedBoard;
     }
 
-    public Board findByBoardId(Long id) {
-        Board board = boardRepository.findZoneAndPetTitleAndPetAgeById(id);
-        return board;
+    public Board findOneBoard(Long id) {
+        return boardRepository.findZoneAndPetTitleAndPetAgeById(id);
     }
 
     public void updateBoard(Long memberId, Long boardId, BoardUpdateRequest boardRequest) {

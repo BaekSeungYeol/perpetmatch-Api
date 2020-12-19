@@ -16,7 +16,7 @@ import javax.persistence.Lob;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardGetResponseV1 {
+public class AdoptBoardV2 {
     private Long id;
     private String manager;
     private String title;
@@ -46,7 +46,7 @@ public class BoardGetResponseV1 {
     private String boardImage3;
     private boolean closed;
 
-    public BoardGetResponseV1(Board board) {
+    public AdoptBoardV2(Board board) {
         id = board.getId();
         manager = board.getManager().getNickname();
         title = board.getTitle();

@@ -38,8 +38,8 @@ public class AdoptApiController {
     public ResponseEntity searchByProfile(@RequestBody AdoptMatchDto matchDto,
                                           @PageableDefault(size=15, page = 0) Pageable pageable) {
 
-        AdoptMatchCondition condition = boardService.makeCondition(matchDto);
-        Page<AdoptBoard> boardList = boardRepository.findByProfileTags(condition, pageable);
+        AdoptMatchCondition profileCondition = boardService.makeCondition(matchDto);
+        Page<AdoptBoard> boardList = boardRepository.findByProfileTags(profileCondition, pageable);
         Page<AdoptBoardV1> boardListWithProfile = boardList.map(AdoptBoardV1::new);
         return ResponseEntity.ok().body(ApiResponseDto.createOK(boardListWithProfile));
     }

@@ -1,10 +1,11 @@
 package com.perpetmatch.api;
 
+import com.perpetmatch.jjwt.resource.ApiResponseCode;
+import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.BoardService;
 import com.perpetmatch.Domain.Board;
 import com.perpetmatch.Domain.User;
-import com.perpetmatch.modules.Member.UserRepository;
 import com.perpetmatch.modules.Member.UserService;
 import com.perpetmatch.api.dto.Board.*;
 import com.perpetmatch.api.dto.User.UserCredit;
@@ -30,34 +31,26 @@ public class BoardApiController {
 
     private final BoardService boardService;
     private final BoardRepository boardRepository;
-    private final UserRepository userRepository;
     private final UserService userService;
 
-    /**
-     * 입양하기 페이지 다건 조회
-     */
-    @GetMapping("/boards")
-    public ResponseEntity getBoards(Pageable pageable) {
-        Slice<Board> allBoards = boardService.findAllBoards();
-        Slice<BoardPageData> boardLists = allBoards.map(BoardPageData::new);
 
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 다건 조회입니다.", boardLists));
+    @GetMapping("/boards")
+    public ResponseEntity getAdoptBoardLists(Pageable pageable) {
+        Slice<Board> AdoptBoardEntityLists = boardService.findAllBoards();
+        Slice<BoardPageData> AdoptBoardDtoLists = AdoptBoardEntityLists.map(BoardPageData::new);
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(AdoptBoardDtoLists));
     }
 
 
-    // 단건 조회
     @GetMapping("/boards/{id}")
-    public ResponseEntity getOneBoard(@PathVariable Long id) {
+    public ResponseEntity getOneAdoptBoardList(@PathVariable Long id) {
 
-        if (!boardRepository.existsById(id)) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
-        Board board = boardService.findByBoardId(id);
+        if (!boardRepository.existsById(id)) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
-        BoardGetResponseV1 boardResponse = new BoardGetResponseV1(board);
+        Board board = boardService.findOneBoard(id);
+        AdoptBoardV2 OneBoardList = new AdoptBoardV2(board);
 
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "해당 유저의 게시글입니다.", boardResponse));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(OneBoardList));
     }
 
     @PostMapping("/boards")
@@ -88,7 +81,7 @@ public class BoardApiController {
         }
 
         boardService.updateBoard(currentMember.getId(), id, boardRequest);
-        Board board = boardService.findByBoardId(id);
+        Board board = boardService.findOneBoard(id);
         BoardResponse boardResponse = BoardResponse.builder().id(board.getId()).title(board.getTitle()).build();
         return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "게시글 수정이 완료되었습니다.", boardResponse));
 

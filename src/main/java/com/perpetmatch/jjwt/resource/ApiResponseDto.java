@@ -19,7 +19,6 @@ public class ApiResponseDto<T> {
     private ApiResponseDto(ApiResponseCode status) {
         this.bindStatus(status);
     }
-
     private ApiResponseDto(ApiResponseCode status, T data) {
         this.bindStatus(status);
         this.data = data;

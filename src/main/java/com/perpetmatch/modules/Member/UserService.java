@@ -269,8 +269,8 @@ public class UserService {
         byId.ifPresent(m -> m.getZones().remove(zone));
     }
 
-    public boolean apply(Long id, String username) {
-        Board board = boardRepository.findById(id).get();
+    public boolean hasAppliedUser(Long id, String username) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
         Optional<User> user = userRepository.findByNickname(username);
         user.ifPresent(u -> {
             if(board.isMember(u.getNickname()))
@@ -281,24 +281,28 @@ public class UserService {
         return board.isMember(username);
     }
     public List<ApplyUsers> applyUserList(Long id) {
-
         Board board = boardRepository.findZoneAndPetTitleAndPetAgeById(id);
-        List<ApplyUsers> collect = new ArrayList<>();
-        Set<User> users = board.getUsers();
-        for(User u : users) {
-            User user = userRepository.findById(u.getId()).get();
-            ApplyUsers applyUser = new ApplyUsers(user);
-            collect.add(applyUser);
-        }
-        return collect;
+        return findAppliedUsers(id, board);
     }
 
-    public boolean isManager(String username, Long id) {
+
+    private List<ApplyUsers> findAppliedUsers(Long id, Board board) {
+        List<ApplyUsers> AppliedUsers = new ArrayList<>();
+        Set<User> users = board.getUsers();
+        for(User u : users) {
+            User user = userRepository.findById(u.getId()).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
+            ApplyUsers applyUser = new ApplyUsers(user);
+            AppliedUsers.add(applyUser);
+        }
+        return AppliedUsers;
+    }
+
+    public boolean findManager(String username, Long id) {
         Board board = boardRepository.findById(id).get();
         return board.isManager(username);
     }
 
-    public boolean likes(Long id, String username) {
+    public boolean hasBoardLikes(Long id, String username) {
         Board board = boardRepository.findById(id).get();
         Optional<User> user = userRepository.findByNickname(username);
         user.ifPresent(u -> {
@@ -330,7 +334,7 @@ public class UserService {
 
     public Set<BagDetailsDto> getBags(Long id) {
         User user = userRepository.findByIdWithBags(id);
-        Set<BagDetailsDto> collect = user.getBag().stream().map(o -> new BagDetailsDto(o)).collect(Collectors.toSet());
+        Set<BagDetailsDto> collect = user.getBag().stream().map(BagDetailsDto::new).collect(Collectors.toSet());
          return collect;
     }
 
@@ -344,16 +348,14 @@ public class UserService {
     }
 
     public User acceptUser(Long id, NameDto name) {
-        Board board = boardRepository.findById(id).get();
+        Board board = boardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Board", "id", id));
         board.setClosed(true);
 
+        User user = userRepository.findByNickname(name.getNickname()).orElseThrow(() -> new ResourceNotFoundException("Member", "id", id));
         int credit = board.getCredit();
-
-        User user = userRepository.findByNickname(name.getNickname()).get();
         user.setCredit(credit);
 
         sendAdoptionSuccessEmail(user,board);
-
         return user;
     }
 

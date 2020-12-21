@@ -2,6 +2,7 @@ package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.jjwt.resource.ApiResponseCode;
+import com.perpetmatch.jjwt.resource.AuthController;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.Gender;
 import com.perpetmatch.Domain.Board;
@@ -79,25 +80,22 @@ class BoardApiControllerTest {
     UserService userService;
     @Autowired
     PetAgeRepository petAgeRepository;
+    @Autowired
+    AuthController authController;
 
     private Long id;
     private String token = null;
 
     @BeforeEach
     void beforeEach() throws Exception {
-        SignUpRequest request = SignUpRequest.builder()
-                .nickname("백승열입니다")
-                .email("beck22222@naver.com")
-                .password("12345678").build();
+        signUp();
+        getToken();
+    }
 
-        mockMvc.perform(post("/api/auth/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)));
-
+    private void getToken() throws Exception {
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
-                .password("12345678")
+                .password("@!test1234")
                 .build();
 
         MvcResult mvcResult = mockMvc.perform(post("/api/auth/signin")
@@ -106,8 +104,18 @@ class BoardApiControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk()).andReturn();
 
+
         TokenTest findToken = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TokenTest.class);
         token = findToken.getTokenType() + " " + findToken.getAccessToken();
+    }
+
+    private void signUp() {
+        SignUpRequest request = SignUpRequest.builder()
+                .nickname("백승열입니다")
+                .email("beck22222@naver.com")
+                .password("@!test1234").build();
+
+        authController.registerMember(request);
     }
 
     @AfterEach
@@ -437,8 +445,8 @@ class BoardApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("현재 신청한 유저 여부입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.userIn").value(true))
                 .andDo(document("adopt-apply",
                         pathParameters(
@@ -453,8 +461,8 @@ class BoardApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 여부입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.userIn").type(JsonFieldType.BOOLEAN).description("신청시 true 취소시 false 반환"))
                         ));
         //then
@@ -495,8 +503,8 @@ class BoardApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 목록입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("수락된 유저의 id 입니다."),
                                 fieldWithPath("data.nickname").type(JsonFieldType.STRING).description("수락된 유저의 닉네임 입니다."),
                                 fieldWithPath("data.credit").type(JsonFieldType.NUMBER).description("수락된 유저의 현재 껌(크레딧) 입니다.")
@@ -524,8 +532,8 @@ class BoardApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("현재 신청한 유저 목록입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.users").exists())
                 .andDo(document("apply-list",
                         pathParameters(
@@ -540,8 +548,8 @@ class BoardApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 목록입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.users[0].id").type(JsonFieldType.NUMBER).description("현재 신청한 유저의 아이디 입니다."),
                                 fieldWithPath("data.users[0].nickname").type(JsonFieldType.STRING).description("현재 신청한 유저의 닉네임 입니다."),
                                 fieldWithPath("data.users[0].profileImage").type(JsonFieldType.NULL).description("현재 신청한 유저의 프로필 이미지 입니다."),
@@ -561,8 +569,8 @@ class BoardApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("현재 유저의 즐겨찾기 여부입니다. "))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andExpect(jsonPath("data.like").value(true))
                 .andDo(document("like-apply",
                         pathParameters(
@@ -577,8 +585,8 @@ class BoardApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("현재 신청한 유저 여부입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.like").type(JsonFieldType.BOOLEAN).description("즐겨찾기 시 true 취소시 false 반환"))
                 ));
         //then
@@ -606,7 +614,7 @@ class BoardApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("success").value(false))
-                .andExpect(jsonPath("message").value("현재 신청하지 않은 유저입니다."))
+                .andExpect(jsonPath("message").value("신청 여부 입니다."))
                 .andDo(document("applied_me",
                         pathParameters(
                                 parameterWithName("id").description("게시글 아이디")

@@ -9,13 +9,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserCredit {
+public class UserDtoWithCredit {
 
     private Long id;
     private String nickname;
     private int credit;
 
-    public UserCredit(User user) {
+    public UserDtoWithCredit(User user) {
         this.id = user.getId();
         this.nickname = user.getNickname();
         this.credit = user.getCredit();

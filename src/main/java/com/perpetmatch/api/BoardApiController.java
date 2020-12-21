@@ -1,22 +1,19 @@
 package com.perpetmatch.api;
 
+import com.perpetmatch.Domain.Board;
+import com.perpetmatch.Domain.User;
+import com.perpetmatch.api.dto.Board.*;
+import com.perpetmatch.api.dto.User.UserDtoWithCredit;
+import com.perpetmatch.jjwt.CurrentMember;
+import com.perpetmatch.jjwt.UserPrincipal;
+import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.ApiResponseCode;
 import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.BoardService;
-import com.perpetmatch.Domain.Board;
-import com.perpetmatch.Domain.User;
 import com.perpetmatch.modules.Member.UserService;
-import com.perpetmatch.api.dto.Board.*;
-import com.perpetmatch.api.dto.User.UserCredit;
-import com.perpetmatch.jjwt.CurrentMember;
-import com.perpetmatch.jjwt.UserPrincipal;
-import com.perpetmatch.jjwt.resource.ApiResponse;
-import com.perpetmatch.jjwt.resource.ApiResponseWithData;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +32,10 @@ public class BoardApiController {
 
 
     @GetMapping("/boards")
-    public ResponseEntity getAdoptBoardLists(Pageable pageable) {
+    public ResponseEntity getAdoptBoardLists() {
         Slice<Board> AdoptBoardEntityLists = boardService.findAllBoards();
-        Slice<BoardPageData> AdoptBoardDtoLists = AdoptBoardEntityLists.map(BoardPageData::new);
-        return ResponseEntity.ok().body(ApiResponseDto.createOK(AdoptBoardDtoLists));
+        Slice<BoardPageData> AdoptBoardDtoListsData = AdoptBoardEntityLists.map(BoardPageData::new);
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(AdoptBoardDtoListsData));
     }
 
 
@@ -48,9 +45,9 @@ public class BoardApiController {
         if (!boardRepository.existsById(id)) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
         Board board = boardService.findOneBoard(id);
-        AdoptBoardV2 OneBoardList = new AdoptBoardV2(board);
+        AdoptBoardV2 OneBoardListData = new AdoptBoardV2(board);
 
-        return ResponseEntity.ok().body(ApiResponseDto.createOK(OneBoardList));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(OneBoardListData));
     }
 
     @PostMapping("/boards")
@@ -59,12 +56,12 @@ public class BoardApiController {
         if(errors.hasErrors() || currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
         Board board = boardService.createNewBoard(currentMember.getId(), boardRequest);
-        BoardResponse createdBoardIdAndTitle = BoardResponse.builder()
+        BoardTitleDto createdBoardIdAndTitleData = BoardTitleDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
                 .build();
 
-        return ResponseEntity.ok().body(ApiResponseDto.createOK(createdBoardIdAndTitle));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(createdBoardIdAndTitleData));
     }
 
 
@@ -77,9 +74,9 @@ public class BoardApiController {
         boardService.updateBoard(currentMember.getId(), id, boardRequest);
 
         Board board = boardService.findOneBoard(id);
-        BoardResponse createdBoardIdAndTitle = BoardResponse.builder().id(board.getId()).title(board.getTitle()).build();
+        BoardTitleDto createdBoardIdAndTitleData = BoardTitleDto.builder().id(board.getId()).title(board.getTitle()).build();
 
-        return ResponseEntity.ok().body(ApiResponseDto.createOK(createdBoardIdAndTitle));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(createdBoardIdAndTitleData));
     }
 
 
@@ -90,23 +87,14 @@ public class BoardApiController {
      */
     @GetMapping("/boards/{id}/manager")
     public ResponseEntity isManager(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+        if (currentMember == null || !userService.findManager(currentMember.getUsername(), id))
+            return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
-        String username = currentMember.getUsername();
-        boolean isManager = userService.isManager(username, id);
-
-        if(!isManager)  return new ResponseEntity<>(new ApiResponse(false, "글의 주인이 아닙니다."), HttpStatus.BAD_REQUEST);
-        else {
-            List<ApplyUsers> applyUsers = userService.applyUserList(id);
-            BoardApplyUsers boardResponse = new BoardApplyUsers(applyUsers);
-            return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 신청한 유저 목록입니다.",boardResponse));
-        }
+        List<ApplyUsers> applyUsers = userService.applyUserList(id);
+        BoardAppliedUsers boardUserDtoData = new BoardAppliedUsers(applyUsers);
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(boardUserDtoData));
 
     }
-
 
     /**
      * 수락 버튼을 누를 시 결제가 되야 한다.
@@ -115,20 +103,13 @@ public class BoardApiController {
     @PostMapping("/boards/{id}/accept")
     public ResponseEntity accept(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
                                  @RequestBody NameDto name) {
-        if(currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
-        String username = currentMember.getUsername();
-        boolean isManager = userService.isManager(username, id);
-
-        if(!isManager)  return new ResponseEntity<>(new ApiResponse(false, "글의 주인이 아닙니다."), HttpStatus.BAD_REQUEST);
-
+        if(currentMember == null || !userService.findManager(currentMember.getUsername(), id))
+            return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
         User user = userService.acceptUser(id, name);
-        UserCredit userCredit = new UserCredit(user);
+        UserDtoWithCredit userDtoWithCreditData = new UserDtoWithCredit(user);
 
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "수락이 완료되었습니다.",userCredit));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(userDtoWithCreditData));
     }
 
 
@@ -138,17 +119,13 @@ public class BoardApiController {
      */
     @PostMapping("/boards/{id}/apply")
     public ResponseEntity apply(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
         String username = currentMember.getUsername();
-        boolean userIn = userService.apply(id, username);
+        boolean userIn = userService.hasAppliedUser(id, username);
 
-        // 현재 글에(id) 신청한 멤버의 id와 username 보여주기
-        BoardApply boardResponse = new BoardApply(userIn);
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 신청한 유저 여부입니다.",boardResponse));
+        AppliedBoardDto appliedBoardData = new AppliedBoardDto(userIn);
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(appliedBoardData));
     }
 
     /**
@@ -156,17 +133,13 @@ public class BoardApiController {
      */
     @PostMapping("/boards/{id}/likes")
     public ResponseEntity likes(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
         String username = currentMember.getUsername();
-        boolean likeApply = userService.likes(id, username);
+        boolean likeApply = userService.hasBoardLikes(id, username);
 
-        // 현재 글에(id) 신청한 멤버의 id와 username 보여주기
-        BoardLike boardResponse = new BoardLike(likeApply);
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "현재 유저의 즐겨찾기 여부입니다. ",boardResponse));
+        BoardLikeDto boardlikeData = new BoardLikeDto(likeApply);
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(boardlikeData));
     }
 
 
@@ -176,18 +149,10 @@ public class BoardApiController {
      */
     @GetMapping("/boards/{id}/applied_me")
     public ResponseEntity isAppliedUser(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
 
-        boolean applied = boardService.isApplied(id, currentMember.getUsername());
-
-        if(applied)
-            return ResponseEntity.ok().body(new ApiResponse(true, "현재 신청된 유저입니다."));
-        else
-            return ResponseEntity.ok().body(new ApiResponse(false, "현재 신청하지 않은 유저입니다."));
-
+        boolean applied = boardService.isBoardApplied(id, currentMember.getUsername());
+        return ResponseEntity.ok().body(new ApiResponse(applied, "신청 여부 입니다."));
     }
 
 

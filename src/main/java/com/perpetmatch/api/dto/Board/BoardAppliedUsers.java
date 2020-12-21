@@ -1,15 +1,17 @@
 package com.perpetmatch.api.dto.Board;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class BoardResponse {
-    private Long id;
-    private String title;
+public class BoardAppliedUsers {
+
+    List<ApplyUsers> users = new ArrayList<>();
+
 }

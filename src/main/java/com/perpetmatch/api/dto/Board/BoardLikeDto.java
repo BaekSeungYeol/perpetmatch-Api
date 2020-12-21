@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardApply {
+public class BoardLikeDto {
 
-    boolean userIn;
+    boolean like;
 }

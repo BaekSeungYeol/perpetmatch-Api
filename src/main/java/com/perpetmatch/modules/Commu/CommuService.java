@@ -1,5 +1,6 @@
 package com.perpetmatch.modules.Commu;
 
+import com.perpetmatch.exception.ResourceNotFoundException;
 import com.perpetmatch.modules.Comment.CommentRepository;
 import com.perpetmatch.Domain.Comment;
 import com.perpetmatch.Domain.Commu;
@@ -75,5 +76,11 @@ public class CommuService {
         Commu savedCommu = commuRepository.save(commu);
 
         user.getCommus().add(savedCommu);
+    }
+
+    @Transactional
+    public void addLike(Long id) {
+        Commu commu = commuRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Commu", "id", id));
+        commu.addLikes();
     }
 }

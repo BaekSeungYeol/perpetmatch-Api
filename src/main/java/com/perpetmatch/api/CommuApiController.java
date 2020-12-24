@@ -1,5 +1,7 @@
 package com.perpetmatch.api;
 
+import com.perpetmatch.exception.ResourceNotFoundException;
+import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Comment.CommentRepository;
 import com.perpetmatch.modules.Commu.CommuRepository;
 import com.perpetmatch.modules.Commu.CommuService;
@@ -36,28 +38,20 @@ public class CommuApiController {
 
     @PostMapping("/boards/{id}/likes")
     public ResponseEntity likes(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
-        Optional<Commu> byId = commuRepository.findById(id);
-        byId.ifPresent(u -> u.setLikes(u.getLikes() + 1));
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "좋아요"));
+        commuService.addLike(id);
+
+        return ResponseEntity.ok().body(ApiResponseDto.createOK());
     }
 
 
     @PostMapping("/boards")
     public ResponseEntity createBoard(@CurrentMember UserPrincipal currentMember, @RequestBody @Valid CommuPostDto commuPostDto
             , Errors errors) {
-        if(errors.hasErrors()) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 입력입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
-        if(currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+
 
         commuService.createCommuBoard(currentMember.getId(), commuPostDto);
 

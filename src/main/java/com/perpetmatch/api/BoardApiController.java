@@ -19,6 +19,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.List;
 
 @RestController
@@ -41,8 +43,7 @@ public class BoardApiController {
 
     @GetMapping("/boards/{id}")
     public ResponseEntity getOneAdoptBoardList(@PathVariable Long id) {
-
-        if (!boardRepository.existsById(id)) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
+        if (!boardRepository.existsById(id)) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
 
         Board board = boardService.findOneBoard(id);
         AdoptBoardV2 OneBoardListData = new AdoptBoardV2(board);
@@ -53,7 +54,8 @@ public class BoardApiController {
     @PostMapping("/boards")
     public ResponseEntity createBoard(@CurrentMember UserPrincipal currentMember, @RequestBody @Valid BoardPostRequest boardRequest
     , Errors errors) {
-        if(errors.hasErrors() || currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
 
         Board board = boardService.createNewBoard(currentMember.getId(), boardRequest);
         BoardTitleDto createdBoardIdAndTitleData = BoardTitleDto.builder()
@@ -68,8 +70,7 @@ public class BoardApiController {
     @PutMapping("/boards/{id}")
     public ResponseEntity updateBoard(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
                                       @RequestBody @Valid BoardUpdateRequest boardRequest, Errors errors) {
-
-        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
+        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
 
         boardService.updateBoard(currentMember.getId(), id, boardRequest);
 
@@ -87,8 +88,7 @@ public class BoardApiController {
      */
     @GetMapping("/boards/{id}/manager")
     public ResponseEntity isManager(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if (currentMember == null || !userService.findManager(currentMember.getUsername(), id))
-            return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
+        if (currentMember == null || !userService.findManager(currentMember.getUsername(), id)) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         List<ApplyUsers> applyUsers = userService.applyUserList(id);
         BoardAppliedUsers boardUserDtoData = new BoardAppliedUsers(applyUsers);
@@ -103,8 +103,7 @@ public class BoardApiController {
     @PostMapping("/boards/{id}/accept")
     public ResponseEntity accept(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
                                  @RequestBody NameDto name) {
-        if(currentMember == null || !userService.findManager(currentMember.getUsername(), id))
-            return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
+        if(currentMember == null || !userService.findManager(currentMember.getUsername(), id)) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         User user = userService.acceptUser(id, name);
         UserDtoWithCredit userDtoWithCreditData = new UserDtoWithCredit(user);
@@ -119,7 +118,7 @@ public class BoardApiController {
      */
     @PostMapping("/boards/{id}/apply")
     public ResponseEntity apply(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         String username = currentMember.getUsername();
         boolean userIn = userService.hasAppliedUser(id, username);
@@ -133,7 +132,7 @@ public class BoardApiController {
      */
     @PostMapping("/boards/{id}/likes")
     public ResponseEntity likes(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         String username = currentMember.getUsername();
         boolean likeApply = userService.hasBoardLikes(id, username);
@@ -149,7 +148,7 @@ public class BoardApiController {
      */
     @GetMapping("/boards/{id}/applied_me")
     public ResponseEntity isAppliedUser(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseCode.BAD_PARAMETER);
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         boolean applied = boardService.isBoardApplied(id, currentMember.getUsername());
         return ResponseEntity.ok().body(new ApiResponse(applied, "신청 여부 입니다."));

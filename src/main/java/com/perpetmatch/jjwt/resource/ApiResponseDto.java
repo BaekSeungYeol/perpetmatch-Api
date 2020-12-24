@@ -11,7 +11,6 @@ public class ApiResponseDto<T> {
 
     public static final ApiResponseDto DEFAULT_OK = new ApiResponseDto<>(ApiResponseCode.OK);
     public static final ApiResponseDto DEFAULT_UNAUTHORIZED = new ApiResponseDto<>(ApiResponseCode.UNAUTHORIZED);
-
     private ApiResponseCode code;
     private String message;
     private T data;
@@ -32,4 +31,8 @@ public class ApiResponseDto<T> {
     public static <T> ApiResponseDto<T> createOK(T data) {
         return new ApiResponseDto<>(ApiResponseCode.OK, data);
     }
+    public static <T> ApiResponseDto<T> createOK() {
+        return new ApiResponseDto<>(ApiResponseCode.OK);
+    }
+    public static <T> ApiResponseDto<T> badRequest() { return new ApiResponseDto<>(ApiResponseCode.BAD_PARAMETER);}
 }

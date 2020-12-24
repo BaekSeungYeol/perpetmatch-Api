@@ -39,4 +39,7 @@ public class Commu extends DateAudit{
     private Set<Comment> comments = new HashSet<>();
 
 
+    public void addLikes() {
+        likes++;
+    }
 }

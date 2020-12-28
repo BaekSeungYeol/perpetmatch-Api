@@ -1,6 +1,8 @@
 package com.perpetmatch.modules.Commu;
 
+import com.perpetmatch.api.dto.Commu.CommentDetailsDto;
 import com.perpetmatch.exception.ResourceNotFoundException;
+import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Comment.CommentRepository;
 import com.perpetmatch.Domain.Comment;
 import com.perpetmatch.Domain.Commu;
@@ -9,11 +11,14 @@ import com.perpetmatch.modules.Member.UserRepository;
 import com.perpetmatch.api.dto.Commu.CommentDto;
 import com.perpetmatch.api.dto.Commu.CommuPostDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,47 +30,39 @@ public class CommuService {
     private final CommentRepository commentRepository;
 
     public void createCommuBoard(Long id, CommuPostDto commuPostDto) {
+        User user = userRepository.findById(id).orElseThrow((() -> new ResourceNotFoundException("Member", "id", id)));
 
-        makeCommuBoardAndSaveAdd(id, commuPostDto);
+        Commu commu = makeCommuBoard(user, commuPostDto);
+        savedBoardToUser(user,commu);
+    }
 
+    private void savedBoardToUser(User user, Commu commu) {
+        user.makeCommuBoard(commu);
     }
 
     public List<Commu> getAllBoards() {
         return commuRepository.findAllWithComment();
     }
 
-    public void createComments(Long currentMemberId, Long id, CommentDto dto) {
-        User user = userRepository.findById(currentMemberId).get();
+    public Comment createCommentByUserId(Long curUserId, CommentDto dto) {
+        User user = userRepository.findById(curUserId).orElseThrow((() -> new ResourceNotFoundException("User", "id", curUserId)));
 
-        Optional<Commu> commuBoard = commuRepository.findById(id);
+        Comment comment = new Comment();
+        comment.setNickname(user.getNickname());
+        comment.setProfileImage(user.getProfileImage());
+        comment.setText(dto.getText());
+        return commentRepository.save(comment);
 
-        commuBoard.ifPresent(
-                c -> {
-                    Comment comment = new Comment();
-                    comment.setNickname(user.getNickname());
-                    comment.setProfileImage(user.getProfileImage());
-                    comment.setText(dto.getText());
-                    commentRepository.save(comment);
-                    c.getComments().add(comment);
-                }
-        );
     }
-    public void  removeComments(Long currentMemberId, Long boardId, Long commentId) {
+    public void removeComment(Long commuBoardId, Long commentId) {
+        Commu commu = commuRepository.findById(commuBoardId).orElseThrow(() -> new ResourceNotFoundException("CommuBoard", "id", commuBoardId));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
+        commu.removeComment(comment);
 
-        User user = userRepository.findById(currentMemberId).get();
-
-        Optional<Commu> commuBoard = commuRepository.findById(boardId);
-
-        commuBoard.ifPresent(
-                c -> {
-                    Comment comment = commentRepository.findById(commentId).get();
-                    c.getComments().remove(comment);
-                }
-        );
     }
 
-    private void makeCommuBoardAndSaveAdd(Long id, CommuPostDto commuPostDto) {
-        User user = userRepository.findById(id).get();
+    private Commu makeCommuBoard(User user, CommuPostDto commuPostDto) {
+
         Commu commu = new Commu();
         commu.setNickname(user.getNickname());
         commu.setImage(commuPostDto.getImage());
@@ -73,14 +70,23 @@ public class CommuService {
         commu.setDescription(commuPostDto.getDescription());
         commu.setLikes(commuPostDto.getLikes());
         commu.setProfileImage(user.getProfileImage());
-        Commu savedCommu = commuRepository.save(commu);
-
-        user.getCommus().add(savedCommu);
+        return commuRepository.save(commu);
     }
 
     @Transactional
     public void addLike(Long id) {
         Commu commu = commuRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Commu", "id", id));
         commu.addLikes();
+    }
+
+    @Transactional
+    public void addToCommuBoard(Long commuId,Comment comment) {
+        Commu commu = commuRepository.findById(commuId).orElseThrow((() -> new ResourceNotFoundException("Commu", "commuId", commuId)));
+        commu.addComment(comment);
+    }
+
+    public Set<CommentDetailsDto> getComments(Long commuId) {
+        Commu commu = commuRepository.findById(commuId).orElseThrow(() -> new ResourceNotFoundException("Commu", "commuId", commuId));
+        return commu.getComments().stream().map(CommentDetailsDto::new).collect(Collectors.toSet());
     }
 }

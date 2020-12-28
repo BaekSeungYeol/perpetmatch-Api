@@ -1,5 +1,6 @@
 package com.perpetmatch.Domain;
 
+import com.perpetmatch.exception.ResourceNotFoundException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,5 +42,13 @@ public class Commu extends DateAudit{
 
     public void addLikes() {
         likes++;
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
     }
 }

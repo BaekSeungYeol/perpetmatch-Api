@@ -1,6 +1,8 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.perpetmatch.jjwt.resource.ApiResponseCode;
+import com.perpetmatch.jjwt.resource.AuthController;
 import com.perpetmatch.modules.Comment.CommentRepository;
 import com.perpetmatch.modules.Commu.CommuRepository;
 import com.perpetmatch.Domain.Comment;
@@ -57,26 +59,22 @@ class CommuApiControllerTest {
     CommuRepository commuRepository;
     @Autowired
     CommentRepository commentRepository;
-
+    @Autowired
+    AuthController authController;
 
     private Long id;
     private String token = null;
 
     @BeforeEach
     void beforeEach() throws Exception {
-        SignUpRequest request = SignUpRequest.builder()
-                .nickname("백승열입니다")
-                .email("beck22222@naver.com")
-                .password("@!dighfkddl").build();
+        signUp();
+        getToken();
+    }
 
-        mockMvc.perform(post("/api/auth/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)));
-
+    private void getToken() throws Exception {
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
-                .password("@!dighfkddl")
+                .password("@!test1234")
                 .build();
 
         MvcResult mvcResult = mockMvc.perform(post("/api/auth/signin")
@@ -85,8 +83,18 @@ class CommuApiControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk()).andReturn();
 
+
         TokenTest findToken = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TokenTest.class);
         token = findToken.getTokenType() + " " + findToken.getAccessToken();
+    }
+
+    private void signUp() {
+        SignUpRequest request = SignUpRequest.builder()
+                .nickname("백승열입니다")
+                .email("beck22222@naver.com")
+                .password("@!test1234").build();
+
+        authController.registerMember(request);
     }
 
     @Test
@@ -120,8 +128,9 @@ class CommuApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("소통 게시글이 등록 되었습니다."))));
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("NULL"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."))));
     }
 
     @Test
@@ -153,8 +162,9 @@ class CommuApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 댓글을 추가했습니다."))));
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("NULL"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."))));
     }
 
     @Test
@@ -185,8 +195,9 @@ class CommuApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("성공적으로 댓글을 제거했습니다."))));
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("NULL"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."))));
     }
 
     @Test
@@ -216,8 +227,8 @@ class CommuApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("소통 댓글 리스트 입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("소통 댓글 리스트 입니다."),
                                 fieldWithPath("data[0].nickname").type(JsonFieldType.STRING).description("소통 댓글 리스트 입니다."),
                                 fieldWithPath("data[0].profileImage").type(JsonFieldType.STRING).description("소통 댓글 리스트 입니다."),
@@ -248,8 +259,9 @@ class CommuApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("좋아요"))));
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("data").type(JsonFieldType.NULL).description("NULL"),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."))));
 
     }
 
@@ -277,8 +289,8 @@ class CommuApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         relaxedResponseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("소통 댓글 리스트 입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("소통 글 ID"),
                                 fieldWithPath("data[0].nickname").type(JsonFieldType.STRING).description("글 작성자 닉네임"),
                                 fieldWithPath("data[0].profileImage").type(JsonFieldType.STRING).description("게시글 작성자 프로필 이미지"),

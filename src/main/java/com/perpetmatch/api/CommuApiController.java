@@ -1,6 +1,6 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.exception.ResourceNotFoundException;
+import com.perpetmatch.Domain.Comment;
 import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Comment.CommentRepository;
 import com.perpetmatch.modules.Commu.CommuRepository;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,8 +32,6 @@ import java.util.stream.Collectors;
 public class CommuApiController {
 
     private final CommuService commuService;
-    private final CommentRepository commentRepository;
-    private final CommuRepository commuRepository;
 
     @PostMapping("/boards/{id}/likes")
     public ResponseEntity likes(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
@@ -49,67 +46,48 @@ public class CommuApiController {
     @PostMapping("/boards")
     public ResponseEntity createBoard(@CurrentMember UserPrincipal currentMember, @RequestBody @Valid CommuPostDto commuPostDto
             , Errors errors) {
-        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
         if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
-
+        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
 
         commuService.createCommuBoard(currentMember.getId(), commuPostDto);
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "소통 게시글이 등록 되었습니다."));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK());
     }
 
     @PostMapping("/boards/{id}/comments")
     public ResponseEntity createComments(@CurrentMember UserPrincipal currentMember, @PathVariable Long id, @RequestBody  CommentDto dto) {
-        if (currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
-        if(commuRepository.findById(id).isEmpty()) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
-        commuService.createComments(currentMember.getId(),id, dto);
+        Comment comment = commuService.createCommentByUserId(currentMember.getId(), dto);
+        commuService.addToCommuBoard(id,comment);
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 댓글을 추가했습니다."));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK());
     }
 
 
     @DeleteMapping("/boards/{id}/comments/{commentId}")
-    public ResponseEntity deleteComments(@CurrentMember UserPrincipal currentMember, @PathVariable Long id, @PathVariable Long commentId) {
-        if (currentMember == null) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
-        if(commuRepository.findById(id).isEmpty() || commentRepository.findById(commentId).isEmpty()) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity deleteComments(
+            @CurrentMember UserPrincipal currentMember, @PathVariable Long id, @PathVariable Long commentId) {
+        if (currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
-        commuService.removeComments(currentMember.getId(),id,commentId);
+        commuService.removeComment(id,commentId);
 
-        return ResponseEntity.ok().body(new ApiResponse(true, "성공적으로 댓글을 제거했습니다."));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK());
     }
 
     @GetMapping("/boards/{id}/comments")
     public ResponseEntity getComments(@PathVariable Long id) {
-        if(commuRepository.findById(id).isEmpty()) {
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-        }
 
-        Commu commu = commuRepository.findById(id).get();
-        Set<CommentDetailsDto> comments = commu.getComments().stream().map(CommentDetailsDto::new)
-                .collect(Collectors.toSet());
+        Set<CommentDetailsDto> comments = commuService.getComments(id);
 
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true,"소통 댓글 리스트 입니다.", comments));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(comments));
 
     }
 
     @GetMapping("/boards")
     public ResponseEntity getBoards() {
         List<Commu> allCommuBoards = commuService.getAllBoards();
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true,"소통 리스트 입니다.", allCommuBoards));
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(allCommuBoards));
     }
 
 

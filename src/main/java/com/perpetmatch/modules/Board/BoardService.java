@@ -126,10 +126,6 @@ public class BoardService {
 
     public boolean isBoardApplied(Long id, String username) {
         Board board = boardRepository.findByIdWithUsers(id);
-        Set<User> users = board.getUsers();
-        for(User u : users) {
-            if(u.getNickname().equals(username)) return true;
-        }
-        return false;
-   }
+        return board.findAppliedUsers(username);
+    }
 }

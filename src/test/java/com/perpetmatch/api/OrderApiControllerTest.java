@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.Domain.OrderItem;
 import com.perpetmatch.Domain.User;
+import com.perpetmatch.jjwt.resource.ApiResponseCode;
+import com.perpetmatch.jjwt.resource.AuthController;
 import com.perpetmatch.modules.Item.ItemRepository;
 import com.perpetmatch.modules.Member.UserRepository;
 import com.perpetmatch.modules.Member.UserService;
@@ -63,25 +65,22 @@ class OrderApiControllerTest {
     UserRepository userRepository;
     @Autowired
     OrderItemRepository orderItemRepository;
+    @Autowired
+    AuthController authController;
 
     private Long id;
     private String token = null;
 
     @BeforeEach
     void beforeEach() throws Exception {
-        SignUpRequest request = SignUpRequest.builder()
-                .nickname("백승열입니다")
-                .email("beck22222@naver.com")
-                .password("12345678").build();
+        signUp();
+        getToken();
+    }
 
-        mockMvc.perform(post("/api/auth/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)));
-
+    private void getToken() throws Exception {
         LoginRequest loginRequest = LoginRequest.builder()
                 .usernameOrEmail("beck22222@naver.com")
-                .password("12345678")
+                .password("@!test1234")
                 .build();
 
         MvcResult mvcResult = mockMvc.perform(post("/api/auth/signin")
@@ -90,8 +89,18 @@ class OrderApiControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk()).andReturn();
 
+
         TokenTest findToken = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TokenTest.class);
         token = findToken.getTokenType() + " " + findToken.getAccessToken();
+    }
+
+    private void signUp() {
+        SignUpRequest request = SignUpRequest.builder()
+                .nickname("백승열입니다")
+                .email("beck22222@naver.com")
+                .password("@!test1234").build();
+
+        authController.registerMember(request);
     }
 
 
@@ -211,8 +220,8 @@ class OrderApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("아이템 단건 조회 입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andDo(document("get-item",
                         pathParameters(
                                 parameterWithName("id").description("아이템 아이디")
@@ -226,8 +235,8 @@ class OrderApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("아이템 단건 조회 입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),
                                 fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
                                 fieldWithPath("data.title").type(JsonFieldType.STRING).description("아이템 제목 입니다."),
                                 fieldWithPath("data.price").type(JsonFieldType.NUMBER).description("아이템 가격 입니다."),

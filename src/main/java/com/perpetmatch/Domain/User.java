@@ -143,4 +143,8 @@ public class User extends DateAudit{
         this.bag.clear();
         this.credit = Math.max(0, credit - totalSum);
     }
+
+    public void makeCommuBoard(Commu savedCommu) {
+        this.commus.add(savedCommu);
+    }
 }

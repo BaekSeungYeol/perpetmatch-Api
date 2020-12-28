@@ -2,7 +2,10 @@ package com.perpetmatch.api;
 
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.Domain.Order;
+import com.perpetmatch.jjwt.resource.ApiResponseCode;
+import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Item.ItemRepository;
+import com.perpetmatch.modules.Item.ItemService;
 import com.perpetmatch.modules.Member.UserService;
 import com.perpetmatch.modules.Order.OrderService;
 import com.perpetmatch.api.dto.Order.*;
@@ -33,19 +36,13 @@ public class OrderApiController {
     private final ItemRepository itemRepository;
     private final OrderService orderService;
     private final UserService userService;
-
+    private final ItemService itemService;
 
     @GetMapping("/shop/details/{id}")
     public ResponseEntity getFeedOne(@PathVariable Long id) {
 
-        Optional<Item> item = itemRepository.findById(id);
-        if(item.isEmpty())
-            return new ResponseEntity<>(new ApiResponse(false, "잘못된 접근입니다."),
-                    HttpStatus.BAD_REQUEST);
-
-        Item curItem = item.get();
-        ItemDtoOne itemDto = new ItemDtoOne(curItem);
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "아이템 단건 조회 입니다.",itemDto));
+        ItemDtoOne itemDto = itemService.getItemById(id);
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(itemDto));
     }
 
 

@@ -134,4 +134,8 @@ public class Board extends DateAudit{
         boardImage2 = boardRequest.getBoardImage2();
         boardImage3 = boardRequest.getBoardImage3();
     }
+
+    public boolean findAppliedUsers(String username) {
+        return users.stream().anyMatch(u -> u.getNickname().equals(username));
+    }
 }

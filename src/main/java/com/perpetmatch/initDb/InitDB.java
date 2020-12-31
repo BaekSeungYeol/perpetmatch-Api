@@ -87,13 +87,6 @@ public class InitDB {
                 }).collect(Collectors.toList());
 
                 petRepository.saveAll(collect);
-//                List<Pet> collect = Files.readAllLines(resource1.getFile().toPath(), StandardCharsets.UTF_8).stream()
-//                        .map(line -> {
-//                            String[] lines = line.split(",");
-//                            return Pet.builder().title(lines[0]).build();
-//                        }).collect(Collectors.toList());
-//
-//                petRepository.saveAll(collect);
             }
         }
 
@@ -112,29 +105,12 @@ public class InitDB {
 
                 zoneRepository.saveAll(collect);
 
-//                Resource resource = new ClassPathResource("zonesList.csv");
-//                List<Zone> collect = Files.readAllLines(resource.getFile().toPath(), StandardCharsets.UTF_8).stream()
-//                        .map(line -> {
-//                            String[] lines = line.split(",");
-//                            return Zone.builder().province(lines[0]).build();
-//                        }).collect(Collectors.toList());
-//
-//                zoneRepository.saveAll(collect);
             }
         }
-        private static List<Byte> convertBytesToList(byte[] bytes) {
-            final List<Byte> list = new ArrayList<>();
-            for (byte b : bytes) {
-                list.add(b);
-            }
-            return list;
-        }
 
-
-        private String company;
         public void putItems() {
             if(itemRepository.count() == 0) {
-                Feed feed1 = new Feed();
+                Item feed1 = new Feed();
                 feed1.setTitle("벅스펫 국내산 유기농 베지믹스 관절건강 사료");
                 feed1.setPrice(51990);
                 feed1.setStockQuantity(100);

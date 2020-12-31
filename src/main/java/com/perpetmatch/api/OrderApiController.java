@@ -2,7 +2,6 @@ package com.perpetmatch.api;
 
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.Domain.Order;
-import com.perpetmatch.jjwt.resource.ApiResponseCode;
 import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Item.ItemRepository;
 import com.perpetmatch.modules.Item.ItemService;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,27 +47,23 @@ public class OrderApiController {
     @GetMapping("/shop/feeds")
     public ResponseEntity getFeedList() {
 
-        List<Item> items = itemRepository.findAllByCompany("벨리스");
-        Set<ItemDto> collect = items.stream().map(ItemDto::new).collect(Collectors.toSet());
-
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "사료 리스트 다건 조회 입니다.",collect));
+        Set<ItemDto> shopItemsFeeds = itemService.findFeeds();
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(shopItemsFeeds));
     }
 
     @GetMapping("/shop/snacks")
     public ResponseEntity getSnackList() {
 
-        List<Item> items = itemRepository.findAllByCompany("마이비펫");
-        Set<ItemDto> collect = items.stream().map(ItemDto::new).collect(Collectors.toSet());
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "간식 리스트 다건 조회 입니다.",collect));
+        Set<ItemDto> shopItemsSnacks = itemService.findSnacks();
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(shopItemsSnacks));
     }
 
 
     @GetMapping("/shop/goods")
     public ResponseEntity getGoodsList() {
 
-        List<Item> items = itemRepository.findAllByCompany("까르페띠앙");
-        Set<ItemDto> collect = items.stream().map(ItemDto::new).collect(Collectors.toSet());
-        return ResponseEntity.ok().body(new ApiResponseWithData<>(true, "용품 리스트 다건 조회 입니다.",collect));
+        Set<ItemDto> shopItemsGoods = itemService.findGoods();
+        return ResponseEntity.ok().body(ApiResponseDto.createOK(shopItemsGoods));
     }
 
     @GetMapping("/shop/items/best")

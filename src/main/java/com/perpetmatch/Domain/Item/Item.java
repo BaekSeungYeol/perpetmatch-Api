@@ -1,6 +1,7 @@
 package com.perpetmatch.Domain.Item;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.perpetmatch.modules.Item.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +40,8 @@ public abstract class Item {
     private String boardImageMain;
     private String company;
 
+    @Enumerated(EnumType.STRING)
+    private ItemType itemType;
 
     @ElementCollection
     private Set<String> options = new HashSet<>();
@@ -47,6 +50,7 @@ public abstract class Item {
     public void addStock(int quantity) {
         this.stockQuantity += quantity;
     }
+
 
     public void removeStock(int quantity) {
         int restStock = this.stockQuantity - quantity;

@@ -2,7 +2,7 @@ package com.perpetmatch.api;
 
 import com.perpetmatch.modules.Member.domain.User;
 import com.perpetmatch.modules.Member.domain.UserRepository;
-import com.perpetmatch.api.dto.User.UserDto;
+import com.perpetmatch.modules.Member.query.dto.UserDto;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import lombok.RequiredArgsConstructor;

@@ -3,7 +3,7 @@ package com.perpetmatch.api;
 import com.perpetmatch.Domain.Board;
 import com.perpetmatch.modules.Member.domain.User;
 import com.perpetmatch.api.dto.Board.*;
-import com.perpetmatch.api.dto.User.UserDtoWithCredit;
+import com.perpetmatch.modules.Member.query.dto.UserDtoWithCredit;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;

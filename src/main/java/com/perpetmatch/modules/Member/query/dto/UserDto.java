@@ -1,4 +1,4 @@
-package com.perpetmatch.api.dto.User;
+package com.perpetmatch.modules.Member.query.dto;
 
 import lombok.*;
 

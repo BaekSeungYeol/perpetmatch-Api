@@ -1,4 +1,4 @@
-package com.perpetmatch.api;
+package com.perpetmatch.modules.Member.ui;
 
 import com.perpetmatch.modules.Member.domain.User;
 import com.perpetmatch.modules.Member.domain.UserRepository;

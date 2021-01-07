@@ -2,15 +2,10 @@ package com.perpetmatch.modules.Board;
 
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
-import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
+import com.perpetmatch.modules.Member.domain.User;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Component
 public class BoardMapper {

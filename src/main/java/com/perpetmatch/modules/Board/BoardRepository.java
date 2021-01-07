@@ -1,7 +1,7 @@
 package com.perpetmatch.modules.Board;
 
 import com.perpetmatch.Domain.Board;
-import com.perpetmatch.Domain.User;
+import com.perpetmatch.modules.Member.domain.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;

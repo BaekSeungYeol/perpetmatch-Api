@@ -1,25 +1,16 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.Board;
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.Domain.Zone;
-import com.perpetmatch.api.dto.Profile.ZoneResponseOne;
 import com.perpetmatch.jjwt.resource.*;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.Gender;
 import com.perpetmatch.api.dto.Board.AdoptMatchDto;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.common.RestDocsConfiguration;
-import com.perpetmatch.modules.Member.UserRepository;
-import com.perpetmatch.modules.Zone.ZoneRepository;
-import com.perpetmatch.modules.pet.PetRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -35,11 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;

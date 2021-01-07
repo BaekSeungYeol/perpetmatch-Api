@@ -4,8 +4,8 @@ import com.perpetmatch.modules.Delivery.DeliveryRepository;
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.modules.Item.ItemRepository;
-import com.perpetmatch.modules.Member.UserRepository;
-import com.perpetmatch.modules.OrderItem.OrderItemRepository;
+import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.modules.Member.domain.UserRepository;
 import com.perpetmatch.api.dto.Order.AddressDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
 
 @Service
 @Transactional

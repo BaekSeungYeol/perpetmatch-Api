@@ -1,17 +1,16 @@
 package com.perpetmatch.api;
 
 import com.perpetmatch.Domain.Board;
-import com.perpetmatch.Domain.User;
+import com.perpetmatch.modules.Member.domain.User;
 import com.perpetmatch.api.dto.Board.*;
 import com.perpetmatch.api.dto.User.UserDtoWithCredit;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
-import com.perpetmatch.jjwt.resource.ApiResponseCode;
 import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.BoardService;
-import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Member.application.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.List;
 
 @RestController

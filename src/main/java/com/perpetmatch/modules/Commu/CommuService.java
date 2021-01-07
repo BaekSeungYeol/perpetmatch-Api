@@ -2,21 +2,18 @@ package com.perpetmatch.modules.Commu;
 
 import com.perpetmatch.api.dto.Commu.CommentDetailsDto;
 import com.perpetmatch.exception.ResourceNotFoundException;
-import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Comment.CommentRepository;
 import com.perpetmatch.Domain.Comment;
 import com.perpetmatch.Domain.Commu;
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.modules.Member.domain.UserRepository;
 import com.perpetmatch.api.dto.Commu.CommentDto;
 import com.perpetmatch.api.dto.Commu.CommuPostDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 

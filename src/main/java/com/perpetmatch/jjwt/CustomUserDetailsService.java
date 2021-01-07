@@ -1,7 +1,7 @@
 package com.perpetmatch.jjwt;
 
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.modules.Member.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -5,7 +5,7 @@ import com.perpetmatch.Domain.Order;
 import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Item.ItemRepository;
 import com.perpetmatch.modules.Item.ItemService;
-import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Member.application.UserService;
 import com.perpetmatch.modules.Order.OrderService;
 import com.perpetmatch.api.dto.Order.*;
 import com.perpetmatch.jjwt.CurrentMember;
@@ -21,9 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")

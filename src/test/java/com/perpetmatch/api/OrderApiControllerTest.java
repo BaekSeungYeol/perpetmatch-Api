@@ -3,12 +3,12 @@ package com.perpetmatch.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.Domain.OrderItem;
-import com.perpetmatch.Domain.User;
+import com.perpetmatch.modules.Member.domain.User;
 import com.perpetmatch.jjwt.resource.ApiResponseCode;
 import com.perpetmatch.jjwt.resource.AuthController;
 import com.perpetmatch.modules.Item.ItemRepository;
-import com.perpetmatch.modules.Member.UserRepository;
-import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Member.domain.UserRepository;
+import com.perpetmatch.modules.Member.application.UserService;
 import com.perpetmatch.modules.OrderItem.OrderItemRepository;
 import com.perpetmatch.api.dto.Order.AddressDto;
 import com.perpetmatch.api.dto.Order.BagDto;
@@ -257,8 +257,8 @@ class OrderApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("사료 리스트 다건 조회 입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andDo(document("list-feeds",
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
@@ -269,9 +269,8 @@ class OrderApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("간식 리스트 다건 조회 입니다."),
-                                fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."), fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
                                 fieldWithPath("data[0].title").type(JsonFieldType.STRING).description("아이템 제목 입니다."),
                                 fieldWithPath("data[0].price").type(JsonFieldType.NUMBER).description("아이템 가격 입니다."),
                                 fieldWithPath("data[0].stockQuantity").type(JsonFieldType.NUMBER).description("아이템 수량 입니다."),
@@ -290,8 +289,8 @@ class OrderApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("간식 리스트 다건 조회 입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andDo(document("list-snacks",
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
@@ -302,9 +301,8 @@ class OrderApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("용품 리스트 다건 조회 입니다."),
-                                fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."),fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
                                 fieldWithPath("data[0].title").type(JsonFieldType.STRING).description("아이템 제목 입니다."),
                                 fieldWithPath("data[0].price").type(JsonFieldType.NUMBER).description("아이템 가격 입니다."),
                                 fieldWithPath("data[0].stockQuantity").type(JsonFieldType.NUMBER).description("아이템 수량 입니다."),
@@ -324,8 +322,8 @@ class OrderApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("message").value("용품 리스트 다건 조회 입니다."))
+                .andExpect(jsonPath("code").value(ApiResponseCode.OK.toString()))
+                .andExpect(jsonPath("message").value("요청이 성공하였습니다."))
                 .andDo(document("list-goods",
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("JSON"),
@@ -336,9 +334,8 @@ class OrderApiControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("true"),
-                                fieldWithPath("message").type(JsonFieldType.STRING).description("용품 리스트 다건 조회 입니다."),
-                                fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
+                                fieldWithPath("code").type(JsonFieldType.STRING).description(ApiResponseCode.OK.toString()),
+                                fieldWithPath("message").type(JsonFieldType.STRING).description("요청이 성공하였습니다."), fieldWithPath("data[0].id").type(JsonFieldType.NUMBER).description("아이템 id 입니다."),
                                 fieldWithPath("data[0].title").type(JsonFieldType.STRING).description("아이템 제목 입니다."),
                                 fieldWithPath("data[0].price").type(JsonFieldType.NUMBER).description("아이템 가격 입니다."),
                                 fieldWithPath("data[0].stockQuantity").type(JsonFieldType.NUMBER).description("아이템 수량 입니다."),

@@ -1,17 +1,14 @@
 package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
 import com.perpetmatch.modules.Board.Gender;
+import com.perpetmatch.modules.Member.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity

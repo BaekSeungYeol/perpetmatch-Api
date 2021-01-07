@@ -1,7 +1,8 @@
-package com.perpetmatch.Domain;
+package com.perpetmatch.modules.Member.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.perpetmatch.Domain.*;
 import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.jjwt.oauth2.user.AuthProvider;
 import lombok.*;
@@ -18,7 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 @Getter @Setter
 @EqualsAndHashCode(of = "id")
-public class User extends DateAudit{
+public class User extends DateAudit {
 
     @Id @GeneratedValue
     private Long id;

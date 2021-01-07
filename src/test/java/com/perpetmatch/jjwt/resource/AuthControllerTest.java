@@ -1,8 +1,8 @@
 package com.perpetmatch.jjwt.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.modules.Member.UserRepository;
-import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Member.domain.UserRepository;
+import com.perpetmatch.modules.Member.application.UserService;
 import com.perpetmatch.jjwt.JwtTokenProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

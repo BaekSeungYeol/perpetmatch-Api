@@ -1,6 +1,7 @@
 package com.perpetmatch.modules.Board;
 
 import com.perpetmatch.Domain.*;
+import com.perpetmatch.modules.Member.domain.User;
 import com.perpetmatch.modules.PetAge.PetAgeRepository;
 import com.perpetmatch.modules.Zone.ZoneRepository;
 import com.perpetmatch.api.dto.Board.AdoptMatchCondition;
@@ -10,7 +11,7 @@ import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
 import com.perpetmatch.exception.ResourceNotFoundException;
 import com.perpetmatch.exception.UpdateException;
 import com.perpetmatch.modules.pet.PetRepository;
-import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -18,9 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional

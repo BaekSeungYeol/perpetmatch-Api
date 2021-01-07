@@ -1,6 +1,5 @@
-package com.perpetmatch.modules.Member;
+package com.perpetmatch.modules.Member.domain;
 
-import com.perpetmatch.Domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

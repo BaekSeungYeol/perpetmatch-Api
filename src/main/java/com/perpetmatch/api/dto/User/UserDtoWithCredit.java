@@ -1,6 +1,6 @@
 package com.perpetmatch.api.dto.User;
 
-import com.perpetmatch.Domain.User;
+import com.perpetmatch.modules.Member.domain.User;
 import lombok.*;
 
 @EqualsAndHashCode(of = "id")

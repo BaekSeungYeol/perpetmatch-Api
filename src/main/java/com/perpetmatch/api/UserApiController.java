@@ -1,9 +1,8 @@
 package com.perpetmatch.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.modules.Member.UserRepository;
-import com.perpetmatch.modules.Member.UserService;
+import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.modules.Member.domain.UserRepository;
+import com.perpetmatch.modules.Member.application.UserService;
 import com.perpetmatch.jjwt.JwtTokenProvider;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.JwtAuthenticationResponse;
@@ -15,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequiredArgsConstructor

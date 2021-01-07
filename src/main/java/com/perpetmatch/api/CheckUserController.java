@@ -1,7 +1,7 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.modules.Member.domain.UserRepository;
 import com.perpetmatch.api.dto.User.UserDto;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;

@@ -1,4 +1,4 @@
-package com.perpetmatch.modules.Member;
+package com.perpetmatch.modules.Member.application;
 
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Domain.Item.Item;
@@ -17,6 +17,8 @@ import com.perpetmatch.infra.mail.EmailService;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Item.ItemRepository;
+import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.modules.Member.domain.UserRepository;
 import com.perpetmatch.modules.OrderItem.OrderItemRepository;
 import com.perpetmatch.modules.PetAge.PetAgeRepository;
 import com.perpetmatch.modules.Role.RoleRepository;
@@ -24,7 +26,6 @@ import com.perpetmatch.modules.Zone.ZoneRepository;
 import com.perpetmatch.modules.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -303,7 +304,7 @@ public class UserService {
     }
 
     public boolean hasBoardLikes(Long id, String username) {
-        Board board = boardRepository.findById(id).get();
+        Board board = boardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("board","id",id));
         Optional<User> user = userRepository.findByNickname(username);
         user.ifPresent(u -> {
             if(u.getLikeList().contains(board))

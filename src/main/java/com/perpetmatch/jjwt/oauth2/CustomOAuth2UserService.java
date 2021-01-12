@@ -2,8 +2,8 @@ package com.perpetmatch.jjwt.oauth2;
 
 import com.perpetmatch.Domain.Role;
 import com.perpetmatch.Domain.RoleName;
-import com.perpetmatch.modules.Member.domain.User;
-import com.perpetmatch.modules.Member.domain.UserRepository;
+import com.perpetmatch.Domain.User;
+import com.perpetmatch.modules.Member.UserRepository;
 import com.perpetmatch.modules.Role.RoleRepository;
 import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.OAuth2AuthenticationProcessingException;

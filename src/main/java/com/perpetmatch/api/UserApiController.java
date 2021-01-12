@@ -1,8 +1,8 @@
-package com.perpetmatch.modules.Member.ui;
+package com.perpetmatch.api;
 
-import com.perpetmatch.modules.Member.domain.User;
-import com.perpetmatch.modules.Member.domain.UserRepository;
-import com.perpetmatch.modules.Member.application.UserService;
+import com.perpetmatch.Domain.User;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.modules.Member.UserService;
 import com.perpetmatch.jjwt.JwtTokenProvider;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.JwtAuthenticationResponse;

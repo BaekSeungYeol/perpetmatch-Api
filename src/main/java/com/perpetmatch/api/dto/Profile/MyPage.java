@@ -1,6 +1,6 @@
 package com.perpetmatch.api.dto.Profile;
 
-import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.Domain.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,18 +1,16 @@
-package com.perpetmatch.modules.Member.domain;
+package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.perpetmatch.Domain.*;
-import com.perpetmatch.Domain.Item.Item;
 import com.perpetmatch.jjwt.oauth2.user.AuthProvider;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -42,6 +40,9 @@ public class User extends DateAudit {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Pet> petTitles = new HashSet<>();
+
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Zone> zones = new HashSet<>();
 
@@ -50,6 +51,9 @@ public class User extends DateAudit {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Board> likeList = new HashSet<>();
+
+
+
 
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Commu> commus = new HashSet<>();

@@ -1,7 +1,7 @@
 package com.perpetmatch.api.dto.Board;
 
 
-import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.Domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

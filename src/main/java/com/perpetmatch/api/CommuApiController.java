@@ -36,7 +36,7 @@ public class CommuApiController {
 
     @PostMapping("/boards/{id}/likes")
     public ResponseEntity likes(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(currentMember == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         commuService.addLike(id);
 
@@ -47,8 +47,8 @@ public class CommuApiController {
     @PostMapping("/boards")
     public ResponseEntity createBoard(@CurrentMember UserPrincipal currentMember, @RequestBody @Valid CommuPostDto commuPostDto
             , Errors errors) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
-        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
+        if(currentMember == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(errors.hasErrors()) return ResponseEntity.badRequest().body(ApiResponseDto.badRequest());
 
         commuService.createCommuBoard(currentMember.getId(), commuPostDto);
 
@@ -57,7 +57,7 @@ public class CommuApiController {
 
     @PostMapping("/boards/{id}/comments")
     public ResponseEntity createComments(@CurrentMember UserPrincipal currentMember, @PathVariable Long id, @RequestBody  CommentDto dto) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(currentMember == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         Comment comment = commuService.createCommentByUserId(currentMember.getId(), dto);
         commuService.addToCommuBoard(id,comment);
@@ -69,7 +69,7 @@ public class CommuApiController {
     @DeleteMapping("/boards/{id}/comments/{commentId}")
     public ResponseEntity deleteComments(
             @CurrentMember UserPrincipal currentMember, @PathVariable Long id, @PathVariable Long commentId) {
-        if (currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if (currentMember == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         commuService.removeComment(id,commentId);
 

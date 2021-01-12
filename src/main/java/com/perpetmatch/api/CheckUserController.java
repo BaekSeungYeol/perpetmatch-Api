@@ -1,15 +1,14 @@
 package com.perpetmatch.api;
 
-import com.perpetmatch.modules.Member.domain.User;
-import com.perpetmatch.modules.Member.domain.UserRepository;
-import com.perpetmatch.modules.Member.query.dto.UserDto;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
+import com.perpetmatch.Domain.User;
+import com.perpetmatch.modules.Member.UserRepository;
+import com.perpetmatch.api.dto.Profile.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor

@@ -1,7 +1,7 @@
 package com.perpetmatch.jjwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.Domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

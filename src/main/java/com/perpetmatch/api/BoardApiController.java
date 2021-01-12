@@ -1,18 +1,19 @@
 package com.perpetmatch.api;
 
 import com.perpetmatch.Domain.Board;
-import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.Domain.User;
 import com.perpetmatch.api.dto.Board.*;
-import com.perpetmatch.modules.Member.query.dto.UserDtoWithCredit;
+import com.perpetmatch.api.dto.Profile.UserDtoWithCredit;
 import com.perpetmatch.jjwt.CurrentMember;
 import com.perpetmatch.jjwt.UserPrincipal;
 import com.perpetmatch.jjwt.resource.ApiResponse;
 import com.perpetmatch.jjwt.resource.ApiResponseDto;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Board.BoardService;
-import com.perpetmatch.modules.Member.application.UserService;
+import com.perpetmatch.modules.Member.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class BoardApiController {
 
     @GetMapping("/boards/{id}")
     public ResponseEntity getOneAdoptBoardList(@PathVariable Long id) {
-        if (!boardRepository.existsById(id)) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
+        if (!boardRepository.existsById(id)) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponseDto.Not_Found);
 
         Board board = boardService.findOneBoard(id);
         AdoptBoardV2 OneBoardListData = new AdoptBoardV2(board);
@@ -51,8 +52,8 @@ public class BoardApiController {
     @PostMapping("/boards")
     public ResponseEntity createBoard(@CurrentMember UserPrincipal currentMember, @RequestBody @Valid BoardPostRequest boardRequest
     , Errors errors) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
-        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
+        if(currentMember == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(errors.hasErrors()) return ResponseEntity.badRequest().body(ApiResponseDto.badRequest());
 
         Board board = boardService.createNewBoard(currentMember.getId(), boardRequest);
         BoardTitleDto createdBoardIdAndTitleData = BoardTitleDto.builder()
@@ -67,7 +68,7 @@ public class BoardApiController {
     @PutMapping("/boards/{id}")
     public ResponseEntity updateBoard(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
                                       @RequestBody @Valid BoardUpdateRequest boardRequest, Errors errors) {
-        if(errors.hasErrors()) return ResponseEntity.ok().body(ApiResponseDto.badRequest());
+        if(errors.hasErrors()) return ResponseEntity.badRequest().body(ApiResponseDto.badRequest());
 
         boardService.updateBoard(currentMember.getId(), id, boardRequest);
 
@@ -85,7 +86,7 @@ public class BoardApiController {
      */
     @GetMapping("/boards/{id}/manager")
     public ResponseEntity isManager(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if (currentMember == null || !userService.findManager(currentMember.getUsername(), id)) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if (currentMember == null || !userService.findManager(currentMember.getUsername(), id)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         List<ApplyUsers> applyUsers = userService.applyUserList(id);
         BoardAppliedUsers boardUserDtoData = new BoardAppliedUsers(applyUsers);
@@ -100,7 +101,7 @@ public class BoardApiController {
     @PostMapping("/boards/{id}/accept")
     public ResponseEntity accept(@CurrentMember UserPrincipal currentMember, @PathVariable Long id,
                                  @RequestBody NameDto name) {
-        if(currentMember == null || !userService.findManager(currentMember.getUsername(), id)) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(currentMember == null || !userService.findManager(currentMember.getUsername(), id)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         User user = userService.acceptUser(id, name);
         UserDtoWithCredit userDtoWithCreditData = new UserDtoWithCredit(user);
@@ -115,7 +116,7 @@ public class BoardApiController {
      */
     @PostMapping("/boards/{id}/apply")
     public ResponseEntity apply(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(currentMember == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         String username = currentMember.getUsername();
         boolean userIn = userService.hasAppliedUser(id, username);
@@ -129,7 +130,7 @@ public class BoardApiController {
      */
     @PostMapping("/boards/{id}/likes")
     public ResponseEntity likes(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(currentMember == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         String username = currentMember.getUsername();
         boolean likeApply = userService.hasBoardLikes(id, username);
@@ -145,7 +146,7 @@ public class BoardApiController {
      */
     @GetMapping("/boards/{id}/applied_me")
     public ResponseEntity isAppliedUser(@CurrentMember UserPrincipal currentMember, @PathVariable Long id) {
-        if(currentMember == null) return ResponseEntity.ok().body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
+        if(currentMember == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponseDto.DEFAULT_UNAUTHORIZED);
 
         boolean applied = boardService.isBoardApplied(id, currentMember.getUsername());
         return ResponseEntity.ok().body(new ApiResponse(applied, "신청 여부 입니다."));

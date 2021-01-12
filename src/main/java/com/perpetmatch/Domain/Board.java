@@ -3,7 +3,6 @@ package com.perpetmatch.Domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perpetmatch.api.dto.Board.BoardUpdateRequest;
 import com.perpetmatch.modules.Board.Gender;
-import com.perpetmatch.modules.Member.domain.User;
 import lombok.*;
 
 import javax.persistence.*;

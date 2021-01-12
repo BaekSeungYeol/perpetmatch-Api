@@ -2,7 +2,7 @@ package com.perpetmatch.api.dto.Profile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perpetmatch.Domain.*;
-import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.Domain.User;
 import lombok.*;
 
 import java.time.LocalDateTime;

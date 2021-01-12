@@ -1,7 +1,6 @@
 package com.perpetmatch.Domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.perpetmatch.modules.Member.domain.User;
 import lombok.*;
 
 import javax.persistence.*;

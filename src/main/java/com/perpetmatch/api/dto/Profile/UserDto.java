@@ -1,13 +1,10 @@
-package com.perpetmatch.modules.Member.query.dto;
+package com.perpetmatch.api.dto.Profile;
 
 import lombok.*;
 
 @EqualsAndHashCode(of = "id")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class UserDto {
 
     private Long id;

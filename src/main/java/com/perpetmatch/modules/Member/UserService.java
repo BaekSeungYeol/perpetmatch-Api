@@ -1,4 +1,4 @@
-package com.perpetmatch.modules.Member.application;
+package com.perpetmatch.modules.Member;
 
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.Domain.Item.Item;
@@ -17,8 +17,7 @@ import com.perpetmatch.infra.mail.EmailService;
 import com.perpetmatch.jjwt.resource.SignUpRequest;
 import com.perpetmatch.modules.Board.BoardRepository;
 import com.perpetmatch.modules.Item.ItemRepository;
-import com.perpetmatch.modules.Member.domain.User;
-import com.perpetmatch.modules.Member.domain.UserRepository;
+import com.perpetmatch.Domain.User;
 import com.perpetmatch.modules.OrderItem.OrderItemRepository;
 import com.perpetmatch.modules.PetAge.PetAgeRepository;
 import com.perpetmatch.modules.Role.RoleRepository;

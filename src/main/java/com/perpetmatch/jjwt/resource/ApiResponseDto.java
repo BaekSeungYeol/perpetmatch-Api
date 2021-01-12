@@ -8,9 +8,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 public class ApiResponseDto<T> {
-
     public static final ApiResponseDto DEFAULT_OK = new ApiResponseDto<>(ApiResponseCode.OK);
     public static final ApiResponseDto DEFAULT_UNAUTHORIZED = new ApiResponseDto<>(ApiResponseCode.UNAUTHORIZED);
+    public static final ApiResponseDto Not_Found = new ApiResponseDto<>(ApiResponseCode.NOT_FOUND);
     private ApiResponseCode code;
     private String message;
     private T data;
@@ -22,6 +22,8 @@ public class ApiResponseDto<T> {
         this.bindStatus(status);
         this.data = data;
     }
+
+
 
     private void bindStatus(ApiResponseCode status) {
         this.code = status;

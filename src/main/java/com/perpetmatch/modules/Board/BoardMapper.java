@@ -2,7 +2,7 @@ package com.perpetmatch.modules.Board;
 
 import com.perpetmatch.Domain.*;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
-import com.perpetmatch.modules.Member.domain.User;
+import com.perpetmatch.Domain.User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

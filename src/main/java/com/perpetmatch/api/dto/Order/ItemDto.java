@@ -1,12 +1,10 @@
 package com.perpetmatch.api.dto.Order;
 
-import com.perpetmatch.Domain.Item.Item;
+import com.perpetmatch.Item.domain.Item;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Data
 @Builder

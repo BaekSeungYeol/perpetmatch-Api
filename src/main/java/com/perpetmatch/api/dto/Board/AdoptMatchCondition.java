@@ -1,12 +1,11 @@
 package com.perpetmatch.api.dto.Board;
 
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.PetAge;
-import com.perpetmatch.Domain.Zone;
+import com.perpetmatch.pet.domain.Pet;
+import com.perpetmatch.pet.domain.PetAge;
+import com.perpetmatch.Zone.domain.Zone;
 import lombok.Data;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data

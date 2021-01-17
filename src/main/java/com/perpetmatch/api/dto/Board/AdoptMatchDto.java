@@ -1,15 +1,11 @@
 package com.perpetmatch.api.dto.Board;
 
 
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.PetAge;
-import com.perpetmatch.Domain.Zone;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor

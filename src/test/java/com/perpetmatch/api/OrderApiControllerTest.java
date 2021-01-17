@@ -1,15 +1,15 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perpetmatch.Domain.Item.Item;
-import com.perpetmatch.Domain.OrderItem;
-import com.perpetmatch.Domain.User;
+import com.perpetmatch.Item.domain.Item;
+import com.perpetmatch.Order.domain.OrderItem;
+import com.perpetmatch.User.domain.User;
 import com.perpetmatch.jjwt.resource.ApiResponseCode;
 import com.perpetmatch.jjwt.resource.AuthController;
-import com.perpetmatch.modules.Item.ItemRepository;
-import com.perpetmatch.modules.Member.UserRepository;
-import com.perpetmatch.modules.Member.UserService;
-import com.perpetmatch.modules.OrderItem.OrderItemRepository;
+import com.perpetmatch.Item.domain.ItemRepository;
+import com.perpetmatch.User.domain.UserRepository;
+import com.perpetmatch.User.application.UserService;
+import com.perpetmatch.Order.domain.OrderItemRepository;
 import com.perpetmatch.api.dto.Order.AddressDto;
 import com.perpetmatch.api.dto.Order.BagDto;
 import com.perpetmatch.common.RestDocsConfiguration;

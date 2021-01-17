@@ -1,9 +1,10 @@
 package com.perpetmatch.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.perpetmatch.AdoptBoard.ui.BoardApiController;
 import com.perpetmatch.jjwt.resource.*;
-import com.perpetmatch.modules.Board.BoardRepository;
-import com.perpetmatch.modules.Board.Gender;
+import com.perpetmatch.AdoptBoard.domain.BoardRepository;
+import com.perpetmatch.AdoptBoard.domain.Gender;
 import com.perpetmatch.api.dto.Board.AdoptMatchDto;
 import com.perpetmatch.api.dto.Board.BoardPostRequest;
 import com.perpetmatch.common.RestDocsConfiguration;

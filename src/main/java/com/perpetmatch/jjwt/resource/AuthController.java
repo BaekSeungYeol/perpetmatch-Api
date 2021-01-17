@@ -1,9 +1,9 @@
 package com.perpetmatch.jjwt.resource;
 
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.modules.Member.UserRepository;
-import com.perpetmatch.modules.Member.UserService;
-import com.perpetmatch.modules.Role.RoleRepository;
+import com.perpetmatch.User.domain.User;
+import com.perpetmatch.User.domain.UserRepository;
+import com.perpetmatch.User.application.UserService;
+import com.perpetmatch.Role.domain.RoleRepository;
 import com.perpetmatch.infra.config.AppProperties;
 import com.perpetmatch.jjwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -44,12 +43,8 @@ public class AuthController {
     @Transactional
     @DeleteMapping("/user/{usernameOrEmail}")
     public ResponseEntity dUser(@PathVariable String usernameOrEmail) {
-        Optional<User> user = userRepository.findByNicknameOrEmail(usernameOrEmail,usernameOrEmail);
-        user.ifPresent(u -> {
-                    userRepository.delete(u);
-                }
-        );
 
+        userService.delete(usernameOrEmail);
         return ResponseEntity.ok().body(new ApiResponse(true, "회원 탈퇴 되었습니다."));
 
     }
@@ -58,20 +53,23 @@ public class AuthController {
     @Transactional
     public ResponseEntity<?> authenticateMember(@Valid @RequestBody LoginRequest loginRequest) {
 
+        Authentication authentication = PutAuthenticationInHolder(loginRequest);
+
+        String jwt = tokenProvider.generateToken(authentication);
+        String usernameOrEmail = loginRequest.getUsernameOrEmail();
+        String nickname = userService.createUserAndGetName(usernameOrEmail);
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,nickname));
+    }
+
+    private Authentication PutAuthenticationInHolder(@RequestBody @Valid LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),
                         loginRequest.getPassword()
                 )
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = tokenProvider.generateToken(authentication);
-        String usernameOrEmail = loginRequest.getUsernameOrEmail();
-        Optional<User> user = userRepository.findByNicknameOrEmail(usernameOrEmail, usernameOrEmail);
-        String nickname = user.get().getNickname();
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,nickname));
+        return authentication;
     }
 
     @PostMapping("/signup")

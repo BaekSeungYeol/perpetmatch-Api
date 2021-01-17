@@ -1,8 +1,10 @@
 package com.perpetmatch.api.dto.Profile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.perpetmatch.Domain.*;
-import com.perpetmatch.Domain.User;
+import com.perpetmatch.User.domain.User;
+import com.perpetmatch.Zone.domain.Zone;
+import com.perpetmatch.pet.domain.Pet;
+import com.perpetmatch.pet.domain.PetAge;
 import lombok.*;
 
 import java.time.LocalDateTime;

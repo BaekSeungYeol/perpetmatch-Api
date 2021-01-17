@@ -1,18 +1,13 @@
 package com.perpetmatch.api.dto.Order;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.perpetmatch.Domain.*;
+import com.perpetmatch.Order.domain.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.FetchType.LAZY;
 
 @Data
 @Builder

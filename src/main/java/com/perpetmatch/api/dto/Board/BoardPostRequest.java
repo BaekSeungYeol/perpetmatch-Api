@@ -1,6 +1,6 @@
 package com.perpetmatch.api.dto.Board;
 
-import com.perpetmatch.modules.Board.Gender;
+import com.perpetmatch.AdoptBoard.domain.Gender;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 

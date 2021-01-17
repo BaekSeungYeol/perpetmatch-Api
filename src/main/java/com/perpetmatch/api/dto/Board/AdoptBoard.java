@@ -1,7 +1,6 @@
 package com.perpetmatch.api.dto.Board;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.perpetmatch.modules.Board.Gender;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Data;

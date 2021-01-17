@@ -1,9 +1,7 @@
 package com.perpetmatch.api.dto.Order;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.perpetmatch.Domain.Order;
+import com.perpetmatch.Order.domain.Order;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

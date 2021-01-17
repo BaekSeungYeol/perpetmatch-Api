@@ -1,13 +1,9 @@
 package com.perpetmatch.api.dto.Board;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.perpetmatch.Domain.Board;
-import com.perpetmatch.Domain.Pet;
-import com.perpetmatch.Domain.PetAge;
-import com.perpetmatch.Domain.Zone;
+import com.perpetmatch.AdoptBoard.domain.Board;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

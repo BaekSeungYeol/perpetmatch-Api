@@ -1,8 +1,7 @@
 package com.perpetmatch.api.dto.Board;
 
 
-import com.perpetmatch.modules.Board.Gender;
-import com.perpetmatch.Domain.Board;
+import com.perpetmatch.AdoptBoard.domain.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

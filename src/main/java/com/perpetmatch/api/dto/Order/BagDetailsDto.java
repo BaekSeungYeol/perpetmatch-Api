@@ -1,6 +1,6 @@
 package com.perpetmatch.api.dto.Order;
 
-import com.perpetmatch.Domain.OrderItem;
+import com.perpetmatch.Order.domain.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

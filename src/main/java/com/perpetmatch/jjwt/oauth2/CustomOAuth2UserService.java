@@ -1,10 +1,10 @@
 package com.perpetmatch.jjwt.oauth2;
 
-import com.perpetmatch.Domain.Role;
-import com.perpetmatch.Domain.RoleName;
-import com.perpetmatch.Domain.User;
-import com.perpetmatch.modules.Member.UserRepository;
-import com.perpetmatch.modules.Role.RoleRepository;
+import com.perpetmatch.Role.domain.Role;
+import com.perpetmatch.Role.domain.RoleName;
+import com.perpetmatch.User.domain.User;
+import com.perpetmatch.User.domain.UserRepository;
+import com.perpetmatch.Role.domain.RoleRepository;
 import com.perpetmatch.exception.AppException;
 import com.perpetmatch.exception.OAuth2AuthenticationProcessingException;
 import com.perpetmatch.jjwt.UserPrincipal;
